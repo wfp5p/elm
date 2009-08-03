@@ -207,14 +207,6 @@ typedef unsigned long size_t;
 # endif
 #endif
 
-/* 
- * Ultrix's fflush returns EOF and sets error flag if the stream is read-only.
- */
-#if defined(ULTRIX_FFLUSH_BUG) && defined(ANSI_C)
-# define fflush(fp) \
-	    ((((fp)->_flag & (_IOREAD | _IORW)) == _IOREAD) ? 0 : fflush(fp))
-#endif
-
 #ifdef SHORTNAMES	/* map long names to shorter ones */
 # include <shortname.h>
 #endif
