@@ -727,16 +727,16 @@ int ch;
 
 	else {
 	  /* if some kind of non-printable character change to a '?' */
-#ifdef ASCII_CTYPE
+
 	  if(!isascii(ch) || !isprint(ch))
-#else
-	  if ( (!isprint(ch) && !(ch & ~0x7f)) ||  ch == 0226)
-/* 0226 can mess up xterm */ 	       
-#endif
+/*  if ( (!isprint(ch) && !(ch & ~0x7f)) ||  ch == 0226) */
+/* 0226 can mess up xterm */
+
 	    ch = '?';
 
 	  /* if we only have one column left, simulate automargins if
-	   * the terminal doesn't have them */
+	   * the terminal doesn't have them
+	   */
 	  if (TC_curr_col == COLS - 1) {
 	    putchar(ch);
 	    if (!TC_automargin || TC_eatnewlineglitch) {
