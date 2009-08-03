@@ -73,7 +73,7 @@ char *requestedmfile;	/* first mail file to open, empty if the default */
 {
     char buf[SLEN];
 
-    sprintf(version_buff, "%s PL%s", VERSION, PATCHLEVEL);
+    sprintf(version_buff, "%s", VERSION);
     def_ans_yes = catgets(elm_msg_cat, ElmSet, ElmYes, "y");
     def_ans_no = catgets(elm_msg_cat, ElmSet, ElmNo, "n");
     nls_deleted = catgets(elm_msg_cat, ElmSet, ElmTitleDeleted, "[deleted]");
