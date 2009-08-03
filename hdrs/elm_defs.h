@@ -253,17 +253,7 @@ typedef unsigned long size_t;
 #endif
 
 
-/*
- * Some of the old BSD ctype conversion macros corrupted characters.
- * We will substitute our own versions if required.
- */
 #include <ctype.h>
-#ifdef BROKE_CTYPE
-# undef  toupper
-# define toupper(c)	(islower(c) ? ((c) - 'a' + 'A') : (c))
-# undef  tolower
-# define tolower(c)	(isupper(c) ? ((c) - 'A' + 'a') : (c))
-#endif
 
 #if defined(ANSI_C)
 # include <unistd.h>
