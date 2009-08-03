@@ -42,7 +42,6 @@ int   mode;
 	    access is being checked if a bare symlink exists
 	    or "errno" otherwise **/
 
-#ifdef SYMLINK
 	struct stat stat_buf;
 
 	if (mode != ACCESS_EXISTS)
@@ -51,7 +50,4 @@ int   mode;
 	/** if the lstat succeeds, the file exists, as it was statable **/
 
 	return lstat(file, &stat_buf);
-#else
-	return access(file, mode);
-#endif
 }

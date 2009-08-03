@@ -120,9 +120,7 @@ int resyncing, quitting, prompt;
 	FILE *temp;
 	char temp_keep_file[SLEN], buffer[SLEN], *msg;
 	struct stat    buf;		/* stat command  */
-#ifdef SYMLINK
 	struct stat    lbuf;		/* lstat command  */
-#endif
 #if defined(BSD) && !defined(UTIMBUF)
 	time_t utime_buffer[2];		/* utime command */
 #else
@@ -495,7 +493,7 @@ int resyncing, quitting, prompt;
 	 * so we know already whether this folder is a symlink.  If it
 	 * is, we'll have to keep it around even if it's empty.
 	 */
-#ifdef SYMLINK
+
         if (lstat(curr_folder.filename, &lbuf) != 0) {
 	  err = errno;
 	  dprint(1, (debugfile, "Error: errno %s attempting to stat file %s\n", 
@@ -505,7 +503,7 @@ int resyncing, quitting, prompt;
 	}
 
 	is_symlink = S_ISLNK(lbuf.st_mode);
-#endif /* SYMLINK */
+
 
 	/* If there are any messages to keep, first copy them to a
 	 * temp file, then remove original and copy whole temp file over.
