@@ -252,23 +252,6 @@ typedef unsigned long size_t;
   extern int strspn(), strcspn();
 #endif
 
-#ifdef MEMCPY
-# ifndef ANSI_C
-#   if defined(I_MEMORY)
-#     include <memory.h>
-#   else
-#     if defined(__convexc__)
-        extern void *memcpy(), *memset();
-#     else
-        extern char *memcpy(), *memset();
-#     endif
-      extern int memcmp();
-#   endif
-# endif
-# define bcopy(src, dest, len)	memcpy((dest), (src), (len))
-# define bcmp(s1, s2, len)	memcmp((s1), (s2), (len))
-# define bzero(s, len)		memset((s), 0, (len))
-#endif
 
 /*
  * Some of the old BSD ctype conversion macros corrupted characters.
