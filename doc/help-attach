@@ -1,0 +1,50 @@
+
+		Elm 2.5 Message Attachments Screen
+
+    Any file or document may be attached along with your mail message.
+    Elm uses the MIME "multipart/mixed" scheme to encapsulate your
+    message along with any attachments.  This menu allows you to select
+    attachments for your message.
+
+    The following commands are available in the Message Attachments Screen:
+
+	 Key    Meaning
+	 ---    -------
+
+	  j	Move down to next attachment.
+	  k	Move up to previous attachment.
+	  +	Move down a screenful.
+	  -	Move up a screenful.
+	<NUM>	Move to the specified attachment number.
+	  1	Move to first attachment.
+	  *	Move to last attachment.
+
+	  a	Add a new attachment to the message. (**)
+	  d	Delete an existing attachment from the message.
+	  q	Leave this menu and continue with the message.
+
+	  f	Modify "file name" for the current attachment. (**)
+	  c	Modify "content type" for the current attachment. (*)
+	  e	Modify "content encoding" for the current attachment. (*)
+	  s	Modify "content description" for the current attachment. (*)
+	  p	Modify "content disposition" for the current attachment. (*)
+
+	  t	Place or clear a tag on the current attachment.
+	 ^T     Clear all of the tags.
+	  m     Move all tagged attachments after the current attachment.
+
+	 ^L	Redraw display.
+	  !	Shell escape (*).
+	  ?	Display this help listing.
+
+	   (*)	Marked commands require additional entry.  CTRL/D may be used
+		to abort command and return to Attachments Screen.
+
+	  (**)	Same as (*) ... plus you may enter a directory name
+		or use patterns ("*" and "?" chars) to call up the
+		File Selection Browser to select the attachment file.
+		Just strike ENTER to browse the directory that contains
+		the most previously added attachment.  You may abbreviate
+		your mail folders directory as "=" and your home
+		directory as "~".
+

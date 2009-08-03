@@ -1,0 +1,47 @@
+		The Elm 2.5 File Selection Browser
+
+    The following commands are available in the File Selection Browser:
+
+	 Key    Meaning
+	 ---    -------
+
+	  j	Move down to next entry.
+	  k	Move up to previous entry.
+	  +	Move down to next page.
+	  -	Move up to previous page.
+	  1	Move to first entry.
+	  *	Move to last entry.
+
+	ENTER	Select the currently highlighted entry.
+	SPACE	Select the currently highlighted entry.
+	  q	Leave the browser without making a selection.
+
+	  .	Enter a filename in the current directory (*).
+	  /	Enter a filename from the root directory (*).
+	  =	Enter a filename in your mail folders directory (*).
+	  ~	Enter a filename in your home directory (*).
+
+	  c	Change directory (*).
+	  l	Limit display - specify a new match pattern for entries (*).
+	  p	Limit display - specify a new match pattern for entries (*).
+	  o	Options settings - display/hide dot files, sorting order (*).
+	 ^R	Recall - change to previously browsed directory.
+
+	 ^L	Redraw display.
+	  !	Shell escape (*).
+	  ?	Display this help listing.
+
+	(*) Marked commands require additional entry.  CTRL/D may be used
+	    to abort command and return to File Selection Browser.
+
+
+    The following commands are available in the "O)ption Setting" menu:
+
+	 Key    Meaning
+	 ---    -------
+
+	 ^D	Abort - undo any changes and return to File Selection Browser.
+	 ^R	Recall - undo any changes made to option settings.
+	 ^L	Redraw display.
+	  ?	Display this help listing.
+

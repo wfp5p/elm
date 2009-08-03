@@ -1,0 +1,50 @@
+
+		Elm 2.5 Folder Selection
+
+    You need to select a folder for the following commands:
+
+	s)ave - Selected message(s) will be saved to the folder you select,
+		and then deleted from the current folder.
+
+	C)opy - Selected message(s) will be saved to the folder you select.
+
+	c)hange - The folder you select will be opened for reading.
+
+    You may abort the command and return to the Elm main menu by typing
+    CTRL/D.
+
+    If you have enabled the "Save by Name" feature, Elm will recommend
+    a folder name for the s)ave and C)opy commands.  You may strike ENTER
+    to accept the recommendation, or enter a different folder name.
+
+    There are some special names you may use to select the folder.
+
+	!		Your main "incoming" mail folder.
+	>		Your "received" mail folder.
+	<		Your "sent" mail folder.
+	!!		The same folder used for most recent save/copy.
+	=folder		Select "folder" in your saved folders directory.
+	~/folder	Select "folder" in your home directory.
+	~user/folder	Select "folder" in user's home directory.
+	@alias		The default save folder for the "alias".
+
+    You may specify a directory name here.  If you do, the "File Selection
+    Browser" will start up to select a folder.  Here are some examples
+    that would start up the browser:
+
+	/usr/tmp	Start browser in "/usr/tmp".
+	.		Start browser in current directory.
+	=		Start browser in your saved folders directory.
+
+    You also may specify a pattern for the "File Selection Browser".  If
+    you do, only filenames that match the pattern will be displayed.
+    The patterns use "*" to match any number of characters, and "?" to
+    match any single character.  Here are some examples:
+
+	=*joe*		Start browser in saved folders directory, and only
+			    display files with "joe" somewhere in the
+			    name.
+
+	/tmp/*.gif	Start browser in the /tmp directory, and only
+			    display files ending in ".gif".
+

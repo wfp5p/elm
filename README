@@ -1,0 +1,19 @@
+This is the 2.5 (USENET) version of the Elm Mail System
+
+Where to find more info on Elm:
+   Much discussion on Elm including interim bug fixes, work arounds
+and future plans occurs in the Usenet news group comp.mail.elm. 
+
+The current version of elm can be found at ftp.virginia.edu in /pub/elm
+
+Limitations/Problems you might encounter in compiling and installing Elm:
+
+Solaris 2.X:
+
+ You must have /usr/ccs/bin in your PATH.  Elm 2.5 will not
+ compile with /usr/ucb/cc, it will work with gcc.
+ 
+ You must say no to using flock().
+ 
+ 
+

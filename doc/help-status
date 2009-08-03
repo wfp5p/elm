@@ -1,0 +1,19 @@
+
+           Commands available from the Status Menu in Elm 2.5
+
+ Key    Meaning
+ ---    -------
+  q,<return>
+        Return to the index screen.
+
+ ^L     Redraw screen.
+
+  n     New and unread / old and unread / read.  Change with <space>.
+
+  o     Restore original status of message as of entry to Elm or last resync.
+
+  r     Whether the message has been replied to.  Change with <space>.
+
+  u     Undo changes made this time in the status editor.
+
+  x     Exit leaving folder untouched unconditionally.

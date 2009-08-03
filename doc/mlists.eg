@@ -1,0 +1,33 @@
+# Mailing lists info for elm
+#
+# This file can be placed in $HOME/.elm/mlists or /usr/local/lib/mlists.
+# Entries from the former location override the latter.
+# 
+# Put each mailing list you want recognized in this list, one per line.
+# Lists are named using RFC-822 format, i.e. either '"list name" <list-addr>'
+# or 'list-addr (list name)'.  'list-addr' is just the pattern the 'To:'
+# address will be matched against; it is not meant to be a fully-qualified
+# address.
+#
+# Delimiters can be redefined as well:
+#
+#   name	default
+#   [to-me]	------------
+#   [to-many]	============
+#   [cc-me]	============
+#
+# Matches are case-independent, and only match whole words with '@', '!',
+# ':' as delimter characters.  So "os" will match "host!os" or "os@host",
+# but not "osf@host".
+#
+# examples:
+#   elm-test
+#   elm-dev
+#   "mjdomo users"	<majordomo-users>
+#   team@work
+#   os			(OS group)
+#
+#   [to-me]		(------)
+#   [to-many]		(======)
+#   [cc-me]		(==cc==)
+#

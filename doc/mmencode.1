@@ -1,0 +1,100 @@
+.TH MMENCODE 1L "Elm Version 2.5" "USENET Community Trust"
+.SH NAME
+mmencode - Translate to and from mail-oriented encoding formats
+.SH SYNOPSIS
+.ta 8n
+.B mmencode
+[
+.B \-ubq
+] [
+.B \-o
+outputfile ] [ inputfile ]
+.SH DESCRIPTION
+The
+.I mmencode
+program simply converts a byte stream into (or out of) one of the
+standard mail encoding formats defined by MIME, the proposed standard
+for internet multimedia mail formats.  Such an encoding is necessary
+because binary data cannot be sent through the mail.  The encodings
+understood by
+.I mmencode
+are preferable to the use of the
+.IR uuencode (1)
+and
+.IR uudecode (1)
+programs, for use in mail, in several respects that were important to
+the authors of MIME.
+.P
+By default,
+.I mmencode
+reads standard input, and sends a ``base64'' encoded version of the
+.I inputfile
+to standard output.  If no
+.I inputfile
+is specified, then the standard input is processed.
+.P
+The following options are available.
+.IP "\fB\-b\fP"
+Tells
+.I mmencode
+to process ``base64'' encoding (which is the default).
+.IP "\fB\-q\fP"
+Tells
+.I mmencode
+to process ``quoted-printable'' encoding instead of ``base64''.
+.IP "\fB\-u\fP"
+Tells
+.I mmencode
+to decode the input, rather than encode it.
+.IP "\fB\-o\fP"
+Output will be sent to
+.I outputfile
+instead of the standard output.
+.SH RATIONALE
+.I mmencode
+is intended to be a replacement for
+.I uuencode
+for mail and news use.  The reason is simple:
+.I uuencode
+doesn't work very well in a number of circumstances and ways.  In
+particular, uuencode uses characters that don't translate well across
+all mail gateways (particularly ASCII <-> EBCDIC gateways).  Also,
+.I uuencode
+is not standard -- there are several variants floating around, encoding
+and decoding things in different and incompatible ways, with no
+``standard'' on which to base an implementation.  Finally,
+.I uuencode
+does not generally work well in a pipe, although some variants have
+been modified to do so.
+.I mmencode
+implements the encodings which were defined for MIME as
+.I uuencode
+replacements, and should be considerably more robust for email use.
+.SH SEE ALSO
+metamail(1), uuencode(1), uudecode(1)
+.SH BUGS
+This program is derived from the
+.I mmencode
+provided in the
+.I metamail
+package.  That package also links this program to the name
+.IR mimencode .
+The
+.B \-p
+option, which is provided in the
+.I metamail
+implementation, is accepted as a noop.
+.SH COPYRIGHT
+Copyright (c) 1991 Bell Communications Research, Inc. (Bellcore)
+.P
+Permission to use, copy, modify, and distribute this material for any
+purpose and without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies, and
+that the name of Bellcore not be used in advertising or publicity
+pertaining to this material without the specific, prior written
+permission of an authorized representative of Bellcore.  BELLCORE
+MAKES NO REPRESENTATIONS ABOUT THE ACCURACY OR SUITABILITY OF THIS
+MATERIAL FOR ANY PURPOSE.  IT IS PROVIDED "AS IS", WITHOUT ANY EXPRESS
+OR IMPLIED WARRANTIES.
+.SH AUTHOR
+Nathaniel S. Borenstein

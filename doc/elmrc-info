@@ -1,0 +1,377 @@
+#; @(#)$Id: elmrc-info,v 1.14 1996/08/08 19:49:15 wfp5p Exp $
+#
+# This file allows you to tailor Elm.
+#
+# The lines beginning with "#" (like this one!) are comments.
+#
+# Some of the option settings are commented out with "###".  This means
+# that you do NOT have a value set for the option, and the system default
+# will be used.  (The value shown is the default at the time this file
+# was created.)  If you wish to enable one of these options, you MUST
+# delete the "###" to de-comment the entry.
+#
+# For the yes/no settings, say ON for yes and OFF for no.
+#
+# For more detailed description of these settings, see the Elm Reference Guide.
+#
+# --- Table of Contents ---
+#
+#	1. General Program Configuration Options
+#	2. Main Message Selection Screen Options
+#	3. Message Display/Pager Options
+#	4. Editor Options
+#	5. Message Composition Options
+#	6. Signature Options
+#	7. Program Termination/Folder Cleanup Options
+#	8. Folder Handling Options
+#	9. MIME and Character Set Options
+#
+
+#-----------------------------------------------------------------------
+#
+# Section 1:  General Program Configuration Options
+#
+
+# Are we good at it?  0=beginner, 1=intermediate, 2 and above=expert.
+# Lower levels give more verbose prompts.  Higher levels make advanced
+# options available.
+userlevel
+
+# After displaying a transient message, Elm will pause this many seconds
+# before erasing it.  Can be 0 or a positive integer.
+sleepmsg
+
+# After this many seconds of inactivity, Elm will re-check the mailbox
+# for new messages.
+timeout
+
+# Enable AT&T Mail forms support?
+forms
+
+# Want to use HP 2622 terminal softkeys?
+# You had better be running on that sort of terminal if you turn this on!
+softkeys
+
+# Would you like to use termcap/terminfo ti/te (screen switch) entries?
+usetite
+
+# When initially reading in a mail folder, the status display is updated
+# whenever this many more messages are processed.  A large number helps
+# avoid lots of output on slow terminal connecitons.
+readmsginc
+
+# Command to print a message.
+print
+
+# List of headers to select and weed when printing messages.
+printhdrs
+
+# Command to use for shell escapes.
+shell
+
+# Directory to use for temporary files.
+tmpdir
+
+# Pathname to the saved calendar entries file.
+calendar
+
+# How to sort the alias list, "Name" by default.
+aliassortby
+
+# Space-delimited list of alternative addresses that appear in your
+# mail messages (such as your addresses on other machines).  This allows
+# Elm to recognize which messages are to and from you.  Stuff like
+# "user@*.dom.ain" works here.
+alternatives
+
+# List of options that can be configured at the "o)ptions" screen.
+configoptions
+
+
+#-----------------------------------------------------------------------
+#
+# Section 2:  Main Message Selection Screen Options
+#
+
+# Mark selected message with "->" rather than the inverse video bar?
+arrow
+
+# Display the three-line "mini-menu" of commands?
+menu
+
+# How to sort the display of messages in a folder. "Reverse Sent" by default.
+sortby
+
+# Should mailing list info be displayed for messages at startup?
+# The "M" command toggles this on and off.
+showmlists
+
+# When "showmlists" is off, a single-character mark is displayed
+# to indicate who the message is to.  This four-character string
+# defines the values to use for the mark.  The four characters are:
+#   - Mark for mail to you and nobody else.
+#   - Mark for mail to you and other recipients.
+#   - Mark for mail to multiple recipients, and you are on the CC list.
+#   - Mark for mail not addressed directly to you (e.g. mailing lists)
+# An underscore "_" in this list will display as a blank.
+# the default value is  _TC*
+#
+tochars
+
+# Should messages to which you've replied be shown with an "r" mark?
+showreply
+
+# Start up by pointing to the first new message received, if possible?
+pointnew
+
+# When moving to next or previous page of messages, should the current
+# message pointer also move onto that page?
+movepage
+
+# Increment the message pointer only after the message has been fully
+# disposed (saved or deleted)?  If OFF, then the message pointer is
+# incremented after you do anything that touches the message.
+resolve
+
+
+#-----------------------------------------------------------------------
+#
+# Section 3:  Message Display/Pager Options
+#
+
+# Program to use for displaying messages.  "builtin" is recommended.
+pager
+
+# Display message title when displaying pages of message?
+titles
+
+# This determines whether the builtin pager should be used instead of
+# an external pager (if you defined one above).  If the value is greater
+# than zero, then the builtin pager is used for any message shorter than
+# that number of lines.  If the value is less than zero, the builtin
+# pager is used if the message is that many lines shorter than the size
+# of the screen.  If zero, the external pager always is used.
+builtinlines
+
+# Prompt for a command after the external pager exits?
+promptafter
+
+# Enable use of the "weedout" list defined below?
+weed
+
+# What headers I DON'T want to see, ever.
+weedout
+
+
+#-----------------------------------------------------------------------
+#
+# Section 4:  Editor Options
+#
+
+# Name of editor to use for composing messages.  "none" or "builtin"
+# uses the simple built-in editor.
+editor
+
+# Name of editor to use for replies that have text.
+alteditor
+
+# Name of editor to use for the "~e" command in the built-in editor.
+easyeditor
+
+# Name of editor to use for the "~v" command in the built-in editor.
+visualeditor
+
+# The character to use in the built-in editor for entering commands.
+escape
+
+# Flush the input buffer after returning from an external editor?
+editflush
+
+
+#-----------------------------------------------------------------------
+#
+# Section 5:  Message Composition Options
+#
+
+# The full user name for outbound mail.  NOTE:  Many mail systems add
+# From: lines on their own and this setting has no effect!!!  If your
+# system is one of those, you might want to try things such as the
+# "chfn" command or setting the NAME environment parameter.
+fullname
+
+# Would you like to be asked for Carbon-Copy addresses when sending a message?
+askcc
+
+# When you send a message to an alias that contains you, would you
+# like to receive a copy of the message?
+metoo
+
+# When replying to a message, ask "Copy message?" into editing buffer?
+# If OFF, then the "replycopy" action is taken without asking.
+askreplycopy
+
+# Should the default for the "Copy message?" question be "yes"?
+replycopy
+
+# When messages are copied into the outbound buffer, don't include headers?
+# If OFF, just the message body with no headers is copied.
+noheader
+
+# Prefix to mark included message text.  Use "_" for a space.
+prefix
+
+# Attribution string for replies.  "%F" is the author of original message.
+attribution
+
+# Attribution for forwarded messages.  "%F" is original author.
+# Something like: "--- %[begin|end] forwarded message from %F ---"
+# If empty, standard attribution and prefix quoting used on forwards.
+fwdattribution
+
+# List of delivery precedences allowed, or empty to allow anything.
+# Precedence may be followed by optional ":priority" setting.
+precedences
+
+# When showing To: addresses, just display the recipient name?
+# If OFF, show entire recipient address.
+names
+
+# When sending messages to a uucp "bang path" address, automatically
+# add a CC that will bounce back a copy off the remote host when it is
+# at least this many hops away.  Set 0 to disable function.
+bounceback
+
+
+#-----------------------------------------------------------------------
+#
+# Section 6:  Signature Options
+#
+
+# Local ".signature" file to append to appropriate messages.
+localsignature
+
+# Remote ".signature" file to append to appropriate messages.
+remotesignature
+
+# Place dashes line above signatures?  (Usenet compatibility and convention)
+sigdashes
+
+
+#-----------------------------------------------------------------------
+#
+# Section 7:  Program Termination/Folder Cleanup Options
+#
+
+# Should the "Delete messages?" question be asked when you exit, resync,
+# or change folders?  If OFF, then the "alwaysdelete" action is taken
+# without asking.
+askdelete
+
+# Should the "Keep unread messages in incoming mailbox?" question be
+# asked when you exit, resync, or change folders?  If OFF, then the
+# "alwayskeep" action is taken without asking.
+askkeep
+
+# Should the "Move read messages to received folder?" question be asked
+# when you exit, resync, or change folders?  If OFF, then the "alwaysstore"
+# action is taken without asking.
+askstore
+
+# Should the default for the "Delete messages?" question be "yes"?
+alwaysdelete
+
+# Should the default for the "Keep unread messages in incoming mailbox?"
+# question be "yes"?
+alwayskeep
+
+# Should the default for the "Move read messages to received folder?"
+# question be "yes"?
+alwaysstore
+
+# Should we keep folders from which all messages are deleted?
+# If OFF then the empty folder files are deleted.
+keepempty
+
+
+#-----------------------------------------------------------------------
+#
+# Section 8:  Folder Handling Options
+#
+
+# Where to save my mail to.
+maildir
+
+# Save a copy of all outgoing messages I send?
+copy
+
+# Name of folder in which copies of outgoing messages are saved.
+sentmail
+
+# Name of folder in which received messages are saved.
+receivedmail
+
+# Save messages, incoming and outbound, by alias of sender/recipient?
+savebyalias
+
+# Save messages, incoming and outbound, by login name of sender/recipient?
+savebyname
+
+# Save outbound messages by login name of sender/recipient even if the
+# associated folder doesn't already exist?
+forcename
+
+# Should Elm ask for confirmation before it appends messages to any
+# existing file?  This is used for both folders in the user's mail
+# directory and ordinary files.
+confirmappend
+
+# Should Elm ask for confirmation before it creates any new files?  This
+# is used for both folders in the user's mail directory and ordinary
+# files.
+confirmcreate
+
+# Should Elm ask for confirmation before it appends a message to an
+# existing file that is not a folder in the user's Mail directory? This
+# is used for ordinary files only and does not affect folders in the
+# user's mail directory.
+confirmfiles
+
+# Should Elm ask for confirmation before it creates a new folder in the
+# user's Mail directory?  This is used only for folders in the user's
+# mail directory and does not affect ordinary files.
+confirmfolders
+
+# Should Elm ask for confirmation before saving tagged messages to a
+# folder when the cursor is on an untagged message?
+confirmtagsave
+
+# List of folders which are incoming folders.  Incoming folders are 
+# handled like your spool mailbox.  Folders in this list will be 
+# opened with "magic mode"
+incomingfolders
+
+
+#-----------------------------------------------------------------------
+#
+# Section 9:  MIME and Character Set Options
+#
+
+# Name of character set which the display supports.
+displaycharset
+
+# List of character sets, which are (more or less) a superset of US-ASCII.
+# When "displaycharset" is one of these, we can avoid spawning "metamail"
+# to handle a US-ASCII message.
+compatcharsets
+
+# The character set used for messages you write that contain 8-bit
+# national characters.  (This becomes the "charset" parameter in the
+# "Content-Type" header of your outbound message.)  If the message
+# contains solely 7-bit charcters, then this setting is ignored and
+# US-ASCII is selected.  A common choice here is "ISO-8859-1".
+charset
+
+#
+# end of Elm configuration settings
+#
+#-----------------------------------------------------------------------

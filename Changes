@@ -1,0 +1,979 @@
+Changes in 2.5 PL8
+
+- fixed a hang when hitting certain 8-bit chars in the From line
+
+- fixed a file descriptor leak (from Andreas Luik)
+
+- removed all Expires: processing
+
+
+Changes in 2.5 PL7
+
+- a few display issues fixed (from Kenneth Reek)
+
+- buffer overflow in frm fixed
+
+Changes in 2.5 PL6
+
+- Fixed message-id in the In-Reply-To header.
+
+- Actually show the -r option in the usage
+
+- Whacked a few more places where we might follow a symlink in tmpdir
+
+- Fastmail didn't grok commas correctly.
+
+- Change lock.c to not use errno unless there's an errno
+
+Changes in 2.5 PL5
+
+- A few more buffer overruns fixed.
+
+Changes in 2.5 PL4
+
+- little bug in aliasdb.c (from Scot W. Hetzel <scot@genroco.com>)
+
+- Message-Id: could overflow (from Darin Wayrynen <darin@deru.net>)
+
+- Fixed the permissions setting problem with the edit mailbox function
+
+- Added a ResizeScreen() call after show_msg() calls to hopefully deal wit
+  SIGWINCH problems (inspired from Yuke Zhuge <zhuge@stone.pdx.informix.com>)
+  
+- Fixed problems under SunOS 4.1.3 (from Paul J. Menchini <mench@mench.com>)
+
+- Fixed content encoding (from David Woolley  <david@djwhome.demon.co.uk>)
+
+- Attempt to stop crashes with long recipient list (from Gilles Detillieux 
+  <grdetil@scrc.umanitoba.ca>)
+  
+
+Changes in 2.5 PL3
+
+- Fixed the declaration of outbound_from_name (from Richard Jackson 
+  <rjackson@gmu.edu>)
+
+- Fixed the leapyear macro (from Gerhard Niklasch)
+  
+- Fixed editing of a long CC line (from Derek Godfrey <djg@sjc.ascend.com>)
+
+- Mail that lands in the sentmail with attachments now has the 
+  Content-disposition header text added to the message (from Dave 
+  Spensley)
+  
+- Made allto a bit longer (suggested by Dave Spensley 
+  <davesp@typhoon.xnet.com>)
+
+- Fixed Configure to find (again) fcntl on Linux
+
+- can_access will now allow you to write to a char device (/dev/null)
+
+Changes in 2.5 PL2
+
+- Fixed (again, maybe?) savebyalias from Adam Benjamin <aebenjam@opentext.com>
+
+- Fixed bug were an alias delete would crash elm if the mailbox was empty
+
+Changes in 2.5 PL1
+
+- Fixed savebyalias from Michael D Hughes <mdh@logcabin.woods.bridge.com> 
+  and Robert Schwartz <rjs@elt.com>
+  
+- Changes for 8 bit clean from H.J. Lu <hjl@varesearch.com>
+
+Changes in 2.5 PL0
+
+- One minor change to make an easier compile on SparcLinux.
+
+Changes in 2.5 PL0pre8
+
+- Y2K stuff from Ed Symanzik <zik@msu.edu>
+
+Changes in 2.5 PL0pre7
+
+- minor change to deal with egcs
+
+Changes in 2.5 PL0pre6
+
+- newalias nows does a geteuid() instead of getuid().  This is to lets 
+  SysAdmins do "su <user> -c 'newalias'"
+  
+
+Changes in 2.5 PL0pre5
+
+- Fix for GECOS entries with comma-delimited sub-fields from Chip 
+  Rosenthal <chip@unicom.com>.
+
+- Fix? for keys getting screw up after a ^Z from Chip Rosenthal
+  <chip@unicom.com>.
+
+
+Changes in 2.5 PL0pre4
+
+- A few changes for BSD from Chip Rosenthal <chip@unicom.com>.
+
+- A few changes to Configure suggested by Chip Rosenthal <chip@unicom.com>.
+
+
+Changes in 2.5 PL0pre3
+
+- Configure didn't see fcntl locking on Linux.  Fix from Sean McDermott 
+  <spm@intel.com>
+
+
+Changes in 2.5 beta 3
+
+- Fixed a problem where elm would try to close a file twice when
+  sending an attachment (from reichler@ews.uiuc.edu)
+
+- Added docs for environment variables to the man page (from Eric
+  Haszlakiewicz <nimenees@uaccess.net>)
+
+Changes in 2.5 beta 2
+
+- IncomingFolders no longer set Magic Mode on for everything
+
+- Configure should now deal with Linux.
+
+- Make //pattern honor current limit (from Keith Neufeld<neufeld@pvi.org>)
+
+- year 2000 fix.....?
+
+- Building on Solaris requires /usr/ccs/bin to be in the PATH
+
+Changes in 2.5 beta 1
+
+- b)ounce honor DONT_ADD_FROM (from Keith Neufeld<neufeld@pvi.org>)
+
+- removed [encode] display and reply (from Keith Neufeld<neufeld@pvi.org>)
+
+- make right/left arrows work in the file browser the same as in the
+  message index. (from Keith Neufeld<neufeld@pvi.org>)
+
+- fixed a bug in the incomingfolders code (it wouldn't save) (from Bob Schwartz
+  <rjs@elt.com>)
+  
+- fixed the meaning of noheader for forwards (from Keith Neufeld<neufeld@pvi.org>)
+
+
+
+Changes in 2.5 alpha 11
+
+- fixed a bug in the alias code (thanks to Keith Neufeld<neufeld@pvi.org>)
+
+- fixed the generation of temp file names in newmbox.c
+
+- allowed longer Cc: lines.  This was due to a crash with a group reply.
+
+- added incomingfolders to the elmrc.  This is a list of folders that will
+  automatically be opened with "magic mode" on. (inspired by a patch from
+  Cristophe Kalt <kalt@ensta.fr>)
+
+
+Changes in 2.5 alpha 10
+
+- Press u on a message that is read but not deleted will mark the message as
+  unread (from Larry Schwimmer <rosebud@cyclone.Stanford.EDU>).
+
+- mmencode.1 man page is now installed with others (from Gregory Margo
+  <gmargo@newton.vip.best.com>).
+
+- Magic mode stuff is now in help and NLS (from Gregory Margo
+  <gmargo@newton.vip.best.com>).
+
+- allow elimination of aliases from larger aliases (To: bigalias -subalias).
+  Based on incomplete patch by Waldi Ravens <waldi@moacs.indiv.nl.net>.  Also
+  removes redundant declarations of get_alias_address(), which is declared in
+  elm_globals.h (from Keith Neufeld<neufeld@pvi.org>)
+
+- On an entry field that normally clears to be retyped from scratch as soon
+  as the user presses a key (Subject: on header edit screen), allow right
+  arrow and delete to begin editing the existing default answer. (from Keith
+  Neufeld<neufeld@pvi.org>)
+
+- Add a warning to Configure about disabling shell escapes (from Keith
+  Neufeld<neufeld@pvi.org>)
+
+- Eliminate complaints in doc/Makefile about duplicate makefile entries if
+  mansrc and catmansrc are both "none" (from Keith Neufeld<neufeld@pvi.org>)
+
+- Allow entry of uppercase commands on header display/edit screens, since
+  that's how they're parenthesized on the display.  (from Bob Schwartz
+  <rjs@elt.com> and Keith Neufeld <neufeld@pvi.org>
+
+- Make 2+ -line error messages write over more of the screen instead of
+  scrolling it. (from Bob Schwartz <rjs@elt.com> and Keith Neufeld
+  <neufeld@pvi.org>
+
+- Don't try to send a message if the user erased all the recipients on the
+  header screen. (from Bob Schwartz <rjs@elt.com> and Keith Neufeld
+  <neufeld@pvi.org>
+  
+- Extend save-by-name behavior to allow save-by-alias (if the user has an
+  alias for this address). (from Bob Schwartz <rjs@elt.com> and Keith Neufeld
+  <neufeld@pvi.org>
+
+- Elm munged the permissions of a mailbox when not using system call locking
+  and the mailbox was ordinary in all regards except for being on another
+  filesystem than the temp mailbox.  Fixed. (from Bob Schwartz <rjs@elt.com>
+  and Keith Neufeld <neufeld@pvi.org>.  Various other folks have also
+  submitted patches that address this problem.
+  
+- Fix a bug in frm error message (from Bob Schwartz <rjs@elt.com>
+  and Keith Neufeld <neufeld@pvi.org>
+
+
+Changes in 2.5 alpha 9
+======================
+
+- Fixed a write call in lock.c (from Paul Close <pdc@lunch.engr.sgi.com>)
+
+- When creating a new file, always make it so that symlinks aren't followed.
+  This probably should only be done for temp files... 
+  
+- Add full name comments to the Cc: line of a group reply, and removes the
+  To: recipient from the Cc: list (from Keith Neufeld<neufeld@pvi.org>)
+
+- Make the keys on the status change screen change the status, instead of
+  taking you up into the row to change the status with the space bar.  Also
+  add he status change configuration to "elm -v" (from Keith
+  Neufeld<neufeld@pvi.org>)
+
+- In fastmail: fix the argument list generated to invoke the mailer to be
+  space-separated rather than comma-separated; and change access() to
+  can_access() (from Keith Neufeld<neufeld@pvi.org>)
+
+- Fixed a problem with alt editor introduced in alpha 8 (from Robert
+  Schwartz <rjs@elt.com>)
+
+- Added vi-style `H'' and `L'' commands to go to the top |and bottom of the
+  current indexed (Index, Alias) screen (from Keith Neufeld<neufeld@pvi.org>)
+
+- More changes by Chip Rosenthal:
+
+Totally new curses subsystem.
+
+Encapsulated folder state into a (FOLDER) datatype.  Removes a
+	gadzillion globals, and paves the way towards multiple
+	folder support.
+
+Maintain alias state separately, introducing stuff like num_aliases
+	and curr_alias, to avoid the incestuous sharing of globals
+	between folders and aliases.  This required some ugly
+	changes to the menu stuff since they can no longer, for
+	instance, just look at current -- they need to distinguish
+	whether being run in folder or alias mode.  This likely is
+	an interim step, Keith has mumbled stuff about replacing
+	the wretched menu code.
+
+Total rewrite of the Elm startup code.  Of particular note is that
+	Elm entry into and exit from raw in a more controlled and
+	consistent fashion.
+
+Total rewrite of the Elm shutdown code.  Replaced the dozen or so separate
+	procedures that all terminate Elm in slightly different ways,
+	with a single leave() procedure.
+
+New debug menu entered with '@' or '#' (the two are now equivalent).
+	Added debug info on terminal (curses) settings.
+
+The display_helpfile() program is now passed a just a topic (say "options")
+	instead of a full pathname ("/usr/local/lib/elm/help-options").
+
+File selection browser now has smart directory/pattern changing.  Instead
+	of separate commands, just type in what you want (directory, pattern,
+	or both) and it just figures it out.
+
+When leaving the header menu for the ready-to-send screen, the display
+	is updated properly.
+
+Fixed the annoying screen-redraw-every-five-minutes.
+
+MIME_SEND has been removed.  The MIME sending stuff is always on.
+	The MIME_RECV stuff remains an option, controlled by the
+	Configure answer to the MIME question.
+
+Instead of just assuming base64 on binary data, see if quoted-printable
+	will produce smaller encoded output.
+
+New Makefiles.  There now is a Make.defs.SH file that includes all of
+	the definitions (CC, BINDIR, etc.) plus the standard rules
+	(all, clean, etc.).  The Makefile.SH files just define the
+	list of targets, and the specific rules to build/install them.
+	The Makefile.SH includes Make.defs plus depend.out to generate
+	the resulting Makefile.  Thus Makefile.SH should be much smaller
+	and simpler, and the subdirectory makefiles should now work
+	consistently.
+
+New "allow_setuid" setting.  This must be enabled in the global elmrc in
+	order for Elm to operate setuid.  This prevents naive setuid
+	installation without being too heavy handed.
+
+Depreciated "keypad" setting.  New curses system knows whether or not
+	to use HP keypad by termcap settings.
+
+Reorganization of main header files.  The elmutil.h header is now
+	obsolete.  All portions of the Elm package include elm_defs.h,
+	and the main Elm program (but not utilities) include elm_globals.h.
+	Moved many definitions specific to Elm (and not used by the
+	utilities) from elm_defs.h to elm_globals.h.  Placed declaration
+	of the dozen-or-so widely used globals in elm_defs.h.
+
+Major overhaul of the global namespace.  Terminal state is now encapsulated
+	into (struct term_info).  Folder state is now encapsulated
+	into (FOLDER).  Most parameters incestuously shared between
+	folder and alias now split apart (e.g. added num_aliases,
+	curr_aliases).  New "opmode" parameter indicates Elm
+	operating mode (OPMODE_READ, OPMODE_SEND, etc.).
+
+New hdrs/port_termios.h encapsulates terminal setting commands in
+	a POSIX wrapper.
+
+sysdefs.h no longer defines individual help files, but rather a
+	single "system_help_dir".
+
+New lib/fast_getpw.c.  Does a "fast" getpwnam() by caching recent results.
+
+Replaced gethostname() and gethostdomain() in lib/opt_utils.c with new
+	get_hostname() and get_hostdomain() in new lib/gethostname.c.
+
+Added new init_common() to perform initializations common to Elm and
+	utilities in a consistent fashion.
+
+get_word() not treats a (parenthesized comment) as a single word.
+
+Added file selection browser and attachments menu to the message catalog.
+
+New doc/help-selfolder with help on folder selection commands.
+
+Reduced redundant macros, procedures, and definitions.  Stuff like
+	use isspace() instead of whitespace(), streq() instead
+	of equals(), TRUE instead of YES, strchr() instead of index(),
+	etc.
+
+All of the utilities now call initialize_common() rather than re-implementing
+	the initialization code in an inconsistent fashion.
+
+fastmail was broke.  Rewrote it.
+
+Fixed readmsg so that when weeding is done, the default action is the
+	opposite of the last action.  That is, with a weed list of
+	"Foo: Bar:" the default is reject all other headers.  With
+	a weed list of "Foo: !Bar:" the default is accept all other
+	headers.
+
+
+
+
+Changes in 2.5 alpha 8
+======================
+
+
+Lots of changes by Chip Rosenthal <chip@unicom.com>, including:
+
+
+--- EXTERNAL CHANGES ---
+
+New "make setup" target in base Makefile ensures .SH files up to date.
+
+New "make tags" target in base Makefile creates tags for src and lib dirs.
+
+New "mime-types" file added to $libdir.  (The mime-types file I've
+    used basically is munged from my Gopher/HTTP server.  It might
+    not be appropriate for the final release.)
+
+Renamed "mlists" to "mlists.eg" in $libdir.
+
+Renamed all help files from stuff like "elm-help.0" to "help-main".
+
+Major overhaul of the elmrc file.  Options are now grouped together
+    logically rather than appearing in alphabetical order.  (See next
+    item for more info.)
+
+Major change to $libdir/elmrc-info.  Previously, this was used simply
+    as comments for annotating the elmrc.  Now, it directs the production
+    of the elmrc.  The old elmrc-info format was:
+
+	option-name
+	# Comments to associate with the option.
+
+    The new format is:
+
+	# Comments to associate with the option.
+	option-name
+
+    Basically, just passes the elmrc-info file through, substituting
+    in the "option-name = value" wherever it encounters an option
+    name.  Appropriate checks are included so that settings missing
+    from elmrc-info and extraneous settings in elmrc-info are noted
+    with warnings.  If elmrc-info is missing, we fall back on a
+    raw alphabetical listing.
+
+Added "mmencode" to utils and "mmencode.1" to doc.  This is an
+    encoder/decoder for base64 and quoted-printable.  It's based on
+    the metamail version, which is freely redistributable.
+
+"readmsg" now accepts "-w" to specify header weeding.  The default
+    works like:  readmsg -w 'Subject: From: To: Cc: Apparently- Date:'
+    The list entries are left-anchored "patmatch" patterns.
+
+Added "printhdrs" elmrc option that allows header weeding to be
+    specified when printing.  The value of this option becomes the
+    "-w" arg to "readmsg".
+
+Before, when printing a message, Elm discarded stdout/stderr if the
+    "print" option had "%s" in it.  Now stdout/stderr is always left
+    attached to the tty.
+
+The "site hiding" stuff has been deleted.
+
+Fixed potential problem where Elm was too aggressive stripping outside
+    quotes from fullnames such as these:
+
+	joe@acme.com ("Joe User :-)")
+	joe@acme.com ("Joe" User "IV")
+
+Pattern matching now allows \-quoting, such as "name\*with\*stars".
+
+Fixed NLS utilities to compile on ANSIishy systems.
+
+Improved SIGWINCH/SIGCONT support.  The places that already handled
+    SIGWINCH (main menu and alias menu) now redraw automatically
+    on SIGCONT as well.  The verify_transmission menu, file browser,
+    and attachments menu do SIGWINCH/SIGCONT too.  Also, if you do a
+    screen resize during a suspend, Elm now will notice.
+
+Fixed possible problem with character reading.  (The problem was that
+    ReadCh() was doing a read(2), while the rest of the package uses
+    stdio.  Fixed ReadCh() to use getchar(3) instead.)
+
+Temporarily ifdef'ed out the access() test on the ~e editor.  (I'd
+    like to delete this entirely.)  This allows you to say
+    "easyeditor = emacs" and not have to specify a full pathname.
+
+Under the s)ave command, the cookie to mean "same as the last folder
+    I used" has been changed from "." to "!!".
+
+Under the s)ave command, if you specify a pattern you now get the
+    new file selection browser instead of an "ls -C" listing.  The
+    file selection browser also is started if you give a directory
+    name.
+
+Under the c)hange command, if you specify a pattern you now get the
+    new file selection browser instead of an "ls -C" listing.  The
+    file selection browser also is started if you give a directory
+    name.
+
+The "fwdattribution" setting now understands "%[begin|end]" formatting.
+    Stuff to the left of the bar is printed in the opening attribution,
+    stuff to the right in the close.  The %A escape is depreciated
+    and is slated for removal.
+
+Elm will try to use $PAGER or sel_pager to display help files, before
+    falling back to its built-in help pager.
+
+The chance of funky behavior during signals has been reduced.  (In
+    other words, Elm was doing tons of things in its signal handlers
+    that are dangerous.  Most, but not all, of them have been removed.)
+
+Before, if you tried to f)orward a form Elm would allow it, but wouldn't
+    let you edit or anything.  Now, it won't even do that.  It just
+    gives a message prompting you to use b)ounce instead.
+
+Elm is now MIME-sending capable right out of the box.  The answer that
+    you give Configure with respect to the MIME question affects just
+    the reading side of Elm.
+
+Outbound mail messages (and MIME multipart/mixed parts) no longer
+    have Content-Length: headers.  Content-Length: is generated only
+    when messages are saved to a local folder.
+
+The saved copy of a message will not have a Content-Type header
+    unless the message is the source to a form.
+
+If you omit the encoding from an [include ...] line, Elm will guess
+    an appropriate encoding rather than assuming no encoding.
+
+The content-type is now optional to [include ...].  That is, you
+    can say just [include filename] and Elm will guess both the content
+    type and encoding.
+
+New [attach ...] command.  Use exactly the same way as [include ...].
+    Difference is inclusions appear in-line with the message; attachments
+    appear at the end.
+
+New attachments menu.  To enter, after composing the message, strike
+    "a" at the verify_transmission menu.
+
+The MIME headers of outbound message have been changed.  Before
+    the headers on a part would look something like:
+
+	Content-Type: image/gif
+	Content-Transfer-Encoding: base64
+	Content-Name: /pub/archive/images/Drawing/bill.gif
+	Content-Length: 5376
+
+    Now they will appear something like:
+
+	Content-Type: image/gif
+	Content-Transfer-Encoding: base64
+	Content-Description: GIF picture - version 87a 640 x 350, 16 colors
+	Content-Disposition: attachment; filename="bill.gif"
+
+The "textencoding" elmrc option has been dropped.  Elm now determines
+    on its own whether a message is "8bit" or "7bit".  This setting
+    will be ignored silently if it appears in elmrc.
+
+Accordingly, Configure no longer asks about "defencoding".
+
+The "charset" elmrc option is now used only if the message has 8-bit
+    characters.  If the message contains solely 7-bit characters then
+    this setting is ignored and US-ASCII is used.
+
+Accordingly, Configure now offers ISO-8859-1 and not US-ASCII as the
+    default "defcharset".
+
+
+--- INTERNAL CHANGES - header files ---
+
+Major reorganization of the header files.  Basically here is the mapping:
+
+	old way			-->	new way
+
+	defs.h			-->	elm_defs.h
+	header.h + elm.h	-->	elm_globals.h
+
+    Here is the general idea:  everything and anything in the Elm
+    package should include "elm_defs.h".  It includes all of the
+    definitions, inclusions, and portability hackups.  The *ONLY*
+    files that should include "elm_globals.h" are those in the "src"
+    subdirectory.  It defines the globals, and contains some of the
+    definitions/declarations used with in Elm.  (Note that there are
+    one or two routines in the library that require "elm_globals.h".
+    I'd argue either that should be fixed, or they don't belong in
+    the library.)
+
+The "elm_defs.h" provides for ANSI prototyping.  It says:
+
+	#ifndef P_
+	# ifdef ANSI_C
+	#   define P_(ARGS) ARGS
+	# else
+	#   define P_(ARGS) ()
+	#   define const
+	# endif
+	#endif
+
+    For example, the cvt_timestr_to_hhmmss() procedure (from
+    lib/date_util.c) should be declared with something like:
+
+	int cvt_timestr_to_hhmmss P_((const char *, int *, int *, int *));
+
+A new header file, "elm_lib.h" has been introduced.  It contains
+    declarations (and prototypes) for *every* entry in libutil.a.
+    This header needs to be updated as changes are made to the library.
+    This header is included automatically via "elm_defs.h", thus should
+    not be included explicitly.  (Exception:  components of the library
+    that have their own header files, such as ndbz.c, are not included
+    in "elm_lib.h".)
+
+Renamed "curses.h" to "elm_curses.h" to avoid name collision/confusion.
+
+Added "port_wait.h" header.  Anything that needs to use wait(2) should
+    include this.  Then, declare a "waitstatus_t" to hold the return
+    status, and use the POSIX macros to test the status.
+
+New headers "sndhdrs.h" and "sndparts.h" support the new mail sending
+    subsystem.
+
+A lot of stuff from "mime.h" has been dropped, retaining basically just
+    that which is used by the receiving portion of Elm.
+
+The MIME capability has been split into MIME_SEND and MIME_RECV.
+    MIME_SEND is hardwired on.  MIME_RECV follows the Configure answer.
+    (It is my hope that MIME_SEND will be deleted before release, and
+    this stuff will just be standard.  As currently written, things will
+    not compile if you try with MIME_SEND turned off.)
+
+The "SHORT" macro has been dropped.  It was overloaded, used both as
+    a string length as well as an argument to sort name types.  Instead,
+    use TLEN (as in teeny length) to declare 10-byte strings.  As far
+    as sort names (used to be SHORT/FULL/PAD), the padded sort names have
+    been dropped (I fixed the menus to do the padding themselves), so
+    the sort_name() procedures now accept a TRUE/FALSE boolean to
+    return long versus short names.
+
+I've dropped most of the happy macros for character names.  If you
+    want to use ':' then say that, not COLON.
+
+Renamed INCOMING/OUTGOING to LOCK_INCOMING/LOCK_OUTGOING.
+
+Dropped JANUARY, FEBRUARY, ... definitions from elm_defs.h.
+
+The MAIN_HELP, OPTIONS_HELP, etc. definitions have been changed from
+    numbers to help file names and moved into sysdefs.h.
+
+Rewrote the dprint() macro to fix subtle bug.  This means stuff like:
+
+	if (something)
+		dprint();
+	else
+		foobar();
+    
+    will work correctly now.  (Before, foobar() would be run if
+    "something && !debug".)
+
+Things in sysdefs.h/elm_defs.h/elm_globals.h were juggled about to their
+    appropriate home.  For instance, the declaration of strstr() does
+    not belong in sysdefs.h.  I put it in the new elm_lib.h header.
+
+Deleted nearly all #includes from headers.h when converting over to
+    "elm_globals.h".  This stuff belongs in "elm_defs.h".
+
+Previously "headers.h" was used to declare the extern globals and
+    "elm.h" was used to create/initialize them.  The new "elm_globals.h"
+    does both.  Just declare INTERN before including the file (done
+    in elm.c) to create them.
+
+Drop explicit initialization of empty strings.  This means they now will
+    be created in BSS rather than DATA, saving dozens of kilobytes of
+    space in the executable and speeding startup.
+
+All of the outbound message header globals are gone (to, subject, etc.)
+    The new SEND_HEADERS datatype does this.
+
+The "forwarding" and "text_encoding" globals are gone.
+
+The "resize_screen" global has been renamed "caught_screen_change_sig" to
+    reflect that it is used in SIGCONT handling as well as SIGWINCH.
+
+One exception to the "all globals in elm_globals.h" rule: the "debug"
+    and "debugfile" global declarations have been moved into "elm_defs.h"
+    since so many things use them.
+
+
+--- INTERNAL CHANGES - lib/* code changes ---
+
+The entire library directory has been ANSIfied and checked with
+    "gcc -Wall".  (Well...actually almost -Wall.  Due to the:
+
+	/*#undef ... /* ... */
+
+    stuff, I had to turn off the nested comment checks.
+
+The can_access() procedure has been rewritten.  It now avoids an
+    expensive fork when unnecessary.  Also, it now follows access(2)
+    semantics (setting proper errno status rather than returning an
+    errno value).  (All calls to can_access() have been updated to
+    deal with this change.)
+
+The error_description() routine has been dropped, and the entire
+    package has been modified to use strerror().  lib/errno.c has
+    been modified to provide a strerror() for those systems that
+    lack it.
+
+figure_out_addressee() routine has been modified so that you now
+    have to pass the username as the second argument.  Previously
+    it obtained this info from a global variable, which may or may
+    not be initialized properly if figure_out_addressee() is called
+    from a utility program.
+
+The "next_field" value from parse_arpa_mailbox() now points to the
+    character after scanning left off rather than where the next field
+    begins.  What this essentially means is that whitespace is no
+    longer skipped before setting the "next_field" value.
+
+The patmatch() procedure now requires a third "opts" argument.
+
+Added the following (possibly useful) routines to the library:
+    basename(), trim_trailing_slashes(), trim_trailing_spaces(),
+    and trim_quotes().
+
+
+--- INTERNAL CHANGES - src/* code changes ---
+
+The sort_name() and alias_sort_name() procedures used to take a
+    FULL, SHORT, or PAD argument.  The menus were fixed to pad the
+    name displays properly, so PAD is no longer necessary.  These
+    routines now take a TRUE (display full name) or FALSE (display
+    short name) argument.
+
+Added ResizeScreen() to src/curses.c.  This may be called to effect
+    a screen resize, and to update the associated globals.
+
+Calling semantics to elm_date_str() [file src/date.c] changed.
+
+New src/file_ops.c added that contains things such as file_open(),
+    file_close(), file_seek(), file_rename(), etc.  They do exactly
+    what you think they do -- plus they add error checking and
+    print messages on failure.  In other words, rather than spending
+    a half screenful of code to fopen() a file, just file_open() it.
+
+The calling semantics to copy_message() have changed.  It no longer
+    accepts a "prefix" argument.  New usage is:
+
+	copy_message(FILE *dest_file, int cm_options);
+
+    The following new options have been added:
+
+	CM_PREFIX - Add "prefixchars" to each line.
+	CM_FORWARDING - Replaces the (now removed) "forwarding" global.
+	CM_ATTRIBUTION - Add an attribution line.
+
+    Since attribution generation has been merged into this routine,
+    the makeAttString() procedure has been moved into src/fileio.c
+
+Calling semantics to display_helpfile() [file src/help.c] changed.
+    Before, it used to take an integer to select a helpfile.  Now, it
+    takes a helpfile pathname.  (These pathnames are now defined in
+    sysdefs.h.)
+
+Calling semantics to read_number() [file src/in_utils.c] changed.
+    It used to have a hardwired screen line number and got its
+    default response from a magic global variable.  Now you have
+    to pass both of these as arguments.
+
+Calling semantics to GetPrompt() [file src/in_utils.c] changed.
+    Now you need to pass the timeout as a parameter, rather than using
+    the global "timeout".  Say "0" for infinite timeout.  Also, if a
+    SIGWINCH/SIGCONT occurs while in this procedure, the screen resize
+    is done automatically.  Thus, the calling routine merely needs to
+    do a redraw.  In other words, any menu that says:
+
+	cmd = ReadCh();
+
+    can get instant SIGWINCH/SIGCONT support by changing that line to:
+
+	if ((cmd = ReadCh()) == NO_OP_COMMAND) {
+	    do_redraw = TRUE;	/* or however you force a screen redraw */
+	    continue;
+	}
+
+All of the signal initializations moved out of src/init.c and into
+    the new initialize_signals() [file src/signals.c] routine.
+
+The error message handling [file src/out_utils.c] is a bit
+    smarter.  Now, for instance, the clear_error() routine performs
+    output only if there is an error to clear.  It also returns TRUE
+    when it does so, telling you that the cursor has moved.
+
+The remail() procedure (implements "b)ounce") has been moved into
+    src/reply.c.
+
+The strip_commas() routine [file src/strings.c] has been modified to
+    elide extraneous whitespace -- not create *more* of it!
+
+The argv_zero() routine [file src/strings.c] has been dropped.  Use
+    the new basename() library routine.
+
+The system_call() procedure [file src/syscall.c] will set errno
+    properly in the event of failure.  (By failure, I mean that something
+    went wrong, and not that the subprocess had a non-zero status.)
+
+If it has anything to do with sending mail, then chances are 87.43%
+    that it has been rewritten, replaced, deleted, or moved to
+    some other file.
+
+All of the mail sending has been unified behind a new routine:
+
+	int send_message(given_to, given_cc, given_subject, mssgtype)
+	const char *given_to, *given_cc, *given_subject;
+	int mssgtype;
+
+    Supported values for the "mssgtype" argument are:
+
+	#define SM_ORIGINAL     0 /* this is an original message            */
+	#define SM_REPLY        1 /* this is a response to the current mssg */
+	#define SM_FORWARD      2 /* the current mssg is being forwarded    */
+	#define SM_FWDUNQUOTE   3 /* forward - without quoting or editing   */
+	#define SM_FORMRESP     4 /* this is a response to a fill-out form  */
+
+
+- Configure now looks for /var/spool/lock (from Bernd Ernesti
+  <bernd@arresum.inka.de>)
+  
+- regexp.h was removed from the distribution (from Keith Neufeld<neufeld@pvi.org> )
+
+
+
+Changes in 2.5 alpha 7
+======================
+
+- Minor tweaks to eliminate superfluous strlen() calls (from Chip
+  Rosenthal <chip@unicom.com>)
+  
+- Significant rewrite of rfc822_toklen() (from Chip Rosenthal <chip@unicom.com>)
+
+- Add %)F and %>F to attribution, for from name and from address (from Paul 
+  Close <pdc@lunch.engr.sgi.com>)
+  
+- Add header fields to the send menu.  Only list to/cc/subject and any
+  non-null fields (from Paul Close <pdc@lunch.engr.sgi.com>)
+  
+- More efficiency changes (from Paul Close <pdc@lunch.engr.sgi.com>)
+
+- Don't use _down termcap if it is \n, since that doesn't work most
+  places without mucking with stty (from Paul Close <pdc@lunch.engr.sgi.com>)
+
+- elm won't allow the tmp mailbox to be a symlink (from Syd Weinstein
+  <syd@Myxa.COM>)
+  
+- removed move_old_files_to_new() since it is no long needed (from Syd Weinstein
+  <syd@Myxa.COM>)
+  
+- added the Status change screen (from Keith Neufeld<neufeld@pvi.org> )
+
+- fixed a bug with the timezone stuff (from Chip Rosenthal <chip@unicom.com>)
+
+- fixed a small bug in fwdattribution (from Chip Rosenthal <chip@unicom.com>)
+
+- fixed readmsg to deal with long header lines (from Chip Rosenthal 
+  <chip@unicom.com>)
+
+
+Changes in 2.5 alpha 6
+======================
+
+- added handling of Apparently-To: (from Paul Close <pdc@lunch.engr.sgi.com>
+
+- fixed a bug with MMDF & MIME (from Michael Elkins <elkins@aero.org>).
+
+- fixed up the behaviour of ask & friends (from Keith Neufeld<neufeld@pvi.org> )
+
+- added the ability to make entries of the form "!attribute" in a DT_MLT
+  list or as a DT_SYN (which makes it an antonym, but it's still processed by
+  DT_SYN).  It does _not_ allow "!attribute" in the elmrc, which would be
+  silly.  It reimplements autocopy as a DT_MLT of !askreplycopy and replycopy,
+  and it fixes alwaysleave to be a DT_MLT of alwayskeep and !alwaysstore,
+  removing the `kludge that should be part of the "machine"'' from
+  src/read_rc.c.  (from Keith Neufeld<neufeld@pvi.org> )
+  
+- prlong moved from $libdir to $bindir
+
+- corrects inconsistent names used for header file inclusion.
+  While most files include "foo.h", a couple used "../hdrs/foo.h".
+
+- add a "fwdattribution" elmrc variable that enhances the handling of
+  forwarded messages.  If undefined (the default), the current behaviour is
+  preserved (standard attribution and prefix added on edited messages).  If
+  this variable is defined, the prefix is never added, and instead of the
+  standard attribution the inclusion is bracketed like:
+
+
+Changes in 2.5 alpha 5
+======================
+
+- autocopy expanded into replycopy and askreplycopy (in elmrc).  replycopy 
+  determines whether the default should be yes or no, and askreplycopy 
+  determines whether it should happen automatically. (from Keith Neufeld 
+  <neufeld@pvi.org> )
+  
+- askstore can be used to separately prompt to move read messages to 
+  =received when you leave your mailbox.  I see its main use for people who 
+  don't want to use =received but still like confirmation of deletion. (from 
+  Keith Neufeld <neufeld@pvi.org> )
+  
+- Slight change to the behavior of resolv. (from Keith Neufeld < neufeld@pvi.org>)
+
+- If you delete the last message in a folder that is a symlink, the folder will
+  be emptied (this didn't work before).  (from Keith Neufeld < neufeld@pvi.org>)
+
+- Added Chip Rosenthal's <chip@unicom.com> change to allow builds in a separate
+  directory.
+
+- Elm will now no longer stomp on folders if the user is over quota (from Larry
+  Schwimmer <rosebud@cyclone.Stanford.EDU>).
+  
+- Changed the test for the Ultrix fflush bug.
+
+Changes in 2.5 alpha 3
+======================
+
+- Added a change from Keith Neufeld <neufeld@pvi.org> to make the confirm for
+  saving tagged messages a user configurable option (confirmtagsave in elmrc).
+  
+- Flush the edit buffer after an edit and now make it a user config thing 
+ (editflush in elmrc).
+
+
+
+Changes in 2.5 alpha 1
+======================
+
+- Added the changes that allow other folders to be treated as spool folders
+  (the "Magic Mode" change).  Hitting '&' toggles this as well as the use of 
+  the command line option -M.  The -M option also works on frm/nfrm.
+
+- Added the "replied" code.  You must set showreply=ON in your elmrc for this
+  to work.
+  
+- Added a key aliases to make emacs users happy:
+  cntl-V is same as +
+  cntl-N is down
+  cntl-P is up
+
+- Added the Ultrix fflush bug fix.
+
+- Added some extra attribution code (inspired by a patch from 
+  serini@ghost.sm.dsi.unimi.it (Piero Serini)).  The attribution string
+  may now contain:
+  
+  %F      who the message is from (this is the same as %s)
+  %D      date the message was created (the from message)
+  %I      message ID
+  %S      message subject
+
+- Added patch to allow embedded date in folder names (from Mike Kenney 
+  <mike@wavelet.apl.washington.edu>).  This allows:
+  
+          %h      month name ( 3 letter abbreviation )
+          %y      last 2 digits of year
+          %m      month number
+          %d      day of the month
+          %j      day of the year
+				
+  This patch also allows environment vars to be enclosed in {}.
+  
+  
+- Added Wayne Davison's patch to confirm on saving tagged messages.
+
+  
+- If DONT_ADD_FROM is defined the Your name option doesn't do anything so it 
+  now doesn't show up (from Larry Schwimmer <rosebud@cyclone.Stanford.EDU>).
+  
+- There were a couple places in mailmsg2 that strincmp was called with only 2
+  parameters.
+
+- The wildcard '*' is now allowed in the alternatives list.  For example, 
+  wfp5p@*virginia.edu matches user wfp5p for all machines at virginia.edu.
+  (from Michael Elkins <elkins@aero.org>).
+
+- Added the mailing list stuff done by Paul Close <pdc@sgi.com>
+
+- Allow the entry of aliases like the To: line 
+  (from Keith Neufeld <neufeld@pvi.org>)
+  
+- Change to deal with parenthesized comments in when eliminating members from 
+  an alias. (from Keith Neufeld <neufeld@pvi.org>)
+  
+- Allow a shell escape from the alias screen (just like from
+  the index screen).  It does not put the shell escape onto the alias
+  screen menu. (from Keith Neufeld <neufeld@pvi.org>)
+  
+- Allow the use of "T" from the builtin pager. (from Keith Neufeld 
+  <neufeld@pvi.org>)
+
+- Changes over to enhanced mode in for the print command.  From Chip Rosenthal
+  <chip@unicom.com>
+
+- Readmsg fixed to not truncate messages when called from within elm (it'll
+  still have the the problem if run standalone).  From Chip Rosenthal 
+  <chip@unicom.com>.
+
+- Added fix for utime() from Chip Rosenthal <chip@unicom.com>
+
+- Flush the edit buffer after an edit and now make it a user config thing 
+  (editflush in elmrc).
+  
+- Made a few Configure changes
+

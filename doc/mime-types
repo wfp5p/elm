@@ -1,0 +1,143 @@
+#
+# mime-types - maps file extentions to MIME Content-Type values
+#
+# This file is used by Elm to assign a Content-Type to attach/include files.
+# Unless a Content-Type is specified, Elm will search this file looking
+# for a match for the extension given in field one.  At the first match
+# found, the remainder of the line is taken as the Content-Type.
+#
+# There is an implied dot before the extension, and there can not be
+# any other characters following the extension.  This first rule means
+# that a file called "bigif" would NOT be assigned "image/gif".  The
+# second rule means that a file called "foo.txt.Z" would NOT be assigned
+# "text/plain".
+#
+
+cgi	text/html
+htm	text/html
+html	text/html
+tex	text/plain
+txt	text/plain
+
+gif	image/gif
+ief	image/ief
+jpe	image/jpeg
+jpeg	image/jpeg
+jpg	image/jpeg
+tif	image/tiff
+tiff	image/tiff
+xbm	image/x-xbitmap
+xwd	image/x-xwindowdump
+
+au	audio/basic
+snd	audio/basic
+aif	audio/x-aiff
+aifc	audio/x-aiff
+aiff	audio/x-aiff
+wav	audio/x-wav
+
+mpe	video/mpeg
+mpeg	video/mpeg
+mpg	video/mpeg
+mov	video/quicktime
+qt	video/quicktime
+avi	video/x-msvideo
+movie	video/x-sgi-movie
+
+bin	application/octet-stream
+exe	application/octet-stream
+pdf	application/pdf
+ai	application/postscript
+eps	application/postscript
+ps	application/postscript
+dvi	application/x-dvi
+
+# ----------------------------------------------------------------------------
+#
+# The following listing was excerpted from
+# <URL: ftp://ftp.isi.edu/in-notes/iana/assignments/media-types/media-types >.
+# It shows all of the official IANA sanctioned media types (formerly
+# called MIME types) as of 20 Sept 1995.
+#
+# The full power of MIME is available only when the sending and receiving
+# email systems agree on media type names.  It is, therefore, a really
+# bad idea to invent media types on your own.  Stick with the standard
+# names.
+#
+# If you can coordinate between the sending and receiving systems (i.e.
+# people within your organization want to send spreadsheet attachments),
+# it often is helpful to create media types that integrate application
+# programs with the MIME system.  When you do this, however, it is an
+# extremely good idea to use the "X-" experimental type prefix -- as in
+# "application/x-whizzyrite-pro".
+#
+# ----------------------------------------------------------------------------
+# 
+# [RFC1521] specifies that Content Types, Content Subtypes, Character
+# Sets, Access Types, and Conversion values for MIME mail will be
+# assigned and listed by the IANA.
+# 
+# 
+# Content Types and Subtypes
+# --------------------------
+# 
+# Type            Subtype         Description                 Reference
+# ----            -------         -----------                 ---------
+# text            plain                            [RFC1521,Borenstein]
+#                 richtext                         [RFC1521,Borenstein]
+#                 enriched                                    [RFC1563]
+#                 tab-separated-values                   [Paul Lindner]
+# 
+# multipart       mixed                            [RFC1521,Borenstein]
+#                 alternative                      [RFC1521,Borenstein]
+#                 digest                           [RFC1521,Borenstein]
+#                 parallel                         [RFC1521,Borenstein]
+#                 appledouble                [MacMime,Patrik Faltstrom]
+#                 header-set                             [Dave Crocker]
+# 
+# message         rfc822                           [RFC1521,Borenstein]
+#                 partial                          [RFC1521,Borenstein]
+#                 external-body                    [RFC1521,Borenstein]
+#                 news                        [RFC 1036, Henry Spencer]
+# 
+# application     octet-stream                     [RFC1521,Borenstein]
+#                 postscript                       [RFC1521,Borenstein]
+#                 oda                              [RFC1521,Borenstein]
+#                 atomicmail                    [atomicmail,Borenstein]
+#                 andrew-inset                [andrew-inset,Borenstein]
+#                 slate                           [slate,terry crowley]
+#                 wita              [Wang Info Transfer,Larry Campbell]
+#                 dec-dx            [Digital Doc Trans, Larry Campbell]
+#                 dca-rft        [IBM Doc Content Arch, Larry Campbell]
+#                 activemessage                          [Ehud Shapiro]
+#                 rtf                                    [Paul Lindner]
+#                 applefile                  [MacMime,Patrik Faltstrom]
+#                 mac-binhex40               [MacMime,Patrik Faltstrom]
+#                 news-message-id              [RFC1036, Henry Spencer]
+#                 news-transmission            [RFC1036, Henry Spencer]
+#                 wordperfect5.1                         [Paul Lindner]
+#                 pdf                                    [Paul Lindner]
+#                 zip                                    [Paul Lindner]
+#                 macwriteii                             [Paul Lindner]
+#                 msword                                 [Paul Lindner]
+#                 remote-printing                        [RFC1486,Rose]
+#                 mathematica                             [Van Nostern]
+#                 cybercash                                  [Eastlake]
+#                 commonground                                 [Glazer]
+#                 iges                                          [Parks]
+#                 riscos                                        [Smith]
+#                 eshop                                          [Katz]
+# 
+# image           jpeg                             [RFC1521,Borenstein]
+#                 gif                              [RFC1521,Borenstein]
+#                 ief             Image Exchange Format       [RFC1314]
+#                 g3fax                                       [RFC1494]
+#                 tiff            Tag Image File Format          [Rose]
+# 
+# audio           basic                            [RFC1521,Borenstein]
+# 
+# video           mpeg                             [RFC1521,Borenstein]
+#                 quicktime                              [Paul Lindner]
+# 
+# ----------------------------------------------------------------------------
+
