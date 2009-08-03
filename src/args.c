@@ -185,12 +185,6 @@ args_version()
 	printf("\t(C) Copyright 1988-1999 USENET Community Trust\n");
 	printf("\tBased on Elm 2.0, (C) Copyright 1986,1987 Dave Taylor\n");
 
-#ifdef MMDF
-	printf("\tUse MMDF Mail Transport Agent/Mailbox Delimiters: MMDF\n");
-#else /* MMDF */
-	printf("\tUse UNIX Mailbox Delimiters and %s Mail Transport Agent: not MMDF\n", mailer);
-#endif /* MMDF */
-
 #ifdef DONT_ADD_FROM
 	printf("\tLet the MTA add the From: header: DONT_ADD_FROM\n");
 #else /* DONT_ADD_FROM */

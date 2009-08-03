@@ -458,8 +458,5 @@ int file_rename P_((const char *, const char *));
 int send_message P_((const char *, const char *, const char *, int));
 void display_to P_((char *));
 int get_to P_((char *, char *, int));
-#ifdef MMDF
-void do_mmdf_addresses P_((FILE *, char *));
-#endif
 char *build_mailer_command P_((char *, const char *, char *, char *, char *));
 

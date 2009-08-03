@@ -262,11 +262,7 @@ int form;
     if (file_seek(fp_copy, 0L, SEEK_END, fname_dest) < 0)
 	goto done;
 
-#ifdef MMDF
-    fputs(MSG_SEPARATOR, fp_copy);
-#else
     putc('\n', fp_copy);
-#endif /* MMDF */
     time(&now);
     fprintf(fp_copy, "From %s %s", user_name, ctime(&now));
 
@@ -309,10 +305,6 @@ int form;
 
     /* ensure message ends with a newline */
     putc('\n', fp_copy);
-
-#ifdef MMDF
-    fputs(MSG_SEPARATOR, fp_copy);
-#endif
 
     /* go fixup the content length header */
     if (file_seek(fp_copy, clen_pos, SEEK_SET, fname_dest) < 0)

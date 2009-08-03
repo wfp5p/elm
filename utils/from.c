@@ -353,9 +353,6 @@ int *selected;
 	int line_bytes;
 	struct mailFile mailFile; 
 	int flush_lines = FALSE;
-#ifdef MMDF
-	int newheader = FALSE;
-#endif /* MMDF */
 	extern struct addrs patterns;
 	extern struct addrs mlnames;
 	static struct addrs allto;
@@ -411,23 +408,6 @@ int *selected;
 	  /* preload first char of line for fast string comparisons */
 	  fast_comp_load(buffer[0]);
 
-#ifdef MMDF
-          if (strcmp(buffer, MSG_SEPARATOR) == 0) {
-	    newheader = !newheader;
-	    if (newheader) {
-	      subject[0] = '\0';
-	      to_whom[0] = '\0';
-	      all_to[0] = '\0';
-	      in_header = TRUE;
-	      expect_header = FALSE;
-	      content_length = 0;
-	      if (user_mailbox)
-		status = NEW_MSG;
-	      else
-		status = READ_MSG;
-	    }
-	  }
-#else
 	  if (fast_strbegConst(buffer, "From ") && real_from(buffer, &hdr)) {
 	    strcpy(from_whom, hdr.from);
 	    subject[0] = '\0';
@@ -441,7 +421,6 @@ int *selected;
 	    else
 	      status = READ_MSG;
 	  }
-#endif /* MMDF */
 	  else if (expect_header) {
 	    /* didn't find a header where we expected, so go back */
 	    /* and search for a new header */
@@ -453,12 +432,7 @@ int *selected;
 	  else if (in_header) {
 	    if (!isspace(buffer[0]))
 	      in_to_list = FALSE;
-#ifdef MMDF
-	    if (real_from(buffer, &hdr))
-	      strcpy(from_whom, hdr.from);
-	    else
-#endif /* MMDF */
-	    if (fast_strbegConst(buffer,">From ")) 
+		    if (fast_strbegConst(buffer,">From ")) 
 	      forwarded(buffer, from_whom); /* return address */
 	    else if (fast_header_cmp(buffer,"Subject", (char *)NULL) ||
 		     fast_header_cmp(buffer,"Re", (char *)NULL)) {
@@ -504,10 +478,6 @@ int *selected;
 		strfcat(all_to, buffer, LONG_STRING);
 	    else if (buffer[0] == '\n') {
 	      in_header = FALSE;
-#ifdef MMDF
-	      if (*from_whom == '\0')
-                strcpy(from_whom, user_name);
-#endif /* MMDF */
 	      count++;
 	      summary[status]++;
 	      if (content_length > 0) {

@@ -296,10 +296,6 @@ int add_new_only;
 	FAST_COMP_DECLARE;
 
 	static int first_read = 0;
-#ifdef MMDF
-        int newheader = 0;
-#endif /* MMDF */
-
 	if (curr_folder.flags & FOLDER_IS_SPOOL) {
 	  elm_lock(LOCK_INCOMING);	/* ensure no mail arrives while we do this! */
 	  if (! add_new_only) {
@@ -440,12 +436,8 @@ int add_new_only;
 	    }
 	    else
 	      first_line = FALSE;
-	      	
-#ifdef MMDF
-	    if (!forwarding_mail && strcmp(buffer, MSG_SEPARATOR) != 0 ) {
-#else
+
 	    if (!fast_strbegConst(buffer, "From ") && !forwarding_mail) { /*}*/
-#endif /* MMDF */
 	      ShutdownTerm();
 	      error(catgets(elm_msg_cat, ElmSet, ElmFolderCorrupt,
 		  "Folder is corrupt!!  I can't read it!!"));
@@ -454,12 +446,7 @@ int add_new_only;
 	  }
 
 	  if (content_remaining <= 0) {
-#ifdef MMDF
-	    if (strcmp(buffer, MSG_SEPARATOR) == 0) {
-              newheader = !newheader;
-#else
 	    if (was_empty_line && fast_strbegConst(buffer,"From ")) { /*}*/
-#endif /* MMDF */
 	      /** allocate new header pointers, if needed... **/
 
 	      if (count >= curr_folder.max_headers) {
@@ -549,69 +536,6 @@ int add_new_only;
 		  PutLine1(count_x, count_y, "%d", count);
 		  FlushOutput();
 		}
-#ifdef MMDF
-	      } else if (newheader) {
-		current_header = curr_folder.headers[count];
-
-		current_header->offset = (long) fbytes;
-		current_header->content_length = -1; /* not found yet */
-		current_header->index_number = count+1;
-
-		/* set default status - always 'visible'  - and
-		 * if a spool file, presume 'new', otherwise
-		 * 'read', for the time being until overridden
-		 * by a Status: header.
-		 * We presume 'read' for nonspool mailfile messages
-		 * to be compatible messages stored with older versions of elm,
-		 * which didn't support a Status: header.
-		 */
-		if (curr_folder.flags & FOLDER_IS_SPOOL)
-		  current_header->org_status = current_header->status
-		      = VISIBLE | NEW | UNREAD;
-		else
-		  current_header->org_status = current_header->status
-		      = VISIBLE;
-
-		strcpy(current_header->from, "");	/* clear from    */
-		strcpy(current_header->subject, "");	/* clear subj    */
-		strcpy(current_header->to, "");		/* clear to    */
-		strcpy(current_header->allfrom, "");	/* clear allto */
-		strcpy(current_header->allto, "");	/* clear allto */
-		strcpy(tmp_cc_list, "");		/* clear tmp_cc_list */
-		strcpy(current_header->time_zone, "");	/* clear time zone name */
-		strcpy(current_header->time_menu, "");	/* clear menu date */
-		strcpy(current_header->mailx_status, "");	/* clear status flags */
-		strcpy(current_header->messageid, "<no.id>"); /* set no id into message id */
-		current_header->encrypted = 0;		/* clear encrypted */
-		current_header->exit_disposition = UNSET;
-		current_header->status_chgd = FALSE;
-		current_header->ml_to.len = current_header->ml_to.max = 0;
-		current_header->ml_to.str = NULL;
-
-		/* Set the number of lines for the _preceding_ message,
-		 * but only if there was a preceding message and
-		 * only if it wasn't calculated already. It would
-		 * have been calculated already if we are only
-		 * reading headers of new messages that have just arrived,
-		 * and the preceding message was one of the old ones.
-		 */
-		if (count && (!add_new_only || (count > curr_folder.num_mssgs))) {
-		  curr_folder.headers[count-1]->lines = line;
-		  if (curr_folder.headers[count-1]->content_length < 0)
-		    curr_folder.headers[count-1]->content_length = fbytes - content_start;
-		}
-
-		count++;
-		subj = 0;
-		line = 0;
-		in_header = TRUE;
-		if (count % readmsginc == 0) {
-		  PutLine1(count_x, count_y, "%d", count);
-		  FlushOutput();
-		}
-		dprint(1, (debugfile, 
-			     "\n**** Added header record ****\n"));
-#endif /* MMDF */
 	      }
 	    } else if (!forwarding_mail && count == 0) {
 	      /* if this is the first "From" in file but the "From" line is
@@ -645,21 +569,6 @@ int add_new_only;
 	  }
 
 	  if (in_header == TRUE) {
-#ifdef MMDF
-	    if (strcmp(buffer, MSG_SEPARATOR) == 0) {
-	      /*
-	       * This is disgusting, but the code below "knows" that
-	       * headers all have colons in them.  However, the MMDF
-	       * message separator is a header without a colon.  So,
-	       * we put one there to make the rest of the logic work.
-	       */
-	      buffer[0] = ':';
-	    } else if (fast_strbegConst(buffer,"From ")) {
-	      dprint(1, (debugfile, 
-		   "\n**** Calling real_from for \"From_\" ****\n"));
-	      real_from(buffer, current_header);
-	    } else
-#endif /* MMDF */
 	    if (fast_header_cmp(buffer,">From", (char *)NULL)) {
 	      buffer[line_bytes - 1] = '\0';
 	      strfcpy(current_header->allfrom, buffer+7, STRING);

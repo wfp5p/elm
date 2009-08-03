@@ -382,9 +382,6 @@ FILE *fp;
     int alloc_size;
     char buf[SLEN];
     int buf_len, last_buf_len, was_empty_line;
-#ifdef MMDF
-    int  newheader = 0;
-#endif /* MMDF */
 
     /* zero out the folder seek offsets index */
     folder_size = 0;
@@ -401,12 +398,9 @@ FILE *fp;
     while (offset = ftell(fp), (buf_len = mail_gets(buf, sizeof(buf), fp)) != 0) {
 	was_empty_line = last_buf_len == 1;
 	last_buf_len = buf_len;
-#ifdef MMDF
-	if ((strcmp(buf, MSG_SEPARATOR) == 0) && (++newheader % 2) != 0)
-#else
+
 	if (was_empty_line && strbegConst(buf, "From ") &&
 	    real_from(buf, (struct header_rec *)NULL))
-#endif
 	{
 	    if (folder_size >= alloc_size) {
 		alloc_size += ALLOC_INCR;
@@ -435,9 +429,6 @@ int do_page_breaks;
     char buf[VERY_LONG_STRING];
     int look_for_pat;
     int buf_len, last_buf_len, was_empty_line;
-#ifdef MMDF
-    int  newheader = 0;
-#endif /* MMDF */
 
     /*
      * This flag ensures that we don't reprint a message if a single
@@ -453,12 +444,8 @@ int do_page_breaks;
 
 	was_empty_line = last_buf_len == 1;
 	last_buf_len = buf_len;
-#ifdef MMDF
-	if ((strcmp(buf, MSG_SEPARATOR) == 0) && (++newheader % 2) != 0)
-#else
 	if (was_empty_line && strbegConst(buf, "From ") &&
 	    real_from(buf, (struct header_rec *)NULL))
-#endif
 	{
 	    mssg_idx = offset;
 	    look_for_pat = TRUE;
@@ -526,12 +513,9 @@ int do_page_breaks;
 	last_buf_len = buf_len;
 
 	if (stop_offset == 0L || curr_offset >= stop_offset) {
-#ifdef MMDF
-	    is_seperator = (strcmp(buf, MSG_SEPARATOR) == 0);
-#else
 	    is_seperator = was_empty_line && strbegConst(buf, "From ") &&
 		       real_from(buf, (struct header_rec *)NULL);
-#endif
+
 	} else {
 	    is_seperator = FALSE;
 	}

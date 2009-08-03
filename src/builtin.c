@@ -175,10 +175,6 @@ int  input_size;
 	int ch, formfeed, lines_more;
 	int pending_len = input_size, display_len = 0;
 
-#ifdef MMDF
-	if (strcmp(input_line, MSG_SEPARATOR) == 0)
-	  strcpy(input_line," ");
-#endif /* MMDF */
 	pending = input_line;
 	CarriageReturn();
 

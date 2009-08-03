@@ -242,9 +242,6 @@ int mssgtype;
     /* retrieve copy of desired message */
     if (copy_msg == YES) {
 	i = CM_ATTRIBUTION;
-#ifdef MMDF
-	i |= CM_MMDF_HEAD;
-#endif
 	if (edit_msg)
 	    i |= CM_DECODE;
 	if (mssgtype != SM_FWDUNQUOTE)
@@ -375,14 +372,6 @@ message_is_prepared:
     /* generate full message (headers and body) to transmit */
     if ((fp_fullmssg = file_open(fname_fullmssg, "w")) == NULL) /* 7! w+? */
 	goto done;
-#ifdef MMDF
-    if (streq(submitmail, mailer)) {
-	do_mmdf_addresses(fp_fullmssg, shdr->expanded_to);
-	do_mmdf_addresses(fp_fullmssg, shdr->expanded_cc);
-	do_mmdf_addresses(fp_fullmssg, shdr->expanded_bcc);
-	putc('\n', fp_fullmssg);
-    }
-#endif
     if (sndhdr_output(fp_fullmssg, shdr, (form == YES), FALSE) < 0)
 	goto message_is_prepared;
     if (form == YES)
@@ -1180,21 +1169,6 @@ char *copy_file;	/* pointer to buffer holding copy file name	*/
 }
 
 
-#ifdef MMDF
-PUBLIC void do_mmdf_addresses(fp, buf)
-FILE *fp;
-char *buf;
-{
-    char *bufcopy[VERY_LONG_STRING], *bp, *addr;
-
-    bp = strip_parens(strip_commas(strfcpy(bufcopy, buf, sizeof(bufcopy))));
-    while ((addr = strtok(bp, " \t\r\n")) != NULL) {
-	bp = NULL;
-	fputs(addr, fp);
-	putc('\n', fp);
-    }
-}
-#endif /* MMDF */
 
 
 /*

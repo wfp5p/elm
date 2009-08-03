@@ -1274,11 +1274,7 @@ char *fname;
 	    ;
 	if (file_close(fp, fname) < 0)
 	    return FALSE;
-#ifdef MMDF
-	ok = (strcmp(buf, MSG_SEPARATOR) == 0);
-#else
 	ok = strbegConst(buf, "From ");
-#endif
 	if (!ok) {
 	    error1(S_(FbrowserNotValidMailbox,
 			"\"%s\" is not a valid mailbox."), fname);

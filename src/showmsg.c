@@ -559,10 +559,6 @@ int  builtin;
 
 	strcpy(buffer + buf_len, "\n");
 	++buf_len;
-#ifdef MMDF
-	if (strncmp(buffer, MSG_SEPARATOR, buf_len) == 0)
-	  return(0);	/* no reason to show the ending terminator */
-#endif /* MMDF */
 	if (builtin) {
 	  return(display_line(buffer, buf_len));
 	}

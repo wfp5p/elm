@@ -84,16 +84,6 @@ char *from, *buffer, *to;
 	buffer[i] = '\0';
 	reverse(buffer);
 
-#ifdef MMDF
-	if (strlen(buffer) == 0) {
-	  if(to && *to != '\0' && !addr_matches_user(to, user_name)) {
-	    tail_of(to, buffer, (char *)0);
-	    using_to = 1;
-	  } else
-	    strcpy(buffer, user_fullname);
-        }
-#endif /* MMDF */
-
 	if ( strcmp(buffer, user_fullname) == 0 ||
 	  addr_matches_user(buffer, user_name) ) {
 

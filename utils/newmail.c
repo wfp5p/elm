@@ -380,10 +380,6 @@ register struct folder_struct *cur_folder;
 	register int in_header;		/* TRUE when processing a hdr	  */
 	int count;			/* count of messages done	  */
 	int init_header;		/* TRUE to reset hdr for new mssg */
-#ifdef MMDF
-	int newheader = 0;		/* count lead/trail ^A^A^A^A	  */
-#endif /* MMDF */
-
 	count = 0;
 	init_header = TRUE;
 
@@ -409,11 +405,7 @@ register struct folder_struct *cur_folder;
 	   */
 	  if (!in_header) {
 	    in_header = 
-#ifdef MMDF
-	      (strcmp(buffer, MSG_SEPARATOR) == 0 && (newheader = !newheader));
-#else
 	      strbegConst(buffer, "From ") && real_from(buffer, &hdr);
-#endif /* MMDF */
 	    continue;
 	  }
 
@@ -427,13 +419,6 @@ register struct folder_struct *cur_folder;
 	    continue;
 	  }
 
-#ifdef MMDF
-	  /*
-	   * With MMDF we still need to locate the "From_" header.
-	   */
-	  if (real_from(buffer, &hdr))
-	    continue;
-#endif /* MMDF */
 
 	  if (header_cmp(buffer, "From", (char *) NULL))  {
 	    parse_arpa_who(buffer+5, hdr.from);

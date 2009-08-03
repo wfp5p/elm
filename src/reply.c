@@ -601,10 +601,6 @@ int remail()
     if ((mailfd = file_open(filename, "w")) == NULL)
 	goto failed;
     (void) elm_chown(filename, userid, groupid);
-#ifdef MMDF
-    if (strcmp(submitmail, mailer) == 0)
-      do_mmdf_addresses(mailfd, expanded);
-#endif /* MMDF */
     copy_message(mailfd, curr_folder.curr_mssg, CM_REMOTE|CM_MMDF_HEAD|CM_REMAIL);
     if (file_close(mailfd, filename) < 0)
 	goto failed;

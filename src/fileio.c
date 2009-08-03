@@ -194,10 +194,6 @@ int msgnum, cm_options;
       /* preload the first char of the line for fast comparisons */
       fast_comp_load(buffer[0]);
 
-#ifdef MMDF
-      if ((cm_options & CM_MMDF_HEAD) && strcmp(buffer, MSG_SEPARATOR) == 0)
-	continue;
-#endif /* MMDF */
 
       /* are we still in the header? */
 
@@ -214,9 +210,6 @@ int msgnum, cm_options;
 	}
 	else if (!isspace(*buffer)
 	      && index(buffer, ':') == NULL
-#ifdef MMDF
-	      && strcmp(buffer, MSG_SEPARATOR) != 0
-#endif /* MMDF */
 		) {
 	  in_header = 0;
 	  bytes_seen = 0;
@@ -307,23 +300,10 @@ int msgnum, cm_options;
 	/* add remote on to front? */
 	if (first_line && remote) {
 	  no_ret(buffer);
-#ifndef MMDF
 	  if (!strip_from && fprintf(dest_file, "%s%s remote from %s\n",
 		  prefix, buffer, host_name) == EOF) {
 		copy_write_error_exit(errno);
 	  }
-#else
-	  if (fast_strbegConst(buffer, "From ")) {
-	    if (!strip_from && fprintf(dest_file, "%s%s remote from %s\n",
-		    prefix, buffer, host_name) == EOF) {
-		copy_write_error_exit(errno);
-	    }
-	  } else {
-	    if (fprintf(dest_file, "%s%s\n", prefix, buffer) == EOF) {
-		copy_write_error_exit(errno);
-	    }
-	  }
-#endif /* MMDF */
 	  first_line = FALSE;
 	  continue;
 	}
@@ -385,7 +365,7 @@ int msgnum, cm_options;
 	}
 
 
-#ifndef MMDF
+
 #ifndef DONT_ESCAPE_MESSAGES
 	if (msg_header->content_length <= bytes_seen &&
 	    fast_strbegConst(buffer, "From ") && (real_from(buffer, NULL))) {
@@ -400,7 +380,7 @@ int msgnum, cm_options;
 	  break;	/* STOP NOW! */
 	}
 #endif /* DONT_ESCAPE_MESSAGES */
-#endif /* MMDF */
+
 
 	err = 0;
 	if (*prefix && !crypt_line) err = fputs(prefix, dest_file);
@@ -409,12 +389,12 @@ int msgnum, cm_options;
 	if (err != buf_len) copy_write_error_exit(errno);
       }
     }
-#ifndef MMDF
+
     if (buf_len + strlen(prefix) > 1)
 	if (putc('\n', dest_file) == EOF) {	/* blank line to keep mailx happy *sigh* */
 	  copy_write_error_exit(errno);
 	}
-#endif /* MMDF */
+
 
     /* emit the closing attribution */
     if ((cm_options & CM_ATTRIBUTION) && forwarding && fwdattribution[0]) {
