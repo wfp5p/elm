@@ -255,16 +255,3 @@ char *tempnam( dir, pfx)
 
 
 
-#ifndef RENAME
-int rename(tmpfname, fname)
-const char *tmpfname, *fname;
-{
-	int status;
-
-	(void) unlink(fname);
-	if ((status = link(tmpfname, fname)) != 0)
-		return(status);
-	(void) unlink(tmpfname);
-	return(0);
-}
-#endif

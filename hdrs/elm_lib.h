@@ -238,10 +238,6 @@ char *cuserid P_((char *));
 char *tempnam P_((char *, char *));
 #endif
 
-#ifndef RENAME
-int rename P_((char *, char *));
-#endif
-
 /* parsarpdat.c */
 
 int parse_arpa_date P_((const char *, struct header_rec *));

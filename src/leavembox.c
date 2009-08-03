@@ -675,17 +675,11 @@ int resyncing, quitting, prompt;
 	     * as well as in UNIX.  This action is relatively safe
 	     * since the allocation for the new file already exists.
 	     */
-#ifdef RENAME
+
 	    if (rename(temp_keep_file, curr_folder.filename) != 0)
-#else
-	    if (link(temp_keep_file, curr_folder.filename) != 0)
-#endif
 	    {
-#ifdef RENAME
+
 	      if(errno == EXDEV)
-#else
-	      if(errno == EXDEV || errno == EEXIST)
-#endif
 	      {
 
 		/* cannot rename across file systems - use copy instead */
@@ -693,19 +687,11 @@ int resyncing, quitting, prompt;
 	      } else {
 		err = errno;
 		ShutdownTerm();
-#ifdef RENAME
 		dprint(1, (debugfile,
 			"rename(%s, %s) failed (leavembox) [%s]\n", 
 		       temp_keep_file, curr_folder.filename, strerror(err)));
 		error1(catgets(elm_msg_cat, ElmSet, ElmLeaveRenameFailed,
 			"Rename failed! [%s]"), strerror(err));
-#else
-		dprint(1, (debugfile,
-			"link(%s, %s) failed (leavembox) [%s]\n", 
-		       temp_keep_file, curr_folder.filename, strerror(err)));
-		error1(catgets(elm_msg_cat, ElmSet, ElmLeaveLinkFailed,
-			"Link failed! [%s]"), strerror(err));
-#endif
 		if (mailgroupid != groupid && (curr_folder.flags & FOLDER_IS_SPOOL))
 		  SETGID(groupid);
 		leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
