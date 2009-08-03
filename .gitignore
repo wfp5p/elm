@@ -1,0 +1,12 @@
+Make.defs
+Makefile
+*.o
+bin/
+config.h
+lib/libutil.a
+sysdefs.h
+utils/checkalias
+utils/listalias
+utils/messages
+utils/printmail
+
