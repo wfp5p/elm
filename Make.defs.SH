@@ -31,6 +31,10 @@ define)	mcsrc="mcprt.c mcprtlib.c msgcat.c"
 	;;
 esac
 
+./ELM-VERSION-GEN
+VERSION=$(sed -e 's/^ELM_VERSION = //' < ELM-VERSION-FILE)
+
+
 echo "Extracting Make.defs (with variable substitutions)"
 cat >Make.defs <<!GROK!THIS!
 
@@ -95,7 +99,7 @@ OPTIMIZE	= $optimize
 #DEBUG		= -g -DDEBUG
 CCFLAGS		= $ccflags $xencf
 INCLS		= -I.. -I\$(INCLDIR)
-CFLAGS		= \$(CCFLAGS) \$(OPTIMIZE) \$(DEBUG) \$(INCLS)
+CFLAGS		= \$(CCFLAGS) \$(OPTIMIZE) \$(DEBUG) \$(INCLS) -DVERSION='"$VERSION"'
 LFLAGS		= $ldflags $xenlf
 LIBS		= $libs $cryptlib $termlib $dbm
 LINTFLAGS	= \$(INCLS)

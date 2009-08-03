@@ -181,7 +181,7 @@ args_version()
 	/** print out version information **/
 
 	printf("\nElm Version and Identification Information:\n\n");
-	printf("\tElm %s PL%s, of %s\n",VERSION,PATCHLEVEL,VERS_DATE);
+	printf("\tElm %s\n",VERSION);
 	printf("\t(C) Copyright 1988-1999 USENET Community Trust\n");
 	printf("\tBased on Elm 2.0, (C) Copyright 1986,1987 Dave Taylor\n");
 

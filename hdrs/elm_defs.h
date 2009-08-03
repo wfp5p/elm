@@ -80,10 +80,9 @@
  * modules throughout the Elm package (src, lib, and utils).
  */
 
-#define VERSION		"2.5"			/* Version number... */
+/* #define VERSION		ELM_VERSION */			/* Version number... */
 #define VERS_DATE	"August 18, 2005"		/* for elm -v option */
-#define WHAT_STRING	\
-	"@(#) Version 2.5, USENET supported version PL8"
+#define WHAT_STRING	"Version 2.5, git working"
 
 #include <sys/types.h>	/* for fundamental types */
 #include <stdio.h>	/* Must get the _IOEOF flag for feof() on Convex */
