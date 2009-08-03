@@ -366,20 +366,6 @@ int msgnum, cm_options;
 
 
 
-#ifndef DONT_ESCAPE_MESSAGES
-	if (msg_header->content_length <= bytes_seen &&
-	    fast_strbegConst(buffer, "From ") && (real_from(buffer, NULL))) {
-	  /* If we have a content-length > bytes_seen and there is lines left
-	  ** this is probably a From line that is part of the body, as an
-	  ** included message. A simple heuristic test.
-	  */
-	  dprint(1, (debugfile,
-		 "\n*** Internal Problem...Tried to add the following;\n"));
-	  dprint(1, (debugfile,
-		 "  '%s'\nto output file (copy_message) ***\n", buffer));
-	  break;	/* STOP NOW! */
-	}
-#endif /* DONT_ESCAPE_MESSAGES */
 
 
 	err = 0;

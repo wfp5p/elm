@@ -281,11 +281,6 @@ int form;
     clen_begdata = ftell(fp_copy);
     while ((len = mail_gets(buf, sizeof(buf), fp_mssg)) > 0) {
 
-#ifndef DONT_ESCAPE_MESSAGES
-	if (strbegConst(buf, "From "))
-	    putc('>', fp_copy);
-#endif
-
 	if (fwrite(buf, 1, len, fp_copy) != len) {
 	    ShutdownTerm();
 	    error1(catgets(elm_msg_cat, ElmSet, ElmWriteFailedSaveMssg,
