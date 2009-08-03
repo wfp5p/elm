@@ -108,7 +108,7 @@ int isspool;
     if (fp_dest == NULL && (fp_dest = file_open(fname_dest, "w")) == NULL)
 	goto done;
     if (!isspool && groupid != mailgroupid)
-	(void) elm_chown(fname_dest, userid, groupid);
+	    chown(fname_dest, userid, groupid);
 
     if (file_copy(fp_src, fp_dest, fname_src, fname_dest) < 0)
 	goto done;

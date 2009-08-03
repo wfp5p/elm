@@ -486,7 +486,7 @@ int resyncing, quitting, prompt;
 	  }
 	  fclose(temp);
 	  dprint(2, (debugfile, "\n\n"));
-	  (void) elm_chown(recvd_mail, userid, groupid);
+	  chown(recvd_mail, userid, groupid);
 	}
 
 	/* Check symbolic link status now (ahead of normal stat() call)

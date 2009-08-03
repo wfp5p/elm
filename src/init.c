@@ -117,7 +117,7 @@ char *requestedmfile;	/* first mail file to open, empty if the default */
 			filename);
 	    exit(1);
 	}
-	(void) elm_chown(filename, userid, groupid); /* file owned by user */
+	chown(filename, userid, groupid);
 	fprintf(debugfile, 
 "Debug output of the ELM program (at debug level %d).  Version %s\n\n",
 	      debug, version_buff);
@@ -314,7 +314,7 @@ const char *path;
 		path, strerror(errno));
 	exit(1);
     }
-    if (elm_chown(path, userid, groupid) != 0) {
+    if (chown(path, userid, groupid) != 0) {
 	fprintf(stderr, "Cannot set \"%s\" ownership. [%s]\r\n",
 		path, strerror(errno));
 	exit(1);

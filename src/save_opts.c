@@ -107,7 +107,7 @@ PUBLIC void save_options()
     if (elm_access(rcfname, ACCESS_EXISTS) != -1) {
 	if (rename(rcfname, buf) < 0)
 	    dprint(2, (debugfile, "Unable to rename %s to %s\n", rcfname, buf));
-	(void) elm_chown(buf, userid, groupid);
+	chown(buf, userid, groupid);
     }
 
     /* create an "elmrc" file */

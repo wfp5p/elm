@@ -214,18 +214,3 @@ char *filename;
 	return( (char *) buffer);
 }
 
-int elm_chown(file, userid, groupid)
-char *file;
-int userid, groupid;
-{
-#ifdef CHOWN_NEG1
-	int status;
-
-	status = chown(file, -1, groupid);
-	chown(file, userid, -1);
-
-	return(status);
-#else
-	return(chown(file, userid, groupid));
-#endif
-}

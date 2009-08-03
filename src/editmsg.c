@@ -98,7 +98,7 @@ const char *sel_editor;
     else
 	sprintf(buffer, "%s %s", sel_editor, filename);
 
-    (void) elm_chown(filename, userid, groupid);
+    chown(filename, userid, groupid);
 
     if ((rc = system_call(buffer, SY_COOKED|SY_ENAB_SIGHUP|SY_DUMPSTATE)) < 0) {
 	err = errno;

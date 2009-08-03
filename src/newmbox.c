@@ -316,7 +316,7 @@ int add_new_only;
 	      leave(LEAVE_ERROR);
 	    }
 	   copyit++;
-	   (void) elm_chown(curr_folder.tempname, userid, groupid);
+	   chown(curr_folder.tempname, userid, groupid);
 	   chmod(curr_folder.tempname, 0600);	/* shut off file for other people! */
 	 }
 	 else {

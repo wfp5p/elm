@@ -649,13 +649,13 @@ char *fname;
 # endif
 #endif
 
-	if (elm_chown(fname, new_owner, new_group) < 0) {
+	if (chown(fname, new_owner, new_group) < 0) {
 	  if (!CHOWN_IS_RESTRICTED)
 	    ret_code = -1;
-	  dprint(4, (debugfile, "  elm_chown(%s, %d, %d) FAILED [%s]\n",
+	  dprint(4, (debugfile, "  chown(%s, %d, %d) FAILED [%s]\n",
 	      fname, new_owner, new_group, strerror(errno)));
 	} else {
-	  dprint(4, (debugfile, "  elm_chown(%s, %d, %d) succeeded\n",
+	  dprint(4, (debugfile, "  chown(%s, %d, %d) succeeded\n",
 	      fname, new_owner, new_group));
 	}
 
