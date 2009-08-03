@@ -237,9 +237,7 @@ char *cuserid P_((char *));
 #ifndef TEMPNAM
 char *tempnam P_((char *, char *));
 #endif
-#ifndef GETOPT
-int getopt P_((int, char **, char *));
-#endif
+
 #ifndef RENAME
 int rename P_((char *, char *));
 #endif
