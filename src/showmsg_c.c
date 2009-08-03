@@ -129,16 +129,8 @@ int command;
 		       break;
 #endif
 
-	    case '<' : 
-#ifdef ENABLE_CALENDAR
-		       put_cmd_name(catgets(elm_msg_cat, ElmSet, ElmScanForCalendarCmd,
-				"Scan messages for calendar entries"), TRUE);
-		       scan_calendar();
-#else
-		       store_msg(catgets(elm_msg_cat, ElmSet, ElmCantScanForCalendar,
-				"Can't scan for calendar entries!"));
-#endif
-		       break;
+       /* this was scan for calendar entries */
+	    case '<' : break;
 
 	    case '%' : put_cmd_name(catgets(elm_msg_cat, ElmSet, ElmDisplayReturnAdd,
 				"Display return address"), TRUE);
@@ -149,7 +141,7 @@ int command;
 				"Bounce message"), TRUE);
 		       remail();
 		       break;
-  
+
 	    case 'd' : delete_msg(TRUE, FALSE); /* really delete it, silent */
 		       if (! resolve_mode)
 			 store_msg(catgets(elm_msg_cat, ElmSet, ElmMessageMarkedForDeleteion,

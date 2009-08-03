@@ -156,10 +156,6 @@ read_rc_file()
 	sprintf(raw_folders, "~/%s", default_folders);
 	do_expand_env("folders", folders, raw_folders, sizeof(folders));
 
-	sprintf(raw_calendar_file, "~/%s", dflt_calendar_file);
-	do_expand_env("calendar_file", calendar_file, raw_calendar_file,
-	    sizeof(calendar_file));
-
 	strcpy(e_editor, emacs_editor);
 	strcpy(v_editor, default_editor);
 
@@ -168,9 +164,6 @@ read_rc_file()
 
 	sprintf(raw_folders, "%s/%s", user_home, default_folders);
 	strncpy(folders, raw_folders, SLEN);
-
-	sprintf(raw_calendar_file, "%s/%s", user_home, dflt_calendar_file);
-	strcpy(calendar_file, raw_calendar_file);
 
 	strcpy(to_chars, default_to_chars);
 

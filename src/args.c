@@ -273,13 +273,6 @@ args_version()
 	printf("\tSpell checking feature disabled: not ISPELL\n");
 #endif /* ISPELL */
 
-#ifdef ENABLE_CALENDAR
-	printf("\tCalendar file feature enabled: ENABLE_CALENDAR\n");
-	printf("\t\t(Default calendar file is %s)\n",dflt_calendar_file);
-#else /* ENABLE_CALENDAR */
-	printf("\tCalendar file feature disabled: not ENABLE_CALENDAR\n");
-#endif /* ENABLE_CALENDAR */
-
 	printf("\n\n");
 	exit(1);
 

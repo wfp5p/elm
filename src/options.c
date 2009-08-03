@@ -88,19 +88,12 @@ static char rcsid[] = "@(#)$Id: options.c,v 1.5 1996/03/14 17:29:43 wfp5p Exp $"
 #undef onoff
 #define   onoff(n)	(n == 1? on_name : off_name)
 
-#ifdef ENABLE_CALENDAR
-# ifdef DONT_ADD_FROM
-#define CONFIG_OPTIONS "^_cdefsopv_am_un"
-# else
-#define CONFIG_OPTIONS "^_cdefsopyv_am_un"
-# endif
-#else
-# ifdef DONT_ADD_FROM
+#ifdef DONT_ADD_FROM
 #define CONFIG_OPTIONS "^_defsopv_am_un"
-# else
+#else
 #define CONFIG_OPTIONS "^_defsopyv_am_un"
-# endif
 #endif
+
 
 
 extern char *alias_sort_name(), *sort_name();

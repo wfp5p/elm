@@ -222,22 +222,6 @@ char *argv[];
 			   break;
 
 	    case '<'    :  /* scan current message for calendar information */
-#ifdef ENABLE_CALENDAR
-			   if  (curr_folder.num_mssgs < 1) {
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToScan,
-			       "No mail to scan!"));
-			   }
-			   else {
-			       PutLine0(-1, -1, catgets(elm_msg_cat,
-				   ElmSet, ElmScanForCalendar,
-				   "Scan message for calendar entries..."));
-			       scan_calendar();
-			   }
-#else
-			   error(catgets(elm_msg_cat,
-			     ElmSet, ElmSorryNoCalendar,
-			     "Sorry. Calendar function disabled."));
-#endif
 			   break;
 
 	    case 'a'    :  alias();

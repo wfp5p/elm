@@ -157,11 +157,6 @@ int pager_help;
 				"/ = Search for specified pattern in folder.");
 		      break;
 
-#ifdef ENABLE_CALENDAR
-	    case '<': s = catgets(elm_msg_cat, ElmSet, ElmHelpCalendar,
-	       "< = Scan current message for calendar entries (if enabled).");
-		      break;
-#endif
 
 	    case '>': s = catgets(elm_msg_cat, ElmSet, ElmHelpSave,
 	       "> = Save current message or tagged messages to specified file.");
