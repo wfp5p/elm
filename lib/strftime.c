@@ -84,7 +84,6 @@ static int weeknumber P_((const struct tm *timeptr, int firstweekday));
 #define SYSV_EXT	1	/* stuff in System V ascftime routine */
 #define SUNOS_EXT	1	/* stuff in SunOS strftime routine */
 #define POSIX2_DATE	1	/* stuff in Posix 1003.2 date command */
-#define VMS_EXT		1	/* include %v for VMS date format */
 #define POSIX_SEMANTICS	1	/* call tzset() if TZ changes */
 
 #if defined(POSIX2_DATE)
@@ -447,19 +446,6 @@ strftime(char *s, size_t maxsize, const char *format, const struct tm *timeptr)
 #endif
 
 
-#ifdef VMS_EXT
-		case 'v':	/* date as dd-bbb-YYYY */
-			sprintf(tbuf, "%02d-%3.3s-%4d",
-				range(1, timeptr->tm_mday, 31),
-				months_a[range(0, timeptr->tm_mon, 11)],
-				timeptr->tm_year + 1900);
-			for (i = 3; i < 6; i++)
-				if (islower(tbuf[i]))
-					tbuf[i] = toupper(tbuf[i]);
-			break;
-#endif
-
-
 #ifdef POSIX2_DATE
 		case 'C':
 			sprintf(tbuf, "%02d", (timeptr->tm_year + 1900) / 100);
@@ -472,7 +458,7 @@ strftime(char *s, size_t maxsize, const char *format, const struct tm *timeptr)
 			goto again;
 
 		case 'V':	/* week of year according ISO 8601 */
-#if defined(GAWK) && defined(VMS_EXT)
+#if defined(GAWK)
 		{
 			extern int do_lint;
 			extern void warning();
