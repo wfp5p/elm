@@ -31,7 +31,6 @@ define)	mcsrc="mcprt.c mcprtlib.c msgcat.c"
 	;;
 esac
 
-./ELM-VERSION-GEN
 VERSION=$(sed -e 's/^ELM_VERSION = //' < ELM-VERSION-FILE)
 
 

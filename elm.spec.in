@@ -1,0 +1,56 @@
+Summary:	The elm mail user agent
+Name:		elm
+Version:	ELM-VERSION-STRING
+Release:	1
+License:	Distributable
+Group:		Networking/Mail
+Source0:	ftp://ftp.virginia.edu/pub/elm/%{name}-%{version}.tar.gz
+#Source1:        elm2.5.8.conf.sh
+Requires:       aspell
+BuildRequires:	libtermcap-devel ncurses-devel 
+
+%description
+Elm is a popular terminal mode email user agent. Elm includes all
+standard mailhandling features, including MIME support via metamail.
+
+%prep
+%setup -q 
+
+sed "s|BUILD_DIR|'$RPM_BUILD_DIR/%{name}%{version}'|;" config.sh.build >config.sh
+sed "s|BUILD_ROOT|$RPM_BUILD_ROOT|;"  config.sh.build >config.sh
+echo "ELM_VERSION = %{version}" >ELM-VERSION-FILE 
+
+
+%build
+
+sh ./Make.defs.SH
+find . -depth -name 'Makefile.SH' -exec sh ./{} \;
+
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/%{_bindir}
+mkdir -p $RPM_BUILD_ROOT/%{_libdir}/elm2.5.8
+mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1
+
+make install
+
+/bin/rm $RPM_BUILD_ROOT/%{_bindir}/mmencode
+/bin/rm $RPM_BUILD_ROOT/%{_mandir}/man1/mmencode*
+
+%clean
+#rm -rf $RPM_BUILD_ROOT
+
+%post
+
+%postun
+
+%files
+%defattr(-,root,root)
+%{_libdir}/elm2.5.8
+%{_bindir}/*
+%attr(02755, root, mail) %{_bindir}/elm
+
+%{_mandir}/man*/*
+
