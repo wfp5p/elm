@@ -243,10 +243,6 @@ int getopt P_((int, char **, char *));
 #ifndef RENAME
 int rename P_((char *, char *));
 #endif
-#ifndef MKDIR
-int mkdir P_((const char *, int));
-#endif
-
 
 /* parsarpdat.c */
 

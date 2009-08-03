@@ -254,34 +254,6 @@ char *tempnam( dir, pfx)
 #endif
 
 
-#ifndef MKDIR
-
-int mkdir(path, mode)
-const char *path;
-int mode;
-{
-    char cmdbuf[SLEN];
-
-    if (access(path, ACCESS_EXISTS) == 0) {
-	errno = EEXIST;
-	return -1;
-    }
-
-    sprintf(cmdbuf, "mkdir %s", folders);
-    if (system(cmdbuf) != 0) {
-	errno = EPERM; /* just a guess */
-	return -1;
-    }
-
-    if (chmod(path, mode) != 0)
-	return -1;
-
-    return 0;
-}
-
-#endif
-
-
 #ifndef GETOPT
 
 /*LINTLIBRARY*/
