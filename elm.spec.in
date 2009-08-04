@@ -7,18 +7,18 @@ Group:		Networking/Mail
 Source0:	ftp://ftp.virginia.edu/pub/elm/%{name}-%{version}.tar.gz
 #Source1:        elm2.5.8.conf.sh
 Requires:       aspell
-BuildRequires:	libtermcap-devel ncurses-devel 
+BuildRequires:	libtermcap-devel ncurses-devel
 
 %description
 Elm is a popular terminal mode email user agent. Elm includes all
 standard mailhandling features, including MIME support via metamail.
 
 %prep
-%setup -q 
+%setup -q
 
-sed "s|BUILD_DIR|'$RPM_BUILD_DIR/%{name}%{version}'|;" config.sh.build >config.sh
-sed "s|BUILD_ROOT|$RPM_BUILD_ROOT|;"  config.sh.build >config.sh
-echo "ELM_VERSION = %{version}" >ELM-VERSION-FILE 
+sed "s|BUILD_DIR|'$RPM_BUILD_DIR/%{name}%{version}'|" config.sh.build >config.sh
+sed -i "s|BUILD_ROOT|$RPM_BUILD_ROOT|"  config.sh
+echo "ELM_VERSION = %{version}" >ELM-VERSION-FILE
 
 
 %build
