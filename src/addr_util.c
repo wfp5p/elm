@@ -193,7 +193,6 @@ char *to, *full_to;
 
 	  j = get_word(to, i, next_word, sizeof(next_word));
 
-try_new_word:
 	  if(word[0] == '(')
 	    in_parens++;
 
