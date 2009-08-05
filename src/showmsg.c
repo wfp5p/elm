@@ -89,7 +89,6 @@ int number;
 	char who[LONG_STRING], buffer[VERY_LONG_STRING];
 	waitstatus_t wait_stat;
 
-	int crypted = 0;			/* encryption */
 	static int start_encode_len = 0, end_encode_len = 0;
 	int weed_header, weeding_out = 0;	/* weeding    */
 	int using_to,				/* misc use   */
@@ -142,9 +141,8 @@ int number;
 	    ((current_header->status & MIME_NEEDDECOD) ||
 	     (current_header->status & MIME_NOTPLAIN)) &&
 	    !getenv("NOMETAMAIL") ) {
-	    char fname[STRING], Cmd[SLEN], line[VERY_LONG_STRING];
-	    int code, err;
-	    long lines = current_header->lines;
+	    char fname[STRING], Cmd[SLEN];
+	    int code;
 	    FILE *fpout;
 
 	    if (fseek(curr_folder.fp, current_header->offset, 0) != -1) {

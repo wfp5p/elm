@@ -51,9 +51,8 @@ const char *fname;
 {
     unsigned char buf[512], *s;
     int len, n;
-    long pos;
     FILE *fp;
-    SEND_BODYPART *part, *subpart;
+    SEND_BODYPART *part;
 
     if ((part = bodypart_new(fname, BP_IS_MIMEPART)) == NULL)
 	return (SEND_BODYPART *) NULL;
@@ -210,10 +209,10 @@ static SEND_BODYPART *process_attach_line(cmdline)
 char *cmdline;
 {
     char *fld, *cmd, *fname, *cont_type, *cont_encoding;
-    char *rec_type, *rec_encoding, buf[SLEN];
+    char buf[SLEN];
     const char *actual_type;
     SEND_BODYPART *part;
-    int fldno, len, rc;
+    int fldno, len;
 
     len = strlen(trim_trailing_spaces(cmdline));
     if (cmdline[0] != '[' || cmdline[len-1] != ']') {

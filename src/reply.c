@@ -35,7 +35,7 @@
  *
  ******************************************************************************/
 
-/*** routine allows replying to the sender of the current message 
+/*** routine allows replying to the sender of the current message
 
 ***/
 
@@ -45,7 +45,7 @@
 
 /** Note that this routine generates automatic header information
     for the subject and (obviously) to lines, but that these can
-    be altered while in the editor composing the reply message! 
+    be altered while in the editor composing the reply message!
 **/
 
 char *get_token();
@@ -79,7 +79,7 @@ char *new_address, *full_address;
 	/** This routine will add the new address to the list of addresses
 	    in the full address buffer IFF it doesn't already occur.  It
 	    will also try to fix dumb hops if possible, specifically hops
-	    of the form ...a!b...!a... and hops of the form a@b@b etc 
+	    of the form ...a!b...!a... and hops of the form a@b@b etc
 	**/
 
 	register int len, host_count = 0, i;
@@ -91,7 +91,7 @@ char *new_address, *full_address;
 
 	/** optimize **/
 	/*  break down into a list of machine names, checking as we go along */
-	
+
 	addrptr = (char *) new_address;
 
 	while ((host = get_token(addrptr, "!", 1)) != NULL) {
@@ -109,16 +109,16 @@ char *new_address, *full_address;
 	       return(1);
 	    }
 	  }
-	  else 
+	  else
 	    host_count = i + 1;
 	  addrptr = NULL;
 	}
 
 	/** fix the ARPA addresses, if needed **/
-	
+
 	if (qchloc(hosts[host_count-1], '@') > -1)
 	  fix_arpa_address(hosts[host_count-1]);
-	  
+
 	/** rebuild the address.. **/
 
 	new_address[0] = '\0';
@@ -150,7 +150,7 @@ char *return_address, *full_address;
 	/** Read the current message, extracting addresses from the 'To:'
 	    and 'Cc:' lines.   As each address is taken, ensure that it
 	    isn't to the author of the message NOR to us.  If neither,
-	    prepend with current return address and append to the 
+	    prepend with current return address and append to the
 	    'full_address' string.
 	**/
 
@@ -169,9 +169,9 @@ char *return_address, *full_address;
 
     if (fseek(curr_folder.fp, curr_folder.headers[curr_folder.curr_mssg-1]->offset, 0) == -1) {
 	err = errno;
-	dprint(1,(debugfile,"Error: seek %ld resulted in errno %s (%s)\n", 
+	dprint(1,(debugfile,"Error: seek %ld resulted in errno %s (%s)\n",
 		 curr_folder.headers[curr_folder.curr_mssg-1]->offset,
-		 strerror(err), 
+		 strerror(err),
 		 "get_and_expand_everyone"));
 	error2(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
 		"ELM [seek] couldn't read %d bytes into file (%s)."),
@@ -179,7 +179,7 @@ char *return_address, *full_address;
 		strerror(err));
 	return;
     }
- 
+
     /** okay!  Now we're there!  **/
 
     /** now let's parse the actual message! **/
@@ -322,9 +322,9 @@ reply()
 int
 reply_to_everyone()
 {
-	/** Reply to everyone who received the current message.  
+	/** Reply to everyone who received the current message.
 	    This includes other people in the 'To:' line and people
-	    in the 'Cc:' line too.  Returns non-zero iff the screen 
+	    in the 'Cc:' line too.  Returns non-zero iff the screen
             has to be rewritten. **/
 
 	char return_address[SLEN], subject[SLEN];
@@ -348,7 +348,7 @@ reply_to_everyone()
 int
 forward()
 {
-    /** Forward the current message.  
+    /** Forward the current message.
 	Return TRUE if the main part of the screen has been changed
 	(useful for knowing whether a redraw is needed.
     **/
@@ -371,7 +371,7 @@ forward()
 	msgtype = SM_FWDUNQUOTE;
 
     if ((len = strlen(hdr->subject)) > 0) {
-	strcpy(subject, hdr->subject); 
+	strcpy(subject, hdr->subject);
 	if (len < 6 || strcmp(subject+len-(sizeof("(fwd)")-1), "(fwd)") != 0)
 	    strcat(subject, " (fwd)");
     } else {
@@ -406,7 +406,7 @@ get_return_name(address, name, trans_to_lowercase)
 char *address, *name;
 int   trans_to_lowercase;
 {
-	/** Given the address (either a single address or a combined list 
+	/** Given the address (either a single address or a combined list
 	    of addresses) extract the login name of the first person on
 	    the list and return it as 'name'.  Modified to stop at
 	    any non-alphanumeric character. **/
@@ -414,7 +414,7 @@ int   trans_to_lowercase;
 	/** An important note to remember is that it isn't vital that this
 	    always returns just the login name, but rather that it always
 	    returns the SAME name.  If the persons' login happens to be,
-	    for example, joe.richards, then it's arguable if the name 
+	    for example, joe.richards, then it's arguable if the name
 	    should be joe, or the full login.  It's really immaterial, as
 	    indicated before, so long as we ALWAYS return the same name! **/
 
@@ -427,7 +427,7 @@ int   trans_to_lowercase;
 	 *  are embedded in a domain style address.
 	 **/
 
-	char single_address[SLEN], *sa;
+	char single_address[SLEN];
 	register int	i, loc, iindex = 0,
 			end, first = 0;
 	register char	*c;
@@ -471,7 +471,7 @@ int   trans_to_lowercase;
 		/* OK then, let's assume it is one of them. */
 
 		iindex = 0;
-		
+
 		if ((c = strstr (&single_address[first], "/G"))
 		    || (c = strstr (&single_address[first], "/g"))) {
 
@@ -513,7 +513,7 @@ int   trans_to_lowercase;
 	    while (c = strstr (&single_address[first], "::")) {
 		first = c - single_address + 2;
 	    }
-		    
+
 
 	    /*
 	     *	At this point the algorithm is to keep shifting our
@@ -523,11 +523,11 @@ int   trans_to_lowercase;
 	     */
 
 	    for (i=loc; single_address[i] != '!' && i > first-1; i--)
-		if (single_address[i] == '%' || 
+		if (single_address[i] == '%' ||
 		    single_address[i] == ':' ||
 		    single_address[i] == '/' ||
 		    single_address[i] == '@') loc = i-1;
-	
+
 	    if (i < first || single_address[i] == '!') i++;
 
 	    for (iindex = 0; iindex < loc - i + 1; iindex++)
@@ -564,11 +564,10 @@ int   trans_to_lowercase;
 int remail()
 {
     /** remail a message... returns TRUE if new foot needed ... **/
-    
+
     FILE *mailfd;
     char entered[VERY_LONG_STRING], expanded[VERY_LONG_STRING];
     char *filename, buffer[VERY_LONG_STRING], *msg;
-    int  err;
 
     filename = NULL;
     entered[0] = '\0';
@@ -589,7 +588,7 @@ int remail()
 
 /* tempnam is bad.... but only if we open the file in a way that follows
  * symlinks.... file_open doesn't. */
-   
+
     if((filename = tempnam(temp_dir, "snd.")) == NULL) {
 	dprint(1, (debugfile, "couldn't make temp file nam! (remail)\n"));
 	set_error(catgets(elm_msg_cat, ElmSet, ElmCouldntMakeTempFileName,

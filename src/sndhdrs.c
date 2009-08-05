@@ -98,9 +98,6 @@ int is_form, is_copy;
 	    mail.
     **/
 
-    char buffer[SLEN];
-    int err;
-
     /** Subject moved to top of headers for mail because the
 	pure System V.3 mailer, in its infinite wisdom, now
 	assumes that anything the user sends is part of the
@@ -162,7 +159,7 @@ PUBLIC void generate_in_reply_to(shdr, msg)
 SEND_HEADER *shdr;
 int msg;
 {
-    char from_buf[SLEN], date_buf[SLEN], *q;
+    char from_buf[SLEN], *q;
     struct header_rec *hdr = curr_folder.headers[msg];
     extern char *elm_date_str();
 
@@ -180,10 +177,10 @@ int msg;
 	(*hdr->messageid ? hdr->messageid : "<no.id>"),
 	q, from_buf, q,
 	elm_date_str(date_buf, hdr, TRUE)); */
-   
-   sprintf(shdr->in_reply_to, "%s", 
+
+   sprintf(shdr->in_reply_to, "%s",
 	    (*hdr->messageid ? hdr->messageid : "<no.id>"));
-   
+
 }
 
 

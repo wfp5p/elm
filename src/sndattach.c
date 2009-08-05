@@ -112,7 +112,6 @@ SEND_MULTIPART **user_attachments_p;
     int curr_sel;		/* currently selected entry		*/
     int prev_sel;		/* selection at previous iteration	*/
     int mssg_ok;
-    char *mssg_what;
     int n, i;
     char tmp_buf[SLEN], *s;
 
@@ -699,8 +698,7 @@ int *do_redraw_p, *mssg_ok_p;
 {
     SEND_BODYPART *att_new;
     char fname[SLEN], fb_dir[SLEN], fb_pat[SLEN], *s;
-    char cont_descrip[SLEN], cont_type[SLEN], cont_encoding[SLEN];
-    int do_browser, i;
+    int i;
     static char save_fname[SLEN];
 
     if (att == NULL)

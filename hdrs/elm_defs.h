@@ -445,12 +445,6 @@ struct addr_rec {
 # define INIT(X)
 #endif
 
-#ifdef INTERN
-static char ident[] = WHAT_STRING;
-static char copyright[] = "\
-@(#)          (C) Copyright 1986,1987, Dave Taylor\n\
-@(#)          (C) Copyright 1988-1995, The Usenet Community Trust\n";
-#endif
 
 #ifdef DEBUG
 #   define dprint(LVL, PRINTF_ARGS) \

@@ -712,9 +712,8 @@ alias()
 
 	char name[NLEN], *address, buffer[SLEN];
 	char *commap;
-	int  key_offset;        /** Position offset within keyboard string   **/
 	static int  newaliases = 0;
-	int  ch, i, j;
+	int  ch, i;
 	int nutitle = 0;
 	int too_long;
 
@@ -1011,8 +1010,6 @@ install_aliases()
 
 	int na;
 	char itextfile[SLEN], odatafile[SLEN];
-	char buffer[SLEN];
-
 
 	error(catgets(elm_msg_cat, AliasesSet, AliasesUpdating,
 		"Updating aliases..."));
@@ -1191,8 +1188,6 @@ int are_in_aliases;
  *	and all mixed up...  :-(
  */
 
-	char fname[SLEN];
-	register int i = -1;
 	int dups = 0;
 
 	curr_alias = 0;

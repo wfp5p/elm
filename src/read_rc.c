@@ -103,9 +103,8 @@ read_rc_file()
 	    .rc file... **/
 
 	FILE *file;
-	char buffer[SLEN], filename[SLEN], *cp, 
-	     	temp[SLEN]; /* for when an option is run through expandenv */
-	int  i, ch, len, err;
+	char buffer[SLEN], filename[SLEN], *cp;
+
 
 	/* Establish some defaults in case elmrc is incomplete or not there.
 	 * Defaults for other elmrc options were established in their
@@ -117,7 +116,7 @@ read_rc_file()
 	 * the default editor and not on the one that might be given in the
 	 * elmrc.
 	 */
-	 
+
 	default_weedlist();
 
 	errors = 0;
@@ -125,7 +124,7 @@ read_rc_file()
 
 	raw_local_signature[0] = raw_remote_signature[0] =
 		local_signature[0] = remote_signature[0] =
-		raw_recvdmail[0] = raw_sentmail[0] = 
+		raw_recvdmail[0] = raw_sentmail[0] =
 		allowed_precedences[0] = '\0';
 		/* no defaults for those */
 
@@ -183,7 +182,7 @@ read_rc_file()
 	/* Look for the elmrc file */
 /*	sprintf(filename, "%s/%s", user_home, elmrcfile); */
         getelmrcName(filename,SLEN);
-   
+
 	if ((file = fopen(filename, "r")) == NULL) {
 	  dprint(2, (debugfile, "Warning:User has no \".elm/elmrc\" file\n\n"));
 	} else {
@@ -213,7 +212,7 @@ read_rc_file()
 	do_expand_env("temp_dir", temp_dir, raw_temp_dir, sizeof(temp_dir));
   	if (temp_dir[strlen (temp_dir)-1] != '/')
   	    strcat(temp_dir, "/");
-  
+
 	do_expand_env("shell", shell, raw_shell, sizeof(shell));
 
 	do_expand_env("editor", editor, raw_editor, sizeof(editor));
@@ -306,7 +305,7 @@ read_rc_file()
 	  strcpy(buffer, &sent_mail[1]);
 	  sprintf(sent_mail, "%s/%s", folders, buffer);
 	}
-   
+
         expandFilenamesInMagicList();
 
 	if (debug > 10) 	/** only do this if we REALLY want debug! **/
@@ -347,8 +346,8 @@ int lcl;
 		    alternatives(buffer);
 		} else if (prev_type == DT_WEE) {
 		    weedout(buffer);
-		} 
-	        else if (prev_type == DT_INC) 
+		}
+	        else if (prev_type == DT_INC)
 		 {
 		    add_incoming(buffer);
 		 }
@@ -522,11 +521,11 @@ char *word1, *word2;
 	    case DT_WEE:
 		weedout(word2);
 		break;
-	   
+
 	    case DT_INC:
 	        add_incoming(word2);
 	        break;
-	   
+
 
 	    case DT_NOP:
 		/*
@@ -539,7 +538,7 @@ char *word1, *word2;
 
 	return(save_info[x].flags & DT_MASK);
 }
-	
+
 weedout(string)
 char *string;
 {
@@ -616,7 +615,7 @@ char *string;
 	  else {
 	    current_record = (struct addr_rec *)
 		safe_malloc(sizeof(struct addr_rec));
-	  
+
 	    strcpy(current_record->address, address);
 	    current_record->next = NULL;
 	    previous_record->next = current_record;
@@ -631,29 +630,29 @@ char *string;
 {
   /** This routine is called with a list of folder names **/
 
-  char *strptr,*f, *p;
+  char *strptr,*f;
   char filename[SLEN];
   int finished;
-   
+
   finished = FALSE;
   strptr = string;
-  
-  while ((f = strtokq(strptr, "\t ,", TRUE)) != NULL) 
+
+  while ((f = strtokq(strptr, "\t ,", TRUE)) != NULL)
   {
      strptr = NULL;
-    
+
      if (!*f)
       continue;
-    
+
     if (!istrcmp(f, "*end-of-incoming-folders*"))
       break;
 
     strcpy (filename, f);
-    
+
     if (matchInList(magiclist,magiccount,filename,FALSE))
       continue;
-     
-/* 7! need to put an error call if magiccount > MAX_IN_WEEDLIST */    
+
+/* 7! need to put an error call if magiccount > MAX_IN_WEEDLIST */
 
     magiclist[magiccount++] =  safe_strdup(filename);
 
@@ -663,10 +662,10 @@ char *string;
 
 expandFilenamesInMagicList()
 {
-   
+
    int i;
    char filename[SLEN];
-   
+
    for (i=0; i < magiccount; i++)
    {
       strcpy(filename,magiclist[i]);
@@ -678,8 +677,8 @@ expandFilenamesInMagicList()
 
 default_weedlist()
 {
-	/** Install the default headers to weed out!  Many gracious 
-	    thanks to John Lebovitz for this dynamic method of 
+	/** Install the default headers to weed out!  Many gracious
+	    thanks to John Lebovitz for this dynamic method of
 	    allocation!
 	**/
 
@@ -702,21 +701,21 @@ int count;
 char *buffer;
 int ignoreCase;
 {
-   	/** returns true iff the first 'n' characters of 'buffer' 
+   	/** returns true iff the first 'n' characters of 'buffer'
 	    match an entry of the list **/
-	
+
 	register int i;
 
 	for (i=0;i < count; i++)
         {
 	   if (ignoreCase)
 	   {
-	      if (strincmp(buffer, list[i], strlen(list[i])) == 0) 
+	      if (strincmp(buffer, list[i], strlen(list[i])) == 0)
 	         return(1);
 	   }
 	   else
  	   {
-	      if (strncmp(buffer, list[i], strlen(list[i])) == 0) 
+	      if (strncmp(buffer, list[i], strlen(list[i])) == 0)
 	         return(1);
            }
 	}
@@ -728,7 +727,7 @@ int
 breakup(buffer, word1, word2)
 char *buffer, *word1, *word2;
 {
-	/** This routine breaks buffer down into word1, word2 where 
+	/** This routine breaks buffer down into word1, word2 where
 	    word1 is alpha characters only, and there is an equal
 	    sign delimiting the two...
 		alpha = beta
@@ -738,7 +737,7 @@ char *buffer, *word1, *word2;
 	**/
 
 	register int i;
-	
+
 	for (i=0;buffer[i] != '\0' && ok_rc_char(buffer[i]); i++)
 	  if (buffer[i] == '_')
 	    word1[i] = '-';
@@ -829,7 +828,7 @@ register char	*src;
 **	%y					  current year (modulo 100)
 **
 **      %Y                                        current year
-** 
+**
 **	%m					  current month number (01-12)
 **
 **	%j					  day of the year (001-366)
@@ -858,13 +857,13 @@ register char 	*src;
 int 		len;
 {
     int			n;
-    register char	*var, *ptr = dst, *env;
+    register char	*var, *env;
     time_t		now;
     struct tm		*tm;
 
 
     /*
-    ** Buffer for environment variables 
+    ** Buffer for environment variables
     */
     var = (char *) safe_malloc(strlen(src) + 1);
 
@@ -906,13 +905,13 @@ int 		len;
 	        switch(*src)
 	        {
 		    case 'h':	/* Month name */
-		        strncpy(dst, monthnames[tm->tm_mon], 
+		        strncpy(dst, monthnames[tm->tm_mon],
                            (3 > len ? len : 3));
 		        dst += 3;
 		        len -= 3;
 		        break;
 		    case 'a':	/* Day of the week */
-		        strncpy(dst, daynames[tm->tm_wday], 
+		        strncpy(dst, daynames[tm->tm_wday],
                            (3 > len ? len : 3));
 		        dst += 3;
 		        len -= 3;
@@ -1037,7 +1036,7 @@ dump_rc_results()
 
 		default:
 		    switch (save_info[i].flags&DT_MASK) {
-	
+
 		    case DT_STR:
 			s = SAVE_INFO_STR(i);
 			break;

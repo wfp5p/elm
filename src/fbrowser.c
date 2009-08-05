@@ -122,7 +122,6 @@ const char *spec;
 char *ret_dir, *ret_pat;
 {
     struct stat sbuf;
-    int i;
     char *s;
 
     (void) strcpy(ret_dir, spec);
@@ -190,7 +189,6 @@ const char *prompt;		/* message for screen header		*/
     int rc;			/* final return status			*/
     char tmp_buf[SLEN], *np, *s;
     int n, i;
-    struct stat sbuf;
 
     if (!safe_copy(curr_dir, start_dir, sizeof(curr_dir)))
 	return FALSE;
@@ -987,7 +985,7 @@ int is_rescan;
 {
     FB_DIR *dl;
     char pname[SLEN], *np;
-    int nread, nsel, plen, i;
+    int nread, nsel, plen;
     DIR *dirp;
     struct DIRENT *dirent;
     struct stat sbuf;

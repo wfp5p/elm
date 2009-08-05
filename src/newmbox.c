@@ -103,7 +103,6 @@ int adds_only;
 	**/
 
 	int  same_file;
-	int err;
 	char new_tempname[SLEN];
 
 	/* determine whether we are changing files */
@@ -287,7 +286,7 @@ int add_new_only;
 	register long line = 0;
 	register int count = 0, another_count,
 	  subj = 0, copyit = 0, in_header = FALSE;
-	int count_x, count_y = 17, err;
+	int count_x, count_y = 17;
 	int in_to_list = FALSE, in_cc_list = FALSE, forwarding_mail = FALSE,
 	  first_line = TRUE, content_length_found = FALSE, was_empty_line;
 	char tmp_cc_list[LONG_STRING];

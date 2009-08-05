@@ -99,7 +99,7 @@ status_help()
 {
     /*  help menu for the status screen... */
 
-    char c, *ptr, *prompt;
+    char c, *prompt;
 
     ClearLine(LINES-2);		/* clear option prompt message */
     CenterLine(LINES-3, catgets(elm_msg_cat, ElmSet, ElmPressKeyHelp,

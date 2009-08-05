@@ -818,7 +818,7 @@ struct edit_field *ed;
 static int edfld_prevword(ed)
 struct edit_field *ed;
 {
-    int i, len;
+    int i;
     char *s;
 
     edfld_integrity_check(ed);

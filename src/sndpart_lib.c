@@ -337,7 +337,7 @@ char *retbuf;
 int retbufsiz;
 {
     char *s;
-    int len_fname, len_ext, rc;
+    int len_fname, len_ext;
     FILE *fp;
 
     if ((fp = fopen(fname_mimetypes, "r")) == NULL)

@@ -49,9 +49,6 @@ static int get_ynq(int);
 static void create_private_dir(const char *);
 */
 
-static void check_elm_dir();
-static void check_folder_dir();
-static int get_ynq();
 static void create_private_dir();
 
 

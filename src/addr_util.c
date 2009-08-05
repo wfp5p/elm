@@ -143,7 +143,7 @@ char *to, *full_to;
 			eliminated = 0;
 	int too_long = FALSE;
 	int to_len;
-	char word[SLEN], next_word[SLEN], *ptr, buffer[SLEN];
+	char word[SLEN], next_word[SLEN], *ptr;
 	char elim_list[SLEN], word_a[SLEN], next_word_a[SLEN];
 	char *gecos;
 

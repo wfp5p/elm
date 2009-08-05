@@ -169,7 +169,7 @@ struct hdr_menu_item hmenu_item_list[] = {
 PUBLIC void edit_headers(shdr)
 SEND_HEADER *shdr;
 {
-    int c, i, do_redraw;
+    int c, do_redraw;
     struct hdr_menu_item *h;
 
     /* copy message header into private buffer */
@@ -289,7 +289,7 @@ static int hdrmenu_get(h)
 struct hdr_menu_item *h;
 {
     char inpbuf[SLEN], *s;
-    int ret, emode;
+    int emode;
 
     /* display the instructions */
     switch (h->flags & HF_PROMPT_MASK) {
@@ -665,7 +665,7 @@ PUBLIC int show_msg_headers(shdr, cmds)
 const SEND_HEADER *shdr;
 const char *cmds;
 {
-    int max_lineno, c, i;
+    int max_lineno;
     struct hdr_menu_item *h;
 
     max_lineno = 0;

@@ -52,11 +52,10 @@ int
 limit()
 {
 	/** returns non-zero if we changed selection criteria = need redraw **/
-	
+
 	char criteria[STRING], first[STRING], rest[STRING], msg[STRING];
 	static char *prompt = NULL;
 	int  last_selected, all;
-	int status;
 
 	last_selected = selected;
 	all = 0;
@@ -89,7 +88,7 @@ limit()
 			|| criteria[0] == '\0') {
 	    /* no change */
 	    selected = last_selected;
-	    return(FALSE);	
+	    return(FALSE);
 	  }
 	  clear_error();
 
@@ -272,7 +271,7 @@ char *pattern;
 	  for (iindex = 0; iindex < num_aliases; iindex++)
 	    if (! patmatch(pattern, aliases[iindex]->name, PM_NOCASE|PM_WSFOLD))
 	      clearit(aliases[iindex]->status, VISIBLE);
-	    else if (additional_criteria && 	
+	    else if (additional_criteria &&
 		     !(aliases[iindex]->status & VISIBLE))
 	      clearit(aliases[iindex]->status, VISIBLE);	/* shut down! */
 	    else { /* mark it as readable */
@@ -288,13 +287,13 @@ char *pattern;
 	  for (iindex = 0; iindex < num_aliases; iindex++)
 	    if (!patmatch(pattern, aliases[iindex]->alias, PM_NOCASE|PM_WSFOLD))
 	      clearit(aliases[iindex]->status, VISIBLE);
-	    else if (additional_criteria && 	
+	    else if (additional_criteria &&
 		     !(aliases[iindex]->status & VISIBLE))
 	      clearit(aliases[iindex]->status, VISIBLE);	/* shut down! */
 	    else { /* mark it as readable */
 	      setit(aliases[iindex]->status, VISIBLE);
 	      count++;
-	      dprint(5, (debugfile, 
+	      dprint(5, (debugfile,
 			"  Alias %d (%s, %s) marked as visible\n",
 			iindex, aliases[iindex]->alias,
 			aliases[iindex]->name));
@@ -304,7 +303,7 @@ char *pattern;
 	  for (iindex = 0; iindex < num_aliases; iindex++)
 	    if (! (based_on & aliases[iindex]->type))
 	      clearit(aliases[iindex]->status, VISIBLE);
-	    else if (additional_criteria && 	
+	    else if (additional_criteria &&
 		     !(aliases[iindex]->status & VISIBLE))
 	      clearit(aliases[iindex]->status, VISIBLE);	/* shut down! */
 	    else { /* mark it as readable */
@@ -344,7 +343,7 @@ register int iindex, skipdel;
 	  stat = (inalias ?  aliases[iindex]->status : curr_folder.headers[iindex]->status);
 	  if (((stat & VISIBLE) || (!selected))
 	    && (!(stat & DELETED) || (!skipdel))) {
-	      dprint(9, (debugfile, "[Next%s%s: given %d returning %d]\n", 
+	      dprint(9, (debugfile, "[Next%s%s: given %d returning %d]\n",
 		  (skipdel ? " undeleted" : ""),
 		  (selected ? " visible" : ""),
 		  remember_for_debug+1, iindex+1));
@@ -372,7 +371,7 @@ register int iindex, skipdel;
 	  stat = (inalias ? aliases[iindex]->status : curr_folder.headers[iindex]->status);
 	  if (((stat & VISIBLE) || (!selected))
 	    && (!(stat & DELETED) || (!skipdel))) {
-	      dprint(9, (debugfile, "[Previous%s%s: given %d returning %d]\n", 
+	      dprint(9, (debugfile, "[Previous%s%s: given %d returning %d]\n",
 		  (skipdel ? " undeleted" : ""),
 		  (selected ? " visible" : ""),
 		  remember_for_debug+1, iindex+1));
@@ -422,7 +421,7 @@ int message;
 {
 	/** Given a 'virtual' iindex, return a real one.  This is the
 	    flip-side of the routine above, and returns (count+1)
-	    if it cannot map the virtual iindex requested (too big) 
+	    if it cannot map the virtual iindex requested (too big)
 	**/
 
 	register int iindex = 0, count = 0;

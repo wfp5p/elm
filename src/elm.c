@@ -75,7 +75,6 @@ char *argv[];
 	int  pageon, 		/** for when we receive new mail...          **/
 	     last_in_folder;	/** for when we receive new mail too...      **/
 	long num;		/** another variable for fun..               **/
-	int err;
 
 	initialize_common();
 	req_mfile = parse_arguments(argc, argv, to_whom);
@@ -717,7 +716,6 @@ int ch;
 	/* Consolidated the standard menu navigation and delete/tag
 	 * commands to a function.                                   */
 
-	int  key_offset;        /** Position offset within keyboard string   **/
 	int  i;
 	int count, curr;
 

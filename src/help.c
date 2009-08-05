@@ -33,7 +33,7 @@
  *
  ******************************************************************************/
 
-/*** help routine for ELM program 
+/*** help routine for ELM program
 
 ***/
 
@@ -85,7 +85,7 @@ int pager_help;
 	do {
 	  MoveCursor(prompt_line, strlen(help_prompt));
 	  ch = ReadCh();
-	  
+
 	  if (ch == '.') return(0);	/* zero means footer rewrite only */
 
 	  s = unknown_command;
@@ -118,12 +118,12 @@ int pager_help;
 	    case '%': s = catgets(elm_msg_cat, ElmSet, ElmHelpDebugReturnAdd,
      "% = Debug - display the computed return address of the current message.");
 		      break;
-	
+
 	   case '&': s = catgets(elm_msg_cat, ElmSet, ElmHelpMagic,
 	                     "& = Treat all folders as spool files.");
 	             break;
-	     
-  
+
+
 
 	    case '*': if(!pager_help)
 		       s = catgets(elm_msg_cat, ElmSet, ElmHelpLastMessage,
@@ -325,7 +325,7 @@ int pager_help;
 
 	    case ctrl('L'): if(!pager_help)
 			s = catgets(elm_msg_cat, ElmSet, ElmHelpRewriteScreen,
-				"^L = Rewrite the screen.");	
+				"^L = Rewrite the screen.");
 		       break;
 
             case ctrl('?'):					    /* DEL */
@@ -334,7 +334,7 @@ int pager_help;
 					"Exit the mail system quickly.");
 		       break;
 
-	    default : if (isdigit(ch) && !pager_help) 
+	    default : if (isdigit(ch) && !pager_help)
 	            s = catgets(elm_msg_cat, ElmSet, ElmHelpMakeMessageCurrent,
 			"<number> = Make specified number the current message.");
 	  }
@@ -343,7 +343,7 @@ int pager_help;
 	  CenterLine(info_line, s);
 
 	} while (ch != '.');
-	
+
 	/** we'll never actually get here, but that's okay... **/
 
 	return(0);
@@ -356,7 +356,7 @@ char *topic;
 	/*** Help me!  Read file 'helpfile.<section>' and echo to screen ***/
 
 	char buffer[SLEN], fname[SLEN], *sel_pager;
-	int old_raw, line, col, rc;
+	int line, col, rc;
 	FILE *fileptr;
 
 	sprintf(fname, "%s/help-%s", system_help_dir, topic);
@@ -379,7 +379,7 @@ char *topic;
 		"Couldn't open file %s."), fname);
 	  return(FALSE);
 	}
-	
+
 	ClearScreen();
 	while (fgets(buffer, SLEN, fileptr) != NULL) {
 	  GetCursorPos(&line, &col);

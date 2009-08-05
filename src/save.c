@@ -89,14 +89,12 @@ int *redraw_p, silently, delete;
     int num_saved;		/* number mssgs successfully saved	*/
     int sel_mesg_num;		/* sel for building save-by filename	*/
     int current_is_tagged;	/* is current message tagged?		*/
-    int target_in_folder_dir;	/* is target file in "=" directory?	*/
     int i;
     char filename[SLEN];	/* pathname to target folder		*/
     char *canon_filename;	/* result of nameof(filename)		*/
     char *word_save, *word_Save, *word_saved;
     char prompt1[SLEN], prompt2[SLEN];
     char lbuf[LONG_STRING];
-    char *s;
     FILE *fp;
     char *return_alias;		/* Alias of return address		*/
 

@@ -86,8 +86,6 @@ static int
 Grab_the_file(flock_fd)
 int flock_fd;
 {
-    int	retcode	= FLOCKING_OK;
-
     errno = 0;
 
 #ifdef   USE_FCNTL_LOCKING

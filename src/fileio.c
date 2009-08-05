@@ -42,7 +42,7 @@
  *
  ******************************************************************************/
 
-/** File I/O routines, including deletion from the folder! 
+/** File I/O routines, including deletion from the folder!
 
 **/
 
@@ -69,12 +69,12 @@ copy_message(dest_file, msgnum, cm_options)
 FILE *dest_file;
 int msgnum, cm_options;
 {
-	/** Copy selected message to destination file, with optional 'prefix' 
-	    as the prefix for each line.  If remove_header is true, it will 
+	/** Copy selected message to destination file, with optional 'prefix'
+	    as the prefix for each line.  If remove_header is true, it will
 	    skip lines in the message until it finds the end of header line...
 	    then it will start copying into the file... If remote is true
 	    then it will append "remote from <hostname>" at the end of the
-	    very first line of the file (for remailing) 
+	    very first line of the file (for remailing)
 
 	    If "update_status" is true then it will write a new Status:
 	    line at the end of the headers.  It never copies an existing one.
@@ -101,7 +101,7 @@ int msgnum, cm_options;
     int remote		= !!(cm_options & CM_REMOTE);
     int update_status	= !!(cm_options & CM_UPDATE_STATUS);
     int remail		= !!(cm_options & CM_REMAIL);
-    int decode		= !!(cm_options & CM_DECODE);
+
 #ifdef DONT_ADD_FROM
     int strip_from = remail;
 #else /* DONT_ADD_FROM */
@@ -109,7 +109,6 @@ int msgnum, cm_options;
 #endif /* DONT_ADD_FROM */
     int	end_header = 0;
     int sender_added = 0;
-    int crypt_line = OFF, crypted = OFF;
     static int start_encode_len = 0, end_encode_len = 0;
     int bytes_seen = 0;
     int buf_len, err;
@@ -122,14 +121,14 @@ int msgnum, cm_options;
       start_encode_len = strlen(MSSG_START_ENCODE);
       end_encode_len = strlen(MSSG_END_ENCODE);
     }
-   
+
     msg_header = curr_folder.headers[msgnum-1];
     prefix = ((cm_options & CM_PREFIX) ? prefixchars : "");
 
       /** get to the first line of the message desired **/
 
     if (fseek(curr_folder.fp, msg_header->offset, 0) == -1) {
-       dprint(1, (debugfile, 
+       dprint(1, (debugfile,
 		"ERROR: Attempt to seek %d bytes into file failed (%s)",
 		msg_header->offset, "copy_message"));
        error1(catgets(elm_msg_cat, ElmSet, ElmSeekFailed,
@@ -180,7 +179,7 @@ int msgnum, cm_options;
       }
       else
 	next_front = FALSE;
-      
+
       if (front_line && ignoring)
 	ignoring = whitespace(buffer[0]);
 
@@ -231,7 +230,7 @@ int msgnum, cm_options;
 		    copy_write_error_exit(errno);
 		  }
 		} else	{ /* read */
-		  int x;    
+		  int x;
 #ifdef BSD
 		  if (fprintf(dest_file, "%sStatus: OR", prefix) == EOF)
 #else
@@ -240,15 +239,15 @@ int msgnum, cm_options;
 		  {
 		    copy_write_error_exit(errno);
 		  }
-		     
+
 		  if (ison(msg_header->status, REPLIED_TO))
 		  {
                    if (putc('r', dest_file) == EOF)
 		       copy_write_error_exit (errno);
 		  }
-		  
+
 		  for (x=0;msg_header->mailx_status[x] != '\0'; x++)
-                  {		     
+                  {
 		     if ( strchr("ROr",msg_header->mailx_status[x]) == NULL)
 		     {
 		        if (putc(msg_header->mailx_status[x], dest_file) == EOF)
@@ -257,12 +256,12 @@ int msgnum, cm_options;
 			}
 		     }
 		  }
-		     
+
                   if (putc('\n', dest_file) == EOF)
 		     copy_write_error_exit (errno);
-		     
+
 		}
-		   
+
 		update_status = FALSE; /* do it only once */
                }  /* else if NEW - indicate NEW with no Status: line. This is
 		 * important if we resync a mailfile - we don't want
@@ -342,8 +341,7 @@ int msgnum, cm_options;
         /* Process checks that occur after the header area */
 
 	err = 0;
-	if (*prefix && !crypt_line) err = fputs(prefix, dest_file);
-	crypt_line = OFF;
+	if (*prefix) err = fputs(prefix, dest_file);
 	if (err != EOF) err = fwrite(buffer, 1, buf_len, dest_file);
 	if (err != buf_len) copy_write_error_exit(errno);
       }
@@ -583,9 +581,7 @@ char *fname;
 	 *		1 if the saved values were used
 	 */
 
-	int old_umask, i, new_mode, new_owner, new_group, ret_code;
-	int chown_restricted;
-
+	int old_umask, new_mode, new_owner, new_group, ret_code;
 
 	new_mode = 0600;
 	new_owner = userid;

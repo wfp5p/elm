@@ -558,7 +558,7 @@ char *to_field, *address;
 int mssgtype;
 {
     char *prompt;
-    int line, col;
+    int line;
 
     if (*to_field == '\0') {
 	line = (OPMODE_IS_READMODE(opmode)) ? LINES - 2 : 3;
@@ -912,8 +912,8 @@ char *copy_file;	/* pointer to buffer holding copy file name	*/
     int do_redraw;		/* portions of display to update	*/
     int cmd;			/* command to perform			*/
     int max_hdrline;		/* bottommost line used in hdr display	*/
-    char lbuf[VERY_LONG_STRING], *s;
-    int curr_line, curr_col, i;
+    char lbuf[VERY_LONG_STRING];
+    int curr_line, curr_col;
 
     bad_cmd = FALSE;		/* nothing to complain about yet	*/
     prev_form = *form_p + 1;	/* force build of prompt strings	*/

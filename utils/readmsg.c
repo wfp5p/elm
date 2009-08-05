@@ -199,7 +199,7 @@ char *argv[];
     FILE *fp;			/* file stream for opened folder	*/
     struct mssg_info minfo;	/* information on message to extract	*/
     char *sel_weed_str;		/* header weeding specification		*/
-    char buf[SLEN], *cp;
+    char buf[SLEN];
     int i;
 
     initialize_common();

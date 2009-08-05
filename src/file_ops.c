@@ -27,11 +27,11 @@ const char *fname, *fmode;
     const char *modestr;
     int err;
     int fp_handle;
-   
-   
-    if (fmode[0] != 'r') { save_file_stats(fname); } 
+
+
+    if (fmode[0] != 'r') { save_file_stats(fname); }
     /* no reason to call save_file_stats if it's read only */
-   
+
     if ( (fmode[0] == 'w') && (fmode[1] != '+') ) /* it's temp file */
     {
        unlink(fname);
@@ -127,7 +127,7 @@ long offset;
 int whence;
 const char *fname;
 {
-    int rc, err;
+    int err;
 
     if (fseek(fp, offset, whence) == 0)
 	return 0;
