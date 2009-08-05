@@ -1,5 +1,4 @@
 
-static char rcsid[] = "@(#)$Id: mcprtlib.c,v 1.3 1996/03/14 17:27:39 wfp5p Exp $";
 
 /***********************************************************
 Copyright 1990, by Alfalfa Software Incorporated, Cambridge, Massachusetts.

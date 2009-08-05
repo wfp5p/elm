@@ -1,5 +1,4 @@
 
-static char rcsid[] = "@(#)$Id: msgcat.c,v 1.1.1.1 1995/04/19 20:38:32 wfp5p Exp $";
 
 /* -*- c++ -*- */
 

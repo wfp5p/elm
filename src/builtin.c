@@ -1,5 +1,4 @@
 
-static char rcsid[] = "@(#)$Id: builtin.c,v 1.4 1996/03/14 17:27:54 wfp5p Exp $";
 
 /*******************************************************************************
  *  The Elm Mail System  -  $Revision: 1.4 $   $State: Exp $
