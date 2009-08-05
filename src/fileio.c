@@ -143,9 +143,6 @@ int msgnum, cm_options;
 
     lines = msg_header->lines;
 
-    if (msg_header->encrypted && decode) {
-	get_encode_key(OFF);
-    }
 
     /* now while not EOF & still in message... copy it! */
 
@@ -344,29 +341,6 @@ int msgnum, cm_options;
       }
       else { /* not in header */
         /* Process checks that occur after the header area */
-
-	/* perform encryption checks */
-	if (buffer[0] == '[' && decode) {
-		if (!strncmp(buffer, MSSG_START_ENCODE, start_encode_len)) {
-			crypted = ON;
-			crypt_line = ON;
-		} else if (!strncmp(buffer, MSSG_END_ENCODE, end_encode_len)) {
-			crypted = OFF;
-			crypt_line = ON;
-		} else if (crypted) {
-			no_ret(buffer);
-			encode(buffer);
-			strcat(buffer, "\n");
-		}
-	} else if (crypted) {
-		no_ret(buffer);
-		encode(buffer);
-		strcat(buffer, "\n");
-	}
-
-
-
-
 
 	err = 0;
 	if (*prefix && !crypt_line) err = fputs(prefix, dest_file);

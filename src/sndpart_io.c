@@ -413,24 +413,6 @@ SEND_BODYPART *part;
 		part_active = FALSE;
 		continue;
 	    }
-	    
-	    /* do that ugly [encode] bogosity */
-	    if (strbegConst(buf, MSSG_START_ENCODE)) {
-		if (!OPMODE_IS_INTERACTIVE(opmode)) {
-		    error(catgets(elm_msg_cat, ElmSet, ElmNoEncryptInBatch,
-"Sorry.  Cannot send encrypted mail in \"batch mode\"."));
-		    goto done;
-		}
-		if (!have_encode_key)
-		    get_encode_key(TRUE);
-		else
-		    recall_encode_key();
-		new_encode_running = TRUE;
-	    }
-
-	    /* do that ugly [clear] bogosity */
-	    if (strbegConst(buf, MSSG_END_ENCODE))
-		curr_encode_running = new_encode_running = FALSE;
 
 	}
 

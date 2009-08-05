@@ -58,7 +58,7 @@ extern char *elm_date_str();
 int    pipe_abort  = FALSE;	/* did we receive a SIGNAL(SIGPIPE)? */
 
 FILE *pipe_wr_fp;		/* file pointer to write to external pager */
-extern int lines_displayed,	/* defined in "builtin" */	
+extern int lines_displayed,	/* defined in "builtin" */
 	   lines_put_on_screen;	/*    ditto too!        */
 
 /*
@@ -92,7 +92,7 @@ int number;
 
 	int crypted = 0;			/* encryption */
 	static int start_encode_len = 0, end_encode_len = 0;
-	int weed_header, weeding_out = 0;	/* weeding    */ 
+	int weed_header, weeding_out = 0;	/* weeding    */
 	int using_to,				/* misc use   */
 	    pipe_fd[2],				/* pipe file descriptors */
 	    new_pipe_fd,			/* dup'ed pipe fil des */
@@ -121,9 +121,9 @@ int number;
 	    end_encode_len = strlen(MSSG_END_ENCODE);
 	}
 
-	lines = current_header->lines; 
+	lines = current_header->lines;
 
-	dprint(4, (debugfile,"displaying %d lines from message %d using %s\n", 
+	dprint(4, (debugfile,"displaying %d lines from message %d using %s\n",
 		lines, number, pager));
 
 	if (number > curr_folder.num_mssgs || number < 1)
@@ -170,7 +170,7 @@ int number;
 		      Raw(ON); /* Finally raw on and switch screen */
  	              softkeys_on();
 		      EnableFkeys(ON);
-		       
+
 		      return(0);
 		    }
 		}
@@ -185,11 +185,9 @@ int number;
 		  current_header->offset, strerror(err)));
 	  error2(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
 		  "ELM [seek] couldn't read %d bytes into file (%s)."),
-		  current_header->offset, strerror(err));	
+		  current_header->offset, strerror(err));
 	  return(val);
 	}
-	if(current_header->encrypted)
-	  get_encode_key(OFF);
 
 	builtin = (
 	  (strbegConst(pager,"builtin")|| strbegConst(pager,"internal"))
@@ -214,7 +212,7 @@ int number;
 	      strerror(err)));
 	    error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerPipe,
 	      "Could not prepare for external pager(pipe()-%s)."),
-	      strerror(err));	
+	      strerror(err));
 	    Raw(ON);
 	    return(val);
 	  }
@@ -226,7 +224,7 @@ int number;
 	      strerror(err)));
 	    error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerFork,
 	      "Could not prepare for external pager(fork()-%s)."),
-	      strerror(err));	
+	      strerror(err));
 	    Raw(ON);
 	    return(val);
 
@@ -244,7 +242,7 @@ int number;
 		strerror(err)));
 	      error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerDup,
 	        "Could not prepare for external pager(dup()-%s)."),
-		strerror(err));	
+		strerror(err));
 	      _exit(err);
 	    }
 	    close(pipe_fd[0]);	/* original pipe fd no longer needed */
@@ -257,12 +255,12 @@ int number;
 		strerror(err)));
 	      error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerChildFdopen,
 		"Could not prepare for external pager(child fdopen()-%s)."),
-		strerror(err));	
+		strerror(err));
 	      _exit(err);
 	    }
 
 	    /* now execute pager and exit */
-	    
+
 	    /* system_call() will return user to user's normal permissions.
 	     * This is what makes this pipe secure - user won't have elm's
 	     * special SETGID permissions (if so configured) and will only
@@ -270,7 +268,7 @@ int number;
 	     * to execute */
 
 	    _exit(system_call(pager, SY_ENAB_SIGINT));
-	  
+
 	  } /* else this is the parent fork */
 
 	  /* close read-only pipe fd and do write-only with stdio */
@@ -283,7 +281,7 @@ int number;
 	      strerror(err)));
 	    error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerParentFdopen,
 	      "Could not prepare for external pager(parent fdopen()-%s)."),
-	      strerror(err));	
+	      strerror(err));
 
 	    /* Failure - must close pipe and wait for child */
 	    close(pipe_fd[1]);
@@ -299,7 +297,7 @@ int number;
 #ifdef	SIGTSTP
 	  oldstop = signal(SIGTSTP,SIG_DFL);
 	  oldcont = signal(SIGCONT,SIG_DFL);
-#endif 
+#endif
 #ifdef	SIGWINCH
 	  oldwinch = signal(SIGWINCH,SIG_DFL);
 #endif
@@ -345,7 +343,7 @@ int number;
 	  /** if there's a subject, let's output it next,
 	      centered if it fits on a single line.  **/
 
-	  if ((buf_len = strlen(current_header->subject)) > 0 && 
+	  if ((buf_len = strlen(current_header->subject)) > 0 &&
 		matchInList(weedlist,weedcount,"Subject:",TRUE)) {
 	    padding = (buf_len < COLS ? COLS - buf_len : 0);
 	    sprintf(buffer, "%*s%s\n", padding/2, "", current_header->subject);
@@ -356,14 +354,14 @@ int number;
 	    display_line(buffer, strlen(buffer));
 	  else
 	    fprintf(pipe_wr_fp, "%s", buffer);
-	  
+
 	  /** was this message address to us?  if not, then to whom? **/
 
 	  if (! using_to && matchInList(weedlist,weedcount,"To:",TRUE) && filter &&
 	      strcmp(current_header->to, user_name) != 0 &&
 	      strlen(current_header->to) > 0) {
 	    sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmMessageAddressedTo,
-		  "%s(message addressed to %.60s)\n"), 
+		  "%s(message addressed to %.60s)\n"),
 	          strlen(current_header->subject) > 0 ? "\n" : "",
 		  current_header->to);
 	    if (builtin)
@@ -371,16 +369,16 @@ int number;
 	    else
 	      fprintf(pipe_wr_fp, "%s", buffer);
 	  }
-	
+
 	  /** The test above is: if we didn't originally send the mail
 	      (e.g. we're not reading "mail.sent") AND the user is currently
 	      weeding out the "To:" line (otherwise they'll get it twice!)
-	      AND the user is actually weeding out headers AND the message 
-	      wasn't addressed to the user AND the 'to' address is non-zero 
-	      (consider what happens when the message doesn't HAVE a "To:" 
-	      line...the value is NULL but it doesn't match the username 
-	      either.  We don't want to display something ugly like 
-	      "(message addressed to )" which will just clutter up the 
+	      AND the user is actually weeding out headers AND the message
+	      wasn't addressed to the user AND the 'to' address is non-zero
+	      (consider what happens when the message doesn't HAVE a "To:"
+	      line...the value is NULL but it doesn't match the username
+	      either.  We don't want to display something ugly like
+	      "(message addressed to )" which will just clutter up the
 	      screen!).
 
 	      And you thought programming was EASY!!!!
@@ -399,7 +397,7 @@ int number;
 	  if (current_header->status & PRIVATE)
 	    strcpy(buffer, catgets(elm_msg_cat, ElmSet, ElmTaggedPrivate,
 		"\n(** This message is tagged Private"));
-	  else if (current_header->status & CONFIDENTIAL) 
+	  else if (current_header->status & CONFIDENTIAL)
 	    strcpy(buffer, catgets(elm_msg_cat, ElmSet, ElmTaggedCompanyConfidential,
 		"\n(** This message is tagged Company Confidential"));
 
@@ -472,24 +470,11 @@ int number;
 		/* skip it.  NEVER display random headers in forms! */;
 	    else if (weed_header && matchInList(weedlist,weedcount,buffer,TRUE))
 	      weeding_out = 1;	 /* aha!  We don't want to see this! */
-	    else if (buffer[0] == '[') {
-	      if (strncmp(buffer, MSSG_START_ENCODE, start_encode_len)==0)
-	        crypted = ON;
-	      else if (strncmp(buffer, MSSG_END_ENCODE, end_encode_len)==0)
-	        crypted = OFF;
-	      else if (crypted)
-                encode(buffer);
-	      val = show_line(buffer, buf_len, builtin);
-	    } 
-	    else if (crypted) {
-	      encode(buffer);
-	      val = show_line(buffer, buf_len, builtin); 
-	    }
 	    else if (weeding_out) {
 	      weeding_out = (whitespace(buffer[0]));	/* 'n' line weed */
 	      if (! weeding_out) 	/* just turned on! */
 	        val = show_line(buffer, buf_len, builtin);
-	    } 
+	    }
 	    else if (form_letter && strbegConst(buffer,"***") && filter) {
 	      strcpy(buffer,
 "\n------------------------------------------------------------------------------\n");
@@ -500,7 +485,7 @@ int number;
 	      /** skip this stuff - we can't deal with it... **/;
 	    else
 	      val = show_line(buffer, buf_len, builtin);
-	
+
 	    if (val != 0)	/* discontinue the display */
 	      break;
 	}
@@ -538,7 +523,7 @@ int number;
 	      EndStandout();
 	  val = GetKey(0);
 	}
-	
+
 	/* 'q' means quit current operation and pop back up to previous level -
 	 * in this case it therefore means return to index screen.
 	 */

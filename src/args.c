@@ -228,13 +228,6 @@ args_version()
 #endif /* DEBUG */
 
         printf("\tLib dir is: %s\n",system_help_dir);
-   
-#ifdef CRYPT
-	printf("\tCrypt function enabled: CRYPT\n");
-#else /* CRYPT */
-	printf("\tCrypt function disabled: not CRYPT\n");
-#endif /* CRYPT */
-
 #ifdef ALLOW_MAILBOX_EDITING
 	printf("\tMailbox editing included: ALLOW_MAILBOX_EDITING\n");
 #else /* ALLOW_MAILBOX_EDITING */
