@@ -38,7 +38,6 @@ static int do_emit_mssgtext_body P_((FILE *, SEND_BODYPART *));
 static int do_emit_mimepart_header P_((FILE *, SEND_BODYPART *));
 static int do_emit_mimepart_body P_((FILE *, SEND_BODYPART *));
 static int do_emit_multipart_header P_((FILE *, SEND_BODYPART *));
-static int do_emit_multipart_body P_((FILE *, SEND_BODYPART *));
 static int do_emit_multipart_sep P_((FILE *, SEND_BODYPART *, int));
 
 
@@ -585,7 +584,7 @@ SEND_BODYPART *part;
    return 1;
 }
 
-
+/* ***** not used
 static int do_emit_multipart_body(fp_dest, part)
 FILE *fp_dest;
 SEND_BODYPART *part;
@@ -605,7 +604,7 @@ SEND_BODYPART *part;
 
     return do_emit_multipart_sep(fp_dest, part, TRUE);
 }
-
+*/
 
 static int do_emit_multipart_sep(fp, part, finished)
 FILE *fp;
