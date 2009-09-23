@@ -39,61 +39,6 @@
 #  include <pwd.h>
 #endif
 
-#ifndef HAS_CUSERID
-
-char *cuserid(usrname)
-     char *usrname;
-{
-	/** Added for compatibility with Bell systems, this is the last-ditch
-	    attempt to get the users login name, after getlogin() fails.  It
-	    instantiates "usrname" to the name of the user...(it also tries
-	    to use "getlogin" again, just for luck)
-	**/
-	/** This wasn't really compatible.  According to our man page, 
-	 ** It was inconsistent.  If the parameter is NULL then you return
-	 ** the name in a static area.  Else the ptr is supposed to be a
-	 ** pointer to l_cuserid bytes of memory [probally 9 bytes]...
-	 ** It's not mention what it should return if you copy the name
-	 ** into the array, so I chose NULL.
-	 ** 					Sept 20, 1988
-	 **					**WJL**
-	 **/
-
-  struct passwd *password_entry;
-  char   *name, *getlogin();
-  register returnonly = 0;
-  
-  if (usrname == NULL) ++returnonly;
-  
-  if ((name = getlogin()) != NULL) {
-    if (returnonly) {
-      return(name);
-    } else {
-      strcpy(usrname, name);
-      return name;
-    }
-  } 
-  else 
-    if (( password_entry = fast_getpwuid(getuid())) != NULL) 
-      {
-	if (returnonly) 
-	  {
-	    return(password_entry->pw_name);
-	  }
-	else 
-	  {
-	    strcpy(usrname, password_entry->pw_name);
-	    return name;
-	  }
-      } 
-    else 
-      {
-	return NULL;
-      }
-}
-
-#endif
-
 
 #ifndef STRTOK
 

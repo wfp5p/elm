@@ -227,9 +227,6 @@ int okay_address P_((char *, char *));
 
 /* opt_utils.c */
 
-#ifndef HAS_CUSERID
-char *cuserid P_((char *));
-#endif
     /* strtok() declared in elm_defs.h */
     /* strpbrk() declared in elm_defs.h */
     /* strspn() declared in elm_defs.h */
