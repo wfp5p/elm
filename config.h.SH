@@ -43,11 +43,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
  */
 #$d_disphost	DISP_HOST /**/
 
-/* ERRLST:
- *	This symbol, if defined, indicates that the sys_errlist and sys_nerr
- *	symbols exist.
- */
-#$d_errlst	ERRLST	/**/
 
 /* USE_FLOCK_LOCKING
  *	This symbol, if defined, indicates that the flock mailbox locking should be used.
@@ -289,11 +284,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
 #$d_strcspn	STRCSPN		/**/
 
 #$d_strpbrk	STRPBRK		/**/
-
-/* STRERROR:
- *	This symbol, if defined, indicates that strerror() exists.
- */
-#$d_strerror	STRERROR	/**/
 
 /* STRFTIME:
  *	This symbol, if defined, indicates that strftime() exists.

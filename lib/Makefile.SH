@@ -143,7 +143,7 @@ ALL = libutil.a
 INSTS =
 
 SRCS = add_site.c addrmchusr.c aliasdb.c atonum.c basename.c can_access.c \
-	can_open.c chloc.c date_util.c elm_access.c elmrc.c errno.c expand.c \
+	can_open.c chloc.c date_util.c elm_access.c elmrc.c expand.c \
 	fast_getpw.c figadrssee.c gcos_name.c get_tz.c getarpdate.c \
 	getfullnam.c gethostname.c getword.c header_cmp.c in_list.c \
 	initcommon.c ldstate.c len_next.c $(MCSRC) mail_gets.c mailfile.c \
@@ -155,7 +155,7 @@ SRCS = add_site.c addrmchusr.c aliasdb.c atonum.c basename.c can_access.c \
 	validname.c
 
 OBJS = add_site.o addrmchusr.o aliasdb.o atonum.o basename.o can_access.o \
-	can_open.o chloc.o date_util.o elm_access.o elmrc.o errno.o expand.o \
+	can_open.o chloc.o date_util.o elm_access.o elmrc.o expand.o \
 	fast_getpw.o figadrssee.o gcos_name.o get_tz.o getarpdate.o \
 	getfullnam.o gethostname.o getword.o header_cmp.o in_list.o \
 	initcommon.o ldstate.o len_next.o mail_gets.o mailfile.o \

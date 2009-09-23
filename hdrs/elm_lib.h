@@ -69,10 +69,6 @@ int elm_access P_((const char *, int));
 /* errno.c */
 
 extern int errno;
-#ifndef STRERROR
-char *strerror P_((int));
-#endif
-
 
 /* expand.c */
 
