@@ -18,11 +18,9 @@ int retsiz;
     (void) strfcpy(retval, HOSTNAME, retsiz);
 #endif
 
-#ifdef GETHOSTNAME
     /* warning - some systems return FQDN */
     if (retval[0] == '\0')
 	(void) gethostname(retval, retsiz-1);
-#endif
 
 #ifdef DOUNAME
     /* warning - some systems return FQDN */
@@ -73,19 +71,15 @@ int retsiz;
 	(void) fclose(fp);
     }
 
-#ifdef USEGETDOMAINNAME
     if (buf[0] == '\0')
 	(void) getdomainname(buf, sizeof(buf));
-#endif
 
-#ifdef GETHOSTNAME
     if (buf[0] == '\0') {
 	char fqdn[SLEN];
 	(void) gethostname(fqdn, sizeof(fqdn));
 	if ((s = strchr(fqdn, '.')) != NULL)
 	    (void) strfcpy(buf, s, sizeof(buf));
     }
-#endif
 
     if (buf[0] == '\0')
 	(void) strfcpy(buf, DEFAULT_DOMAIN, sizeof(buf));
