@@ -121,15 +121,6 @@ int isspool;
       goto done;
     }
 #endif
-#ifdef HAS_FSYNC
-    if (fsync(fileno(fp_dest)) < 0) {
-      error1(catgets(elm_msg_cat, ElmSet, ElmFsyncFailedCopy,
-		"Error on fsync() of \"%s\"! [%s]"),
-		fname_dest, strerror(errno));
-      goto done;
-    }
-#endif
-
     if (file_close(fp_dest, fname_dest) < 0)
 	goto done;
     fp_dest = NULL;
