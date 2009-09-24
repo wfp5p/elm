@@ -78,10 +78,8 @@ int isspool;
 
     FILE *fp_src, *fp_dest;
     int rc;
-#ifdef FTRUNCATE
     int do_truncate; /* are we overwriting the existing file? */
     off_t size_src; /* size of infile, used for ftruncate call */
-#endif
 
     rc = -1;
     fp_src = NULL;
@@ -90,7 +88,6 @@ int isspool;
     if ((fp_src = file_open(fname_src, "r")) == NULL)
 	return -1;
 
-#ifdef FTRUNCATE
     /* If the user is over quota but the "dest" file exists and
      * "src" is not larger, then opening for update, copying, and
      * truncating to the new size may work or will at least
@@ -103,7 +100,7 @@ int isspool;
      */
     size_src = fsize(fp_src);
     do_truncate = ((fp_dest = fopen(fname_dest, "r+")) != NULL);
-#endif
+
     if (fp_dest == NULL && (fp_dest = file_open(fname_dest, "w")) == NULL)
 	goto done;
     if (!isspool && groupid != mailgroupid)
@@ -112,7 +109,6 @@ int isspool;
     if (file_copy(fp_src, fp_dest, fname_src, fname_dest) < 0)
 	goto done;
 
-#ifdef FTRUNCATE
     fflush(fp_dest);
     if (do_truncate && ftruncate(fileno(fp_dest), size_src) != 0) {
       error1(catgets(elm_msg_cat, ElmSet, ElmTruncateFailedCopy,
@@ -120,7 +116,7 @@ int isspool;
 		fname_dest, strerror(errno));
       goto done;
     }
-#endif
+
     if (file_close(fp_dest, fname_dest) < 0)
 	goto done;
     fp_dest = NULL;

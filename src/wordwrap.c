@@ -136,9 +136,6 @@ FILE *edit_fd;
 		addon -= tabs[--tindex] - 1;
 		erase_tab(tabs[tindex]);
 	      } else erase_a_char();
-
-#ifdef FTRUNCATE
-
 	    } else { /** backspace to end of previous line **/
 
 	      fflush(edit_fd);
@@ -189,9 +186,6 @@ FILE *edit_fd;
 		  if (string[pos] == '\t')
 		    addon += (tabs[tindex++] = 8 - ((pos+addon) & 07)) - 1;
 	      }
-
-#endif
-
 	    }
 	    break;
 

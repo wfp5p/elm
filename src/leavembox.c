@@ -645,26 +645,6 @@ int resyncing, quitting, prompt;
       	    SETGID(mailgroupid);
 
 	  if(!need_to_copy) {
-#if !defined(FTRUNCATE)
-	    /* Unlinking the folder makes the implicit and incorrect
-	     * assumption that the user has sufficient space to hold
-	     * the modified file.  The new file is, in general, not
-	     * larger than the original.  However, many systems have
-	     * quotas adjusted for projects or classes.  When this
-	     * additional quota goes away, the user can be overquota.
-	     * If we unlink the file, we may not be able to allocate
-	     * the blocks required for the new file.  A safer approach
-	     * is to write the file over the existing one and truncate
-	     * to the new size.  Since this does not require
-	     * allocating new blocks, it can succeed or at least fail
-	     * safely (leaving the original file unmodified).  It
-	     * requires using ftruncate (see file_util.c), however, so
-	     * we cannot use the safer approach on systems which lack it.
-	     * Note: This solution still does not address file locking
-	     * (earlier versions ignore that, too).
-	     */
-	    unlink(curr_folder.filename);
-#endif /* !FTRUNCATE */
 	    /* If the file is on the same file system, it is simplest
 	     * to do a rename and avoid the copy.  We prefer rename to
 	     * link, since this avoids the need to unlink or rename
