@@ -13,12 +13,10 @@ char *get_arpa_date()
 
 	static char buffer[SLEN];	/* static character buffer       */
 	time_t	  curr_time;		/* time in seconds....		 */
-	struct tm curr_tm;		/* Time structure, see CTIME(3C) */
 
 	time(&curr_time);
-	curr_tm = *localtime(&curr_time);
 
-	strftime(buffer, SLEN, "%a, %d %b %Y %T %z (%Z)", &curr_tm);
+	strftime(buffer, SLEN, "%a, %d %b %Y %T %z (%Z)", localtime(&curr_time));
 
 	return buffer;
 }
