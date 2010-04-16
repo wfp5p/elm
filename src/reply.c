@@ -599,7 +599,7 @@ int remail()
     if ((mailfd = file_open(filename, "w")) == NULL)
 	goto failed;
     chown(filename, userid, groupid);
-    copy_message(mailfd, curr_folder.curr_mssg, CM_REMOTE|CM_MMDF_HEAD|CM_REMAIL);
+    copy_message(mailfd, curr_folder.curr_mssg, CM_REMOTE|CM_REMAIL);
     if (file_close(mailfd, filename) < 0)
 	goto failed;
 

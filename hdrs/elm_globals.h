@@ -122,7 +122,7 @@
 #define CM_REMOTE		(1<<1)	/* append remote from hostname to    */
 					/*   first line			     */
 #define CM_UPDATE_STATUS	(1<<2)	/* Update Status: Header	     */
-#define CM_MMDF_HEAD		(1<<3)	/* strip mmdf message seperator	     */
+
 #define CM_REMAIL		(1<<4)	/* Add Sender: and Orig-To: headers  */
 #define CM_DECODE		(1<<5)	/* prompt for key if message is	     */
 					/*   encrypted			     */
