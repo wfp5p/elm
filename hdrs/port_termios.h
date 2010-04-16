@@ -14,11 +14,6 @@
 # endif
 #endif
 
-#ifdef PTEM
-# include <sys/stream.h>
-# include <sys/ptem.h>
-#endif
-
 #ifndef TIOCGWINSZ
 # include <sys/ioctl.h>
 #endif
