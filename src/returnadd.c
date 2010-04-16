@@ -247,12 +247,7 @@ int msgnum;
 	   && qchloc(buffer, '!') < 0
 	   && decnet_found == NO)
 	  {
-#ifdef INTERNET
 	    sprintf(buffer + strlen(buffer), "@%s", host_fullname);
-#else
-	    strcpy(buf, buffer);
-	    sprintf(buffer, "%s!%s", host_name, buf);
-#endif
 	  }
 
 	  /*

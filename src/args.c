@@ -214,12 +214,6 @@ args_version()
 	printf("\tIgnore Multipurpose Internet Mail Extensions: not MIME_RECV\n");
 #endif /* MIME_RECV */
 
-#ifdef INTERNET
-	printf("\tPrefers Internet address formats: INTERNET\n");
-#else /* INTERNET */
-	printf("\tInternet address formats not used: not INTERNET\n");
-#endif /* INTERNET */
-
 #ifdef DEBUG
 	printf("\tDebug options are available: DEBUG\n");
 #else /* DEBUG */

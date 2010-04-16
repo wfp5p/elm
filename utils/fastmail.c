@@ -172,13 +172,9 @@ usage_error:
 
     if (add_from) {
 	if (!from_addr) {
-#ifdef INTERNET
 	    int l1 = strlen(user_name), l2 = strlen(host_fullname);
 	    from_addr = (char *) safe_malloc(l1+1+l2+1);
 	    sprintf(from_addr, "%s@%s", user_name, host_fullname);
-#else
-	    from_addr = user_name;
-#endif
 	}
 	if (!from_fullname)
 	    from_fullname = user_fullname;

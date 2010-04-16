@@ -55,20 +55,6 @@ char *from, *buffer, *to;
 
 	register int loc, i = 0, cnt = 0, using_to = 0;
 
-#ifndef INTERNET
-	
-	/** let's see if we have an address appropriate for hacking: 
-	    what this actually does is remove the spuriously added
-	    local bogus Internet header if we have one and the message
-	    has some sort of UUCP component too...
-	**/
-
-	sprintf(buffer, "@%s", host_fullname); 
-	if (chloc(from,'!') != -1 && strstr(from, buffer) != NULL)
-	   from[strlen(from)-strlen(buffer)] = '\0';
-
-#endif
-
 	/**
 	    Produce a simplified version of the from into buffer.  If the
 	    from is just "username" or "Full Username" it will be preserved.

@@ -71,15 +71,7 @@ const char *hdrname, *hdrvalue;
 static char *outbound_from_name(buf)
 char *buf;
 {
-#ifdef INTERNET
-# ifdef USE_DOMAIN
-    sprintf(buf, "\"%s\" <%s@%s>", user_fullname, user_name, host_fullname);
-# else
     sprintf(buf, "\"%s\" <%s@%s>", user_fullname, user_name, host_name);
-# endif
-#else /* !INTERNET */
-    sprintf(buf, "\"%s\" <%s!%s>", user_fullname, host_name, user_name);
-#endif /* !INTERNET */
     return buf;
 }
 #endif /* !DONT_ADD_FROM */
