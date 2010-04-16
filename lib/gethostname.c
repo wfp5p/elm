@@ -1,10 +1,5 @@
 #include "elm_defs.h"
 
-#ifdef DOUNAME
-# include <sys/utsname.h>
-#endif
-
-
 /* return local host name (with any domain elided) */
 void get_hostname(retval, retsiz)
 char *retval;
@@ -14,23 +9,9 @@ int retsiz;
 
     retval[0] = '\0';
 
-#ifdef HOSTCOMPILED
-    (void) strfcpy(retval, HOSTNAME, retsiz);
-#endif
-
     /* warning - some systems return FQDN */
     if (retval[0] == '\0')
 	(void) gethostname(retval, retsiz-1);
-
-#ifdef DOUNAME
-    /* warning - some systems return FQDN */
-    if (retval[0] == '\0') {
-	struct utsname uts;
-	extern int uname();
-	(void) uname(&uts);
-	(void) strfcpy(retval, uts.nodename, retsiz);
-    }
-#endif
 
 #if (defined(XENIX) || defined(M_UNIX))
     if (retval[0] == '\0') {
