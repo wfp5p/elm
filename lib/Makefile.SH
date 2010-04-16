@@ -150,7 +150,7 @@ SRCS = add_site.c addrmchusr.c aliasdb.c atonum.c basename.c can_access.c \
 	mk_aliases.c mk_lockname.c mlist.c move_left.c ndbz.c okay_addr.c \
 	opt_utils.c parsarpdat.c parsarpmbox.c parsarpwho.c patmatch.c \
 	posixsig.c qstrings.c realfrom.c remfirstwd.c reverse.c \
-	rfc822tlen.c safemalloc.c shiftlower.c strfcpy.c strftime.c \
+	rfc822tlen.c safemalloc.c shiftlower.c strfcpy.c \
 	strincmp.c striparens.c strstr.c strtokq.c tail_of.c trim.c \
 	validname.c
 
@@ -163,7 +163,7 @@ OBJS = add_site.o addrmchusr.o aliasdb.o atonum.o basename.o can_access.o \
 	okay_addr.o opt_utils.o parsarpdat.o parsarpmbox.o parsarpwho.o \
 	patmatch.o posixsig.o qstrings.o realfrom.o remfirstwd.o \
 	reverse.o rfc822tlen.o safemalloc.o shiftlower.o strfcpy.o \
-	strftime.o strincmp.o striparens.o strstr.o strtokq.o tail_of.o \
+	strincmp.o striparens.o strstr.o strtokq.o tail_of.o \
 	trim.o validname.o
 !NO!SUBS!
 

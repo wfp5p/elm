@@ -309,17 +309,6 @@ char *shift_lower P_((char *));
 char *strfcpy P_((char *, const char *, int));
 void  strfcat P_((char *, const char *, int));
 
-
-/* strftime.c */
-
-#ifndef STRFTIME
-#ifdef ANSI_C
-struct tm;
-#endif
-size_t strftime P_((char *, size_t, const char *, const struct tm *));
-#endif
-
-
 /* strincmp.c */
 
 int strincmp P_((const char *, const char *, int));
