@@ -38,7 +38,7 @@ register const char *user;
 
 	do {
 	  if ( strncmp(addr,user,len) == 0 ) {
-	    if ( addr[len] == '\0' || index(c_after,addr[len]) != NULL )
+	    if ( addr[len] == '\0' || strchr(c_after,addr[len]) != NULL )
 	      return TRUE;
 	  }
 	} while ( (addr=qstrpbrk(addr,c_before)) != NULL && *++addr != '\0' ) ;

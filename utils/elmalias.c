@@ -379,7 +379,7 @@ struct alias_rec *ar;
 	     */
 	    pfmt[0] = *fmt++;
 	    n = 1;
-	    while (index("-.0123456789", *fmt) != NULL) {
+	    while (strchr("-.0123456789", *fmt) != NULL) {
 		if (n < sizeof(pfmt)-2)
 		    pfmt[n++] = *fmt;
 		++fmt;

@@ -228,7 +228,7 @@ int *too_longp;	/* error code if expansion overflows buffer		*/
 
 	  /* extract the next name from the list */
 	  for ( name = group ; isspace(*name) ; ++name ) ;
-	  if ( (group = index(name,',')) != NULL )
+	  if ( (group = strchr(name,',')) != NULL )
 	      *group++ = '\0';
 	  remove_possible_trailing_spaces(name);
 	  if ( *name == '\0' )

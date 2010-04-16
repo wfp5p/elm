@@ -204,7 +204,7 @@ int msgnum, cm_options;
 	  }
 	}
 	else if (!isspace(*buffer)
-	      && index(buffer, ':') == NULL
+	      && strchr(buffer, ':') == NULL
 		) {
 	  in_header = 0;
 	  bytes_seen = 0;

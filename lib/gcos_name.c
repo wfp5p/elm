@@ -66,7 +66,7 @@ const char *logname;
      * '('. If there is no '(', then the full name ends at the end of the
      * gcos field.
      */
-    if(lastcp = index(gcos_field, '('))
+    if(lastcp = strchr(gcos_field, '('))
 	*lastcp = '\0';
 
     /* The first character of the full name is the one following the 

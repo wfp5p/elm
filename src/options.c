@@ -417,7 +417,7 @@ options()
 	  ch = tolower(ch);
 	  clear_error();
 
-	  if ((opos = index(config_options, ch)) != NULL) {
+	  if ((opos = strchr(config_options, ch)) != NULL) {
 	      int y = opos - config_options;
 	      opts_menu *o = find_cfg_opts(ch);
               if (o != NULL && y < LINES-5) {

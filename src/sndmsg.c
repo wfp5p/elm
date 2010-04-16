@@ -780,7 +780,7 @@ SEND_HEADER *shdr;
     if (local_signature[0] == '\0' && remote_signature[0] == '\0')
 	return FALSE;
 
-    if (index(shdr->expanded_to, '!') || index(shdr->expanded_cc,'!')) {
+    if (strchr(shdr->expanded_to, '!') || strchr(shdr->expanded_cc,'!')) {
 	sig = remote_signature;		/* ! always means remote */
     } else {
 	/* check each @ for @thissite.domain */
@@ -791,8 +791,8 @@ SEND_HEADER *shdr;
 	sprintf(sitename, "@%s", host_fullname);
 	len = strlen(sitename);
 	sig = local_signature;
-	for (ptr = index(shdr->expanded_to,'@'); ptr;  /* check To: list */
-		    ptr = index(ptr+1,'@')) {
+	for (ptr = strchr(shdr->expanded_to,'@'); ptr;  /* check To: list */
+		    ptr = strchr(ptr+1,'@')) {
 	    if (strincmp(ptr,sitename,len) != 0
 			|| (*(ptr+len) != ',' && *(ptr+len) != 0
 			&& *(ptr+len) != ' ')) {
@@ -801,8 +801,8 @@ SEND_HEADER *shdr;
 	    }
 	}
 	if (sig == local_signature) {		   /* still local? */
-	    for (ptr = index(shdr->expanded_cc,'@'); ptr;   /* check Cc: */
-			ptr = index(ptr+1,'@')) {
+	    for (ptr = strchr(shdr->expanded_cc,'@'); ptr;   /* check Cc: */
+			ptr = strchr(ptr+1,'@')) {
 		if (strincmp(ptr,sitename,len) != 0
 			    || (*(ptr+len) != ',' && *(ptr+len) != 0
 			    && *(ptr+len) != ' ')) {

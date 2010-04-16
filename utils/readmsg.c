@@ -313,7 +313,7 @@ char *argv[];
     }
 
     /* see if we are trying to match a pattern */
-    if (index("0123456789$*", argv[optind][0]) == NULL) {
+    if (strchr("0123456789$*", argv[optind][0]) == NULL) {
 	strcpy(buf, argv[optind]);
 	while (++optind < argc)
 		strcat(strcat(buf, " "), argv[optind]);

@@ -98,7 +98,7 @@ int msgnum;
           if (header_cmp(mybuf, "To", (char *)NULL) ||
 	      header_cmp(mybuf, "Original-To", (char *)NULL)) {
 	    in_to = TRUE;
-	    strcpy(buffer, index(mybuf, ':') + 1);
+	    strcpy(buffer, strchr(mybuf, ':') + 1);
           }
 	  else if (in_to && whitespace(mybuf[0])) {
 	    strcat(buffer, " ");		/* tag a space in   */

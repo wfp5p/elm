@@ -279,7 +279,7 @@ register char *aliases, *lastn, *firstn, *comment, *addresses;
  *	loop over each alias in aliases (split at the ,)
  */
 	while (aliases != NULL) {
-	    if ((s = index(aliases, ',')) != NULL)
+	    if ((s = strchr(aliases, ',')) != NULL)
 		*s++ = '\0';
 
 	    alias.last_name = alias.alias + strlen(aliases) + 1;
@@ -478,7 +478,7 @@ FILE *data;
  *	white space on the end.
  */
 	aliases = buffer;
-	if ((s = index(buffer, '=')) == NULL) {
+	if ((s = strchr(buffer, '=')) == NULL) {
 	    sprintf(msg_buff, catgets(elm_msg_cat,
 	            NewaliasSet, NewaliasNoFieldSep,
 	            "Error - alias \"%.40s\" missing '=' field separator."),

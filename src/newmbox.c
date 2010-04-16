@@ -685,7 +685,7 @@ int add_new_only;
 	      remove_header_keyword(tbuffer);
 	      strfcpy(current_header->mailx_status, tbuffer, WLEN);
 
-	      c = index(current_header->mailx_status, '\n');
+	      c = strchr(current_header->mailx_status, '\n');
 	      if (c != NULL)
 		*c = '\0';
 	      remove_possible_trailing_spaces(current_header->mailx_status);
@@ -695,18 +695,18 @@ int add_new_only;
 	       * is unread. In any case it isn't new because a new message
 	       * wouldn't have a Status: header.
 	       */
-	      if (index(current_header->mailx_status, 'R') != NULL) {
+	      if (strchr(current_header->mailx_status, 'R') != NULL) {
 		clearit(current_header->status, (NEW | UNREAD));
 		clearit(current_header->org_status, (NEW | UNREAD));
 	      }
-	      else if (index(current_header->mailx_status, 'O') != NULL) {
+	      else if (strchr(current_header->mailx_status, 'O') != NULL) {
 		clearit(current_header->status, NEW);
 		setit(current_header->status, UNREAD);
 		clearit(current_header->org_status, NEW);
 		setit(current_header->org_status, UNREAD);
 	      }
 	      
-	      if (index(current_header->mailx_status, 'r') != NULL) {
+	      if (strchr(current_header->mailx_status, 'r') != NULL) {
 		setit(current_header->status, REPLIED_TO);
 		setit(current_header->org_status, REPLIED_TO);
 	      }
@@ -726,7 +726,7 @@ int add_new_only;
 	      lines_start = line;
 	    }
 	    if (in_header == TRUE) {
-	       if ((!whitespace(buffer[0])) && index(buffer, ':') == NULL) {
+	       if ((!whitespace(buffer[0])) && strchr(buffer, ':') == NULL) {
 	        in_header = FALSE;	/* in body of message! */
 	        in_to_list = FALSE;
 	        in_cc_list = FALSE;

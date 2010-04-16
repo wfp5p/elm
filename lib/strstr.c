@@ -63,7 +63,7 @@ const char *s1, *s2;
 
 	if ( len <= strlen(s1)) {
 	    tmpptr = s1;
-	    while ((ptr = index(tmpptr, (int)*s2)) != NULL) {
+	    while ((ptr = strchr(tmpptr, (int)*s2)) != NULL) {
 	        if (strncmp(ptr, s2, len) == 0) {
 	            break;
 	        }

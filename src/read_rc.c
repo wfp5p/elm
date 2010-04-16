@@ -464,7 +464,7 @@ char *word1, *word2;
 		    if (strncmp(s, "rev-", 4) == 0 ||
 			strncmp(s, "reverse-", 8) == 0) {
 			f = -f;
-			s = index(s, '-') + 1;
+			s = strchr(s, '-') + 1;
 		    }
 
 		    for (y= 0; srtval[y].kw; y++) {
@@ -496,7 +496,7 @@ char *word1, *word2;
 		    if (strncmp(s, "rev-", 4) == 0 ||
 			strncmp(s, "reverse-", 8) == 0) {
 			f = -f;
-			s = index(s, '-') + 1;
+			s = strchr(s, '-') + 1;
 		    }
 
 		    for (y= 0; srtval[y].kw; y++) {

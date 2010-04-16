@@ -91,12 +91,12 @@ char *s;
 		return(0);
 	}
 	if (strincmp(s, "text/plain", 10)) return(1);
-	t = (char *) index(s, ';');
+	t = (char *) strchr(s, ';');
 	while (t) {
 		++t;
 		while (*t && isspace(*t)) ++t;
 		if (!strincmp(t, "charset", 7)) {
-			s = (char *) index(t, '=');
+			s = (char *) strchr(t, '=');
 			if (s) {
 				++s;
 				while (*s && (isspace(*s) || *s == '\"')) ++s;
@@ -110,7 +110,7 @@ char *s;
 			}
 			return(1);
 		}
-		t = (char *) index(t, ';');
+		t = (char *) strchr(t, ';');
 	}
 	return(0); /* no charset, was text/plain */
 }

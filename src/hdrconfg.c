@@ -445,7 +445,7 @@ struct hdr_menu_item *h;
     bp = strcpy(buf, allowed_precedences);
     while ((prec = strtok(bp, " \t\n")) != NULL) {
 	bp = NULL;
-	if ((prio = index(prec, ':')) != NULL)
+	if ((prio = strchr(prec, ':')) != NULL)
 	    *prio++ = '\0';
 	if (istrcmp(prec, h->inpval) == 0)
 	    break;
@@ -641,7 +641,7 @@ char *src, *dest;
 
 	char *locpart, *host;
 
-	if (index(src, '@') != NULL
+	if (strchr(src, '@') != NULL
 	 || (locpart = strrchr(src, '!')) == NULL) {
 	  strcpy(dest, src);
 	  return;
@@ -654,7 +654,7 @@ char *src, *dest;
 	else
 	  host = src;
 	sprintf(dest, "%s@%s", locpart, host);
-	if (!index(host, '.'))
+	if (!strchr(host, '.'))
 	  strcat(dest, ".uucp");
 
 	*--locpart = '!';
@@ -681,7 +681,7 @@ const char *cmds;
     }
 
     for (h = hmenu_item_list ; h->menucmd > 0 ; ++h) {
-	if (index(cmds, h->menucmd) != NULL) {
+	if (strchr(cmds, h->menucmd) != NULL) {
 	    hdrmenu_put(h, TRUE);
 	    if (h->lineno > max_lineno)
 		max_lineno = h->lineno;

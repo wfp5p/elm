@@ -372,8 +372,8 @@ char *from;
 	static char *to_me = NULL;
 	static char *to_many = NULL;
 	static char *cc_me = NULL;
-	char *dot = index(from, '.');
-	char *bang = index(from, '!');
+	char *dot = strchr(from, '.');
+	char *bang = strchr(from, '!');
 
 	/*if (show_mlists && !initialized) {*/
 	if (!initialized) {

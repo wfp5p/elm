@@ -438,7 +438,7 @@ add_current_alias()
 
 	/* use full name in current message for default comment */
 	tail_of(current_header->from, comment_buff, current_header->to);
-	if(index(comment_buff, (int)'!') || index(comment_buff, (int)'@'))
+	if(strchr(comment_buff, (int)'!') || strchr(comment_buff, (int)'@'))
 	  /* never mind - it's an address not a full name */
 	  *comment_buff = '\0';
 
@@ -461,7 +461,7 @@ add_current_alias()
 	if (strlen(comment_buff) != 0) {	/* There is something. */
 	    bufptr = comment_buff;
 	    while (*bufptr == ' ') bufptr++;	/* Always strip leading WS */
-	    if ((chspace = index(bufptr, ' ')) != NULL) {
+	    if ((chspace = strchr(bufptr, ' ')) != NULL) {
 	   /*
 	    *   A space means that there is at least (firstname lastname)
 	    *   Get firstname and move bufptr.
@@ -472,7 +472,7 @@ add_current_alias()
 	        while (*bufptr == ' ') bufptr++;
 	    }
 
-above:	    if ((chspace = index(bufptr, ' ')) != NULL) {
+above:	    if ((chspace = strchr(bufptr, ' ')) != NULL) {
 	   /*
 	    *   Another space means a third+ word.  We either have:
 	    *       1. Word 3+ is a comment, or
@@ -657,7 +657,7 @@ int num_to_delete;
 /*
  *	Collapse the to be deleted alias out of line_in_file
  */
-	            rest = index(s, (int)',');
+	            rest = strchr(s, (int)',');
 	            for (++rest; *rest; rest++)
 	              *s++ = *rest;
 	            *s = '\0';
@@ -921,7 +921,7 @@ alias()
 	                              name);
 		                  i = 4;
 		                  while (i < LINES-2) {
-		                      if ((commap = index(address, (int)','))
+		                      if ((commap = strchr(address, (int)','))
 	                                          == NULL) {
 		                          PutLine0(i, 4, address);
 		                          break;
@@ -1363,7 +1363,7 @@ char *buffer, *remainder;
 
 /*	Check to see if an alias */
 
-	if ((s = index(buffer, (int)'=')) == NULL)
+	if ((s = strchr(buffer, (int)'=')) == NULL)
 	  return (0);
 
 	strcpy(remainder, s);		/* Save the remainder of the line */
