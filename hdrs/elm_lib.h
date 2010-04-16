@@ -94,15 +94,6 @@ void figure_out_addressee P_((const char *, const char *, char *));
 char *gcos_name P_((char *, const char *));
 
 
-/* get_tz.c */
-
-#ifdef ANSI_C
-struct tm;
-#endif
-int get_tz_mins P_((void));
-char *get_tz_name P_((struct tm *));
-
-
 /* getarpdate.c */
 
 char *get_arpa_date P_((void));
