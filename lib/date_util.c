@@ -131,7 +131,7 @@ int *day_p;
     int i;
 
     for (i = 0 ; day_name[i] != NULL ; i++) {
-	if (strincmp(day_name[i], str, 3) == 0) {
+	if (strncasecmp(day_name[i], str, 3) == 0) {
 	    *day_p = i+1;
 	    return TRUE;
 	}
@@ -157,7 +157,7 @@ int *month_p;
     int i;
 
     for (i = 0 ; month_name[i] != NULL ; i++) {
-	if (strincmp(month_name[i], str, 3) == 0) {
+	if (strncasecmp(month_name[i], str, 3) == 0) {
 	    *month_p = i+1;
 	    return TRUE;
 	}

@@ -279,7 +279,7 @@ char *cmdline;
      bodypart_set_content(part, BP_CONT_ENCODING, cont_encoding);
 
     actual_type = bodypart_get_content(part, BP_CONT_TYPE);
-    if (actual_type == NULL || strincmp(actual_type, "text", 4) != 0) {
+    if (actual_type == NULL || strncasecmp(actual_type, "text", 4) != 0) {
 	bodypart_guess_content(part, BP_CONT_DESCRIPTION);
 	bodypart_guess_content(part, BP_CONT_MD5);
     }

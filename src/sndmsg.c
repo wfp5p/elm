@@ -793,7 +793,7 @@ SEND_HEADER *shdr;
 	sig = local_signature;
 	for (ptr = strchr(shdr->expanded_to,'@'); ptr;  /* check To: list */
 		    ptr = strchr(ptr+1,'@')) {
-	    if (strincmp(ptr,sitename,len) != 0
+	    if (strncasecmp(ptr,sitename,len) != 0
 			|| (*(ptr+len) != ',' && *(ptr+len) != 0
 			&& *(ptr+len) != ' ')) {
 		sig = remote_signature;
@@ -803,7 +803,7 @@ SEND_HEADER *shdr;
 	if (sig == local_signature) {		   /* still local? */
 	    for (ptr = strchr(shdr->expanded_cc,'@'); ptr;   /* check Cc: */
 			ptr = strchr(ptr+1,'@')) {
-		if (strincmp(ptr,sitename,len) != 0
+		if (strncasecmp(ptr,sitename,len) != 0
 			    || (*(ptr+len) != ',' && *(ptr+len) != 0
 			    && *(ptr+len) != ' ')) {
 		    sig = remote_signature;

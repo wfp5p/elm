@@ -26,7 +26,7 @@
  * If DONT_ADD_FROM is defined the Your name option doesn't do anything so it
  * now doesn't show up (from Larry Schwimmer <rosebud@cyclone.Stanford.EDU>).
  *
- * There were a couple places in mailmsg2 that strincmp was called with only 2
+ * There were a couple places in mailmsg2 that strncasecmp was called with only 2
  * parameters.
  *
  * Revision 1.1.1.1  1995/04/19  20:38:37  wfp5p

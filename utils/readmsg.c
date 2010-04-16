@@ -595,7 +595,7 @@ FILE *fp;
     if (!isspace(buf[0])) {
 	accept_header = weed_dflt_accept;   
 	for (w = Weedlist.next ; w != NULL ; w = w->next) {  
-	    if (strincmp(buf, w->hdrname, w->hdrlen) == 0) {
+	    if (strncasecmp(buf, w->hdrname, w->hdrlen) == 0) {
 		accept_header = !w->hdrskip;
 		break;
 	    }

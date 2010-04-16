@@ -133,7 +133,7 @@ typedef unsigned long size_t;
 
 /* use these ONLY where "d" is a constant string value */
 #define strbegConst(s, d)	(strncmp((s), (d), sizeof(d)-1) == 0)
-#define stribegConst(s, d)	(strincmp((s), (d), sizeof(d)-1) == 0)
+#define stribegConst(s, d)	(strncasecmp((s), (d), sizeof(d)-1) == 0)
 
 /*
  * The macros implement speeded up constant string comparisons.
@@ -150,7 +150,7 @@ typedef unsigned long size_t;
 #define fast_comp_load(c)		FAST_COMP_ch = toupper(c)
 #define fast_strbegConst(s, d)		strbegConst(s, d)
 #define fast_stribegConst(s, d)		(FAST_COMP_ch == (d)[0] \
-	    && strincmp((s), (d), sizeof(d)-1) == 0)
+	    && strncasecmp((s), (d), sizeof(d)-1) == 0)
 #define fast_header_cmp(s, d, result)	(FAST_COMP_ch == (d)[0] \
 	    && header_ncmp((s), (d), sizeof(d)-1, (result), sizeof(result)-1))
 

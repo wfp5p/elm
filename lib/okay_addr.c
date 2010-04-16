@@ -79,13 +79,13 @@ char *address, *return_address;
 	    /* look for user@host or user%host */
 	    if (post == '@' || post == '%') {
 	      char *maybehost = usrp+userlen+1;
-	      if (strincmp(maybehost, host_name, hostlen) == 0 &&
+	      if (strncasecmp(maybehost, host_name, hostlen) == 0 &&
 		  after_okay(maybehost[hostlen])) {
 		/* got user@host */
 		return FALSE;
 	      }
 	      if (! host_equal_hostfull &&
-		  strincmp(maybehost, host_fullname, hostfulllen) == 0 &&
+		  strncasecmp(maybehost, host_fullname, hostfulllen) == 0 &&
 		  after_okay(maybehost[hostfulllen])) {
 		/* got user@fullhost */
 		return FALSE;
@@ -96,7 +96,7 @@ char *address, *return_address;
 	      char *maybehost = usrp-hostlen-1;
 	      if ((maybehost == address ||
 		   (maybehost > address && before_okay(maybehost[-1]))) &&
-	          strincmp(maybehost, host_name, hostlen) == 0) {
+	          strncasecmp(maybehost, host_name, hostlen) == 0) {
 		/* got host!user */
 		return FALSE;
 	      }
@@ -104,7 +104,7 @@ char *address, *return_address;
 	      if (! host_equal_hostfull &&
 		  (maybehost == address ||
 		   (maybehost > address && before_okay(maybehost[-1]))) &&
-	          strincmp(maybehost, host_fullname, hostfulllen) == 0) {
+	          strncasecmp(maybehost, host_fullname, hostfulllen) == 0) {
 		/* got fullhost!user */
 		return FALSE;
 	      }

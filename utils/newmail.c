@@ -461,8 +461,8 @@ register struct folder_struct *cur_folder;
 	  }
 
 	  if (istrcmp(fld_name, "Priority:") == 0) {
-	    if (strincmp(fld_val, "normal", 6) != 0 &&
-	    		strincmp(fld_val, "non-urgent", 10) != 0)
+	    if (strncasecmp(fld_val, "normal", 6) != 0 &&
+	    		strncasecmp(fld_val, "non-urgent", 10) != 0)
 	      hdr.priority = TRUE;
 	    continue;
 	  }

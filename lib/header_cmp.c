@@ -45,7 +45,7 @@ register const char *header, *prefix, *suffix;
 	int len;
 
 	len = strlen(prefix);
-	if (strincmp(header, prefix, len))
+	if (strncasecmp(header, prefix, len))
 		return(NULL);
 
 	/* skip over while space if any */
@@ -66,7 +66,7 @@ register const char *header, *prefix, *suffix;
 	if (suffix != NULL) {
 		len = strlen(suffix);
 		if (len > 0)
-			if (strincmp(header, suffix, len))
+			if (strncasecmp(header, suffix, len))
 				return(NULL);
 	}
 
@@ -84,7 +84,7 @@ header_ncmp(header, prefix, preflen, suffix, sufflen)
 register const char *header, *prefix, *suffix;
 int preflen, sufflen;
 {
-	if (strincmp(header, prefix, preflen))
+	if (strncasecmp(header, prefix, preflen))
 		return 0;
 
 	header += preflen;
@@ -102,7 +102,7 @@ int preflen, sufflen;
 			header++;
 		}
 
-		if (strincmp(header, suffix, sufflen))
+		if (strncasecmp(header, suffix, sufflen))
 			return 0;
 	}
 

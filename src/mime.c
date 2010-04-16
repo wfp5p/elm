@@ -47,7 +47,7 @@ const char *Encoding;
 	return ENCODING_BASE64;
     if (istrcmp(Encoding, ENC_NAME_UUENCODE) == 0)
 	return ENCODING_UUENCODE;
-    if (strincmp(Encoding, "x-", 2) == 0)
+    if (strncasecmp(Encoding, "x-", 2) == 0)
 	return ENCODING_EXPERIMENTAL;
     return ENCODING_ILLEGAL;
 }
@@ -90,19 +90,19 @@ char *s;
 		   reason */
 		return(0);
 	}
-	if (strincmp(s, "text/plain", 10)) return(1);
+	if (strncasecmp(s, "text/plain", 10)) return(1);
 	t = (char *) strchr(s, ';');
 	while (t) {
 		++t;
 		while (*t && isspace(*t)) ++t;
-		if (!strincmp(t, "charset", 7)) {
+		if (!strncasecmp(t, "charset", 7)) {
 			s = (char *) strchr(t, '=');
 			if (s) {
 				++s;
 				while (*s && (isspace(*s) || *s == '\"')) ++s;
-				if (!strincmp(s, display_charset, strlen(display_charset)))
+				if (!strncasecmp(s, display_charset, strlen(display_charset)))
 					return(0);
-				if (!strincmp(s, "us-ascii", 8)) {
+				if (!strncasecmp(s, "us-ascii", 8)) {
 					/* check if configured charset could
 					   display us-ascii */
 					if(charset_ok(display_charset)) return(0);

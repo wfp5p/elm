@@ -710,7 +710,7 @@ int ignoreCase;
         {
 	   if (ignoreCase)
 	   {
-	      if (strincmp(buffer, list[i], strlen(list[i])) == 0)
+	      if (strncasecmp(buffer, list[i], strlen(list[i])) == 0)
 	         return(1);
 	   }
 	   else

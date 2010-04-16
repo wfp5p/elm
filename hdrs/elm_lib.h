@@ -309,12 +309,6 @@ char *shift_lower P_((char *));
 char *strfcpy P_((char *, const char *, int));
 void  strfcat P_((char *, const char *, int));
 
-/* strincmp.c */
-
-int strincmp P_((const char *, const char *, int));
-int istrcmp P_((const char *, const char *));
-
-
 /* striparens.c */
 
 char *strip_parens P_((const char *));
