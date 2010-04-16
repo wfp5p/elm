@@ -642,14 +642,14 @@ char *src, *dest;
 	char *locpart, *host;
 
 	if (index(src, '@') != NULL
-	 || (locpart = rindex(src, '!')) == NULL) {
+	 || (locpart = strrchr(src, '!')) == NULL) {
 	  strcpy(dest, src);
 	  return;
 	}
 
 	*locpart++ = '\0';
 
-	if ((host = rindex(src, '!')) != NULL)
+	if ((host = strrchr(src, '!')) != NULL)
 	  ++host;
 	else
 	  host = src;

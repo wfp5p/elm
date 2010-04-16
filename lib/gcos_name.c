@@ -75,7 +75,7 @@ const char *logname;
      * If there is no '-' before the ending character, then the fullname
      * begins at the beginning of the gcos field.
      */
-    if(firstcp = rindex(gcos_field, '-'))
+    if(firstcp = strrchr(gcos_field, '-'))
 	firstcp++;
     else
 	firstcp = gcos_field;

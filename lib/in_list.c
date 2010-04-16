@@ -77,13 +77,13 @@ char *list, *target;
 	    if(strcmp(next_item, lower_target) == 0)
 		return(TRUE);
 	   
-           if (rindex(lower_target, '*') != NULL) /* do something with wildcards */
+           if (strrchr(lower_target, '*') != NULL) /* do something with wildcards */
 	   {
 	      char tmpStr[SLEN];
 	      char *tptr;
 	      
 	      strcpy(tmpStr,lower_target);
-	      tptr = rindex(tmpStr, '*');
+	      tptr = strrchr(tmpStr, '*');
 	      *tptr = '\0';
 	      
 	      if (strncmp(tmpStr,next_item,strlen(tmpStr)) != 0) /* user is different! */
