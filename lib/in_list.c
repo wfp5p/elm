@@ -27,7 +27,7 @@
  *
  ******************************************************************************/
 
-/** 
+/**
 
 **/
 
@@ -49,7 +49,7 @@ char *list, *target;
 	 * joe		jojoe			no (wrong logname)
 	 * joe		machine!joe		no (similar logname on a perhaps
 	 *					   different machine - to
-	 *					   test this sort of item the 
+	 *					   test this sort of item the
 	 *					   passed target must include
 	 *					   proper machine name, is
 	 *					   in next two examples)
@@ -57,9 +57,9 @@ char *list, *target;
 	 * machine!joe	diffmachine!machine!joe	yes
 	 * joe@machine	jojoe@machine		no  (wrong logname)
 	 * joe@machine	diffmachine!joe@machine	yes
-	 * 
+	 *
 	 * The wildcard * can now also be used.  If there is a wildcard, the
-	 * behaviour is changed slightly.  
+	 * behaviour is changed slightly.
 	 */
 
 	register char	*rest_of_list,
@@ -76,24 +76,24 @@ char *list, *target;
 	    /* see if target matches the whole item */
 	    if(strcmp(next_item, lower_target) == 0)
 		return(TRUE);
-	   
+
            if (strrchr(lower_target, '*') != NULL) /* do something with wildcards */
 	   {
 	      char tmpStr[SLEN];
 	      char *tptr;
-	      
+
 	      strcpy(tmpStr,lower_target);
 	      tptr = strrchr(tmpStr, '*');
 	      *tptr = '\0';
-	      
+
 	      if (strncmp(tmpStr,next_item,strlen(tmpStr)) != 0) /* user is different! */
 	        return(FALSE);
-	      
+
 	      tptr++;
 	      strcpy(tmpStr,tptr);
-	    
+
 	      tptr = next_item;
-	      
+
 	      tptr += strlen(next_item)-strlen(tmpStr);
 
              if (strncmp(tmpStr,tptr,strlen(tmpStr)) != 0)
@@ -101,7 +101,7 @@ char *list, *target;
 	      else
 	        return(TRUE);
 	   }
-	   
+
 	   else
 
 	    if(strpbrk(lower_target,"!@%:") != NULL) {
