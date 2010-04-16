@@ -155,9 +155,7 @@ int  interval_time,		/* how long to sleep between checks */
      current_folder = 0;	/* struct pointer for looping       */
 FILE	*fd = NULL;		/* fd to use to read folders	    */
 
-#ifdef PIDCHECK
 int  parent_pid;		/* See if sucide should be attempt  */
-#endif /* PIDCHECK */
 
 extern int errno;
 
@@ -205,10 +203,10 @@ char *argv[];
 	to_text = catgets(elm_msg_cat, NewmailSet, NewmailTo, "to ");
 	from_text = catgets(elm_msg_cat, NewmailSet, NewmailFrom, "from ");
 
-#ifdef PIDCHECK				/* This will get the pid that         */
-	parent_pid = getppid();		/* started the program, ie: /bin/sh   */
-					/* If it dies for some reason (logout)*/
-#endif /* PIDCHECK */			/* Then exit the program if PIDCHECK  */
+				  /* This will get the pid that         */
+	parent_pid = getppid();	  /* started the program, ie: /bin/sh   */
+				  /* If it dies for some reason (logout)*/
+	                          /* Then exit the program if PIDCHECK  */
 
 	interval_time = DEFAULT_INTERVAL;
 
@@ -273,15 +271,13 @@ char *argv[];
 
 	while (1) {
 
-#ifdef PIDCHECK
 	if ( kill(parent_pid,0))
 		exit(0);
-#else
+
 #ifndef AUTO_BACKGROUND		/* won't work if we're nested this deep! */
 	  if (getppid() == 1) 	/* we've lost our shell! */
 	    exit(0);
 #endif /* AUTO_BACKGROUND */
-#endif /* PIDCHECK */
 
 	  if (! isatty(1))	/* we're not sending output to a tty any more */
 	     exit(0);

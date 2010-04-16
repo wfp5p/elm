@@ -199,7 +199,7 @@ int direction;
       if (mailgroupid != groupid)
         SETGID(mailgroupid); /* reset id so that we can get at lock file */
 
-#ifdef PIDCHECK
+
       /** first, try to read the lock file, and if possible, check the pid.
 	  If we can validate that the pid is no longer active, then remove
 	  the lock file.
@@ -228,7 +228,7 @@ int direction;
         close(create_fd);
 	create_iteration = 0;
       }
-#endif
+
 	      
       /* try to assert create lock file MAX_ATTEMPTS times */
       do {
