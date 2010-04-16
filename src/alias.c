@@ -1614,7 +1614,7 @@ char *address;
 	get_return_address(address, return_address);
 	
 	for (i = 0; i < num_aliases; i++) {
-	    if (istrcmp(return_address, aliases[i]->address) == 0)
+	    if (strcasecmp(return_address, aliases[i]->address) == 0)
 		return aliases[i]->alias;
 	}
 	return NULL;

@@ -42,7 +42,7 @@ char *lastsite;
 
 	stripped = strip_parens(site);
 
-	if (istrcmp(stripped, "uucp") != 0)
+	if (strcasecmp(stripped, "uucp") != 0)
 	  if (strcmp(stripped, lastsite) != 0) {
 	    if (buffer[0] == '\0')
 	      strcpy(buffer, stripped);         /* first in list! */

@@ -433,34 +433,34 @@ register struct folder_struct *cur_folder;
 	    } while (isspace(*fld_val));
 	  }
 
-	  if (istrcmp(fld_name, ">From") == 0) {
+	  if (strcasecmp(fld_name, ">From") == 0) {
 	    forwarded(fld_val, hdr.from);
 	    continue;
 	  }
 
-	  if (istrcmp(fld_name, "To:") == 0) {
+	  if (strcasecmp(fld_name, "To:") == 0) {
 	    figure_out_addressee(fld_val, user_name, hdr.to);
 	    continue;
 	  }
 
-	  if (istrcmp(fld_name, "Subject:") == 0) {
+	  if (strcasecmp(fld_name, "Subject:") == 0) {
 	    strfcpy(hdr.subject, fld_val, sizeof(hdr.subject));
 	    continue;
 	  }
 
-	  if (istrcmp(fld_name, "Re:") == 0) {
+	  if (strcasecmp(fld_name, "Re:") == 0) {
 	    if (hdr.subject[0] == '\0')
 	      strfcpy(hdr.subject, fld_val, sizeof(hdr.subject));
 	    continue;
 	  }
 
-	  if (istrcmp(fld_name, "Importance:") == 0) {
+	  if (strcasecmp(fld_name, "Importance:") == 0) {
 	    if (atoi(fld_val) >= 2)
 	      hdr.priority = TRUE;
 	    continue;
 	  }
 
-	  if (istrcmp(fld_name, "Priority:") == 0) {
+	  if (strcasecmp(fld_name, "Priority:") == 0) {
 	    if (strncasecmp(fld_val, "normal", 6) != 0 &&
 	    		strncasecmp(fld_val, "non-urgent", 10) != 0)
 	      hdr.priority = TRUE;

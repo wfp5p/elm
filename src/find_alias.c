@@ -48,7 +48,7 @@ int alias_type;
 
 	while (++loc < (num_aliases+num_duplicates)) {
 	    if ( aliases[loc]->type & alias_type ) {
-	        if (istrcmp(word, aliases[loc]->alias) == 0)
+	        if (strcasecmp(word, aliases[loc]->alias) == 0)
 	            return(loc);
 	    }
 	}

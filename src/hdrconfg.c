@@ -447,7 +447,7 @@ struct hdr_menu_item *h;
 	bp = NULL;
 	if ((prio = strchr(prec, ':')) != NULL)
 	    *prio++ = '\0';
-	if (istrcmp(prec, h->inpval) == 0)
+	if (strcasecmp(prec, h->inpval) == 0)
 	    break;
     }
 

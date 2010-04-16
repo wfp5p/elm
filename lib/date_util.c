@@ -263,7 +263,7 @@ int *mins_p;
 	tz = 1;
     }
     for (p = tzone_info; p->str; p++) {
-	if (istrcmp(p->str, str) == 0) {
+	if (strcasecmp(p->str, str) == 0) {
 	    *mins_p = tz * p->offset;
 	    return TRUE;
 	}
@@ -346,9 +346,9 @@ int *hours_p, *mins_p, *secs_p;
      */
     add_hrs = 0;
     if (len > 3) {
-	if (istrcmp(str+len-2, "am") == 0) {
+	if (strcasecmp(str+len-2, "am") == 0) {
 		str[len -= 2] = '\0';
-	} else if (istrcmp(str+len-2, "pm") == 0) {
+	} else if (strcasecmp(str+len-2, "pm") == 0) {
 		str[len -= 2] = '\0';
 		add_hrs = 12;
 	}

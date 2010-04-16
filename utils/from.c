@@ -149,13 +149,13 @@ char *argv[];
 			       default:       usage(argv[0]);
 					      exit(EXIT_ERROR);
 			     }
-			   } else if (istrcmp(optarg,"new") == 0)
+			   } else if (strcasecmp(optarg,"new") == 0)
 			     selct |= NEW_MSG;
-			   else if (istrcmp(optarg,"old") == 0)
+			   else if (strcasecmp(optarg,"old") == 0)
 			     selct |= OLD_MSG;
-			   else if (istrcmp(optarg,"unread") == 0)
+			   else if (strcasecmp(optarg,"unread") == 0)
 			     selct |= OLD_MSG;
-			   else if (istrcmp(optarg,"read") == 0)
+			   else if (strcasecmp(optarg,"read") == 0)
 			     selct |= READ_MSG;
 			   else {
 			     usage(argv[0]);

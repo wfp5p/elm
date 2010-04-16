@@ -75,15 +75,15 @@ char *argv[];
  *	-p = prompt for phone slip messages
  */
 	for (msgnum = 1; msgnum < argc; msgnum++) {
-	  if (istrcmp(argv[msgnum], "-u") == 0)
+	  if (strcasecmp(argv[msgnum], "-u") == 0)
 	    allow_name = 1;
-	  if (istrcmp(argv[msgnum], "-p") == 0)
+	  if (strcasecmp(argv[msgnum], "-p") == 0)
 	    phone_slip = 1;
-	  if (istrcmp(argv[msgnum], "-pu") == 0) {
+	  if (strcasecmp(argv[msgnum], "-pu") == 0) {
 	    allow_name = 1;
 	    phone_slip = 1;
 	  }
-	  if (istrcmp(argv[msgnum], "-up") == 0) {
+	  if (strcasecmp(argv[msgnum], "-up") == 0) {
 	    allow_name = 1;
 	    phone_slip = 1;
 	  }
@@ -109,10 +109,10 @@ prompt:   printf(catgets(elm_msg_cat, AnswerSet, AnswerMessageTo, "\nMessage to:
 	  if(recip_name[0] == '\0')
 		goto prompt;
 
-	  if ((istrcmp(recip_name, quit_word) == 0) ||
-	      (istrcmp(recip_name, exit_word) == 0) ||
-	      (istrcmp(recip_name, done_word) == 0) ||
-	      (istrcmp(recip_name, bye_word)  == 0))
+	  if ((strcasecmp(recip_name, quit_word) == 0) ||
+	      (strcasecmp(recip_name, exit_word) == 0) ||
+	      (strcasecmp(recip_name, done_word) == 0) ||
+	      (strcasecmp(recip_name, bye_word)  == 0))
 	     exit(0);
 
 	  if (translate(recip_name, name) == 0)

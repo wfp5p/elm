@@ -225,7 +225,7 @@ char *string;
     match = -1;
 
     for (i = 0; i < entry->ml_to.len; i++) {
-	if (istrcmp(entry->ml_to.str[i], addr) == 0) {
+	if (strcasecmp(entry->ml_to.str[i], addr) == 0) {
 	    match = i;
 	    break;
 	}

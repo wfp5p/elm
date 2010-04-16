@@ -35,17 +35,17 @@ const char *Encoding;
 {
     if (Encoding == NULL || *Encoding == '\0')
 	return ENCODING_NONE;
-    if (istrcmp(Encoding, ENC_NAME_7BIT) == 0)
+    if (strcasecmp(Encoding, ENC_NAME_7BIT) == 0)
 	return ENCODING_7BIT;
-    if (istrcmp(Encoding, ENC_NAME_8BIT) == 0)
+    if (strcasecmp(Encoding, ENC_NAME_8BIT) == 0)
 	return ENCODING_8BIT;
-    if (istrcmp(Encoding, ENC_NAME_BINARY) == 0)
+    if (strcasecmp(Encoding, ENC_NAME_BINARY) == 0)
 	return ENCODING_BINARY;
-    if (istrcmp(Encoding, ENC_NAME_QUOTED) == 0)
+    if (strcasecmp(Encoding, ENC_NAME_QUOTED) == 0)
 	return ENCODING_QUOTED;
-    if (istrcmp(Encoding, ENC_NAME_BASE64) == 0)
+    if (strcasecmp(Encoding, ENC_NAME_BASE64) == 0)
 	return ENCODING_BASE64;
-    if (istrcmp(Encoding, ENC_NAME_UUENCODE) == 0)
+    if (strcasecmp(Encoding, ENC_NAME_UUENCODE) == 0)
 	return ENCODING_UUENCODE;
     if (strncasecmp(Encoding, "x-", 2) == 0)
 	return ENCODING_EXPERIMENTAL;
@@ -84,7 +84,7 @@ char *s;
 	char *t;
 	if (!s) return(1);
 	while (*s && isspace(*s)) ++s;
-	if (istrcmp(s, "text\n") == 0) {
+	if (strcasecmp(s, "text\n") == 0) {
 		/* old MIME spec, subtype now obligat, accept it as
 		   "text/plain; charset=us-ascii" for compatibility
 		   reason */
@@ -127,7 +127,7 @@ char *s;
     bp = strcpy(buf, charset_compatlist);
     while ((chset = strtok(bp, " \t\n")) != NULL) {
 	bp = NULL;
-	if (istrcmp(chset, s) == 0)
+	if (strcasecmp(chset, s) == 0)
 	    break;
     }
 

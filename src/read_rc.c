@@ -560,13 +560,13 @@ char *string;
 	      *p = ' ';
 	  }
 
-	  if (! istrcmp(header, "*end-of-user-headers*"))
+	  if (! strcasecmp(header, "*end-of-user-headers*"))
 	    break;
 
-	  if (! istrcmp(header, "*end-of-defaults*"))
+	  if (! strcasecmp(header, "*end-of-defaults*"))
 	    finished = TRUE;
 
-	  if (! istrcmp(header, "*clear-weed-list*")) {
+	  if (! strcasecmp(header, "*clear-weed-list*")) {
 	    while (weedcount)
 	      free(weedlist[--weedcount]);
 	    header = "*end-of-defaults*";
@@ -644,7 +644,7 @@ char *string;
      if (!*f)
       continue;
 
-    if (!istrcmp(f, "*end-of-incoming-folders*"))
+    if (!strcasecmp(f, "*end-of-incoming-folders*"))
       break;
 
     strcpy (filename, f);

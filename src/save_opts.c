@@ -311,9 +311,9 @@ int optnum;
 	len = strlen(save_info[optnum].name) + 6;
 
 	i = 0;
-	while (i < weedcount && istrcmp(weedlist[i], "*end-of-defaults*") != 0)
+	while (i < weedcount && strcasecmp(weedlist[i], "*end-of-defaults*") != 0)
 	    i++;
-	while (i < weedcount && istrcmp(weedlist[i], "*end-of-defaults*") == 0)
+	while (i < weedcount && strcasecmp(weedlist[i], "*end-of-defaults*") == 0)
 	    i++;
 	if (i == 1) {
 	    /* end-of-defaults in the first position means

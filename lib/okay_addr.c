@@ -56,7 +56,7 @@ char *address, *return_address;
 
 	if (first_time) {
 	  /* username and hostname don't change, so do this only once */
-	  host_equal_hostfull = (istrcmp(host_name, host_fullname) == 0);
+	  host_equal_hostfull = (strcasecmp(host_name, host_fullname) == 0);
 	  userlen = strlen(user_name);
 	  hostlen = strlen(host_name);
 	  hostfulllen = strlen(host_fullname);
