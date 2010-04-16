@@ -184,12 +184,6 @@ args_version()
 	printf("\t(C) Copyright 1988-1999 USENET Community Trust\n");
 	printf("\tBased on Elm 2.0, (C) Copyright 1986,1987 Dave Taylor\n");
 
-#ifdef DONT_ADD_FROM
-	printf("\tLet the MTA add the From: header: DONT_ADD_FROM\n");
-#else /* DONT_ADD_FROM */
-	printf("\tElm will add the From: header: not DONT_ADD_FROM\n");
-#endif /* DONT_ADD_FROM */
-
 	printf("\tFollowing mail spool locking protocols will be used:");
 #ifdef USE_DOTLOCK_LOCKING
 	printf(" USE_DOTLOCK_LOCKING (.lock)");

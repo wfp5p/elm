@@ -87,13 +87,8 @@
 #undef onoff
 #define   onoff(n)	(n == 1? on_name : off_name)
 
-#ifdef DONT_ADD_FROM
+
 #define CONFIG_OPTIONS "^_defsopv_am_un"
-#else
-#define CONFIG_OPTIONS "^_defsopyv_am_un"
-#endif
-
-
 
 extern char *alias_sort_name(), *sort_name();
 

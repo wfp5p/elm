@@ -91,11 +91,9 @@ char *argv[];
     comments = NULL;
     inreplyto = NULL;
     references = NULL;
-#ifdef DONT_ADD_FROM
+
     add_from = FALSE;
-#else
-    add_from = TRUE;
-#endif
+
 
     while ((i = getopt(argc, argv, "b:c:C:df:F:i:r:R:s:")) != EOF) {
 	switch (i) {

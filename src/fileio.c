@@ -102,11 +102,8 @@ int msgnum, cm_options;
     int update_status	= !!(cm_options & CM_UPDATE_STATUS);
     int remail		= !!(cm_options & CM_REMAIL);
 
-#ifdef DONT_ADD_FROM
+
     int strip_from = remail;
-#else /* DONT_ADD_FROM */
-    int strip_from = FALSE;
-#endif /* DONT_ADD_FROM */
     int	end_header = 0;
     int sender_added = 0;
     static int start_encode_len = 0, end_encode_len = 0;

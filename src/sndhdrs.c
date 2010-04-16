@@ -66,18 +66,6 @@ const char *hdrname, *hdrvalue;
     putc('\n', fp);
 }
 
-
-#ifndef DONT_ADD_FROM
-static char *outbound_from_name(buf)
-char *buf;
-{
-    sprintf(buf, "\"%s\" <%s@%s>", user_fullname, user_name, host_name);
-    return buf;
-}
-#endif /* !DONT_ADD_FROM */
-
-
-
 PUBLIC int sndhdr_output(fp, shdr, is_form, is_copy)
 FILE *fp;
 const SEND_HEADER *shdr;
@@ -109,9 +97,6 @@ int is_form, is_copy;
     write_header_line(fp, "To:",
 		format_long(shdr->expanded_to, sizeof("To: ")-1));
     write_header_line(fp, "Date:", get_arpa_date());
-#ifndef DONT_ADD_FROM
-    write_header_line(fp, "From:", outbound_from_name(buffer));
-#endif
     if (*shdr->cc) {
 	write_header_line(fp, "Cc:",
 		    format_long(shdr->expanded_cc, sizeof("Cc: ")-1));
