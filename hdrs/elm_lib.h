@@ -263,13 +263,6 @@ SIGHAND_TYPE (*posix_signal P_((int, SIGHAND_TYPE (*)(int)))) P_((int));
 #endif
 
 
-/* putenv.c */
-
-#ifndef PUTENV
-int putenv P_((const char *));
-#endif
-
-
 /* qstrings.c */
 
 char *qstrpbrk P_((const char *, const char *));
