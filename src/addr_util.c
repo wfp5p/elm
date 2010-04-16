@@ -299,13 +299,8 @@ char *to, *full_to;
 	      to_len += 2;
 	    }
 	    if (valid_name(word)) {
-#if defined(INTERNET) & defined(USE_DOMAIN)
-	      sprintf(full_to+to_len, "%s@%s", word, host_fullname);
-	      to_len += strlen(word)+1+strlen(host_fullname);
-#else /* INTERNET and USE_DOMAIN */
 	      (void) strcpy(full_to+to_len, word);
 	      to_len += strlen(word);
-#endif /* INTERNET and USE_DOMAIN */
 
 	      if (next_word[0] != '(')
 		if ((gecos = get_full_name(word)) != NULL && *gecos != '\0') {
