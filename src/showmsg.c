@@ -320,7 +320,7 @@ int number;
 			  ? nls_deleted : form_letter ? nls_form : nls_message,
 		    number, curr_folder.num_mssgs);
 	  MCsprintf(title2, "%s %s", using_to? nls_to : nls_from, who);
-	  elm_date_str(title3, current_header, FALSE);
+	  elm_date_str(title3, current_header);
 	  strcat(title3, " ");
 	  strcat(title3, current_header->time_zone);
 

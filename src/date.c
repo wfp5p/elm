@@ -116,14 +116,12 @@ char *name;
 }
 
 char *
-elm_date_str(buf, entry, show_century)
+elm_date_str(buf, entry)
 char *buf;
 struct header_rec *entry;
-int show_century;
 {
 	time_t secs = (entry->time_sent + entry->tz_offset);
-	char *fmt = (show_century ? "%b %d, %Y %r" : "%b %d, %y %r");
-	strftime(buf, SLEN, fmt, gmtime(&secs));
+	strftime(buf, SLEN, "%b %d, %Y %r", gmtime(&secs));
 	return buf;
 }
 

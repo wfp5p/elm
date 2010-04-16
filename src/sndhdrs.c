@@ -138,7 +138,6 @@ int msg;
 {
     char from_buf[SLEN], *q;
     struct header_rec *hdr = curr_folder.headers[msg];
-    extern char *elm_date_str();
 
     assert(msg >= 0 && msg < curr_folder.num_mssgs);
 
@@ -149,11 +148,6 @@ int msg;
 
     /* don't quote already-quoted name */
     q = (from_buf[0] == '"' ? "" : "\"");
-
-/*    sprintf(shdr->in_reply_to, "%s from %s%s%s at %s",
-	(*hdr->messageid ? hdr->messageid : "<no.id>"),
-	q, from_buf, q,
-	elm_date_str(date_buf, hdr, TRUE)); */
 
    sprintf(shdr->in_reply_to, "%s",
 	    (*hdr->messageid ? hdr->messageid : "<no.id>"));
