@@ -236,11 +236,6 @@ typedef unsigned long size_t;
 #     include <strings.h>
 #   endif
 # endif
-  extern char *index(), *rindex();
-  extern char *strcpy(), *strcat(), *strncpy();
-  /* following are provided by libutil.a for systems that lack them */
-  extern char *strstr(), *strtok(), *strpbrk();
-  extern int strspn(), strcspn();
 #endif
 
 
