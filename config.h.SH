@@ -37,12 +37,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
 #define CPPSTDIN "$cppstdin"
 #define CPPMINUS "$cppminus"
 
-/* DISP_HOST:
- *	This symbol, if defined, indicates that elm should display the
- *	host name on the index screen.
- */
-#$d_disphost	DISP_HOST /**/
-
 
 /* USE_FLOCK_LOCKING
  *	This symbol, if defined, indicates that the flock mailbox locking should be used.

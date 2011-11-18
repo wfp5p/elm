@@ -79,11 +79,13 @@ update_title()
 		mailbox = catgets(elm_msg_cat, ElmSet, ElmMailbox, "Mailbox");
 	}
 
-#ifdef DISP_HOST
-	sprintf(folder_string, "%s:%s", host_name, nameof(curr_folder.filename));
-#else
+/* FIXME make this user configureable
+/* #ifdef DISP_HOST */
+/* 	sprintf(folder_string, "%s:%s", host_name, nameof(curr_folder.filename)); */
+/* #else */
+
 	strcpy(folder_string, nameof(curr_folder.filename));
-#endif
+
 
 	if (selected)
 	  MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmShownWithSelect,
