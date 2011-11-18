@@ -16,8 +16,10 @@ standard mailhandling features, including MIME support via metamail.
 %prep
 %setup -q
 
-sed "s|BUILD_DIR|'$RPM_BUILD_DIR/%{name}%{version}'|" config.sh.build >config.sh
+sed "s|BUILD_DIR|'$RPM_BUILD_DIR/%{name}-%{version}'|" config.sh.build >config.sh
 sed -i "s|BUILD_ROOT|$RPM_BUILD_ROOT|"  config.sh
+sed -i "s|LIB_DIR|%{_libdir}|" config.sh
+
 echo "ELM_VERSION = %{version}" >ELM-VERSION-FILE
 
 
