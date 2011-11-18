@@ -70,10 +70,9 @@ int form;
 	      savename[SLEN],	/* name of file saving into    */
 	      msg_buffer[SLEN];
 	char *return_alias;
-	register int
-	     is_ordinary_file;
+	int is_ordinary_file;
 	int  err;
-  
+
 	/* presume fname_dest is okay as is for now */
 	strcpy(savename, fname_dest);
 

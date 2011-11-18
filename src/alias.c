@@ -74,7 +74,7 @@ DBZ *system_hash = NULL, *user_hash = NULL;
 open_alias_files(are_in_aliases)
 int are_in_aliases;
 {
-	if(open_system_aliases() | open_user_aliases()) {
+	if(open_system_aliases() || open_user_aliases()) {
 	    dprint(5, (debugfile,
 		      "Reading alias data files...\n"));
 	    get_aliases(are_in_aliases);

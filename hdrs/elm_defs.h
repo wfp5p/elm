@@ -182,11 +182,7 @@ typedef unsigned long size_t;
 # endif
 #endif
 
-#ifdef __alpha
-# define int32 int
-#else
-# define int32 long
-#endif
+#define int32  int32_t
 
 /* avoid conflict with typedef'd word */
 #ifdef CRAY
