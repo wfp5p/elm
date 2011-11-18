@@ -16,7 +16,7 @@ char *get_arpa_date()
 
 	time(&curr_time);
 
-	strftime(buffer, SLEN, "%a, %d %b %Y %T %z (%Z)", localtime(&curr_time));
+	strftime(buffer, SLEN, "%a, %d %b %Y %T %z", localtime(&curr_time));
 
 	return buffer;
 }
