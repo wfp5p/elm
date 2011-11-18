@@ -922,7 +922,7 @@ int n, selected;
 
     if (!FB_DUMMYMODE) {
 	*bp++ = ' ';
-	if ((pw = fast_getpwuid(dl->entry[n].uid)) != NULL)
+	if ((pw = getpwuid(dl->entry[n].uid)) != NULL)
 	    (void) sprintf(bp, "%-8.8s", pw->pw_name);
 	else
 	    (void) sprintf(bp, "%-8d", dl->entry[n].uid);

@@ -144,7 +144,7 @@ INSTS =
 
 SRCS = add_site.c addrmchusr.c aliasdb.c atonum.c basename.c can_access.c \
 	can_open.c chloc.c date_util.c elm_access.c elmrc.c expand.c \
-	fast_getpw.c figadrssee.c gcos_name.c getarpdate.c \
+	figadrssee.c gcos_name.c getarpdate.c \
 	getfullnam.c gethostname.c getword.c header_cmp.c in_list.c \
 	initcommon.c ldstate.c len_next.c $(MCSRC) mail_gets.c mailfile.c \
 	mk_aliases.c mk_lockname.c mlist.c move_left.c ndbz.c okay_addr.c \
@@ -156,7 +156,7 @@ SRCS = add_site.c addrmchusr.c aliasdb.c atonum.c basename.c can_access.c \
 
 OBJS = add_site.o addrmchusr.o aliasdb.o atonum.o basename.o can_access.o \
 	can_open.o chloc.o date_util.o elm_access.o elmrc.o expand.o \
-	fast_getpw.o figadrssee.o gcos_name.o getarpdate.o \
+	figadrssee.o gcos_name.o getarpdate.o \
 	getfullnam.o gethostname.o getword.o header_cmp.o in_list.o \
 	initcommon.o ldstate.o len_next.o mail_gets.o mailfile.o \
 	$(MCOBJ) mk_aliases.o mk_lockname.o mlist.o move_left.o ndbz.o \

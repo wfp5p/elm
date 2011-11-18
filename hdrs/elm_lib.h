@@ -76,14 +76,6 @@ int expand P_((char *));
 char *expand_define P_((const char *));
 
 
-/* fast_getpw.c */
-
-#ifdef ANSI_C
-struct passwd;
-#endif
-struct passwd *fast_getpwuid P_((int));
-
-
 /* figadrssee.c */
 
 void figure_out_addressee P_((const char *, const char *, char *));
