@@ -53,6 +53,8 @@ char *format_long();
 
 static const char *cf_english P_((const char *));
 
+extern char *address_to_alias(const char *address);
+
 
 /*
  * save_copy() - Append a copy of the message contained in "filename" to
@@ -79,7 +81,7 @@ int form;
 	/* if save_by_name or save_by_alias wanted */
 	if((strcmp(fname_dest, "=") == 0)  || (strcmp(fname_dest, "=?") == 0)) {
 	    if ((save_by_alias &&
-		   (return_alias = (char *) address_to_alias(shdr->expanded_to)) != NULL))
+		   (return_alias = address_to_alias(shdr->expanded_to)) != NULL))
 		strcpy(buffer, return_alias);
 	    else
 	        if (save_by_name)
