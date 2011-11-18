@@ -38,8 +38,8 @@ mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1
 
 make install
 
-/bin/rm $RPM_BUILD_ROOT/%{_bindir}/mmencode
-/bin/rm $RPM_BUILD_ROOT/%{_mandir}/man1/mmencode*
+/bin/rm -f $RPM_BUILD_ROOT/%{_bindir}/mmencode
+/bin/rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/mmencode*
 
 %clean
 #rm -rf $RPM_BUILD_ROOT
