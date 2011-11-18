@@ -427,23 +427,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
 #$i_utime	I_UTIME	/**/
 #$i_sysutime	I_SYSUTIME	/**/
 
-/* PASSNAMES:
- *	This symbol, if defined, indicates that full names are stored in
- *	the /etc/passwd file.
- */
-/* BERKNAMES:
- *	This symbol, if defined, indicates that full names are stored in
- *	the /etc/passwd file in Berkeley format (name first thing, everything
- *	up to first comma, with & replaced by capitalized login ID, yuck).
- */
-/* USGNAMES:
- *	This symbol, if defined, indicates that full names are stored in
- *	the /etc/passwd file in USG format (everything after - and before ( is
- *	the name).
- */
-#$d_passnames	PASSNAMES /*  (undef to take name from ~/.fullname) */
-#$d_berknames	BERKNAMES /* (that is, ":name,stuff:") */
-#$d_usgnames	USGNAMES  /* (that is, ":stuff-name(stuff):") */
 
 /* SIG_TYPE:
  *	This symbol contains the type name of the signal handler functions.

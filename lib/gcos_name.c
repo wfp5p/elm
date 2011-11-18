@@ -32,9 +32,6 @@ char *gcos_field;
 const char *logname;
 {
     /** Return the full name found in a passwd file gcos field **/
-
-#ifdef BERKNAMES
-
     static char fullname[SLEN];
     const char *gcoscp, *lncp;
     char *fncp, *end;
@@ -54,37 +51,8 @@ const char *logname;
 	    *fncp++ = *gcoscp;
 	}
     }
-    
+
     *fncp = '\0';
     return(fullname);
-#else
-#ifdef USGNAMES
 
-    char *firstcp, *lastcp;
-
-    /* The last character of the full name is the one preceding the first
-     * '('. If there is no '(', then the full name ends at the end of the
-     * gcos field.
-     */
-    if(lastcp = strchr(gcos_field, '('))
-	*lastcp = '\0';
-
-    /* The first character of the full name is the one following the 
-     * last '-' before that ending character. NOTE: that's why we
-     * establish the ending character first!
-     * If there is no '-' before the ending character, then the fullname
-     * begins at the beginning of the gcos field.
-     */
-    if(firstcp = strrchr(gcos_field, '-'))
-	firstcp++;
-    else
-	firstcp = gcos_field;
-
-    return(firstcp);
-
-#else
-    /* use full gcos field */
-    return(gcos_field);
-#endif
-#endif
 }
