@@ -225,11 +225,12 @@ static long hash(register char *name, register int size);
 static void crcinit(void);
 static int isprime(register long x);
 static FILE *latebase(register DBZ *db);
+static char *enstring(char *s1, char *s2);
 
 /* file-naming stuff */
 static char dir[] = ".dir";
 static char pag[] = ".pag";
-static char *enstring();
+
 
 /* central data structures */
 static int32_t *getcore(register DBZ *db);
