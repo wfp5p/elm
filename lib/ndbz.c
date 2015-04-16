@@ -220,11 +220,6 @@ static int set();
 #define	MAPIN(o)	((db->dbz_bytesame) ? (o) : bytemap((o), db->dbz_conf.bytemap, db->dbz_mybmap))
 #define	MAPOUT(o)	((db->dbz_bytesame) ? (o) : bytemap((o), db->dbz_mybmap, db->dbz_conf.bytemap))
 
-/* externals used */
-#if !defined(atol)  /* avoid problems with systems that declare atol as a macro */
-extern long atol();
-#endif
-
 /* misc. forwards */
 static long hash(register char *name, register int size);
 static void crcinit(void);
