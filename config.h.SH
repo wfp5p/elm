@@ -110,17 +110,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
  */
 #$d_newauto AUTO_BACKGROUND /**/
 
-/* DONT_ADD_FROM:
- *	This symbol, if defined, indicates that elm should not add
- *	the From: header
- */
-/* USE_DOMAIN:
- *	This symbol, if defined, indicates that elm should add
- *	the domain name to our address
- */
-#$d_noaddfrom	DONT_ADD_FROM /**/
-#$d_usedomain	USE_DOMAIN /**/
-
 /* NO_XHEADER:
  *	This symbol, if defined, will not automatically add "X-Mailer:"
  *	headers.
