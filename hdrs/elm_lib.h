@@ -66,10 +66,6 @@ long make_gmttime P_((int, int, int, int, int, int));
 int elm_access P_((const char *, int));
 
 
-/* errno.c */
-
-extern int errno;
-
 /* expand.c */
 
 int expand P_((char *));
