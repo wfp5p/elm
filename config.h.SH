@@ -69,22 +69,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
  */
 #$d_ftruncate	FTRUNCATE		/**/
 
-/* GETHOSTNAME:
- *	This symbol, if defined, indicates that the C program may use the
- *	gethostname() routine to derive the host name.  See also DOUNAME.
- */
-/* DOUNAME:
- *	This symbol, if defined, indicates that the C program may use the
- *	uname() routine to derive the host name.  See also GETHOSTNAME.
- */
-/* HOSTCOMPILED:
- *	This symbol, if defined, indicated that the host name is compiled
- *	in from the string hostname
- */
-#$d_gethname	GETHOSTNAME	/**/
-#$d_douname	DOUNAME		/**/
-#$d_host_comp	HOSTCOMPILED	/**/
-
 /* index:
  *	This preprocessor symbol is defined, along with rindex, if the system
  *	uses the strchr and strrchr routines instead.
