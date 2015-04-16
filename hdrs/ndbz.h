@@ -129,22 +129,17 @@ typedef struct dbz {
 /* FOO - should these declarations be ANSIfied? */
 
 /* standard dbz functions */
-extern DBZ *dbz_open();
-extern datum dbz_fetch();
-extern int dbz_store();
-extern int dbz_delete();	/* not in dbz */
-extern datum dbz_firstkey();	/* not in dbz */
-extern datum dbz_nextkey();	/* not in dbz */
-extern int dbz_close();		/* in dbz, but not in old dbm */
+extern DBZ *dbz_open(char *name, int mode, int flags);
+extern datum dbz_fetch(DBZ *db, datum key);
+extern int dbz_store(DBZ *db, datum key, datum data);
+extern int dbz_close(DBZ *db);
 
 /* new stuff for dbz */
-extern DBZ *dbz_fresh();
-extern DBZ *dbz_again();
-extern int dbz_sync();
-extern long dbz_size();
-extern int dbz_incore();
-extern int dbz_cancel();
-extern int dbz_debug();
+extern DBZ *dbz_fresh(char *name, long size, int fs, int32_t tagmask);
+extern DBZ *dbz_again(char *name, char *oldname);
+extern int dbz_sync(register DBZ *db);
+extern int dbz_incore(int value);
+extern int dbz_cancel(register DBZ *db);
 
 /*
  * In principle we could handle unlimited-length keys by operating a chunk

@@ -321,7 +321,7 @@ DBZ *dbz_fresh(char *name, long size, int fs, int32_t tagmask)
 /*
  - dbz_size - what's a good table size to hold this many entries?
  */
-long dbzsize(long contents)
+static long dbzsize(long contents)
 {
 	register long n;
 
