@@ -177,9 +177,10 @@ int do_newalias P_((char *, char *, int, int));
 char *mk_lockname P_((const char *));
 
 
-/* mlist.c */
-
-	/* ##### defined in parseaddrs.h ##### */
+/* mlist.c some here, some in parseaddrs.h */
+extern void mlist_parse_header_rec(struct header_rec *entry);
+extern int mlist_match_user(struct header_rec *entry);
+extern int mlist_match_address(struct header_rec *entry, char *string);
 
 
 /* move_left.c */
