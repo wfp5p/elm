@@ -38,9 +38,7 @@
 	((c) == 0 || (c) == '>' || (c) == ':' || (c) == '%' || (c) == '@' || \
 	 (c) == ' ' || (c) == ',' || (c) == '\r' || (c) == '\n')
 
-int
-okay_address(address, return_address)
-char *address, *return_address;
+int okay_address(char *address, char *return_address)
 {
 	/** This routine checks to ensure that the address we just got
 	    from the "To:" or "Cc:" line isn't us AND isn't the person	

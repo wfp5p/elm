@@ -26,10 +26,7 @@
 
 #include "elm_defs.h"
 
-char *
-gcos_name(gcos_field, logname)
-char *gcos_field;
-const char *logname;
+char *gcos_name(char *gcos_field, const char *logname)
 {
     /** Return the full name found in a passwd file gcos field **/
     static char fullname[SLEN];

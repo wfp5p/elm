@@ -32,10 +32,7 @@
 #include "elm_defs.h"
 #include "port_stat.h"
 
-int
-elm_access(file, mode)
-const char *file; 
-int   mode;
+int elm_access(const char *file, int mode)
 {
 	/** returns ZERO iff access to file is permitted, or if exists
 	    access is being checked if a bare symlink exists

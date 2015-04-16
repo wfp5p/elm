@@ -29,8 +29,7 @@
 
 #include "elm_defs.h"
 
-char *shift_lower(string)
-register char *string;
+char *shift_lower(char *string)
 {
 	/** return 'string' shifted to lower case.  Do NOT touch the
 	    actual string handed to us! **/

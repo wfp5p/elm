@@ -28,12 +28,11 @@
 
 #include "elm_defs.h"
 
-char *qstrpbrk(source, keys)
-const char *source, *keys;
+char *qstrpbrk(const char *source, const char *keys)
 {
 	/** Returns a pointer to the first character of source that is any
 	    of the specified keys, or NULL if none of the keys are present
-	    in the source string. 
+	    in the source string.
 	**/
 
 	register const char *s, *k;
@@ -49,18 +48,16 @@ const char *source, *keys;
 	  }
 	  s += len;
 	}
-	
+
 	return(NULL);
 }
 
-int
-qstrspn(source, keys)
-const char *source, *keys;
+int qstrspn(const char *source, const char *keys)
 {
 	/** This function returns the length of the substring of
 	    'source' (starting at zero) that consists ENTIRELY of
 	    characters from 'keys'.  This is used to skip over a
-	    defined set of characters with parsing, usually. 
+	    defined set of characters with parsing, usually.
 	**/
 
 	register int loc = 0, key_index = 0, len;
@@ -80,14 +77,12 @@ const char *source, *keys;
 	return(loc);
 }
 
-int
-qstrcspn(source, keys)
-const char *source, *keys;
+int qstrcspn(const char *source, const char *keys)
 {
 	/** This function returns the length of the substring of
 	    'source' (starting at zero) that consists entirely of
 	    characters NOT from 'keys'.  This is used to skip to a
-	    defined set of characters with parsing, usually. 
+	    defined set of characters with parsing, usually.
 	    NOTE that this is the opposite of strspn() above
 	**/
 

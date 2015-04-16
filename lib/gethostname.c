@@ -1,9 +1,7 @@
 #include "elm_defs.h"
 
 /* return local host name (with any domain elided) */
-void get_hostname(retval, retsiz)
-char *retval;
-int retsiz;
+void get_hostname(char *retval, int retsiz)
 {
     char *s;
 
@@ -35,9 +33,7 @@ int retsiz;
 
 
 /* return local domain (with leading dot) */
-void get_hostdomain(retval, retsiz)
-char *retval;
-int retsiz;
+void get_hostdomain(char *retval, int retsiz)
 {
     char buf[SLEN], *s;
     FILE *fp;

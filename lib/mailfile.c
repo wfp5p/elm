@@ -29,7 +29,7 @@
  *
  ******************************************************************************/
 
-/** 
+/**
 
   A few stdio-type functions reimplemented for performance.  This is pretty
   well tailored to read_headers() in newmbox.c, but it is used a few other
@@ -37,7 +37,7 @@
 
   mailFile_attach
 	Takes a stdio file descriptor and attaches it to a mailFile.
-  
+
   mailFile_copy
 	Indicates that a copy is to be made of the input stream into the
 	specified stdio file descriptor.  This uses fwrite on large blocks,
@@ -74,12 +74,7 @@
 #include "elm_defs.h"
 #include "mailfile.h"
 
-static int refill();
-
-void
-mailFile_attach(mailfile, filedes)
-struct mailFile *mailfile;
-FILE *filedes;
+void mailFile_attach(struct mailFile *mailfile, FILE *filedes)
 {
 	mailfile->filedes = filedes;
 	mailfile->buffer = malloc(MAILFILE_BSIZE+1);
@@ -91,20 +86,28 @@ FILE *filedes;
 	mailfile->error = NULL;
 }
 
-void
-mailFile_copy(mailfile, filedes, error)
-struct mailFile *mailfile;
-FILE *filedes;
-void (*error)();
+void mailFile_copy(struct mailFile *mailfile, FILE *filedes, void (*error)(void))
 {
 	mailfile->copy = filedes;
 	mailfile->error = error;
 }
 
-int
-mailFile_gets(buffer, mailfile)
-char **buffer;
-struct mailFile *mailfile;
+static int refill(struct mailFile *mailfile)
+{
+	mailfile->remain =
+	  fread(mailfile->buffer, 1, MAILFILE_BSIZE, mailfile->filedes);
+	if (mailfile->copy && mailfile->remain > 0) {
+	  if (fwrite(mailfile->buffer, 1, mailfile->remain, mailfile->copy)
+	      != mailfile->remain) {
+	    mailfile->error();
+	  }
+	}
+	mailfile->offset = mailfile->buffer;
+	mailfile->buffer[mailfile->remain] = '\0';
+	return mailfile->remain;
+}
+
+int mailFile_gets(char **buffer, struct mailFile *mailfile)
 {
 	register char *c;
 	register int n, loops, m;
@@ -112,7 +115,7 @@ struct mailFile *mailfile;
 	int size;
 /*	static char vlongstring[VERY_LONG_STRING];*/
    	static char vlongstring[MAILFILE_BSIZE];
-   
+
 
 	if (mailfile->charsaved) {
 	  *(mailfile->offset) = mailfile->savechar;
@@ -193,34 +196,12 @@ struct mailFile *mailfile;
 	return (c - (*buffer));
 }
 
-static int
-refill(mailfile)
-struct mailFile *mailfile;
-{
-	mailfile->remain = 
-	  fread(mailfile->buffer, 1, MAILFILE_BSIZE, mailfile->filedes);
-	if (mailfile->copy && mailfile->remain > 0) {
-	  if (fwrite(mailfile->buffer, 1, mailfile->remain, mailfile->copy)
-	      != mailfile->remain) {
-	    mailfile->error();
-	  }
-	}
-	mailfile->offset = mailfile->buffer;
-	mailfile->buffer[mailfile->remain] = '\0';
-	return mailfile->remain;
-}
-
-long
-mailFile_tell(mailfile)
-struct mailFile *mailfile;
+long mailFile_tell(struct mailFile *mailfile)
 {
 	return ftell(mailfile->filedes) - mailfile->remain;
 }
 
-int
-mailFile_seek(mailfile, offset)
-struct mailFile *mailfile;
-long offset;
+int mailFile_seek(struct mailFile *mailfile, long offset)
 {
 	int ret;
 	long top, bot, curpos;
@@ -247,9 +228,7 @@ long offset;
 	return ret;
 }
 
-void
-mailFile_detach(mailfile)
-struct mailFile *mailfile;
+void mailFile_detach(struct mailFile *mailfile)
 {
 	if (mailfile->filedes);
 	  fflush(mailfile->filedes);

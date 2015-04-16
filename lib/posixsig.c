@@ -40,16 +40,7 @@
 /*
  * This routine used to duplicate the old signal() calls
  */
-SIGHAND_TYPE
-#if ANSI_C && !defined(apollo)
-(*posix_signal(signo, fun))(int)
-	int signo;
-	SIGHAND_TYPE (*fun)(int);
-#else
-(*posix_signal(signo, fun))()
-	int signo;
-	SIGHAND_TYPE (*fun)();
-#endif
+void (*posix_signal(int signo, void (*fun)(int)))(int)
 {
 	struct sigaction act;	/* new signal action structure */
 	struct sigaction oact;  /* returned signal action structure */ 

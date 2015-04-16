@@ -20,40 +20,35 @@
  *
  ******************************************************************************/
 
-/** 
+/**
 
 **/
 
 #include "elm_defs.h"
 
-
-void
-remove_first_word(string)
-char *string;
+void remove_first_word(char *string)
 {	/** removes first word of string, ie up to first non-white space
 	    following a white space! **/
 
 	register int loc;
 
-	for (loc = 0; string[loc] != ' ' && string[loc] != '\0'; loc++) 
+	for (loc = 0; string[loc] != ' ' && string[loc] != '\0'; loc++)
 	    ;
 
 	while (string[loc] == ' ' || string[loc] == '\t')
 	  loc++;
-	
+
 	move_left(string, loc);
 }
 
-void
-remove_header_keyword(string)
-char *string;
+void remove_header_keyword(char *string)
 {	/** removes a RFC822 header keyword from the string.
 	    i.e. removes up to (and including) the first colon,
 	    plus any white-space immediately following it.  **/
 
 	register int loc;
 
-	for (loc = 0; string[loc] != ':' && string[loc] != '\0'; loc++) 
+	for (loc = 0; string[loc] != ':' && string[loc] != '\0'; loc++)
 	    ;
 
 	if (string[loc] == ':') {
@@ -61,6 +56,6 @@ char *string;
 	    while (string[loc] == ' ' || string[loc] == '\t')
 		loc++;
 	}
-	
+
 	move_left(string, loc);
 }

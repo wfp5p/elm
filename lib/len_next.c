@@ -40,10 +40,7 @@
 
 #include "elm_defs.h"
 
-
-int
-len_next_part(str)
-register const char *str;
+int len_next_part(register const char *str)
 {
 	register const char *s;
 

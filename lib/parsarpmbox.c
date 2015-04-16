@@ -92,17 +92,17 @@
 #include "elm_defs.h"
 
 
-static int fullname_is_quoted P_((const char *, int));
-static int parse_bare_addrspec
-	P_((const char *, char *, int, char *, int, char **));
-static int parse_angle_addrspec
-	P_((const char *, char *, int, char *, int, char **));
+static int fullname_is_quoted(const char *fn_str, int fn_len);
+static int parse_bare_addrspec(register const char *buf, char *ret_addr,
+			       int len_addr, char *ret_name,
+			       int len_name, char **next_field);
+static int parse_angle_addrspec(register const char *buf, char *ret_addr,
+				int len_addr, char *ret_name, int len_name,
+				char **next_field);
 
 
-int parse_arpa_mailbox(buf, ret_addr, len_addr, ret_name, len_name, next_field)
-const char *buf;
-char *ret_addr, *ret_name, **next_field;
-int len_addr, len_name;
+int parse_arpa_mailbox(const char *buf, char *ret_addr, int len_addr,
+		       char *ret_name, int len_name, char **next_field)
 {
     register const char *s;
     int rc;
@@ -146,9 +146,7 @@ int len_addr, len_name;
  * Return TRUE if the fullname string is enclosed in double-quotes.
  * AND it is safe to strip the quotes.
  */
-static int fullname_is_quoted(fn_str, fn_len)
-const char *fn_str;
-int fn_len;
+static int fullname_is_quoted(const char *fn_str, int fn_len)
 {
     if (fn_len < 2 || fn_str[0] != '"' || fn_str[fn_len-1] != '"')
 	return FALSE;
@@ -166,11 +164,9 @@ int fn_len;
 /*
  * Parse a mailbox spec in the format:  addr-spec
  */
-static int parse_bare_addrspec(buf,
-	ret_addr, len_addr, ret_name, len_name, next_field)
-register const char *buf;
-char *ret_addr, *ret_name, **next_field;
-int len_addr, len_name;
+static int parse_bare_addrspec(register const char *buf, char *ret_addr,
+			       int len_addr, char *ret_name,
+			       int len_name, char **next_field)
 {
     const char *n_ptr;		/* pointer to (user name) into "buf"	*/
     int n_len;			/* length of text pointed to by "n_ptr"	*/
@@ -286,11 +282,9 @@ int len_addr, len_name;
 /*
  * Parse a mailbox spec in the format:  [phrase] "<" [route] addr-spec ">"
  */
-static int parse_angle_addrspec(buf,
-	ret_addr, len_addr, ret_name, len_name, next_field)
-register const char *buf;
-char *ret_addr, *ret_name, **next_field;
-int len_addr, len_name;
+static int parse_angle_addrspec(register const char *buf, char *ret_addr,
+				int len_addr, char *ret_name, int len_name,
+				char **next_field)
 {
     const char *beg_field, *end_field;
     register int tlen;

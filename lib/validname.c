@@ -34,9 +34,7 @@
 # endif
 #endif
 
-int
-valid_name(name)
-const char *name;
+int valid_name(const char *name)
 {
 	/** Determine whether "name" is a valid logname on this system.
 	    It is valid if there is a password entry, or if there is

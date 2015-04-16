@@ -26,10 +26,7 @@
 
 #include "elm_defs.h"
 
-void
-move_left(string, chars)
-char *string;
-int  chars;
+void move_left(char *string, int chars)
 {
 	/** moves string chars characters to the left DESTRUCTIVELY **/
 

@@ -117,9 +117,7 @@ static int month_len[13] = {
 };
 
 
-int cvt_dayname_to_daynum(str, day_p)
-const char *str;
-int *day_p;
+int cvt_dayname_to_daynum(const char *str, int *day_p)
 {
     /*
      * Convert a day name to number (Sun = 1).  Only the first three
@@ -143,9 +141,7 @@ int *day_p;
 
 
 
-int cvt_monthname_to_monthnum(str, month_p)
-const char *str;
-int *month_p;
+int cvt_monthname_to_monthnum(const char *str, int *month_p)
 {
     /*
      * Convert a month name to number (Jan = 1).  Only the first three
@@ -168,9 +164,7 @@ int *month_p;
 }
 
 
-int cvt_yearstr_to_yearnum(str, year_p)
-const char *str;
-int *year_p;
+int cvt_yearstr_to_yearnum(const char *str, int *year_p)
 {
     /*
      * Convert a year from a string to a number.  We will add the century
@@ -200,8 +194,8 @@ int *year_p;
 }
 
 
-int cvt_mmddyy_to_dayofyear(month, dayofmon, year, dayofyear_p)
-int month, dayofmon, year, *dayofyear_p;
+int cvt_mmddyy_to_dayofyear(int month, int dayofmon, int year,
+			    int *dayofyear_p)
 {
     /*
      * Convert numeric month (1-12), day of month (1-31), and year (with
@@ -218,9 +212,7 @@ int month, dayofmon, year, *dayofyear_p;
 }
 
 
-int cvt_timezone_to_offset(str, mins_p)
-char *str;
-int *mins_p;
+int cvt_timezone_to_offset(char *str, int *mins_p)
 {
     /*
      * Convert a timezone to a number of minutes *east* of gmt.  The
@@ -283,8 +275,7 @@ failed:
 }
 
 
-int cvt_numtz_to_mins(str)
-const char *str;
+int cvt_numtz_to_mins(const char *str)
 {
     /*
      * Convert an HHMM string to minutes.  Check to make sure that the
@@ -322,9 +313,8 @@ bad_tz_str:
 }
 
 
-int cvt_timestr_to_hhmmss(timestr, hours_p, mins_p, secs_p)
-const char *timestr;
-int *hours_p, *mins_p, *secs_p;
+int cvt_timestr_to_hhmmss(const char *timestr, int *hours_p, int *mins_p,
+			  int *secs_p)
 {
     /*
      * Convert a HH:MM[:SS] time specification to hours, minutes, seconds.
@@ -393,8 +383,7 @@ int *hours_p, *mins_p, *secs_p;
 }
 
 
-long make_gmttime(year, month, day, hours, mins, secs)
-int year, month, day, hours, mins, secs;
+long make_gmttime(int year, int month, int day, int hours, int mins, int secs)
 {
     /*
      * Convert date specification (year with century, month 1-12, day 1-31,

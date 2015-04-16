@@ -27,10 +27,7 @@
 
 #include "elm_defs.h"
 
-int
-chloc(string, ch)
-const char *string;
-register int ch;
+int chloc(const char *string, register int ch)
 {
 	/** returns the index of ch in string, or -1 if not in string **/
 	register const char *s;
@@ -41,10 +38,7 @@ register int ch;
 	return(-1);
 }
 
-int
-qchloc(string, ch)
-const char *string;
-register int ch;
+int qchloc(const char *string, register int ch)
 {
 	/* returns the index of ch in string, or -1 if not in string
          * skips over quoted portions of the string

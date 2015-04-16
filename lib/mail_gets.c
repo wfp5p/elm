@@ -28,11 +28,7 @@
 
 #include "elm_defs.h"
 
-int
-mail_gets(buffer, size, mailfile)
-char *buffer;
-int size;
-FILE *mailfile;
+int mail_gets(char *buffer, int size, FILE *mailfile)
 {
 	register int line_bytes = 0, ch;
 	register char *c = buffer;

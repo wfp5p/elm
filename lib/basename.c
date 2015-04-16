@@ -1,7 +1,6 @@
 #include "elm_defs.h"
 
-char *basename(pname)
-const char *pname;
+char *basename(const char *pname)
 {
     const char *s;
     return (char *) ((s = strrchr(pname, '/')) != NULL ? s+1 : pname);

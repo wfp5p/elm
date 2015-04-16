@@ -27,11 +27,7 @@
 
 #include "elm_defs.h"
 
-void
-add_site(buffer, site, lastsite)
-char *buffer;
-const char *site;
-char *lastsite;
+void add_site(char *buffer, const char *site, char *lastsite)
 {
 	/** add site to buffer, unless site is 'uucp' or site is
 	    the same as lastsite.   If not, set lastsite to site.

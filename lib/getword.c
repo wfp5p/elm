@@ -25,11 +25,7 @@
 
 #include "elm_defs.h"
 
-int get_word(buffer, start, word, wordlen)
-const char *buffer;
-int start;
-char *word;
-int wordlen;
+int get_word(const char *buffer, int start, char *word, int wordlen)
 {
     /*
      * Extracts the next white-space delimited word from the "buffer"

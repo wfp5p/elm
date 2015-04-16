@@ -34,9 +34,7 @@
  */
 
 
-void dflt_safe_malloc_fail_handler(proc, len)
-const char *proc;
-unsigned len;
+void dflt_safe_malloc_fail_handler(const char *proc, unsigned len)
 {
 	fprintf(stderr, catgets(elm_msg_cat, ErrorSet,
 		    ErrorSafeMallocOutOfMemory,
@@ -50,8 +48,7 @@ void (*safe_malloc_fail_handler) P_((const char *, unsigned))
 	    = dflt_safe_malloc_fail_handler;
 
 
-malloc_t safe_malloc(len)
-unsigned len;
+malloc_t safe_malloc(unsigned len)
 {
 	malloc_t p;
 	if ((p = malloc(len)) == NULL)
@@ -59,10 +56,7 @@ unsigned len;
 	return p;
 }
 
-
-malloc_t safe_realloc(p, len)
-malloc_t p;
-unsigned len;
+malloc_t safe_realloc(malloc_t p, unsigned len)
 {
 	if ((p = (p == NULL ? malloc(len) : realloc((malloc_t)p, len))) == NULL)
 		(*safe_malloc_fail_handler)("safe_realloc", len);
@@ -70,8 +64,7 @@ unsigned len;
 }
 
 
-char *safe_strdup(s)
-const char *s;
+char *safe_strdup(const char *s)
 {
 	char *p;
 	if ((p = (char *) malloc(strlen(s)+1)) == NULL)

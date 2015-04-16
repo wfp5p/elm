@@ -20,13 +20,11 @@
  * Initial import of elm 2.4 PL0 as base for elm 2.5.
  *
  ******************************************************************************/
-
 #include "elm_defs.h"
 
 static char lock_name[SLEN];
 
-char * mk_lockname(file_to_lock)
-const char *file_to_lock;
+char *mk_lockname(const char *file_to_lock)
 {
       /** Create the proper name of the lock file for file_to_lock,
             which is presumed to be a spool file full path (see

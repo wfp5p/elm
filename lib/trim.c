@@ -5,8 +5,7 @@
  * Remove all trailing slashes from a string -- unless it is just a string
  * of one or more slashes, in which case the result will be "/".
  */
-char *trim_trailing_slashes(str)
-char *str;
+char *trim_trailing_slashes(char *str)
 {
     char *s;
     int i;
@@ -21,8 +20,7 @@ char *str;
 /*
  * Remove all trailing spaces from a string.
  */
-char *trim_trailing_spaces(str)
-char *str;
+char *trim_trailing_spaces(char *str)
 {
     char *s;
     int i;
@@ -37,8 +35,7 @@ char *str;
 /*
  * Trim any double quotes that enclose a string.
  */
-char *trim_quotes(str)
-char *str;
+char *trim_quotes(char *str)
 {
     int len;
     if (str[0] != '"' || str[0] == '\0')

@@ -32,10 +32,7 @@
 /*
  * This is like strncpy() except the result is guaranteed to be '\0' terminated.
  */
-char *strfcpy(dest, src, len)
-register char *dest;
-register const char *src;
-register int len;
+char *strfcpy(char *dest, const char *src, int len)
 {
 	(void) strncpy(dest, src, len);
 	dest[len-1] = '\0';
@@ -50,10 +47,7 @@ register int len;
   *   The result is guaranteed to be '\0' terminated.
   *   A comma is appended to dest.
   */
-void  strfcat(dest, src, len)
-char *dest;
-const char *src;
-int len;
+void strfcat(char *dest, const char *src, int len)
  {
      len -= 3;
      while (*dest++)

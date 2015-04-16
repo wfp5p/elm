@@ -44,10 +44,7 @@
 static int painful_access_check P_((const char *, int));
 
 
-int
-can_access(fname, mode)
-const char *fname;
-int mode;
+int can_access(const char *fname, int mode)
 {
     struct stat stat_buf;
     int rc;
@@ -57,8 +54,8 @@ int mode;
     else
 	rc = painful_access_check(fname, mode);
 
-    if ( (rc == 0) && 
-	 (stat(fname, &stat_buf) == 0) && 
+    if ( (rc == 0) &&
+	 (stat(fname, &stat_buf) == 0) &&
 	 ( !S_ISREG(stat_buf.st_mode) && !S_ISCHR(stat_buf.st_mode) ) )
    {
 	errno = EISDIR; /* well...at least it is not a file */
@@ -73,12 +70,9 @@ int mode;
 void _exit();
 #endif
 
-static int
-painful_access_check(file, mode)
-const char *file; 
-int   mode;
+static int painful_access_check(const char *file, int mode)
 {
-	int pid, w, err; 
+	int pid, w, err;
 	waitstatus_t status;
 	register SIGHAND_TYPE (*istat)(), (*qstat)();
 
@@ -189,4 +183,3 @@ main()
 }
 
 #endif /*}_TEST*/
-

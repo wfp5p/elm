@@ -62,10 +62,7 @@ Quoting from RFC 822:
 						 ;  hours+min. (HHMM)
 */
 
-
-int parse_arpa_date(datestr, entry)
-const char *datestr;
-struct header_rec *entry;
+int parse_arpa_date(const char *datestr, struct header_rec *entry)
 {
     /*
      * Parse a date field in either RFC-822 or Unix date(1) format.

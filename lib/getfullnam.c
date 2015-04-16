@@ -36,9 +36,7 @@
 #  include <pwd.h>
 #endif
 
-char *
-get_full_name(logname)
-const char *logname;
+char *get_full_name(const char *logname)
 {
 	/* return a pointer to the full user name for the passed logname
 	 * or NULL if cannot be found

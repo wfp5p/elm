@@ -38,24 +38,22 @@ extern nl_catd elm_msg_cat;	/* message catalog	    */
 
 char *expand_define();
 
-static char*
-expand_maildir(rcfile, buffer)
-FILE *rcfile;
-char *buffer;
+
+static char *expand_maildir(FILE *rcfile, char *buffer)
 {
 	char *home = NULL, *bufptr;
 	int  foundit = 0;
 
 	bufptr = (char *) buffer;		/* same address */
-	
+
 	while (! foundit && mail_gets(buffer, SLEN, rcfile) != 0) {
 	  if (strncmp(buffer, "maildir", 7) == 0 ||
 	      strncmp(buffer, "folders", 7) == 0) {
-	    while (*bufptr != '=' && *bufptr) 
+	    while (*bufptr != '=' && *bufptr)
 	      bufptr++;
 	    bufptr++;			/* skip the equals sign */
 	    while (isspace(*bufptr) && *bufptr)
-	      bufptr++; 
+	      bufptr++;
 	    home = bufptr;		/* remember this address */
 
 	    while (! isspace(*bufptr) && *bufptr != '\n')
@@ -69,16 +67,14 @@ char *buffer;
 	return home;
 }
 
-int
-expand(filename)
-char *filename;
+int expand(char *filename)
 {
 	/** Expand the filename since the first character is a meta-
 	    character that should expand to the "maildir" variable
 	    in the users ".elmrc" file or in the global rc file...
 
-	    Note: this is a brute force way of getting the entry out 
-	    of the .elmrc file, and isn't recommended for the faint 
+	    Note: this is a brute force way of getting the entry out
+	    of the .elmrc file, and isn't recommended for the faint
 	    of heart!
 	**/
 
@@ -120,7 +116,7 @@ char *filename;
 	if ((expanded_dir = expand_define(home)) == NULL)
 		return(FALSE);
 
-	sprintf(buffer, "%s%s%s", expanded_dir, 
+	sprintf(buffer, "%s%s%s", expanded_dir,
 		(expanded_dir[strlen(expanded_dir)-1] == '/' ||
 		filename[0] == '/') ? "" : "/", (char *) filename+1);
 
@@ -128,8 +124,7 @@ char *filename;
 	return(TRUE);
 }
 
-char *expand_define(maildir)
-const char *maildir;
+char *expand_define(const char *maildir)
 {
 	/** This routine expands any occurances of "~" or "$var" in
 	    the users definition of their maildir directory out of
@@ -144,7 +139,7 @@ const char *maildir;
 	       *nameptr,	       /*  pointer to name??     */
 	       *value;		      /* char pointer for munging */
 
-	if (*maildir == '~') 
+	if (*maildir == '~')
 	  sprintf(buffer, "%s%s", getenv("HOME"), ++maildir);
 	else if (*maildir == '$') { 	/* shell variable */
 
@@ -154,7 +149,7 @@ const char *maildir;
 	  nameptr = (char *) name;
 	  while (*nameptr != '/' && *nameptr) nameptr++;
 	  *nameptr = '\0';	/* null terminate */
-	  
+
 	  /** got word "name" for expansion **/
 
 	  if ((value = getenv(name)) == NULL) {

@@ -1,6 +1,6 @@
 
 /*******************************************************************************
- *  The Elm Mail System  
+ *  The Elm Mail System
  *
  *                      Copyright (c) 2000 USENET Community Trust
  *******************************************************************************
@@ -15,8 +15,8 @@
 
 /*
  * getelmrcName() returns the name of the elmrc file
- * 
- * 
+ *
+ *
  */
 
 #include "elm_defs.h"
@@ -25,7 +25,7 @@ char *CmdLineElmrc = NULL;
 
 void getelmrcName(char *filename,int len)
 {
-   
+
    if (CmdLineElmrc)
    {
       strncpy(filename, CmdLineElmrc, len);

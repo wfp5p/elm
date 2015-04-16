@@ -44,11 +44,8 @@
 #define	MAPIN(o)	((db->dbz_bytesame) ? (of_t) (o) : bytemap((of_t)(o), db->dbz_conf.bytemap, db->dbz_mybmap))
 #define	MAPOUT(o)	((db->dbz_bytesame) ? (of_t) (o) : bytemap((of_t)(o), db->dbz_mybmap, db->dbz_conf.bytemap))
 
-static of_t			/* transformed result */
-bytemap(ino, map1, map2)
-of_t ino;
-int *map1;
-int *map2;
+/* transformed result */
+static int32_t bytemap(int32_t ino, int *map1, int *map2)
 {
 	union oc {
 		of_t o;
@@ -64,10 +61,7 @@ int *map2;
 	return(out.o);
 }
 
-int
-read_one_alias(db, adr)
-DBZ *db;
-struct alias_disk_rec *adr;
+int read_one_alias(DBZ *db, struct alias_disk_rec *adr)
 {
 /*
  *	Read an alias (name, address, etc.) from the data file
@@ -109,9 +103,7 @@ struct alias_disk_rec *adr;
  * dynamically allocated memory is returned.  When the end of file is
  * reached, a NULL is returned.
  */
-struct alias_rec *fetch_alias(db, alias)
-DBZ *db;
-char *alias;
+struct alias_rec *fetch_alias(DBZ *db, char *alias)
 {
 	datum key, val;
 	struct alias_disk_rec adrec;
@@ -183,7 +175,7 @@ char *alias;
 
 	buf = (char *)ar + sizeof(struct alias_rec);
 
-        /* 
+        /*
 	 * Fixup pointers in the alias record.
 	 */
 	ar->status = (int)adrec.status;
@@ -193,18 +185,18 @@ char *alias;
         ar->name = (size_t) adrec.name + buf;
         ar->comment = (size_t) adrec.comment + buf;
         ar->address = (size_t) adrec.address + buf;
-#else   
+#else
 	ar->alias = (char *) ((size_t) adrec.alias + (size_t) buf);
 	ar->last_name = (char *) ((size_t) adrec.last_name + (size_t) buf);
 	ar->name = (char *) ((size_t) adrec.name + (size_t) buf);
 	ar->comment = (char *) ((size_t) adrec.comment + (size_t) buf);
 	ar->address = (char *) ((size_t) adrec.address + (size_t) buf);
-#endif   
+#endif
 	ar->type = (int)adrec.type;
 	ar->length = (size_t)adrec.length;
 
 	/*
-	 * Read in the data content 
+	 * Read in the data content
 	 */
 	if (fread(buf, ar->length, 1, db->dbz_basef) != 1)
 		return (struct alias_rec *)NULL;
@@ -218,8 +210,7 @@ char *alias;
  * to the list.  Addresses are seperated by whitespace and/or commas.
  * Return NULL when list finished.  This routine scribbles on the list.
  */
-char *next_addr_in_list(aptr)
-char **aptr;
+char *next_addr_in_list(char **aptr)
 {
 	register char *front, *back;
 
@@ -244,4 +235,3 @@ char **aptr;
 	*aptr = back;
 	return front;
 }
-

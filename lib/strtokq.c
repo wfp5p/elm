@@ -28,10 +28,7 @@
 
 #include "elm_defs.h"
 
-char *strtokq(source, keys, flag)
-char *source;
-const char *keys;
-int flag;
+char *strtokq(char *source, const char *keys, int flag)
 {
 	register int  last_ch;
 	static   char *sourceptr = NULL;
@@ -39,13 +36,13 @@ int flag;
 
 	if (source != NULL)
 	  sourceptr = source;
-	
-	if (sourceptr == NULL || *sourceptr == '\0') 
+
+	if (sourceptr == NULL || *sourceptr == '\0')
 	  return(NULL);		/* we hit end-of-string last time!? */
 
 	sourceptr += strspn(sourceptr, keys);	/* skip leading crap */
-	
-	if (*sourceptr == '\0') 
+
+	if (*sourceptr == '\0')
 	  return(NULL);		/* we've hit end-of-string */
 
 	if (flag)
@@ -75,7 +72,6 @@ int flag;
 	  sourceptr++;		   /* and skipping for next time */
 
 	return_value[last_ch] = '\0';		/* ..ending right    */
-	
+
 	return((char *) return_value);		/* and we're outta here! */
 }
-

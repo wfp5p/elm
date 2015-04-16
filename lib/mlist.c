@@ -42,29 +42,7 @@
 struct addrs patterns;
 struct addrs mlnames;
 
-static void mlist_read();
-
-void
-mlist_init()
-{
-    char buffer[SLEN];
-
-    patterns.len = patterns.max = 0; patterns.str = NULL;
-    mlnames.len = mlnames.max = 0; mlnames.str = NULL;
-
-    /*
-     * Load home mlistfile first, as we take the first match we can find,
-     * which means that the user file will override the system file.
-     */
-    sprintf(buffer, "%s/%s", user_home, mlistfile); 
-    mlist_read(buffer);
-    sprintf(buffer, "%s", system_mlist_file);   
-    mlist_read(buffer);
-}
-
-static void
-mlist_read(filename)
-char *filename;
+static void mlist_read(char *filename)
 {
     FILE *ml;
     char buffer[SLEN];
@@ -110,11 +88,24 @@ char *filename;
     fclose(ml);
 }
 
-void
-parseaddrs(p, array, append)
-    char *p; 
-    struct addrs *array;
-    int append;
+void mlist_init(void)
+{
+    char buffer[SLEN];
+
+    patterns.len = patterns.max = 0; patterns.str = NULL;
+    mlnames.len = mlnames.max = 0; mlnames.str = NULL;
+
+    /*
+     * Load home mlistfile first, as we take the first match we can find,
+     * which means that the user file will override the system file.
+     */
+    sprintf(buffer, "%s/%s", user_home, mlistfile);
+    mlist_read(buffer);
+    sprintf(buffer, "%s", system_mlist_file);
+    mlist_read(buffer);
+}
+
+void parseaddrs(char *p, struct addrs *array, int append)
 {
     char addr[STRING];
     char *buf, *next;
@@ -136,10 +127,7 @@ parseaddrs(p, array, append)
     }
 }
 
-
-void
-freeaddrs(array)
-    struct addrs *array;
+void freeaddrs(struct addrs *array)
 {
     int i;
     for (i=0; i < array->len; i++) {
@@ -152,10 +140,7 @@ freeaddrs(array)
     array->str = NULL;
 }
 
-void
-mlist_push(arr, str)
-    struct addrs *arr;
-    char *str;
+void mlist_push(struct addrs *arr, char *str)
 {
     int index = arr->len;
     int newlen = index+1;
@@ -177,9 +162,7 @@ mlist_push(arr, str)
     arr->str[index] = safe_strdup(str);
 }
 
-void
-mlist_parse_header_rec(entry)
-struct header_rec *entry;
+void mlist_parse_header_rec(struct header_rec *entry)
 {
     if (entry->ml_to.str == NULL) {
 	if (entry->cc_index >= 0) {
@@ -197,9 +180,7 @@ struct header_rec *entry;
     }
 }
 
-int
-mlist_match_user(entry)
-struct header_rec *entry;
+int mlist_match_user(struct header_rec *entry)
 {
     int match;
     for (match = 0; match < entry->ml_to.len; match++) {
@@ -210,10 +191,7 @@ struct header_rec *entry;
     return -1;
 }
 
-int
-mlist_match_address(entry, string)
-struct header_rec *entry;
-char *string;
+int mlist_match_address(struct header_rec *entry, char *string)
 {
     int i, match;
     char addr[STRING];
@@ -237,10 +215,7 @@ char *string;
 /*
  * case-insensitive searcher
  */
-int
-addrmatch(addr, pattern)
-  struct addrs *addr;
-  struct addrs *pattern;
+int addrmatch(struct addrs *addr, struct addrs *pattern)
 {
     int i, j;
     static int initialized = 0;

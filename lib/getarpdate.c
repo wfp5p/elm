@@ -2,7 +2,7 @@
 
 #include <time.h>
 
-char *get_arpa_date()
+char *get_arpa_date(void)
 {
 	/** returns an ARPA standard date.  The format for the date
 	    according to DARPA document RFC-822 is exemplified by;

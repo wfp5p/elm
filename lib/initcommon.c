@@ -27,7 +27,7 @@ extern char *getenv();
  *
  */
 
-void initialize_common()
+void initialize_common(void)
 {
     char buf[SLEN], *cp;
     struct passwd *pw;
@@ -41,8 +41,8 @@ void initialize_common()
      * Full_username will get overridden by fullname in elmrc, if defined.
      *
      * For those sites that have various user names with the same user
-     * ID, use the passwd entry corresponding to the user name as long 
-     * as it matches the user ID.  Otherwise fall back on the entry 
+     * ID, use the passwd entry corresponding to the user name as long
+     * as it matches the user ID.  Otherwise fall back on the entry
      * associated with the user ID alone.
      */
 
@@ -81,11 +81,11 @@ void initialize_common()
      */
     if ((cp = getenv("MAIL")) == NULL)
 	cp = strcat(strcpy(buf, mailhome), user_name);
-   
+
 #ifdef PATH_MAX /* 7! die here instead! */
     if ( strlen(cp) > PATH_MAX ) cp[PATH_MAX]='\0';
-#endif    
-  
+#endif
+
     incoming_folder = safe_strdup(cp);
 
 }
@@ -106,4 +106,3 @@ main()
     exit(0);
 }
 #endif
-

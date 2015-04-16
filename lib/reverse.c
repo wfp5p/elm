@@ -27,9 +27,7 @@
 #include "elm_defs.h"
 
 
-void
-reverse(string)
-char *string;
+void reverse(char *string)
 {
 	/** reverse string... pretty trivial routine, actually! **/
 

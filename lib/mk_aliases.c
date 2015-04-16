@@ -31,12 +31,12 @@
  *
  ******************************************************************************/
 
-/** Install a new set of aliases for the 'Elm' mailer. 
+/** Install a new set of aliases for the 'Elm' mailer.
 
 	This code is shared with newalias and elm so that
   it is easier to do updates while in elm.  The main routine
   here is do_newalias().  If the third argument is TRUE then
-  we were called from elm.  That means that we will need to 
+  we were called from elm.  That means that we will need to
   sleep() between error messages....  The fourth arguement
   controls whether or not we should warn about missing aliases.text
   files.  For the newalias program that's an error, for elm it's
@@ -83,15 +83,12 @@ static int check_address P_((char *));
 static void put_alias P_((FILE *));
 static void delete_alias_files P_((char *, int));
 
-static int
-get_alias(file, fromelm)
-FILE *file;
-int fromelm;
+static int get_alias(FILE *file, int fromelm)
 {
 	/* load buffer with the next complete alias from the file.
 	   (this can include reading in multiple lines and appending
 	   them all together!)  Returns EOF after last entry in file.
-	
+
 	Lines that start with '#' are assumed to be comments and are
  	ignored.  White space as the first field of a line is taken
 	to indicate that this line is a continuation of the previous. */
@@ -105,7 +102,7 @@ int fromelm;
 	buffer[0] = '\0';			/* zero out line */
 	len = 0;
 
-	if (get_line(file, mybuffer, TRUE, fromelm) == -1) 
+	if (get_line(file, mybuffer, TRUE, fromelm) == -1)
 	    return(-1);
 	strcpy(buffer, mybuffer);
 	len = strlen(buffer);
@@ -139,15 +136,11 @@ int fromelm;
 		  strcat(buffer, s);
 	  }
 	} while (! done);
-	
+
 	return(0);	/* no sweat! */
 }
 
-static int
-get_line(file, buffer, first_line, fromelm)
-FILE *file;
-char *buffer;
-int  first_line, fromelm;
+static int get_line(FILE *file, char *buffer, int first_line, int fromelm)
 {
 /*
  *	Read line from file.
@@ -202,9 +195,7 @@ int  first_line, fromelm;
 	return -1;
 }
 
-static void
-de_escape(the_string)
-char *the_string;
+static void de_escape(char *the_string)
 {
 	register char *s, *out;
 
@@ -219,17 +210,11 @@ char *the_string;
 	return;
 }
 
-#ifdef ANSI_C
 static int add_to_hash_table(char *word, int32 offset)
-#else
-static int add_to_hash_table(word, offset)
-char *word;
-int32  offset;
-#endif
 {
 	datum	key, value, ovalue;
 	int32	off;
-	
+
 	key.dptr = word;
 	key.dsize = strlen(word);
 	off = offset;
@@ -262,10 +247,9 @@ int32  offset;
 
 }
 
-static void
-add_to_table(data, aliases, lastn, firstn, comment, addresses)
-FILE *data;
-register char *aliases, *lastn, *firstn, *comment, *addresses;
+static void add_to_table(FILE *data, register char *aliases,
+			 register char *lastn, register char *firstn,
+			 register char *comment, register char *addresses)
 {
 	struct alias_disk_rec	alias;
 	register char	*s;
@@ -329,11 +313,9 @@ register char *aliases, *lastn, *firstn, *comment, *addresses;
 	    aliases = s;
 	}
 
-}	
+}
 
-int
-check_alias(aliases)
-char *aliases;
+int check_alias(char *aliases)
 {
 /*
  *	Check and make sure this is a legal alias.
@@ -386,9 +368,7 @@ char *aliases;
 	return(0);
 }
 
-static int
-check_address(addresses)
-char *addresses;
+static int check_address(char *addresses)
 {
 
 	register char *s, *out;
@@ -431,9 +411,7 @@ char *addresses;
 	return(0);
 }
 
-void
-despace_address(addresses)
-  char *addresses;
+void despace_address(char *addresses)
 {
 	register char *s, *out;
 	int in_quote = FALSE;
@@ -447,7 +425,7 @@ despace_address(addresses)
 		in_quote = !in_quote;
 
 	    if (!in_quote && isspace(*s)) {
-	        if (*(out-1) != ',') 
+	        if (*(out-1) != ',')
 	            *out++ = ',';
 		/*  but don't copy the space either way */
 	    }
@@ -462,9 +440,7 @@ despace_address(addresses)
 	return;
 }
 
-static void
-put_alias(data)
-FILE *data;
+static void put_alias(FILE *data)
 {
 /*
  *	parse the buffer into aliases, names, comments and addresses
@@ -496,7 +472,7 @@ FILE *data;
 	    err_flag++;
 	    return;
 	}
-	
+
 /*
  *	get the second field into "lastn" - putting stuff after ','
  *	into "comment".  skip over white space after = and before last =
@@ -630,10 +606,7 @@ FILE *data;
 	add_to_table(data, aliases, lastn, firstn, comment, addresses);
 }
 
-int
-do_newalias(inputname, dataname, fromelm, textwarn)
-char *inputname, *dataname;
-int fromelm, textwarn;
+int do_newalias(char *inputname, char *dataname, int fromelm, int textwarn)
 {
 	FILE *in, *data;
 
@@ -713,7 +686,7 @@ int fromelm, textwarn;
 	    fclose(data);
 	    fclose(in);
 	    free(buffer);
-	
+
 	    if (al_count == 0) {
 	        delete_alias_files(dataname, fromelm);
 	    }
@@ -723,10 +696,7 @@ int fromelm, textwarn;
 	/*NOTREACHED*/
 }
 
-static void
-delete_alias_files(dataname, fromelm)
-char *dataname;
-int fromelm;
+static void delete_alias_files(char *dataname, int fromelm)
 {
 /*
  *	This routine remove all the alias hash and data files.
@@ -766,4 +736,3 @@ int fromelm;
 	}
 
 }
-

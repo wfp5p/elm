@@ -49,10 +49,7 @@
 extern long atol();
 #endif
 
-static char *elm_fgetline(buf, buflen, fp)
-char *buf;
-unsigned buflen;
-FILE *fp;
+static char *elm_fgetline(char *buf, unsigned buflen, FILE *fp)
 {
     if (fgets(buf, buflen, fp) == NULL)
 	return (char *) NULL;
@@ -61,8 +58,7 @@ FILE *fp;
 }
 
 
-int load_folder_state_file(fst)
-struct folder_state *fst;
+int load_folder_state_file(struct folder_state *fst)
 {
     char buf[SLEN], *state_fname;
     int status, i;

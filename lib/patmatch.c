@@ -33,40 +33,8 @@
  * That's it.  No [character classes], or other overly fancy stuff.
  */
 
-static int trymatch P_((const char *, const char *, const char *, int));
-
-int patmatch(pat, str, opts)
-const char *pat, *str;
-int opts;
-{
-    int len;
-    const char *pstop;
-
-    if (pat[0] == '^') {
-	opts |= PM_FANCHOR;
-	++pat;
-    }
-
-    len = strlen(pat);
-    if (len > 1 && pat[len-1] == '$' && pat[len-2] != '\\') {
-	opts |= PM_BANCHOR;
-	--len;
-    }
-    pstop = pat+len;
-
-    for ( ; *str != '\0' ; ++str) {
-	if (trymatch(str, pat, pstop, opts))
-	    return TRUE;
-	if (opts & PM_FANCHOR)
-	    return FALSE;
-    }
-    return FALSE;
-}
-
-
-static int trymatch(str, pat, pstop, opts)
-const char *str, *pat, *pstop;
-int opts;
+static int trymatch(const char *str, const char *pat, const char *pstop,
+		    int opts)
 {
 
     while (pat < pstop) {
@@ -141,6 +109,34 @@ int opts;
 
     return (*str == '\0' || !(opts & PM_BANCHOR));
 }
+
+int patmatch(const char *pat, const char *str, int opts)
+{
+    int len;
+    const char *pstop;
+
+    if (pat[0] == '^') {
+	opts |= PM_FANCHOR;
+	++pat;
+    }
+
+    len = strlen(pat);
+    if (len > 1 && pat[len-1] == '$' && pat[len-2] != '\\') {
+	opts |= PM_BANCHOR;
+	--len;
+    }
+    pstop = pat+len;
+
+    for ( ; *str != '\0' ; ++str) {
+	if (trymatch(str, pat, pstop, opts))
+	    return TRUE;
+	if (opts & PM_FANCHOR)
+	    return FALSE;
+    }
+    return FALSE;
+}
+
+
 
 #ifdef _TEST
 

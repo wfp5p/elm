@@ -29,9 +29,7 @@
 #include "elm_defs.h"
 
 
-int
-tail_of(from, buffer, to)
-char *from, *buffer, *to;
+int tail_of(char *from, char *buffer, char *to)
 {
 	/** Return last two words of 'from'.  This is to allow
 	    painless display of long return addresses as simply the

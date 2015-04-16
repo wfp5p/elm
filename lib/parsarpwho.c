@@ -39,10 +39,7 @@
  * We assume the "fullname" result buffer is at least SLEN chars long.
  */
 
-int
-parse_arpa_who(buffer, fullname)
-const char *buffer;
-char *fullname;
+int parse_arpa_who(const char *buffer, char *fullname)
 {
     char addrbuf[SLEN];
 

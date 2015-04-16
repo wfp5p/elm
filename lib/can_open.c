@@ -37,9 +37,7 @@
 void _exit();
 #endif
 
-int
-can_open(file, mode)
-const char *file, *mode;
+int can_open(const char *file, const char *mode)
 {
 	/** Returns 0 iff user can open the file.  This is not
 	    the same as can_access - it's used for when the file might
@@ -49,7 +47,7 @@ const char *file, *mode;
 	int pid, err, w, preexisted;
 	waitstatus_t status;
 	register SIGHAND_TYPE (*istat)(), (*qstat)();
-	
+
 #ifdef VFORK
 	if ((pid = vfork()) == 0)
 #else
@@ -78,7 +76,7 @@ const char *file, *mode;
 	    break;
 	}
 	err = errno;
-	
+
 	signal(SIGINT, istat);
 	signal(SIGQUIT, qstat);
 

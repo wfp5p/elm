@@ -27,10 +27,7 @@
 
 #include "elm_defs.h"
 
-int
-addr_matches_user(addr,user)
-register char *addr;
-register const char *user;
+int addr_matches_user(register char *addr, register const char *user)
 {
 	int len = strlen(user);
 	static char c_before[] = "!:%";	/* these can appear before a username */

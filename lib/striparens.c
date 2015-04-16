@@ -34,8 +34,7 @@
 
 static char paren_buffer[VERY_LONG_STRING];
 
-char *strip_parens(src)
-register const char *src;
+char *strip_parens(const char *src)
 {
 	register int len;
 	register char *dest = paren_buffer;
@@ -52,8 +51,7 @@ register const char *src;
 	return paren_buffer;
 }
 
-char *get_parens(src)
-register const char *src;
+char *get_parens(const char *src)
 {
 	register int len;
 	register char *dest = paren_buffer;

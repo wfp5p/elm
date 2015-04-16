@@ -30,7 +30,7 @@
  *
  ******************************************************************************/
 
-/** 
+/**
 
 **/
 
@@ -50,10 +50,8 @@
  * This routine is NONdestructive to "buf".
  */
 
-void
-figure_out_addressee(buf, username, save_fullname)
-const char *buf, *username;
-char *save_fullname;
+void figure_out_addressee(const char *buf, const char *username,
+			  char *save_fullname)
 {
     const char *curr_field;
     char *next_field;
@@ -79,7 +77,7 @@ char *save_fullname;
 
 	/* if we don't have a name yet, then use this one */
 	if (save_fullname[0] == '\0') {
-	    (void) strncpy(save_fullname, 
+	    (void) strncpy(save_fullname,
 		(fullname[0] != '\0' ? fullname : address),SLEN);
 	}
 

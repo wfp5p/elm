@@ -27,10 +27,7 @@
 extern long make_gmttime();
 
 
-int
-real_from(buffer, entry)
-const char *buffer;
-struct header_rec *entry;
+int real_from(const char *buffer, struct header_rec *entry)
 {
 
     /*

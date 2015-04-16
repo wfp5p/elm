@@ -27,8 +27,7 @@
  * contains any non-numeric characters.  Returns the numeric
  * value on success, -1 on error.
  */
-int atonum(str)
-register const char *str;
+int atonum(register const char *str)
 {
     register int value;
 

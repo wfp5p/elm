@@ -34,10 +34,7 @@
 #include "elm_defs.h"
 
 
-int
-in_list(list, target)
-char *list, *target;
-
+int in_list(char *list, char *target)
 {
 	/* Returns TRUE iff target is an item in the list - case ignored.
 	 * If target is simple (an atom of an address) match must be exact.
