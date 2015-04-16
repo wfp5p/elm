@@ -201,12 +201,12 @@ static int default_incore = 0;
 #		ifndef MAXRUN
 #		define	MAXRUN	100
 #		endif
-static void start();
+static void start(DBZ *db, datum *kp, struct searcher *osp);
 #define	FRESH	((struct searcher *)NULL)
-static of_t search();
+static int32_t search(DBZ *db);
 #define	NOTFOUND	((of_t)-1)
-static int okayvalue();
-static int set();
+static int okayvalue(DBZ *db, int32_t value);
+static int set(DBZ *db, int32_t value);
 
 /*
  * Arguably the searcher struct for a given routine ought to be local to
@@ -1340,7 +1340,7 @@ static long hash(register char *name, register int size)
 /*
  - dbzdebug - control dbz debugging at run time
  */
-int dbzdebug(int value)
+static int dbzdebug(int value)
 {
 #ifdef DBZDEBUG
 	register int old = debug;
