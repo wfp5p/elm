@@ -39,8 +39,8 @@ up-to-date.  Many thanks.
 typedef	long	nl_catd;
 typedef long	nl_item;
 
-    extern nl_catd 	catopen();
-    extern char		*catgets();
-    extern void		catclose();
+extern nl_catd catopen(char *name, int type);
+extern char *catgets(nl_catd catd, int setId, int msgId, char *dflt);
+extern void catclose(nl_catd catd);
 
 #endif
