@@ -104,12 +104,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
  */
 #$d_mime	MIME	/**/
 
-/* MMDF:
- *	This symbol, if defined, indicates that mailboxes are in
- *	the MMDF format.
- */
-#$d_mmdf	MMDF	/**/
-
 /* AUTO_BACKGROUND:
  *	This symbol, if defined, indicates that newmail should go to
  *	the background automatically.
