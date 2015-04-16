@@ -1,7 +1,7 @@
 Summary:	The elm mail user agent
 Name:		elm
 Version:	ELM-VERSION-STRING
-Release:	1
+Release:	1%{?dist}
 License:	Distributable
 Group:		Networking/Mail
 Source0:	ftp://ftp.virginia.edu/pub/elm/%{name}-%{version}.tar.gz
