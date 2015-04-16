@@ -116,23 +116,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
  */
 #$d_noxheader	NO_XHEADER	/**/
 
-/* PIDCHECK:
- *	This symbol, if defined, means that the kill(pid, 0) will
- *	check for an active pid.
- */
-#$d_pidcheck PIDCHECK		/**/
-
-/* PTEM:
- *	This symbol, if defined, indicates that the sys/ptem.h include file is
- *	needed for window sizing.
- */
-#$d_ptem	PTEM		/**/
-
-/* PUTENV:
- *	This symbol, if defined, indicates that putenv() exists.
- */
-#$d_putenv	PUTENV	/**/
-
 /* REMOVE_AT_LAST:
  *	This symbol, if defined, tells the C code to remove the lock
  *	file on lock failure.
