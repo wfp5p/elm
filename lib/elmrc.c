@@ -21,7 +21,7 @@
 
 #include "elm_defs.h"
 
-char *CmdLineElmrc = NULL;
+static char *CmdLineElmrc = NULL;
 
 void getelmrcName(char *filename,int len)
 {

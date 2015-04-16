@@ -65,6 +65,9 @@ long make_gmttime P_((int, int, int, int, int, int));
 
 int elm_access P_((const char *, int));
 
+/* elmrc.c */
+void getelmrcName(char *filename, int len);
+void setelmrcName(char *name);
 
 /* expand.c */
 
