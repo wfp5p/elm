@@ -74,7 +74,7 @@ static int painful_access_check(const char *file, int mode)
 {
 	int pid, w, err;
 	waitstatus_t status;
-	register SIGHAND_TYPE (*istat)(), (*qstat)();
+	void *istat, *qstat;
 
 	if ((pid = vfork()) < 0) {
 	  errno = EAGAIN;

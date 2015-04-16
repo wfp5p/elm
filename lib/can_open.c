@@ -46,7 +46,7 @@ int can_open(const char *file, const char *mode)
 	FILE *fd;
 	int pid, err, w, preexisted;
 	waitstatus_t status;
-	register SIGHAND_TYPE (*istat)(), (*qstat)();
+	void *istat, *qstat;
 
 #ifdef VFORK
 	if ((pid = vfork()) == 0)
