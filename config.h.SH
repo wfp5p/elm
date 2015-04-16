@@ -59,23 +59,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
 
 #define		LOCK_DIR	"$lock_dir"	/**/
 
-/* index:
- *	This preprocessor symbol is defined, along with rindex, if the system
- *	uses the strchr and strrchr routines instead.
- */
-/* rindex:
- *	This preprocessor symbol is defined, along with index, if the system
- *	uses the strchr and strrchr routines instead.
- */
-#$d_index	index strchr	/* cultural */
-#$d_index	rindex strrchr	/*  differences? */
-
-/* INTERNET:
- *	This symbol, if defined, indicates that there is a mailer available
- *	which supports internet-style addresses (user@site.domain).
- */
-#$d_internet	INTERNET	/**/
-
 /* ISPELL:
  *	This symbol, if defined, indicates that the GNU ispell
  *	spelling checker that is available to Elm.
