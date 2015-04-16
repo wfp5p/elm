@@ -189,7 +189,7 @@ int mailFile_gets(char **buffer, struct mailFile *mailfile)
 	  c += n;
 	  mailfile->remain -= n;
 	  mailfile->offset += n;
-	  if (p != 0)		/* '\n' found */
+	  if (p != NULL)		/* '\n' found */
 	    break;
 	}
 	*c = '\0';
