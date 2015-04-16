@@ -108,7 +108,7 @@ static char *month_name[13] = {
 };
 
 static char *day_name[8] = {
-    "sun", "mon", "tue", "wed", "thu", "fri", "sat", 0
+    "sun", "mon", "tue", "wed", "thu", "fri", "sat", NULL
 };
 
 static int month_len[13] = {
