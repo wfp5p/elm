@@ -59,13 +59,11 @@ int in_list(char *list, char *target)
 	 * behaviour is changed slightly.
 	 */
 
-	register char	*rest_of_list,
-			*next_item,
-			ch;
-	int		offset;
-	char		*shift_lower(),
-				lower_list[VERY_LONG_STRING],
-				lower_target[SLEN];
+
+	int offset;
+	char *rest_of_list, *next_item, ch;
+	char lower_list[VERY_LONG_STRING];
+	char lower_target[SLEN];
 
 	rest_of_list = strcpy(lower_list, shift_lower(list));
 	strcpy(lower_target, shift_lower(target));

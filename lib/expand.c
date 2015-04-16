@@ -36,9 +36,6 @@
 
 extern nl_catd elm_msg_cat;	/* message catalog	    */
 
-char *expand_define();
-
-
 static char *expand_maildir(FILE *rcfile, char *buffer)
 {
 	char *home = NULL, *bufptr;

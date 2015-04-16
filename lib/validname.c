@@ -48,7 +48,6 @@ int valid_name(const char *name)
 #else
 
 	char filebuf[SLEN];
-	struct passwd *getpwnam();
 
 	sprintf(filebuf, "%s/%s", mailhome, name);
 	return (getpwnam(name) != NULL); /* && access(filebuf, ACCESS_EXISTS) == 0);*/

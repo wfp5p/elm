@@ -34,7 +34,6 @@ void add_site(char *buffer, const char *site, char *lastsite)
 	**/
 
 	char local_buffer[SLEN], *stripped;
-	char *strip_parens();
 
 	stripped = strip_parens(site);
 

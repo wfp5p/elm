@@ -24,9 +24,6 @@
 #include "elm_defs.h"
 
 
-extern long make_gmttime();
-
-
 int real_from(const char *buffer, struct header_rec *entry)
 {
 

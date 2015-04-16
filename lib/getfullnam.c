@@ -49,7 +49,7 @@ char *get_full_name(const char *logname)
 	char fullnamefile[SLEN];
 #endif
 	static char fullname[SLEN];
-	struct passwd *getpwnam(), *pass;
+	struct passwd *pass;
 
 	if((pass = getpwnam(logname)) == NULL)
 	  return(NULL);
