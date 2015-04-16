@@ -59,16 +59,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
 
 #define		LOCK_DIR	"$lock_dir"	/**/
 
-/* HAS_FSYNC:
- *	This symbol, if defined, indicates that the fsync() routine exists.
- */
-#$d_fsync	HAS_FSYNC		/**/
-
-/* FTRUNCATE:
- *	This symbol, if defined, indicates that the ftruncate() routine exists.
- */
-#$d_ftruncate	FTRUNCATE		/**/
-
 /* index:
  *	This preprocessor symbol is defined, along with rindex, if the system
  *	uses the strchr and strrchr routines instead.
