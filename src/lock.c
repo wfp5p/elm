@@ -197,7 +197,7 @@ int direction;
       lockfile = mk_lockname(curr_folder.filename);
 
       if (mailgroupid != groupid)
-        SETGID(mailgroupid); /* reset id so that we can get at lock file */
+        setegid(mailgroupid); /* reset id so that we can get at lock file */
 
 
       /** first, try to read the lock file, and if possible, check the pid.
@@ -219,7 +219,7 @@ int direction;
 		  "Couldn't remove current lock file %s! [%s]"),
 		  lockfile, strerror(errno));
 	        if (mailgroupid != groupid)
-		  SETGID(groupid);
+		  setegid(groupid);
 		leave(direction == LOCK_INCOMING ? LEAVE_ERROR : LEAVE_EMERGENCY);
 	      }
 	    }
@@ -246,7 +246,7 @@ int direction;
 		"Couldn't create lock file %s! [%s]"),
 		lockfile, strerror(errno));
 	    if (mailgroupid != groupid)
-	      SETGID(groupid);
+	      setegid(groupid);
 	    leave(LEAVE_ERROR);
 	  }
 	}
@@ -282,7 +282,7 @@ int direction;
 	    "Couldn't remove current lock file %s! [%s]",
 	    lockfile, strerror(errno)));
 	  if (mailgroupid != groupid)
-	    SETGID(groupid);
+	    setegid(groupid);
 	  leave(direction == LOCK_INCOMING ? LEAVE_ERROR : LEAVE_EMERGENCY);
 	}
 
@@ -296,7 +296,7 @@ int direction;
 	    "Couldn't create lock file %s! [%s]",
 	    lockfile, strerror(errno)));
 	  if (mailgroupid != groupid)
-	    SETGID(groupid);
+	    setegid(groupid);
 	  leave(LEAVE_ERROR);
 	}
 #else
@@ -310,14 +310,14 @@ int direction;
 	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveGivingUp,
 "Cannot lock folder - giving up.  Please try again in a few minutes."));
 	  if (mailgroupid != groupid)
-	    SETGID(groupid);
+	    setegid(groupid);
 	  leave(LEAVE_ERROR|LEAVE_KEEP_LOCK);
 	} else {
 	  ShutdownTerm();
 	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorTimedOutLock,
 		"Timed out on locking mailbox.  Leaving program."));
 	  if (mailgroupid != groupid)
-	    SETGID(groupid);
+	    setegid(groupid);
 	  leave(LEAVE_ERROR);
 	}
 #endif
@@ -334,7 +334,7 @@ int direction;
 
       (void)close(create_fd);
      if (mailgroupid != groupid)	   
-       SETGID(groupid);
+       setegid(groupid);
 #endif	/* } USE_DOTLOCK_LOCKING */
 				   
 #ifdef SYSCALL_LOCKING
@@ -474,7 +474,7 @@ elm_unlock()
 	   lock_state = OFF;		/* indicate we don't have a lock on */
 #else
 	  if (mailgroupid != groupid)
-	    SETGID(mailgroupid);
+	    setegid(mailgroupid);
 	  if((retcode = unlink(lockfile)) == 0) {	/* remove lock file */
 	    *lockfile = '\0';		/* null lock file name */
 	    lock_state = OFF;		/* indicate we don't have a lock on */
@@ -486,7 +486,7 @@ elm_unlock()
 		"Couldn't remove my own lock file %s!"), lockfile);
 	  }
 	  if (mailgroupid != groupid)
-	    SETGID(groupid);
+	    setegid(groupid);
 #endif	/* } !USE_DOTLOCK_LOCKING */
 	}
 	return(retcode);

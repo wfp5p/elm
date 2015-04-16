@@ -155,7 +155,7 @@ edit_mailbox()
  	   } else elm_lock(LOCK_OUTGOING);
 
 	   if (mailgroupid != groupid)
-      	     SETGID(mailgroupid);
+		   setegid(mailgroupid);
 
 	   /* remove real mail_file and then
 	    * link or copy the edited curr_folder.fp to real mail_file */
@@ -174,7 +174,7 @@ edit_mailbox()
 	   }
 
 	   if (mailgroupid != groupid)
-	     SETGID(groupid);
+		   setegid(groupid);
 
 	   fflush (curr_folder.fp);
 	   elm_unlock();

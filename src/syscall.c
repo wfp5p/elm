@@ -262,7 +262,7 @@ int options;
 	   * Set group and user back to their original values.
 	   * Note that group must be set first.
 	   */
-	  SETGID(groupid);
+	  setegid(groupid);
 	  setuid(userid);
 
 	  /*

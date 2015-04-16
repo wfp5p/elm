@@ -162,13 +162,6 @@ typedef unsigned long size_t;
  *
  ****************************************************************************/
 
-#ifdef HAS_SETEGID
-#define SETGID(s) setegid(s)
-#else
-#define SETGID(s) setgid(s)
-#endif
-
-
 #if defined(__STDC__) || defined(_AIX)
 # define ANSI_C 1
 #endif

@@ -642,7 +642,7 @@ int resyncing, quitting, prompt;
 	if(to_keep) {
 
           if (mailgroupid != groupid && (curr_folder.flags & FOLDER_IS_SPOOL))
-      	    SETGID(mailgroupid);
+		  setegid(mailgroupid);
 
 	  if(!need_to_copy) {
 	    /* If the file is on the same file system, it is simplest
@@ -670,7 +670,7 @@ int resyncing, quitting, prompt;
 		error1(catgets(elm_msg_cat, ElmSet, ElmLeaveRenameFailed,
 			"Rename failed! [%s]"), strerror(err));
 		if (mailgroupid != groupid && (curr_folder.flags & FOLDER_IS_SPOOL))
-		  SETGID(groupid);
+		  setegid(groupid);
 		leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
 	      }
 	    }
@@ -702,7 +702,7 @@ int resyncing, quitting, prompt;
 			"Can't copy folder!  Contents preserved in %s."),
 			temp_keep_file);
 		if (mailgroupid != groupid && (curr_folder.flags & FOLDER_IS_SPOOL))
-		  SETGID(groupid);
+		  setegid(groupid);
 		leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
 	      } else {
 		dprint(1, (debugfile,
@@ -777,7 +777,7 @@ int resyncing, quitting, prompt;
 		   strerror(err), curr_folder.filename);
 	}
 	if (mailgroupid != groupid && (curr_folder.flags & FOLDER_IS_SPOOL))
-	    SETGID(groupid);
+	    setegid(groupid);
 
 	fflush (curr_folder.fp);
 	curr_folder.size = bytes(curr_folder.filename);

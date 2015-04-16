@@ -88,7 +88,7 @@ int   mode;
 	}
 
 	if (pid == 0) {
-	  SETGID(getgid());
+  	  setegid(getgid());
 	  setuid(getuid());
 	  _exit(access(file, mode) == 0 ? 0 : errno);
 	}

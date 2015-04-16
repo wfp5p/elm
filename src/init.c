@@ -92,7 +92,7 @@ char *requestedmfile;	/* first mail file to open, empty if the default */
     groupid = getgid();	
     mailgroupid = getegid();
     if (mailgroupid != groupid)
-	SETGID(groupid);
+	setegid(groupid);
 
     /* make all newly created files private */
     original_umask = umask(077);

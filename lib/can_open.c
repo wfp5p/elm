@@ -56,7 +56,7 @@ const char *file, *mode;
 	if ((pid = fork()) == 0)
 #endif
 	{
-	  SETGID(getgid());
+	  setegid(getgid());
 	  setuid(getuid());		/** back to normal userid **/
 	  preexisted = (access(file, ACCESS_EXISTS) == 0);
 	  if ((fd = fopen(file, mode)) == NULL)

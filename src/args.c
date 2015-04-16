@@ -232,13 +232,6 @@ args_version()
 #else /* ALLOW_SUBSHELL */
 	printf("\tSubshell menu items not included: not ALLOW_SUBSHELL\n");
 #endif /* ALLOW_SUBSHELL */
-   
-#ifdef HAS_SETEGID
-        printf("\tUse setegid(): HAS_SETEGID\n");
-#else
-        printf("\tUse setgid(): not HAS_SETEGID\n");
-#endif
-   
 
 #ifdef ISPELL
 	printf("\tSpell checking feature enabled: ISPELL\n");

@@ -127,11 +127,6 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
 #$d_remlock REMOVE_AT_LAST	/**/
 #define MAX_ATTEMPTS	$maxattempts
 
-/* HAS_SETEGID:
- *	This symbol, if defined, indicates that the setegid() routine exists.
- */
-#$d_setegid	HAS_SETEGID		/**/
-
 /* SAVE_GROUP_MAILBOX_ID:
  *	This symbol, if defined, indicates that Elm needs to restore the
  *	group id of the file, as it is running setgid.
