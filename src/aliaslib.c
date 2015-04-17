@@ -35,6 +35,14 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
+static int do_get_alias(char *name, char **bufptr, int *bufsizep, int mailing,
+			int sysalias, int depth, int *too_longp);
+static int do_expand_group(char *group, char **bufptr, int *bufsizep,
+			   int sysalias, int depth, int *too_longp);
+static int add_name_to_list(register char *name, register char **bufptr,
+			    register int *bufsizep);
+
+
 /*
  * Expand "name" as an alias and return a pointer to static data containing
  * the expansion.  If "name" is not an alias, then NULL is returned.
@@ -85,8 +93,8 @@ char *get_alias_address(char *name, int mailing, int *too_longp)
  * Determine if "name" is an alias, and if so expand it and store the result in
  * "*bufptr".  TRUE returned if any expansion occurs, else FALSE is returned.
  */
-int do_get_alias(char *name, char **bufptr, int *bufsizep, int mailing,
-		 int sysalias, int depth, int *too_longp)
+static int do_get_alias(char *name, char **bufptr, int *bufsizep, int mailing,
+			int sysalias, int depth, int *too_longp)
 {
 	struct alias_rec *match;
 	char abuf[VERY_LONG_STRING];
@@ -208,8 +216,8 @@ do_expand:
 /* int sysalias;	TRUE to suppress checks of the user's aliases */
 /* int depth;	nesting depth */
 /* int *too_longp;	error code if expansion overflows buffer */
-int do_expand_group(char *group, char **bufptr, int *bufsizep,
-		    int sysalias, int depth, int *too_longp)
+static int do_expand_group(char *group, char **bufptr, int *bufsizep,
+			   int sysalias, int depth, int *too_longp)
 {
 	char *name, *gecos;
 	char expanded_address[LONG_STRING];
@@ -264,8 +272,8 @@ int do_expand_group(char *group, char **bufptr, int *bufsizep,
 /* register char **bufptr;	/\* pointer to pointer to end of buffer		*\/ */
 /* register int *bufsizep;	/\* pointer to space remaining in buffer		*\/ */
 
-int add_name_to_list(register char *name, register char **bufptr,
-		     register int *bufsizep)
+static int add_name_to_list(register char *name, register char **bufptr,
+			    register int *bufsizep)
 {
 	if ( *bufsizep < 0 )
 	    return FALSE;
