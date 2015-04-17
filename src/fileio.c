@@ -541,7 +541,7 @@ static char *makeAttString(char *retbuf, int retbuflen, const char *attribution,
 static struct stat saved_buf;
 static char saved_fname[SLEN];
 
-int save_file_stats(char *fname)
+int save_file_stats(const char *fname)
 {
 	/* if fname exists, save the owner, group, mode and filename.
 	 * otherwise flag nothing saved. Return 0 if saved, else -1.
@@ -561,7 +561,7 @@ int save_file_stats(char *fname)
 
 }
 
-int restore_file_stats(char *fname)
+int restore_file_stats(const char *fname)
 {
 	/* if fname matches the saved file name, set the owner and group
 	 * of fname to the saved owner, group and mode,

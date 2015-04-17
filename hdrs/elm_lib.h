@@ -365,6 +365,10 @@ int a_sendmsg(void);
 int show_msg_tag(int msg);
 int show_msg_status(int msg);
 
+/* src/fileio.c */
+int save_file_stats(const char *fname);
+int restore_file_stats(const char *fname);
+
 /* src/returnadd.c */
 int get_return(char *buffer, int msgnum);
 
