@@ -34,10 +34,7 @@
 
 extern int num_duplicates;
 
-int
-find_alias(word, alias_type)
-char *word;
-int alias_type;
+int find_alias(char *word, int alias_type)
 {
 	/** find word and return loc, or -1 **/
 	register int loc = -1;

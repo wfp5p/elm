@@ -71,9 +71,7 @@ extern int lines_displayed,	/* defined in "builtin" */
 # undef SIGWINCH
 #endif
 
-int
-show_msg(number)
-int number;
+int show_msg(int number)
 {
 	/*** Display number'th message.  Get starting and ending lines
 	     of message from headers data structure, then fly through
@@ -527,11 +525,7 @@ int number;
 	return(val == 'i' || val == 'q' ? 0 : val);
 }
 
-int
-show_line(buffer, buf_len, builtin)
-char *buffer;
-int  buf_len;
-int  builtin;
+int show_line(char *buffer, int buf_len, int builtin)
 {
 	/** Hands the given line to the output pipe.  'builtin' is true if
 	    we're using the builtin pager.

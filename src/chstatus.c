@@ -60,8 +60,7 @@ static char *cycle_str[] = { NULL, NULL, NULL };
 int new, undo_new, org_new, replied, undo_replied, org_replied;
 
 
-static void
-display_status()
+static void display_status(void)
 {
     /*  Display all the available status items */
     
@@ -94,8 +93,7 @@ display_status()
 }
 
 
-static void
-status_help()
+static void status_help(void)
 {
     /*  help menu for the status screen... */
 
@@ -163,9 +161,7 @@ status_help()
     ClearLine(LINES-1);		/* clear lower prompt message */
 }
 
-
-int
-ch_status()
+int ch_status(void)
 {
     /** change status... **/
     /* return:

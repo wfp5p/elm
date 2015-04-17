@@ -48,8 +48,7 @@
 #define FROM		2
 
 
-int
-limit()
+int limit(void)
 {
 	/** returns non-zero if we changed selection criteria = need redraw **/
 
@@ -202,10 +201,7 @@ limit()
 	}
 }
 
-int
-limit_selection(based_on, pattern, additional_criteria)
-int based_on, additional_criteria;
-char *pattern;
+int limit_selection(int based_on, char *pattern, int additional_criteria)
 {
 	/** Given the type of criteria, and the pattern, mark all
 	    non-matching curr_folder.headers as ! VISIBLE.  If additional_criteria,
@@ -252,10 +248,7 @@ char *pattern;
 	return(count);
 }
 
-int
-limit_alias_selection(based_on, pattern, additional_criteria)
-int based_on, additional_criteria;
-char *pattern;
+int limit_alias_selection(int based_on, char *pattern, int additional_criteria)
 {
 	/** Given the type of criteria, and the pattern, mark all
 	    non-matching aliases as ! VISIBLE.  If additional_criteria,
@@ -321,9 +314,7 @@ char *pattern;
 	return(count);
 }
 
-int
-next_message(iindex, skipdel)
-register int iindex, skipdel;
+int next_message(register int iindex, register int skipdel)
 {
 	/** Given 'iindex', this routine will return the actual iindex into the
 	    array of the NEXT message, or '-1' iindex is the last.
@@ -354,9 +345,7 @@ register int iindex, skipdel;
 	return(-1);
 }
 
-int
-prev_message(iindex, skipdel)
-register int iindex, skipdel;
+int prev_message(register int iindex, register int skipdel)
 {
 	/** Like next_message, but the PREVIOUS message. **/
 
@@ -381,10 +370,7 @@ register int iindex, skipdel;
 	return(-1);
 }
 
-
-int
-compute_visible(message)
-int message;
+int compute_visible(int message)
 {
 	/** return the 'virtual' iindex of the specified message in the
 	    set of messages - that is, if we have the 25th message as
@@ -415,9 +401,7 @@ int message;
 	return(count);
 }
 
-int
-visible_to_index(message)
-int message;
+int visible_to_index(int message)
 {
 	/** Given a 'virtual' iindex, return a real one.  This is the
 	    flip-side of the routine above, and returns (count+1)

@@ -26,8 +26,7 @@ char *Mime_header_names[BP_NUM_CONT_HEADERS] = {
 static char *scan_mimetypes P_((const char *, const char *, char *, int));
 
 
-PUBLIC int encoding_is_reasonable(value)
-const char *value;
+int encoding_is_reasonable(const char *value)
 {
     switch (mime_encoding_type(value)) {
     case ENCODING_NONE:
@@ -59,8 +58,7 @@ const char *value;
 
 
 #ifndef NDEBUG
-PUBLIC void bodypart_integrity_check(part)
-const SEND_BODYPART *part;
+void bodypart_integrity_check(const SEND_BODYPART *part)
 {
     assert(part != NULL);
 
@@ -114,9 +112,7 @@ const SEND_BODYPART *part;
  * of the MIME headers are initialized to NULL, and none of the
  * part statistics are filled in.
  */
-PUBLIC SEND_BODYPART *bodypart_new(fname, part_type)
-const char *fname;
-int part_type;
+SEND_BODYPART *bodypart_new(const char *fname, int part_type)
 {
     SEND_BODYPART *part;
     int i;
@@ -158,8 +154,7 @@ int part_type;
  *
  * This routine releases the space created by bodypart_new().
  */
-PUBLIC void bodypart_destroy(part)
-SEND_BODYPART *part;
+void bodypart_destroy(SEND_BODYPART *part)
 {
     int i;
     bodypart_integrity_check(part);
@@ -185,10 +180,7 @@ SEND_BODYPART *part;
  * sel - The BP_CONT_xxxx header to set.
  * value - The header value.  A NULL or empty string de-assigns the header.
  */
-PUBLIC void bodypart_set_content(part, sel, value)
-SEND_BODYPART *part;
-int sel;
-const char *value;
+void bodypart_set_content(SEND_BODYPART *part, int sel, const char *value)
 {
     assert(sel >= 0 && sel < BP_NUM_CONT_HEADERS);
     bodypart_integrity_check(part);
@@ -207,9 +199,7 @@ const char *value;
  *
  * Returns the header value, or an empty string if the header is not set.
  */
-PUBLIC const char *bodypart_get_content(part, sel)
-SEND_BODYPART *part;
-int sel;
+const char *bodypart_get_content(SEND_BODYPART *part, int sel)
 {
     const char *value;
 
@@ -231,9 +221,7 @@ int sel;
  * This routine applies some simple heuristics to guess a
  * reasonable value for the header.
  */
-PUBLIC void bodypart_guess_content(part, sel)
-SEND_BODYPART *part;
-int sel;
+void bodypart_guess_content(SEND_BODYPART *part, int sel)
 {
     char buf[SLEN], *value, *fname_tmp, *bp;
     int len;
@@ -329,12 +317,7 @@ int sel;
 }
 
 
-
-static char *scan_mimetypes(fname_mimetypes, fname_part, retbuf, retbufsiz)
-const char *fname_mimetypes;
-const char *fname_part;
-char *retbuf;
-int retbufsiz;
+static char *scan_mimetypes(const char *fname_mimetypes, const char *fname_part, char *retbuf, int retbufsiz)
 {
     char *s;
     int len_fname, len_ext;
@@ -386,8 +369,7 @@ int retbufsiz;
 
 
 #ifndef NDEBUG
-PUBLIC void multipart_integrity_check(multi)
-const SEND_MULTIPART *multi;
+void multipart_integrity_check(const SEND_MULTIPART *multi)
 {
     const SEND_MULTIPART *m1;
 
@@ -406,9 +388,7 @@ const SEND_MULTIPART *multi;
 #endif /* !NDEBUG */
 
 
-PUBLIC SEND_MULTIPART *multipart_new(part, id)
-SEND_BODYPART *part;
-long id;
+SEND_MULTIPART *multipart_new(SEND_BODYPART *part, long id)
 {
     SEND_MULTIPART *multi;
 
@@ -419,9 +399,7 @@ long id;
     return multi;
 }
 
-
-PUBLIC void multipart_destroy(multi)
-SEND_MULTIPART *multi;
+void multipart_destroy(SEND_MULTIPART *multi)
 {
     SEND_MULTIPART *mnext;
 
@@ -441,10 +419,9 @@ SEND_MULTIPART *multi;
 
 
 /*ARGSUSED*/
-PUBLIC SEND_MULTIPART *multipart_insertpart(multi, mp_curr, part, id)
-SEND_MULTIPART *multi, *mp_curr;
-SEND_BODYPART *part;
-long id;
+SEND_MULTIPART *multipart_insertpart(SEND_MULTIPART *multi,
+				     SEND_MULTIPART *mp_curr,
+				     SEND_BODYPART *part, long id)
 {
     SEND_MULTIPART *mp_new;
 
@@ -464,10 +441,9 @@ long id;
 
 
 /*ARGSUSED*/
-PUBLIC SEND_MULTIPART *multipart_appendpart(multi, mp_curr, part, id)
-SEND_MULTIPART *multi, *mp_curr;
-SEND_BODYPART *part;
-long id;
+SEND_MULTIPART *multipart_appendpart(SEND_MULTIPART *multi,
+				     SEND_MULTIPART *mp_curr,
+				     SEND_BODYPART *part, long id)
 {
     SEND_MULTIPART *mp_new;
 
@@ -487,8 +463,8 @@ long id;
 
 
 /*ARGSUSED*/
-PUBLIC SEND_BODYPART *multipart_deletepart(multi, mp_curr)
-SEND_MULTIPART *multi, *mp_curr;
+SEND_BODYPART *multipart_deletepart(SEND_MULTIPART *multi,
+				    SEND_MULTIPART *mp_curr)
 {
     SEND_BODYPART *part;
 
@@ -504,17 +480,14 @@ SEND_MULTIPART *multi, *mp_curr;
 
 
 
-PUBLIC SEND_MULTIPART *multipart_next(multi, mp_curr)
-SEND_MULTIPART *multi, *mp_curr;
+SEND_MULTIPART *multipart_next(SEND_MULTIPART *multi, SEND_MULTIPART *mp_curr)
 {
     mp_curr = (mp_curr == NULL ? multi->next : mp_curr->next);
     return (mp_curr->part == NULL ? (SEND_MULTIPART *) NULL : mp_curr);
 }
 
 
-PUBLIC SEND_MULTIPART *multipart_find(multi, id)
-SEND_MULTIPART *multi;
-long id;
+SEND_MULTIPART *multipart_find(SEND_MULTIPART *multi, long id)
 {
     while (multi = multi->next, multi->part != NULL && multi->id != id)
 	;

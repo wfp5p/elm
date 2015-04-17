@@ -50,15 +50,13 @@ extern time_t	  time();
 
 #define leapyear(year)  (((year) % 4 == 0) && (((year) % 100 != 0) || ((year) % 400 == 0)) )
 
-int  days_in_month[] = { 31,    28,    31,    30,    31,     30, 
+int  days_in_month[] = { 31,    28,    31,    30,    31,     30,
 		  31,     31,    30,   31,    30,     31,  -1};
 
-days_ahead(days, buffer)
-int days;
-char *buffer;
+int days_ahead(int days, char *buffer)
 {
 	/** return in buffer the date (Day, Mon Day, Year) of the date
-	    'days' days after today.  
+	    'days' days after today.
 	**/
 
 	struct tm *the_time;		/* Time structure, see CTIME(3C) */
@@ -73,7 +71,7 @@ char *buffer;
 
 	/* the day of the month... */
 	the_time->tm_mday += days;
-	
+
         while (the_time->tm_mday > days_in_month[the_time->tm_mon]) {
           if (the_time->tm_mon == FEB && leapyear(the_time->tm_year+1900)) {
             if (the_time->tm_mday > DAYS_IN_LEAP_FEB) {
@@ -100,9 +98,7 @@ char *buffer;
 	strftime(buffer, SLEN, "%a, %d %B %y", the_time);
 }
 
-int
-month_number(name)
-char *name;
+int month_number(char *name)
 {
 	int retval;
 	if (cvt_monthname_to_monthnum(name, &retval) < 0) {
@@ -115,18 +111,14 @@ char *name;
 	return retval;
 }
 
-char *
-elm_date_str(buf, entry)
-char *buf;
-struct header_rec *entry;
+char *elm_date_str(char *buf, struct header_rec *entry)
 {
 	time_t secs = (entry->time_sent + entry->tz_offset);
 	strftime(buf, SLEN, "%b %d, %Y %r", gmtime(&secs));
 	return buf;
 }
 
-make_menu_date(entry)
-struct header_rec *entry;
+int make_menu_date(struct header_rec *entry)
 {
 	time_t secs = (entry->time_sent + entry->tz_offset);
 	strftime(entry->time_menu, SLEN, "%b %d", gmtime(&secs));

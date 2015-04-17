@@ -70,10 +70,8 @@ extern long  fsize();
 #define IS_BUILTIN(s)	(streq((s), "builtin") || streq((s), "none"))
 
 
-PUBLIC int edit_message(filename, shdr, sel_editor)
-const char *filename;	
-SEND_HEADER *shdr;
-const char *sel_editor;
+int edit_message(const char *filename, SEND_HEADER *shdr,
+		 const char *sel_editor)
 {
     /* Return 0 if successful, -1 on error. */
 
@@ -101,7 +99,7 @@ const char *sel_editor;
 
     if ((rc = system_call(buffer, SY_COOKED|SY_ENAB_SIGHUP|SY_DUMPSTATE)) < 0) {
 	err = errno;
-	dprint(1, (debugfile, 
+	dprint(1, (debugfile,
 	    "System call failed with status %d (edit_message)\n", rc));
 	dprint(1, (debugfile, "** %s **\n", strerror(err)));
 	ClearLine(LINES-1);
@@ -122,8 +120,7 @@ const char *sel_editor;
     return return_value;
 }
 
-
-static void tilde_help()
+static void tilde_help(void)
 {
 	/* a simple routine to print out what is available at this level */
 
@@ -180,12 +177,9 @@ static void tilde_help()
 	  "Continue.)\n\r"));
 }
 
-static void read_in_file(fd, filename, show_user_filename)
-FILE *fd;
-const char *filename;
-int   show_user_filename;
+static void read_in_file(FILE *fd, const char *filename, int show_user_filename)
 {
-	/** Open the specified file and stream it in to the already opened 
+	/** Open the specified file and stream it in to the already opened
 	    file descriptor given to us.  When we're done output the number
 	    of lines and characters we added, if any... **/
 
@@ -245,10 +239,7 @@ int   show_user_filename;
 	return;
 }
 
-static void print_message_so_far(edit_fd, shdr, filename)
-FILE *edit_fd;
-const SEND_HEADER *shdr;
-const char *filename;
+static void print_message_so_far(FILE *edit_fd, const SEND_HEADER *shdr, const char *filename)
 {
 	/** This prints out the message typed in so far.  We accomplish
 	    this in a cheap manner - close the file, reopen it for reading,
@@ -258,7 +249,7 @@ const char *filename;
 	    A nice enhancement would be for this to -> page <- the message
 	    if it's sufficiently long.  Too much work for now, though.
 	**/
-	
+
 	char buffer[SLEN];
 
 	fflush(edit_fd);
@@ -280,9 +271,7 @@ const char *filename;
 	    "\n\r(Continue entering message.)\n\r"));
 }
 
-static void read_in_messages(fd, buffer)
-FILE *fd;
-char *buffer;
+static void read_in_messages(FILE *fd, char *buffer)
 {
 	/** Read the specified messages into the open file.  If the
 	    first character of "buffer" is 'm' then prefix it, other-
@@ -330,7 +319,7 @@ char *buffer;
 	   PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmCantFindReadmsg,
 	       "(Can't find 'readmsg' command! Continue.)\n\r"));
 	   (void) remove_folder_state_file();
-	   return;	
+	   return;
 	}
 
 	dprint(5, (debugfile, "** readmsg call: \"%s\" **\n", local_buffer));
@@ -345,7 +334,7 @@ char *buffer;
 
 	pclose(myfd);
         (void) remove_folder_state_file();
-	
+
 	if (lines == 0) {
 	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgCouldntAdd,
 	 	 "(Couldn't add the requested message. Continue.)\n\r"));
@@ -372,10 +361,8 @@ char *buffer;
 	return;
 }
 
-static void get_with_expansion(prompt, buffer, expanded_buffer, sourcebuf)
-const char *prompt;
-char *buffer, *expanded_buffer;
-const char *sourcebuf;
+static void get_with_expansion(const char *prompt, char *buffer,
+			       char *expanded_buffer, const char *sourcebuf)
 {
 	char savecopy[SLEN];
 
@@ -387,10 +374,10 @@ const char *sourcebuf;
 	PutLine0(-1, -1, prompt);
 
 	if (sourcebuf != NULL) {
-	  while (!whitespace(*sourcebuf) && *sourcebuf != '\0') 
+	  while (!whitespace(*sourcebuf) && *sourcebuf != '\0')
 	    sourcebuf++;
 	  if (*sourcebuf != '\0') {
-	    while (whitespace(*sourcebuf)) 
+	    while (whitespace(*sourcebuf))
 	      sourcebuf++;
 	    if (strlen(sourcebuf) > 0) {
 	      strcat(buffer, " ");
@@ -426,8 +413,7 @@ const char *sourcebuf;
 /*
  * Interrupt handler for builtin_editor().
  */
-static SIGHAND_TYPE builtin_interrupt_handler(sig)
-int sig;
+static void builtin_interrupt_handler(int sig)
 {
 	signal(SIGINT, builtin_interrupt_handler);
 	signal(SIGQUIT, builtin_interrupt_handler);
@@ -451,9 +437,7 @@ int sig;
  * The editor used by edit_message() when "builtin" or "none" are selected.
  * Return 0 if successful, -1 on error.
  */
-static int builtin_editor(filename, shdr)
-const char *filename;
-SEND_HEADER *shdr;
+static int builtin_editor(const char *filename, SEND_HEADER *shdr)
 {
     char linebuf[SLEN];		/* line input buffer			*/
     char wrapbuf[SLEN];		/* wrapped line overflow buffer		*/
@@ -711,4 +695,3 @@ done:
     builtin_active = FALSE;
     return rc;
 }
-

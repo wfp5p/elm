@@ -27,7 +27,7 @@
  *
  ******************************************************************************/
 
-/** File oriented utility routines for ELM 
+/** File oriented utility routines for ELM
 
 **/
 
@@ -38,9 +38,7 @@
 
 extern char *getlogin();
 
-
-long bytes(name)
-char *name;
+long bytes(char *name)
 {
 	struct stat sbuf;
 
@@ -55,9 +53,7 @@ char *name;
 	leave(LEAVE_EMERGENCY);
 }
 
-
-long fsize(fd)
-FILE *fd;
+long fsize(FILE *fd)
 {
 	struct stat sbuf;
 
@@ -66,10 +62,7 @@ FILE *fd;
 	return (long) sbuf.st_size;
 }
 
-
-int copy(fname_src, fname_dest, isspool)
-const char *fname_src, *fname_dest;
-int isspool;
+int copy(const char *fname_src, const char *fname_dest, int isspool)
 {
     /*
      * Copy a specified file to the indicated destination.
@@ -135,9 +128,7 @@ done:
 
 
 #define FORWARDSIGN	"Forward to "
-int
-check_mailfile_size(mfile)
-char *mfile;
+int check_mailfile_size(char *mfile)
 {
 	/** Check to ensure we have mail.  Only used with the '-z'
 	    starting option. So we output a diagnostic if there is
@@ -160,9 +151,9 @@ char *mfile;
 	/* read access - now see if file has a reasonable size */
 	else if ((fp = fopen(mfile, "r")) == NULL)
 	  retcode = -1;		/* no perm? should have detected this above! */
-	else if (fstat(fileno(fp), &statbuf) == -1) 
+	else if (fstat(fileno(fp), &statbuf) == -1)
 	  retcode = -1;					/* arg error! */
-	else if (statbuf.st_size < 2)		
+	else if (statbuf.st_size < 2)
 	  retcode = 1;	/* empty or virtually empty, e.g. just a newline */
 
 	/* file has reasonable size - see if forwarding */
@@ -198,4 +189,3 @@ char *mfile;
 
 	return(retcode);
 }
-

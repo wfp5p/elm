@@ -25,7 +25,7 @@
  ******************************************************************************/
 
 /** This file contains all the string oriented functions for the
-    ELM Mailer, and lots of other generally useful string functions! 
+    ELM Mailer, and lots of other generally useful string functions!
 
     For BSD systems, this file also includes the function "tolower"
     to translate the given character from upper case to lower case.
@@ -40,9 +40,7 @@
 
 char *format_long(), *strip_commas(), *tail_of_string(), *get_token();
 
-copy_sans_escape(dest, source, len)
-unsigned char *dest, *source;
-int  len;
+int copy_sans_escape(unsigned char *dest, unsigned char *source, int len)
 {
 	/** this performs the same function that strncpy() does, but
 	    also will translate any escape character to a printable
@@ -71,15 +69,13 @@ int  len;
 	dest[j] = '\0';
 }
 
-char *format_long(inbuff, init_len)
-char *inbuff;
-int   init_len;
+char *format_long(char *inbuff, int init_len)
 {
-	/** Return buffer with \n\t sequences added at each point where it 
-	    would be more than 80 chars long.  It only allows the breaks at 
-	    legal points (ie commas followed by white spaces).  init-len is 
-	    the characters already on the first line...  Changed so that if 
-            this is called while mailing without the overhead of "elm", it'll 
+	/** Return buffer with \n\t sequences added at each point where it
+	    would be more than 80 chars long.  It only allows the breaks at
+	    legal points (ie commas followed by white spaces).  init-len is
+	    the characters already on the first line...  Changed so that if
+            this is called while mailing without the overhead of "elm", it'll
             include "\r\n\t" instead.
 	    Changed to use ',' as a separator and to REPLACE it after it's
 	    found in the output stream...
@@ -106,7 +102,7 @@ int   init_len;
 	      ret_buffer[iindex++] = '\n';
 	      ret_buffer[iindex++] = '\t';
 	    }
-	    
+
 	    /* now add this pup! */
 
 	    for (i=(word[0] == ' '? 1:0), len = strlen(word); i<len; i++)
@@ -125,17 +121,16 @@ int   init_len;
 	      ret_buffer[iindex++] = word[i];
 	    current_length += len;
 	  }
-	
+
 	  bufptr = NULL;
 	}
-	
+
 	ret_buffer[iindex] = '\0';
 
 	return( (char *) ret_buffer);
 }
 
-char *strip_commas(string)
-char *string;
+char *strip_commas(char *string)
 {
 	/* DESTRUCTIVELY elide commas and collapse whitespace from string */
 
@@ -164,8 +159,7 @@ char *string;
 	return string;
 }
 
-split_word(buffer, first, rest)
-char *buffer, *first, *rest;
+int split_word(char *buffer, char *first, char *rest)
 {
 	int len;
 	/** Rip the buffer into first word and rest of word, translating it
@@ -191,7 +185,7 @@ char *buffer, *first, *rest;
 	}
 
 	*first = '\0';
-	
+
 	while (whitespace(*buffer)) buffer++;
 
 /*
@@ -207,14 +201,12 @@ char *buffer, *first, *rest;
 	return;
 }
 
-char *tail_of_string(string, maxchars)
-char *string;
-int  maxchars;
+char *tail_of_string(char *string, int maxchars)
 {
 	/** Return a string that is the last 'maxchars' characters of the
 	    given string.  This is only used if the first word of the string
 	    is longer than maxchars, else it will return what is given to
-	    it... 
+	    it...
 	**/
 
 	static char buffer[SLEN];
@@ -239,11 +231,11 @@ int  maxchars;
 	  buffer[maxchars-1] = '.';
 	  buffer[maxchars]   = '.';
 	  buffer[maxchars+1] = '\0';
-	} 
+	}
 	else {
 	  i = maxchars;
 	  buffer[i--] = '\0';
-	  while (i > 1) 
+	  while (i > 1)
 	    buffer[i--] = string[iindex--];
 	  buffer[2] = '.';
 	  buffer[1] = '.';
@@ -256,12 +248,10 @@ int  maxchars;
 
 #define MAX_RECURSION		20		/* up to 20 deep recursion */
 
-char *get_token(source, keys, depth)
-char *source, *keys;
-int   depth;
+char *get_token(char *source, char *keys, int depth)
 {
 	/** This function is similar to strtok() (see "opt_utils")
-	    but allows nesting of calls via pointers... 
+	    but allows nesting of calls via pointers...
 	**/
 
 	register int  last_ch;
@@ -271,21 +261,21 @@ int   depth;
 	if (depth > MAX_RECURSION) {
 	   ShutdownTerm();
 	   error1(catgets(elm_msg_cat, ElmSet, ElmGetTokenOverNested,
-		"Get_token calls nested greater than %d deep!"), 
+		"Get_token calls nested greater than %d deep!"),
 		  MAX_RECURSION);
 	   leave(LEAVE_EMERGENCY);
 	}
 
 	if (source != NULL)
 	  buffers[depth] = source;
-	
+
 	sourceptr = buffers[depth];
-	
-	if (*sourceptr == '\0') 
+
+	if (*sourceptr == '\0')
 	  return(NULL);		/* we hit end-of-string last time!? */
 
 	sourceptr += qstrspn(sourceptr, keys);	  /* skip the bad.. */
-	
+
 	if (*sourceptr == '\0') {
 	  buffers[depth] = sourceptr;
 	  return(NULL);			/* we've hit end-of-string   */
@@ -298,8 +288,8 @@ int   depth;
 	sourceptr += last_ch;		      /* ...value            */
 
 	if (*sourceptr != '\0')		/** don't forget if we're at end! **/
-	  sourceptr++;			      
-	
+	  sourceptr++;
+
 	return_value[last_ch] = '\0';	      /* ..ending right      */
 
 	buffers[depth] = sourceptr;	      /* save this, mate!    */
@@ -308,8 +298,7 @@ int   depth;
 }
 
 
-quote_args(out_string,in_string)
-register char *out_string, *in_string;
+int quote_args(register char *out_string, register char *in_string)
 {
 	/** Copy from "in_string" to "out_string", collapsing multiple
 	    white space and quoting each word.  Returns a pointer to
@@ -352,4 +341,3 @@ register char *out_string, *in_string;
 	--out_string;
     *out_string = '\0';
 }
-

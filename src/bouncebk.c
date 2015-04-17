@@ -26,7 +26,7 @@
 
 /** This set of routines implement the bounceback feature of the mailer.
     This feature allows mail greater than 'n' hops away (n specified by
-    the user) to have a 'cc' to the user through the remote machine.  
+    the user) to have a 'cc' to the user through the remote machine.
 
     Due to the vagaries of the Internet addressing (uucp -> internet -> uucp)
     this will NOT generate bounceback copies with mail to an internet host!
@@ -36,12 +36,10 @@
 #include "elm_defs.h"
 #include "elm_globals.h"
 
-char *bounce_off_remote();		/* forward declaration */
+char *bounce_off_remote(register char *to);
 
-int
-uucp_hops(to)
-register char *to;
-{	
+int uucp_hops(register char *to)
+{
 	/** Given the entire "To:" list, return the number of hops in the
 	    first address (a hop = a '!') or ZERO iff the address is to a
   	    non uucp address.
@@ -54,7 +52,7 @@ register char *to;
 	  if (len == 1) {
 	    if (whitespace(*to))
 	      break;
-	    
+
 	    if (*to == '!')
 	      hopcount++;
 	    else if (*to == '@' || *to == '%' || *to == ':')
@@ -65,14 +63,13 @@ register char *to;
 
 	return(hopcount);
 }
-	
-char *bounce_off_remote(to)
-register char *to;
+
+char *bounce_off_remote(register char *to)
 {
 	/** Return an address suitable for framing (no, that's not it...)
 	    Er, suitable for including in a 'cc' line so that it ends up
-	    with the bounceback address.  The method is to take the first 
-	    address in the To: entry and break it into machines, then 
+	    with the bounceback address.  The method is to take the first
+	    address in the To: entry and break it into machines, then
 	    build a message up from that.  For example, consider the
 	    following address:
 			a!b!c!d!e!joe
@@ -91,12 +88,12 @@ register char *to;
 	  if (len == 1) {
 	    if (whitespace(*to))
 	      break;
-	    
+
 	    if (*to == '!') {
 	      host[hostcount][hindex] = '\0';
 	      hostcount++;
 	      hindex = 0;
-	    } else 
+	    } else
 	      host[hostcount][hindex++] = *to++;
 	  } else {
 	    while (--len >= 0)
@@ -112,7 +109,7 @@ register char *to;
 	  strcat(address, "!");
 	  strcat(address, host[iindex]);
 	}
-	
+
 	/* and now the same thing backwards... */
 
 	for (iindex = hostcount -2; iindex > -1; iindex--) {

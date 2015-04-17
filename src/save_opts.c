@@ -51,9 +51,7 @@ static char *str_opt P_((int, int));
 /*
  * This routine is used in the display_options() procedure.
  */
-PUBLIC char *str_opt_nam(optname, dispmode)
-const char *optname;
-int dispmode;
+char *str_opt_nam(const char *optname, int dispmode)
 {
     int optnum;
     optnum = find_opt(optname);
@@ -85,7 +83,7 @@ int dispmode;
  * If an "elmrc-info" file is not available, then a raw alphabetical
  * dump of the option settings is made.
  */
-PUBLIC void save_options()
+void save_options(void)
 {
     int i;
     char rcfname[SLEN], buf[SLEN], *optdone;
@@ -102,7 +100,7 @@ PUBLIC void save_options()
 /*    sprintf(buf, "%s/%s", user_home, old_elmrcfile);*/
     getelmrcName(buf,SLEN-5);
    strcpy(buf, ".old");
-   
+
     if (elm_access(rcfname, ACCESS_EXISTS) != -1) {
 	if (rename(rcfname, buf) < 0)
 	    dprint(2, (debugfile, "Unable to rename %s to %s\n", rcfname, buf));
@@ -249,8 +247,7 @@ done:
  * call before each error message with err_flag=TRUE.  This will pause
  * if the following error message will wipe out a current message.
  */
-static void err_pause(err_flag)
-int err_flag;
+static void err_pause(int err_flag)
 {
     static char pause_mssg[] = "press ENTER to continue";
     static int error_displayed;
@@ -274,9 +271,7 @@ int err_flag;
 }
 
 
-static void output_option(fp_elmrc, optnum)
-FILE *fp_elmrc;
-int optnum;
+static void output_option(FILE *fp_elmrc, int optnum)
 {
     int local_value, len, i;
     char *optval, *w;
@@ -409,8 +404,7 @@ int optnum;
  * This assumes that save_info[] is sorted by option name.  It's supposed
  * to be, and if it isn't we are going to be hosed badly.
  */
-static int find_opt(optname)
-const char *optname;
+static int find_opt(const char *optname)
 {
     int min_idx, max_idx, idx, d;
 
@@ -445,9 +439,7 @@ const char *optname;
  * long version here, we actually return the short name.  (When we
  * are asked for the short version here, we return a number.)
  */
-static char *str_opt(optnum, longname)
-register int optnum;
-int longname;
+static char *str_opt(register int optnum, int longname)
 {
     static char buf[SLEN];
     register char *retval, *t;
@@ -509,4 +501,3 @@ int longname;
 
     return retval;
 }
-

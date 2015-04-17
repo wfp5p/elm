@@ -32,10 +32,7 @@
 #include "elm_defs.h"
 #include "elm_globals.h"
 
-
-int
-occurances_of(ch, string)
-char ch, *string;
+int occurances_of(int ch, char *string)
 {
 	/** returns the number of occurances of 'ch' in string 'string' **/
 
@@ -47,9 +44,7 @@ char ch, *string;
 	return(count);
 }
 
-int
-qoccurances_of(ch, string)
-char ch, *string;
+int qoccurances_of(int ch, char *string)
 {
 	/** returns the number of occurances of 'ch' in string 'string' **/
 
@@ -64,8 +59,7 @@ char ch, *string;
 	return(count);
 }
 
-remove_possible_trailing_spaces(string)
-char *string;
+int remove_possible_trailing_spaces(char *string)
 {
 	/** an incredibly simple routine that will read backwards through
 	    a string and remove all trailing whitespace.

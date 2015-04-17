@@ -87,9 +87,7 @@ static int edfld_prevword P_((struct edit_field *));
  * set then the prompt will be centered, else it will be right justified.
  */
 
-PUBLIC int enter_yn(question, dflt, line, clear_and_center)
-char *question;
-int dflt, line, clear_and_center;
+int enter_yn(char *question, int dflt, int line, int clear_and_center)
 {
     int yes_len, no_len, col, len, ch, ans, prev_keys;
     char *yes_display, *no_display;
@@ -162,10 +160,7 @@ int dflt, line, clear_and_center;
  * Ask user to enter a number of "thing".  Return value entered.
  * Return "dfltval" if entry aborted or no value entered.
  */
-
-PUBLIC int enter_number(line, dfltval, thing)
-int line, dfltval;
-char *thing;
+int enter_number(int line, int dfltval, char *thing)
 {
 #define MAXDIG 8
     char buf[MAXDIG+1], *prompt;
@@ -208,10 +203,7 @@ char *thing;
  * ESTR_PASSWORD - Just like ESTR_ENTER, except don't echo.  Also, some
  * of the fancier functions (such as cursor movement) are inhibited.
  */
-
-PUBLIC int enter_string(buf, bufsiz, line, col, mode)
-char *buf;
-int bufsiz, line, col, mode;
+int enter_string(char *buf, int bufsiz, int line, int col, int mode)
 {
     int ch, rc, i;
     struct edit_field *ed;
@@ -395,9 +387,7 @@ int bufsiz, line, col, mode;
  *
  * Otherwise, the character entered by the user is returned.
  */
-
-PUBLIC int GetKey(wait_time)
-int wait_time;
+int GetKey(int wait_time)
 {
 
     int first_key, ch, rc;
@@ -479,8 +469,7 @@ int wait_time;
 
 
 #ifndef NDEBUG
-void edfld_integrity_check(ed)
-struct edit_field *ed;
+void edfld_integrity_check(struct edit_field *ed)
 {
     assert(ed->line >= 0 && ed->line <= LINES);
     assert(ed->beg_col >= 0 && ed->beg_col < COLS);
@@ -496,9 +485,8 @@ struct edit_field *ed;
 
 
 /* create a new editing buffer */
-static struct edit_field *edfld_new(buf, bufsiz, line, beg_col, options)
-char *buf;
-int bufsiz, line, beg_col, options;
+static struct edit_field *edfld_new(char *buf, int bufsiz, int line,
+				    int beg_col, int options)
 {
     struct edit_field *ed;
 
@@ -528,16 +516,14 @@ int bufsiz, line, beg_col, options;
 
 
 /* destroy an existing editing buffer */
-void edfld_destroy(ed)
-struct edit_field *ed;
+void edfld_destroy(struct edit_field *ed)
 {
     free((malloc_t)ed);
 }
 
 
 /* position the cursor */
-static void edfld_output_cursor(ed)
-struct edit_field *ed;
+static void edfld_output_cursor(struct edit_field *ed)
 {
     edfld_integrity_check(ed);
     if (ed->options & ED_PASSWORD)
@@ -548,9 +534,7 @@ struct edit_field *ed;
 
 
 /* redraw field starting at char position "start_idx" */
-static void edfld_output_field(ed, start_idx)
-struct edit_field *ed;
-int start_idx;
+static void edfld_output_field(struct edit_field *ed, int start_idx)
 {
     int stop_idx, nch;
     const char *s;
@@ -582,9 +566,7 @@ int start_idx;
 
 
 /* scroll the text "nch" (left < 0, right > 0) chars and update display */
-static void edfld_output_scroll(ed, nch)
-struct edit_field *ed;
-int nch;
+static void edfld_output_scroll(struct edit_field *ed, int nch)
 {
     char *s;
 
@@ -618,17 +600,14 @@ int nch;
 
 
 /* redisplay entire (visible portion of) editing buffer */
-static void edfld_redraw(ed)
-struct edit_field *ed;
+static void edfld_redraw(struct edit_field *ed)
 {
     edfld_output_field(ed, ed->curr_offset);
 }
 
 
 /* set cursor position within editing buffer */
-static int edfld_setpos(ed, pos)
-struct edit_field *ed;
-int pos;
+static int edfld_setpos(struct edit_field *ed, int pos)
 {
     edfld_integrity_check(ed);
 
@@ -652,8 +631,7 @@ int pos;
 
 
 /* erase editing buffer */
-static int edfld_clear(ed)
-struct edit_field *ed;
+static int edfld_clear(struct edit_field *ed)
 {
     edfld_integrity_check(ed);
 
@@ -671,9 +649,7 @@ struct edit_field *ed;
 
 
 /* delete number of chars to left of cursor (0 == char under cursor) */
-static int edfld_delch(ed, nch)
-struct edit_field *ed;
-int nch;
+static int edfld_delch(struct edit_field *ed, int nch)
 {
     int old_pos, old_len, old_offset, i;
     char *s;
@@ -746,9 +722,7 @@ int nch;
 
 
 /* insert character at cursor then advance cursor right */
-static int edfld_insch(ed, ch)
-struct edit_field *ed;
-int ch;
+static int edfld_insch(struct edit_field *ed, int ch)
 {
     int i;
     char *s;
@@ -796,8 +770,7 @@ int ch;
 
 
 /* calculate number of chars right to start of next word */
-static int edfld_nextword(ed)
-struct edit_field *ed;
+static int edfld_nextword(struct edit_field *ed)
 {
     int i;
     char *s;
@@ -815,8 +788,7 @@ struct edit_field *ed;
 
 
 /* calculate number of chars left to start of previous word */
-static int edfld_prevword(ed)
-struct edit_field *ed;
+static int edfld_prevword(struct edit_field *ed)
 {
     int i;
     char *s;

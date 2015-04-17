@@ -81,11 +81,7 @@ extern opts_menu *find_cfg_opts();
 static int lineno = 0;
 static int errors = 0;
 
-
-static void
-do_expand_env(descr, dest, src, destlen)
-    char	*descr, *dest, *src;
-    unsigned	destlen;
+static void do_expand_env(char *descr, char *dest, char *src, unsigned destlen)
 {
     if (expand_env(dest, src, destlen) != 0) {
 	ShutdownTerm();
@@ -96,8 +92,7 @@ do_expand_env(descr, dest, src, destlen)
     }
 }
 
-
-read_rc_file()
+int read_rc_file(void)
 {
 	/** this routine does all the actual work of reading in the
 	    .rc file... **/
@@ -313,10 +308,7 @@ read_rc_file()
 
 }
 
-
-do_rc(file, lcl)
-FILE *file;
-int lcl;
+int do_rc(FILE *file, int lcl)
 {
 	static int prev_type = 0;
 	int x;
@@ -370,11 +362,7 @@ int lcl;
  * Uses an internal table to decode sort-by params...should be coupled
  * with sort_name(), etc...but...
  */
-
-do_set(file, word1, word2, lcl)
-FILE *file;
-int lcl;
-char *word1, *word2;
+int do_set(FILE *file, char *word1, char *word2, int lcl)
 {
 	register int x, y;
 
@@ -539,8 +527,7 @@ char *word1, *word2;
 	return(save_info[x].flags & DT_MASK);
 }
 
-weedout(string)
-char *string;
+int weedout(char *string)
 {
 	/** This routine is called with a list of headers to weed out.   **/
 
@@ -584,9 +571,7 @@ char *string;
 	}
 }
 
-
-alternatives(string)
-char *string;
+int alternatives(char *string)
 {
 	/** This routine is called with a list of alternative addresses
 	    that you may receive mail from (forwarded) **/
@@ -625,8 +610,7 @@ char *string;
 	}
 }
 
-add_incoming (string)
-char *string;
+int add_incoming(char *string)
 {
   /** This routine is called with a list of folder names **/
 
@@ -660,7 +644,7 @@ char *string;
 
 }
 
-expandFilenamesInMagicList()
+int expandFilenamesInMagicList(void)
 {
 
    int i;
@@ -675,7 +659,7 @@ expandFilenamesInMagicList()
    }
 }
 
-default_weedlist()
+int default_weedlist(void)
 {
 	/** Install the default headers to weed out!  Many gracious
 	    thanks to John Lebovitz for this dynamic method of
@@ -695,11 +679,7 @@ default_weedlist()
 	  weedlist[weedcount] = safe_strdup(default_list[weedcount]);
 }
 
-int matchInList(list,count,buffer,ignoreCase)
-char *list[];
-int count;
-char *buffer;
-int ignoreCase;
+int matchInList(char *list[], int count, char *buffer, int ignoreCase)
 {
    	/** returns true iff the first 'n' characters of 'buffer'
 	    match an entry of the list **/
@@ -723,9 +703,7 @@ int ignoreCase;
 	return(0);
 }
 
-int
-breakup(buffer, word1, word2)
-char *buffer, *word1, *word2;
+int breakup(char *buffer, char *word1, char *word2)
 {
 	/** This routine breaks buffer down into word1, word2 where
 	    word1 is alpha characters only, and there is an equal
@@ -789,9 +767,7 @@ static char *daynames[7] = {
 ** Returns:  number of characters read from source
 **
 */
-int read_env_var(dst, src)
-register char	*dst;
-register char	*src;
+int read_env_var(register char *dst, register char *src)
 {
     register int	nread = 0;
 
@@ -851,10 +827,7 @@ register char	*src;
 **
 **
 */
-int expand_env(dst, src, len)
-register char 	*dst;
-register char 	*src;
-int 		len;
+int expand_env(register char *dst, register char *src, int len)
 {
     int			n;
     register char	*var, *env;
@@ -1004,7 +977,7 @@ int 		len;
 
 
 #define on_off(s)	(s == 1? "ON " : "OFF")
-dump_rc_results()
+int dump_rc_results(void)
 {
 	register int i, j, len = 0;
 	char buf[SLEN], *s;
@@ -1071,8 +1044,7 @@ dump_rc_results()
 	fprintf(debugfile, "\n\n");
 }
 
-is_it_on(word)
-char *word;
+int is_it_on(char *word)
 {
 	/** Returns TRUE if the specified word is either 'ON', 'YES'
 	    or 'TRUE', and FALSE otherwise.   We explicitly translate

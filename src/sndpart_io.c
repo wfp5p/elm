@@ -45,8 +45,7 @@ static int do_emit_multipart_sep P_((FILE *, SEND_BODYPART *, int));
  * This is the first of two routines that create a new (SEND_BODYPART).
  * This one is used to process generic parts, such as attachments/inclusions.
  */
-PUBLIC SEND_BODYPART *newpart_mimepart(fname)
-const char *fname;
+SEND_BODYPART *newpart_mimepart(const char *fname)
 {
     unsigned char buf[512], *s;
     int len, n;
@@ -109,8 +108,7 @@ const char *fname;
  * This is the second of two routines that create a new (SEND_BODYPART).
  * This one is used to process the text of the main message.
  */
-PUBLIC SEND_BODYPART *newpart_mssgtext(fname)
-const char *fname;
+SEND_BODYPART *newpart_mssgtext(const char *fname)
 {
     char buf[SLEN];
     unsigned char *s;
@@ -204,8 +202,7 @@ const char *fname;
 /*
  * Process "[attach/include filename content-type content-encoding]" line.
  */
-static SEND_BODYPART *process_attach_line(cmdline)
-char *cmdline;
+static SEND_BODYPART *process_attach_line(char *cmdline)
 {
     char *fld, *cmd, *fname, *cont_type, *cont_encoding;
     char buf[SLEN];
@@ -301,9 +298,7 @@ char *cmdline;
 
 
 /* write out both part header and body with separating newline */
-PUBLIC int emitpart(fp, part)
-FILE *fp;
-SEND_BODYPART *part;
+int emitpart(FILE *fp, SEND_BODYPART *part)
 {
     bodypart_integrity_check(part);
     assert(part->emit_hdr_proc != NULL);
@@ -318,9 +313,7 @@ SEND_BODYPART *part;
 
 
 /* write out the header for this part */
-PUBLIC int emitpart_hdr(fp, part)
-FILE *fp;
-SEND_BODYPART *part;
+int emitpart_hdr(FILE *fp, SEND_BODYPART *part)
 {
     bodypart_integrity_check(part);
     assert(part->emit_hdr_proc != NULL);
@@ -329,9 +322,7 @@ SEND_BODYPART *part;
 
 
 /* write out the body for this part */
-PUBLIC int emitpart_body(fp, part)
-FILE *fp;
-SEND_BODYPART *part;
+int emitpart_body(FILE *fp, SEND_BODYPART *part)
 {
     bodypart_integrity_check(part);
     assert(part->emit_body_proc != NULL);
@@ -339,9 +330,7 @@ SEND_BODYPART *part;
 }
 
 
-static int do_emit_mssgtext_header(fp, part)
-FILE *fp;
-SEND_BODYPART *part;
+static int do_emit_mssgtext_header(FILE *fp, SEND_BODYPART *part)
 {
     bodypart_integrity_check(part);
     assert(part->part_type == BP_IS_MSSGTEXT);
@@ -351,10 +340,7 @@ SEND_BODYPART *part;
 		: do_emit_multipart_header(fp, part));
 }
 
-
-static int do_emit_mssgtext_body(fp_dest, part)
-FILE *fp_dest;
-SEND_BODYPART *part;
+static int do_emit_mssgtext_body(FILE *fp_dest, SEND_BODYPART *part)
 {
     char buf[SLEN];
     SEND_MULTIPART *mp;
@@ -471,9 +457,7 @@ done:
 }
 
 
-static int do_emit_mimepart_header(fp, part)
-FILE *fp;
-SEND_BODYPART *part;
+static int do_emit_mimepart_header(FILE *fp, SEND_BODYPART *part)
 {
     int i;
     assert(part->content_header[BP_CONT_TYPE]);
@@ -490,9 +474,7 @@ SEND_BODYPART *part;
 }
 
 
-static int do_emit_mimepart_body(fp_dest, part)
-FILE *fp_dest;
-SEND_BODYPART *part;
+static int do_emit_mimepart_body(FILE *fp_dest, SEND_BODYPART *part)
 {
     char *fname_tmp, *fname_sel, cmd_buf[SLEN], *s;
     int rc, i;
@@ -570,9 +552,7 @@ done:
 
 
 
-static int do_emit_multipart_header(fp, part)
-FILE *fp;
-SEND_BODYPART *part;
+static int do_emit_multipart_header(FILE *fp, SEND_BODYPART *part)
 {
     char buf[SLEN];
     if (part->boundary == NULL) {
@@ -606,10 +586,7 @@ SEND_BODYPART *part;
 }
 */
 
-static int do_emit_multipart_sep(fp, part, finished)
-FILE *fp;
-SEND_BODYPART *part;
-int finished;
+static int do_emit_multipart_sep(FILE *fp, SEND_BODYPART *part, int finished)
 {
     assert(!MULTIPART_IS_EMPTY(part->subparts));
     assert(part->boundary != NULL);

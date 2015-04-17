@@ -165,9 +165,7 @@ struct hdr_menu_item hmenu_item_list[] = {
 #define hmenu_inreplyto		(hmenu_item_list[9])
 #define hmenu_userdef		(hmenu_item_list[10])
 
-
-PUBLIC void edit_headers(shdr)
-SEND_HEADER *shdr;
+void edit_headers(SEND_HEADER *shdr)
 {
     int c, do_redraw;
     struct hdr_menu_item *h;
@@ -274,7 +272,7 @@ done:
  * Erase instructions, user input, left-over errors, etc.
  * This should be run after every user input command in this module.
  */
-static void hdrmenu_clear_promptarea()
+static void hdrmenu_clear_promptarea(void)
 {
     clear_error();
     MoveCursor(TOPMOST_PROMPTAREA_LINE, 0);
@@ -285,8 +283,7 @@ static void hdrmenu_clear_promptarea()
 /*
  * Prompt the user for a header value, and do any required post-processing.
  */
-static int hdrmenu_get(h)
-struct hdr_menu_item *h;
+static int hdrmenu_get(struct hdr_menu_item *h)
 {
     char inpbuf[SLEN], *s;
     int emode;
@@ -333,9 +330,7 @@ struct hdr_menu_item *h;
 /*
  * Dispay a header and its value in the appropriate field.
  */
-static void hdrmenu_put(h, already_clear)
-struct hdr_menu_item *h;
-int already_clear;
+static void hdrmenu_put(struct hdr_menu_item *h, int already_clear)
 {
     char    *p;
     int     start_row, max_row, start_col, max_col, row, col;
@@ -410,8 +405,7 @@ int already_clear;
  * Process the to, cc, and bcc headers.  The value entered by the
  * user is expanded.  A successful status is always returned.
  */
-static int hdrproc_addr(h)
-struct hdr_menu_item *h;
+static int hdrproc_addr(struct hdr_menu_item *h)
 {
     (void) build_address(strip_commas(h->inpval), h->expval);
     return 0;
@@ -426,8 +420,7 @@ struct hdr_menu_item *h;
  * field will be filled in with that value.  If an error occurs a message
  * is printed, the precedence value is cleared out, and a -1 is returned.
  */
-static int hdrproc_precedence(h)
-struct hdr_menu_item *h;
+static int hdrproc_precedence(struct hdr_menu_item *h)
 {
     char buf[SLEN];	/* assumes sizeof(allowed_precedences) <= SLEN */
     char *bp, *prec, *prio;
@@ -475,8 +468,7 @@ struct hdr_menu_item *h;
  * verified for proper format.  If an error occurs a message is printed,
  * the expanded value is cleared out, and a -1 is returned.
  */
-static int hdrproc_userhdr(h)
-struct hdr_menu_item *h;
+static int hdrproc_userhdr(struct hdr_menu_item *h)
 {
     char *s;
 
@@ -513,7 +505,7 @@ struct hdr_menu_item *h;
 /*
  * Prompt the user to domainize a header.
  */
-static void domainize_submenu()
+static void domainize_submenu(void)
 {
     int c;
     struct hdr_menu_item *h;
@@ -559,9 +551,7 @@ static void domainize_submenu()
 }
 
 
-
-static void domainize(addresses)
-char *addresses;
+static void domainize(char *addresses)
 {
 	/*** Convert the given addresses from bang paths to domain format.
 	     This policy amounts to Rabid Rerouting.  However, since it's
@@ -634,8 +624,7 @@ char *addresses;
 	*d = '\0';
 }
 
-static void domainize_addr(src, dest)
-char *src, *dest;
+static void domainize_addr(char *src, char *dest)
 {
 	/*** Convert one address to domain form. ***/
 
@@ -660,10 +649,7 @@ char *src, *dest;
 	*--locpart = '!';
 }
 
-
-PUBLIC int show_msg_headers(shdr, cmds)
-const SEND_HEADER *shdr;
-const char *cmds;
+int show_msg_headers(const SEND_HEADER *shdr, const char *cmds)
 {
     int max_lineno;
     struct hdr_menu_item *h;
@@ -691,10 +677,7 @@ const char *cmds;
     return max_lineno;
 }
 
-
-PUBLIC int edit_header_char(shdr, c)
-SEND_HEADER *shdr;
-int c;
+int edit_header_char(SEND_HEADER *shdr, int c)
 {
     struct hdr_menu_item *h;
 

@@ -55,8 +55,7 @@
 static char *makeAttString
     P_((char *, int, const char *, int, const struct header_rec *));
 
-static void copy_write_error_exit(err)
-int err;
+static void copy_write_error_exit(int err)
 {
 	ShutdownTerm();
 	error1(catgets(elm_msg_cat, ElmSet, ElmWriteCopyMessageFailed,
@@ -65,9 +64,7 @@ int err;
 }
 
 
-copy_message(dest_file, msgnum, cm_options)
-FILE *dest_file;
-int msgnum, cm_options;
+int copy_message(FILE *dest_file, int msgnum, int cm_options)
 {
 	/** Copy selected message to destination file, with optional 'prefix'
 	    as the prefix for each line.  If remove_header is true, it will
@@ -368,13 +365,12 @@ int msgnum, cm_options;
 }
 
 
-static char *
-makeAttString(retbuf, retbuflen, attribution, sel_field, messageHeader)
-char *retbuf;			/* storage space for result		*/
-int retbuflen;			/* size of result buffer		*/
-const char *attribution;	/* attribution string to expand		*/
-int sel_field;			/* field to select in "%[...]" list	*/
-const struct header_rec *messageHeader; /* current message header info	*/
+/* char *retbuf;			/\* storage space for result		*\/ */
+/* int retbuflen;			/\* size of result buffer		*\/ */
+/* const char *attribution;	/\* attribution string to expand		*\/ */
+/* int sel_field;			/\* field to select in "%[...]" list	*\/ */
+/* const struct header_rec *messageHeader; /\* current message header info	*\/ */
+static char *makeAttString(char *retbuf, int retbuflen, const char *attribution, int sel_field, const struct header_rec *messageHeader)
 {
     const char *aptr = attribution; /* cursor into the attribution spec	*/
     char *rptr = retbuf;	/* cursor into the result buffer	*/
@@ -545,9 +541,7 @@ const struct header_rec *messageHeader; /* current message header info	*/
 static struct stat saved_buf;
 static char saved_fname[SLEN];
 
-int
-save_file_stats(fname)
-char *fname;
+int save_file_stats(char *fname)
 {
 	/* if fname exists, save the owner, group, mode and filename.
 	 * otherwise flag nothing saved. Return 0 if saved, else -1.
@@ -567,8 +561,7 @@ char *fname;
 
 }
 
-restore_file_stats(fname)
-char *fname;
+int restore_file_stats(char *fname)
 {
 	/* if fname matches the saved file name, set the owner and group
 	 * of fname to the saved owner, group and mode,

@@ -81,9 +81,7 @@ extern char *nameof();
  * saving (the "s)ave" command).  If FALSE, they will be preserved (the
  * "C)opy" command.
  */
-
-int save(redraw_p, silently, delete)
-int *redraw_p, silently, delete;
+int save(int *redraw_p, int silently, int delete)
 {
     int num_tagged;		/* or zero if saving current message	*/
     int num_saved;		/* number mssgs successfully saved	*/
@@ -268,9 +266,9 @@ int *redraw_p, silently, delete;
  *		that a file that does not exist and cannot be created will
  *		be accepted.)
  *
- * 
+ *
  * allowSameFolder  - If TRUE the same folder can be selected
- * 
+ *
  * prompt1 - Prompt message that indicates command that initiated selection.
  *
  * prompt2 - Prompt for folder.  Also displayed as page title if file
@@ -278,12 +276,9 @@ int *redraw_p, silently, delete;
  *
  * screen_changed_p - Set TRUE if the upper portion of the display is written.
  */
-
-int select_folder(filename, filesiz, acc_mode, allowSameFolder, prompt1, prompt2, screen_changed_p)
-char *filename;
-int filesiz, acc_mode, allowSameFolder;
-const char *prompt1, *prompt2;
-int *screen_changed_p;
+int select_folder(char *filename, int filesiz, int acc_mode,
+		  int allowSameFolder, const char *prompt1,
+		  const char *prompt2, int *screen_changed_p)
 {
     int prompt_line, prompt_col, help_col, fb_mode, ch;
     char fb_dir[SLEN], fb_pat[SLEN], errbuf[SLEN], *s;
@@ -375,9 +370,7 @@ int *screen_changed_p;
     return 0;
 }
 
-
-int verify_create(filename)
-const char *filename;
+int verify_create(const char *filename)
 {
     char buf[SLEN], *msg;
     int target_in_folder_dir
@@ -402,10 +395,7 @@ const char *filename;
     return enter_yn(buf, FALSE, LINES-2, FALSE);
 }
 
-
-
-int expand_filename(filename)
-char *filename;
+int expand_filename(char *filename)
 {
 	/** Expands	~/	to the current user's home directory
 			~user/	to the home directory of "user"
@@ -413,7 +403,7 @@ char *filename;
 			!	to the user's incoming mailbox
 			>	to the user's received folder
 			<	to the user's sent folder
-			!!	to the last folder used 
+			!!	to the last folder used
 			@alias	to the default folder directory for "alias"
 			shell variables (begun with $)
 
@@ -457,7 +447,7 @@ char *filename;
 	      logname[iindex] = *ptr;
 	    logname[iindex] = '\0';
 	    if((pass = getpwnam(logname)) == NULL) {
-	      dprint(3,(debugfile, 
+	      dprint(3,(debugfile,
 		      "Error: Can't get home directory for %s (%s)\n",
 		      logname, "expand_filename"));
 	      error1(catgets(elm_msg_cat, ElmSet, ElmDontKnowHomeCursor,
@@ -469,7 +459,7 @@ char *filename;
 	  }
 
 	}
-	else if (temp_filename[0] == '=' || temp_filename[0] == '+' || 
+	else if (temp_filename[0] == '=' || temp_filename[0] == '+' ||
 	 	 temp_filename[0] == '%') {
 	  sprintf(filename, "%s/%s", folders, temp_filename+1);
 	}
@@ -506,7 +496,7 @@ char *filename;
 	    strcpy(env_value, getenv(varname));
 
 	  if (strlen(env_value) == 0) {
-	    dprint(3,(debugfile, 
+	    dprint(3,(debugfile,
 		    "Error: Can't expand environment variable $%s (%s)\n",
 		    varname, "expand_filename"));
 	    error1(catgets(elm_msg_cat, ElmSet, ElmDontKnowValueCursor,
@@ -526,7 +516,6 @@ char *filename;
 	  strcpy(filename, prev_fold);
 	} else
 	  strcpy(filename, temp_filename);
-	  
+
 	return(1);
 }
-

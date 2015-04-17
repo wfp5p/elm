@@ -1,7 +1,7 @@
 #include "elm_defs.h"
 #include "elm_globals.h"
 
-PUBLIC int a_sendmsg()
+int a_sendmsg(void)
 {
 	/** Prompt for fields and then call send_message() to send the
 	    specified message.  Return TRUE if the main part of the screen

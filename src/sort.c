@@ -37,11 +37,9 @@
 
 char *sort_name(), *skip_re();
 
-void
-find_old_current(iindex)
-int iindex;
+void find_old_current(int iindex)
 {
-	/** Set current to the message that has "index" as it's 
+	/** Set current to the message that has "index" as it's
 	    index number.  This is to track the current message
 	    when we resync... **/
 
@@ -62,16 +60,15 @@ int iindex;
 	return;		/* can't be found.  Leave it alone, then */
 }
 
-sort_mailbox(entries, visible)
-int entries, visible;
+int sort_mailbox(int entries, int visible)
 {
 	/** Sort the header_table definitions... If 'visible', then
 	    put the status lines etc **/
-	
+
 	int last_index = -1;
 	int compare_headers();	/* for sorting */
 
-	dprint(2, (debugfile, "\n** sorting folder by %s **\n\n", 
+	dprint(2, (debugfile, "\n** sorting folder by %s **\n\n",
 		sort_name(TRUE)));
 
 	/* Don't get last_index if no entries or no current. */
@@ -79,10 +76,10 @@ int entries, visible;
 	if (entries > 0 && curr_folder.curr_mssg > 0)
 	  last_index = curr_folder.headers[curr_folder.curr_mssg-1]->index_number;
 
-	if (entries > 30 && visible)  
-	  error1(catgets(elm_msg_cat, ElmSet, ElmSortingMessagesBy, 
+	if (entries > 30 && visible)
+	  error1(catgets(elm_msg_cat, ElmSet, ElmSortingMessagesBy,
 		"Sorting messages by %s..."), sort_name(TRUE));
-	
+
 	if (entries > 1)
 	  qsort((char *) curr_folder.headers, (unsigned) entries,
 	      sizeof (struct header_rec *) , compare_headers);
@@ -93,9 +90,7 @@ int entries, visible;
 	clear_error();
 }
 
-int
-compare_headers(p1, p2)
-struct header_rec **p1, **p2;
+int compare_headers(struct header_rec **p1, struct header_rec **p2)
 {
 	/** compare two headers according to the sortby value.
 
@@ -113,7 +108,7 @@ struct header_rec **p1, **p2;
 	struct header_rec *first, *second;
 	int ret;
 	long diff;
-	
+
 	first = *p1;
 	second = *p2;
 
@@ -176,8 +171,7 @@ struct header_rec **p1, **p2;
 	return ret;
 }
 
-char *sort_name(longname)
-int longname;
+char *sort_name(int longname)
 {
     if (sortby < 0) {
 	switch (-sortby) {
@@ -261,8 +255,7 @@ int longname;
 		"*UNKNOWN-SORT-PARAMETER*");
 }
 
-char *skip_re(string)
-char *string;
+char *skip_re(char *string)
 {
 	/** this routine returns the given string minus any sort of
 	    "re:" prefix.  specifically, it looks for, and will
@@ -285,12 +278,12 @@ char *string;
 	do {
 	  if (string[i] == '\0') return( (char *) buffer);	/* forget it */
 
-	  if (string[i] != 'r' || string[i+1] != 'e') 
+	  if (string[i] != 'r' || string[i+1] != 'e')
 	    return( (char *) buffer);				/*   ditto   */
 
 	  i += 2;	/* skip the "re" */
 
-	  while (string[i] != ':') 
+	  while (string[i] != ':')
 	    if (string[i] == '\0')
 	      return( (char *) buffer);		      /* no colon in string! */
 	    else
@@ -306,6 +299,6 @@ char *string;
 	  strcpy(buffer, (char *) string + i);
 
 	} while (string[i] == 'r' && string[i+1] == 'e');
- 
+
 	return( (char *) buffer);
 }

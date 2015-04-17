@@ -74,12 +74,12 @@ static char *mssg_sigtstp, *mssg_sigcont;
 #endif
 
 
-PUBLIC void initialize_signals()
+void initialize_signals(void)
 {
     int i;
 
     /* signals to ignore */
-    INIT_SIG(SIGINT, "SIGINT", SIG_IGN, 
+    INIT_SIG(SIGINT, "SIGINT", SIG_IGN,
 	catgets(elm_msg_cat, ElmSet, ElmSigDescripInt,
 	"Interrupt"));
 
@@ -87,7 +87,7 @@ PUBLIC void initialize_signals()
     INIT_SIG(SIGHUP,  "SIGHUP",  bailout_handler,
 	catgets(elm_msg_cat, ElmSet, ElmSigDescripHup,
 	"Hangup"));
-    INIT_SIG(SIGQUIT, "SIGQUIT", bailout_handler, 
+    INIT_SIG(SIGQUIT, "SIGQUIT", bailout_handler,
 	catgets(elm_msg_cat, ElmSet, ElmSigDescripQuit,
 	"Quit"));
     INIT_SIG(SIGTERM, "SIGTERM", bailout_handler,
@@ -170,8 +170,7 @@ PUBLIC void initialize_signals()
 }
 
 
-static SIGHAND_TYPE bailout_handler(sig)
-int sig;
+static void bailout_handler(int sig)
 {
     /*
      * This routine does lots of things that are dangerous to perform
@@ -219,8 +218,7 @@ int sig;
 }
 
 
-static SIGHAND_TYPE sigalrm_catcher(sig)
-int sig;
+static void sigalrm_catcher(int sig)
 {
     signal(SIGALRM, sigalrm_catcher);
     if (GetKey_active) {
@@ -232,8 +230,7 @@ int sig;
 }
 
 
-static SIGHAND_TYPE sigpipe_catcher(sig)
-int sig;
+static void sigpipe_catcher(int sig)
 {
     extern int pipe_abort;
 
@@ -250,8 +247,7 @@ int sig;
 /* state passed between SIGTSTP and SIGCONT handlers */
 static int save_term_status;
 
-static SIGHAND_TYPE sigtstp_catcher(sig)
-int sig;
+static void sigtstp_catcher(int sig)
 {
     /*DANGEROUS*/
     dprint(1, (debugfile, "\n\n** Received %s **\n\n", signame[sig]));
@@ -275,8 +271,7 @@ int sig;
 }
 
 
-static SIGHAND_TYPE sigcont_catcher(sig)
-int sig;
+static void sigcont_catcher(int sig)
 {
     /*DANGEROUS*/
     dprint(1, (debugfile, "\n\n** Received %s **\n\n", signame[sig]));
@@ -314,8 +309,7 @@ int sig;
 
 #ifdef SIGWINCH /*{*/
 
-static SIGHAND_TYPE sigwinch_catcher(sig)
-int sig;
+static void sigwinch_catcher(int sig)
 {
     /*
      * This flag is set when either a SIGWINCH or SIGCONT is
@@ -336,4 +330,3 @@ int sig;
 }
 
 #endif /*}SIGWINCH*/
-

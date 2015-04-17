@@ -41,8 +41,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-help(pager_help)
-int pager_help;
+int help(int pager_help)
 {
 	/** Process the request for help [section] from the user.
 	    If pager_help is TRUE, then act a little differently from
@@ -349,9 +348,7 @@ int pager_help;
 	return(0);
 }
 
-
-display_helpfile(topic)
-char *topic;
+int display_helpfile(char *topic)
 {
 	/*** Help me!  Read file 'helpfile.<section>' and echo to screen ***/
 

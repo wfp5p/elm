@@ -30,7 +30,7 @@
  * Revision 1.1  1995/09/29  17:42:31  wfp5p
  * Alpha 8 (Chip's big changes)
  *
- * 
+ *
  ******************************************************************************/
 
 #include "elm_defs.h"
@@ -55,9 +55,8 @@ static void remove_hostbang P_((char *));
 static int verify_transmission P_((const char *, SEND_HEADER *, SEND_MULTIPART **, int *, char *));
 
 
-PUBLIC int send_message(given_to, given_cc, given_subject, mssgtype)
-const char *given_to, *given_cc, *given_subject;
-int mssgtype;
+int send_message(const char *given_to, const char *given_cc,
+		 const char *given_subject, int mssgtype)
 {
     SEND_HEADER *shdr;		/* headers for this message		*/
     SEND_BODYPART *mssg_parts;	/* contents of this message		*/
@@ -273,13 +272,13 @@ message_is_prepared:
     }
 
     /* add sig now unless we are using builtin editor */
-    if (want_signature && 
+    if (want_signature &&
 	    !streq(editor, "builtin") && !streq(editor, "none")) {
 	if (fp_mssgbody == NULL) {
 	    if ((fp_mssgbody = file_open(fname_mssgbody, "a")) == NULL)
 		goto done;
 	}
-	
+
 	if (append_sig(fp_mssgbody, shdr))
  	    body_has_text = TRUE;
 	want_signature = FALSE;
@@ -338,7 +337,7 @@ message_is_prepared:
 	mp = NULL;
 	while ((mp = multipart_next(attachments, mp)) != NULL) {
 	    multipart_insertpart(mssg_parts->subparts,
-			MULTIPART_TAIL(mssg_parts->subparts), 
+			MULTIPART_TAIL(mssg_parts->subparts),
 			MULTIPART_PART(mp), MP_ID_ATTACHMENT);
 	}
     }
@@ -448,7 +447,7 @@ message_is_prepared:
        free((malloc_t)fname_fullmssg);
        fname_fullmssg = NULL;
     }
-   
+
 
     set_error(catgets(elm_msg_cat, ElmSet, ElmMailSent, "Mail sent!"));
     rc = 0;
@@ -494,8 +493,7 @@ done:
 }
 
 
-PUBLIC void display_to(address)
-char *address;
+void display_to(char *address)
 {
     char *ap;
     char *dp, dispbuf[SLEN], ret_addr[SLEN], ret_name[SLEN];
@@ -553,9 +551,7 @@ char *address;
 }
 
 
-PUBLIC int get_to(to_field, address, mssgtype)
-char *to_field, *address;
-int mssgtype;
+int get_to(char *to_field, char *address, int mssgtype)
 {
     char *prompt;
     int line;
@@ -572,7 +568,7 @@ int mssgtype;
 	PutLine0(line, 0, prompt);
 	if (enter_string(to_field, LONG_STRING, -1, -1, ESTR_REPLACE) < 0
 		    || *to_field == '\0') {
-	    ClearLine(line);	
+	    ClearLine(line);
 	    return FALSE;
 	}
     }
@@ -582,7 +578,7 @@ int mssgtype;
 	(void) strcpy(address, to_field);
     } else {
 	/* perform alias expansion of addresses */
-	(void) build_address(strip_commas(to_field), address); 
+	(void) build_address(strip_commas(to_field), address);
 	if (*address == '\0') {	/* bad address!  Removed!! */
 	    ClearLine(line);
 	    return FALSE;
@@ -593,8 +589,7 @@ int mssgtype;
 }
 
 
-static void display_subject(subject_field)
-const char *subject_field;
+static void display_subject(const char *subject_field)
 {
     int prompt_line;
 
@@ -613,9 +608,7 @@ const char *subject_field;
     PutLine0(-1, -1, subject_field);
 }
 
-
-static int get_subject(subject_field)
-char *subject_field;
+static int get_subject(char *subject_field)
 {
 	char *msg;
 
@@ -655,14 +648,12 @@ char *subject_field;
 	return TRUE;
 }
 
-
-static int get_copies(cc_field, address, addressII, copy_message)
-char *cc_field, *address, *addressII;
-int   copy_message;
+static int get_copies(char *cc_field, char *address, char *addressII,
+		      int copy_message)
 {
 	/** Get the list of people that should be cc'd, returning ZERO if
 	    any problems arise.  Address and AddressII are for expanding
-	    the aliases out after entry! 
+	    the aliases out after entry!
 	    If copy-message, that means that we're going to have to invoke
 	    a screen editor, so we'll need to delay after displaying the
 	    possibly rewritten Cc: line...
@@ -677,11 +668,11 @@ int   copy_message;
 	if (enter_string(cc_field, VERY_LONG_STRING, -1, -1, ESTR_REPLACE) < 0) {
 	  ClearLine(prompt_line-1);
 	  ClearLine(prompt_line);
-	  
+
 	  error(catgets(elm_msg_cat, ElmSet, ElmMailNotSend, "Mail not sent."));
 	  return FALSE;
 	}
-	
+
 	/** The following test is that if the build_address routine had
 	    reason to rewrite the entry given, then, if we're mailing only
 	    print the new Cc line below the old one.  If we're not, then
@@ -701,7 +692,7 @@ int   copy_message;
 	}
 
 	if (strlen(address) + strlen(addressII) > VERY_LONG_STRING) {
-	  dprint(2, (debugfile, 
+	  dprint(2, (debugfile,
 		"String length of \"To:\" + \"Cc\" too long! (get_copies)\n"));
 	  error(catgets(elm_msg_cat, ElmSet, ElmTooManyPeople, "Too many people. Copies ignored."));
 	  if (sleepmsg > 0)
@@ -711,9 +702,8 @@ int   copy_message;
 
 	return TRUE;
 }
-	
 
-static int verify_copy_msg()
+static int verify_copy_msg(void)
 {
 	char *msg;
 
@@ -730,10 +720,7 @@ static int verify_copy_msg()
 	return enter_yn(msg, reply_copy, LINES-3, FALSE);
 }
 
-
-static int recall_last_msg(filename, copy_msg)
-const char *filename;
-int copy_msg;
+static int recall_last_msg(const char *filename, int copy_msg)
 {
 	char *msg;
 
@@ -753,10 +740,7 @@ int copy_msg;
 	/*NOTREACHED*/
 }
 
-
-static int append_sig(fp_mssg, shdr)
-FILE *fp_mssg;
-SEND_HEADER *shdr;
+static int append_sig(FILE *fp_mssg, SEND_HEADER *shdr)
 {
     /* Append the correct signature file to file.  Return TRUE if
     we append anything.  */
@@ -841,8 +825,7 @@ SEND_HEADER *shdr;
     return TRUE;
 }
 
-
-static int verify_bounceback()
+static int verify_bounceback(void)
 {
     char *msg;
 
@@ -859,8 +842,7 @@ static int verify_bounceback()
  * This hack is useful in itself, but it is required now because of the
  * kludge disallowing alias expansion on return addresses.
  */
-static void remove_hostbang(addrs)
-char *addrs;
+static void remove_hostbang(char *addrs)
 {
     int hlen, flen;
     char *src, *dest;
@@ -897,12 +879,15 @@ char *addrs;
  * verify_transmission() - Ask the user to confirm transmission of the
  * message.  Returns 0 to send it, -1 to forget it.
  */
-static int verify_transmission(filename, shdr, attachments_p, form_p, copy_file)
-const char *filename;	/* pathname to mail mssg composition file	*/
-SEND_HEADER *shdr;	/* headers for the message being sent		*/
-SEND_MULTIPART **attachments_p; /* attachments to message being sent	*/
-int  *form_p;		/* pointer to form message state		*/
-char *copy_file;	/* pointer to buffer holding copy file name	*/
+/* const char *filename;	/\* pathname to mail mssg composition file	*\/ */
+/* SEND_HEADER *shdr;	/\* headers for the message being sent		*\/ */
+/* SEND_MULTIPART **attachments_p; /\* attachments to message being sent	*\/ */
+/* int  *form_p;		/\* pointer to form message state		*\/ */
+/* char *copy_file;	/\* pointer to buffer holding copy file name	*\/ */
+
+static int verify_transmission(const char *filename, SEND_HEADER *shdr,
+			       SEND_MULTIPART **attachments_p, int *form_p,
+			       char *copy_file)
 {
     char *prompt_mssg;		/* message to display prompting for cmd	*/
     char prompt_menu1[SLEN];	/* menu of available commands		*/
@@ -1175,10 +1160,8 @@ char *copy_file;	/* pointer to buffer holding copy file name	*/
  * Construct a command string to mail a message.
  * This sanitizes the recipient lists as a side effect.
  */
-PUBLIC char *build_mailer_command(cmdbuf, fname_mssg, to_recip, cc_recip, bcc_recip)
-char *cmdbuf;
-const char *fname_mssg;
-char *to_recip, *cc_recip, *bcc_recip;
+char *build_mailer_command(char *cmdbuf, const char *fname_mssg,
+			   char *to_recip, char *cc_recip, char *bcc_recip)
 {
     char recipients[VERY_LONG_STRING], mflags[SLEN], *cp;
 
@@ -1238,4 +1221,3 @@ char *to_recip, *cc_recip, *bcc_recip;
 	mailer, mflags, recipients, fname_mssg, remove_cmd, fname_mssg);
     return cmdbuf;
 }
-

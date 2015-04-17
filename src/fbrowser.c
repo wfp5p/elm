@@ -117,9 +117,7 @@ static int safe_copy P_((char *, const char *, int));
 static int safe_mkpath P_((char *, const char *, const char *, int));
 
 
-PUBLIC int fbrowser_analyze_spec(spec, ret_dir, ret_pat)
-const char *spec;
-char *ret_dir, *ret_pat;
+int fbrowser_analyze_spec(const char *spec, char *ret_dir, char *ret_pat)
 {
     struct stat sbuf;
     char *s;
@@ -167,14 +165,14 @@ char *ret_dir, *ret_pat;
     return TRUE;
 }
 
-
-PUBLIC int fbrowser(ret_buf, ret_bufsiz, start_dir, start_pat, options, prompt)
-char *ret_buf;			/* storage space for final selection	*/
-int ret_bufsiz;			/* size of storage space		*/
-const char *start_dir;		/* starting directory to browse		*/
-const char *start_pat;		/* starting match pattern		*/
-int options;			/* options (see FB_XXX in elm_defs.h)	*/
-const char *prompt;		/* message for screen header		*/
+int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
+	     const char *start_pat, int options, const char *prompt)
+/* char *ret_buf;			/\* storage space for final selection	*\/ */
+/* int ret_bufsiz;			/\* size of storage space		*\/ */
+/* const char *start_dir;		/\* starting directory to browse		*\/ */
+/* const char *start_pat;		/\* starting match pattern		*\/ */
+/* int options;			/\* options (see FB_XXX in elm_defs.h)	*\/ */
+/* const char *prompt;		/\* message for screen header		*\/ */
 {
     char curr_dir[SLEN];	/* current directory being browsed	*/
     char curr_pat[SLEN];	/* current match pattern for entries	*/
@@ -387,7 +385,7 @@ const char *prompt;		/* message for screen header		*/
 
 	case '+':			/* down page */
 	case KEY_NPAGE:
-        case KEY_RIGHT:   
+        case KEY_RIGHT:
 	    curr_sel += FB_lines_per_page;
 	    break;
 
@@ -618,9 +616,7 @@ done:
 #define FBOSEL_SORT		2
 
 
-static void fb_submenu_options(dl_p, curr_dir, curr_pat)
-FB_DIR **dl_p;
-const char *curr_dir, *curr_pat;
+static void fb_submenu_options(FB_DIR **dl_p, const char *curr_dir, const char *curr_pat)
 {
     int orig_show_dotfiles = fb_show_dotfiles;
     int orig_sortby = fb_sortby;
@@ -826,9 +822,7 @@ const char *curr_dir, *curr_pat;
 	set_error(S_(FbrowserOptionsNotChanged, "Options not changed."));
 }
 
-
-static void fb_disp_enthdr(line)
-int line;
+static void fb_disp_enthdr(int line)
 {
     int w;
     time_t tval;
@@ -852,11 +846,7 @@ int line;
     PutLine1(-1, -1, "  %s", S_(FbrowserEnthdrFilename, "filename"));
 }
 
-
-static void fb_disp_entry(line, dl, n, selected)
-int line;
-const FB_DIR *dl;
-int n, selected;
+static void fb_disp_entry(int line, const FB_DIR *dl, int n, int selected)
 {
     int w, ech;
     unsigned mode;
@@ -956,10 +946,8 @@ int n, selected;
 	EndStandout();
 }
 
-
-static void fb_disp_instr(instr_normal, instr_dummy1, instr_dummy2, do_erase)
-const char *instr_normal, *instr_dummy1, *instr_dummy2;
-int do_erase;
+static void fb_disp_instr(const char *instr_normal, const char *instr_dummy1,
+			  const char *instr_dummy2, int do_erase)
 {
     if (FB_DUMMYMODE) {
 	if (do_erase)
@@ -979,9 +967,8 @@ int do_erase;
 }
 
 
-static FB_DIR *fb_start_dir(sel_dir, sel_pat, is_rescan)
-const char *sel_dir, *sel_pat;
-int is_rescan;
+static FB_DIR *fb_start_dir(const char *sel_dir, const char *sel_pat,
+			    int is_rescan)
 {
     FB_DIR *dl;
     char pname[SLEN], *np;
@@ -1098,8 +1085,7 @@ int is_rescan;
 }
 
 
-static void fb_finish_dir(dl)
-FB_DIR *dl;
+static void fb_finish_dir(FB_DIR *dl)
 {
     int i;
     for (i = 0 ; i < dl->num_entries ; ++i)
@@ -1109,7 +1095,7 @@ FB_DIR *dl;
 }
 
 
-static int (*fb_getsortproc(void)) P_((const malloc_t, const malloc_t))
+static int (*fb_getsortproc(void))(const malloc_t, const malloc_t)
 {
     switch (fb_sortby & FBSORT_TYPE_MASK) {
     case FBSORT_TYPE_NAME:
@@ -1125,7 +1111,7 @@ static int (*fb_getsortproc(void)) P_((const malloc_t, const malloc_t))
     return fbcmp_name_ascending;
 }
 
-static char *fb_getsorttype()
+static char *fb_getsorttype(void)
 {
     static char sbuf[32];
     char *s;
@@ -1155,8 +1141,7 @@ static char *fb_getsorttype()
 }
 
 
-static int fbcmp_name_ascending(p1, p2)
-const malloc_t p1, p2;
+static int fbcmp_name_ascending(const malloc_t p1, const malloc_t p2)
 {
     const struct fb_entryinfo *e1, *e2;
     e1 = (struct fb_entryinfo *) p1;
@@ -1164,8 +1149,7 @@ const malloc_t p1, p2;
     return strcmp(e1->name, e2->name);
 }
 
-static int fbcmp_name_descending(p1, p2)
-const malloc_t p1, p2;
+static int fbcmp_name_descending(const malloc_t p1, const malloc_t p2)
 {
     const struct fb_entryinfo *e1, *e2;
     e1 = (struct fb_entryinfo *) p1;
@@ -1173,8 +1157,7 @@ const malloc_t p1, p2;
     return -strcmp(e1->name, e2->name);
 }
 
-static int fbcmp_size_ascending(p1, p2)
-const malloc_t p1, p2;
+static int fbcmp_size_ascending(const malloc_t p1, const malloc_t p2)
 {
     const struct fb_entryinfo *e1, *e2;
     e1 = (struct fb_entryinfo *) p1;
@@ -1182,8 +1165,7 @@ const malloc_t p1, p2;
     return (int) (e1->size - e2->size);
 }
 
-static int fbcmp_size_descending(p1, p2)
-const malloc_t p1, p2;
+static int fbcmp_size_descending(const malloc_t p1, const malloc_t p2)
 {
     const struct fb_entryinfo *e1, *e2;
     e1 = (struct fb_entryinfo *) p1;
@@ -1191,8 +1173,7 @@ const malloc_t p1, p2;
     return (int) (e2->size - e1->size);
 }
 
-static int fbcmp_mtime_ascending(p1, p2)
-const malloc_t p1, p2;
+static int fbcmp_mtime_ascending(const malloc_t p1, const malloc_t p2)
 {
     const struct fb_entryinfo *e1, *e2;
     e1 = (struct fb_entryinfo *) p1;
@@ -1200,8 +1181,7 @@ const malloc_t p1, p2;
     return (int) (e1->mtime - e2->mtime);
 }
 
-static int fbcmp_mtime_descending(p1, p2)
-const malloc_t p1, p2;
+static int fbcmp_mtime_descending(const malloc_t p1, const malloc_t p2)
 {
     const struct fb_entryinfo *e1, *e2;
     e1 = (struct fb_entryinfo *) p1;
@@ -1210,8 +1190,7 @@ const malloc_t p1, p2;
 }
 
 
-static int fb_mbox_check(fname, options)
-char *fname;
+static int fb_mbox_check(char *fname, int options)
 {
     char buf[SLEN];
     int ok;
@@ -1284,10 +1263,7 @@ char *fname;
 }
 
 
-static int safe_copy(dst, src, dstsiz)
-char *dst;
-const char *src;
-int dstsiz;
+static int safe_copy(char *dst, const char *src, int dstsiz)
 {
     if (dstsiz > 0) {
 	/* strncpy() is supposed to zero-fill the target, Xenix is broke */
@@ -1302,10 +1278,7 @@ int dstsiz;
 }
 
 
-static int safe_mkpath(pbuf, dname, fname, pbufsiz)
-char *pbuf;
-const char *dname, *fname;
-int pbufsiz;
+static int safe_mkpath(char *pbuf, const char *dname, const char *fname, int pbufsiz)
 {
     int len;
     if (dname != NULL && !safe_copy(pbuf, dname, pbufsiz))
@@ -1318,4 +1291,3 @@ int pbufsiz;
     }
     return safe_copy(pbuf+len, fname, pbufsiz-len);
 }
-

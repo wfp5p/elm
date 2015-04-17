@@ -63,7 +63,7 @@
   * x) (internal: exit ELM now)
     y)  full_username	<your full user name for outgoing mail>
     z)  zap sign dashes <on or off>
-	
+
     And others as they seem useful.
 
     Formatting parameters:
@@ -97,53 +97,44 @@ static char *on_name = NULL;
 static char *off_name = NULL;
 static int resort = 0;
 
-
-static post_cal(f)
-int f;
+static post_cal(int f)
 {
     (void) expand_env(calendar_file, raw_calendar_file, sizeof(calendar_file));
 }
 
-static post_editor(f)
-int f;
+static post_editor(int f)
 {
     (void) expand_env(editor, raw_editor, sizeof(editor));
 }
 
-static post_pager(f)
-int f;
+static post_pager(int f)
 {
     (void) expand_env(pager, raw_pager, sizeof(pager));
     clear_pages = (streq(pager, "builtin+") || streq(pager, "internal+"));
 }
 
-static post_folder(f)
-int f;
+static post_folder(int f)
 {
     (void) expand_env(folders, raw_folders, sizeof(folders));
 }
 
-static post_sort(f)
-int f;
+static post_sort(int f)
 {
     if (f)
 	resort++;
 }
 
-static post_sent(f)
-int f;
+static post_sent(int f)
 {
     (void) expand_env(sent_mail, raw_sentmail, sizeof(sent_mail));
 }
 
-static post_print(f)
-int f;
+static post_print(int f)
 {
     (void) expand_env(printout, raw_printout, sizeof(printout));
 }
 
-static post_menu(f)
-int f;
+static post_menu(int f)
 {
     headers_per_page = LINES - (mini_menu ? 13 : 8);
 }
@@ -220,7 +211,7 @@ opts_menu cfg_opts[] = {
 
 { 0 } };
 
-void init_opts_menu()
+void init_opts_menu(void)
 {
 	register char *c;
 	register opts_menu *o;
@@ -237,10 +228,7 @@ void init_opts_menu()
 	}
 }
 
-
-opts_menu *
-find_cfg_opts(c)
-int c;
+opts_menu *find_cfg_opts(int c)
 {
 	register opts_menu *o;
 
@@ -252,10 +240,7 @@ int c;
     return(o->parm ? o : NULL);
 }
 
-
-char *
-one_liner_for(c)
-char c;
+char *one_liner_for(int c)
 {
     opts_menu *o;
 
@@ -267,19 +252,17 @@ char c;
 	return(NULL);
 }
 
-
-void
-display_options()
+void display_options(void)
 {
 	/** Display all the available options.. **/
-	
+
 	int printed_title = FALSE;
 	register int y;
 	register opts_menu *o;
 	register char *s;
 	char buf[SLEN];
 	extern char *str_opt_nam();
-	
+
 	ClearScreen();
 
 	for (s = config_options, y = 0; *s; s++, y++) {
@@ -304,9 +287,7 @@ display_options()
 	}
 }
 
-
-void
-options_help()
+void options_help(void)
 {
 	/** help menu for the options screen... **/
 
@@ -357,10 +338,7 @@ options_help()
 	ClearLine(LINES-1);		/* clear lower prompt message */
 }
 
-
-char *
-level_name(n)
-int n;
+char *level_name(int n)
 {
 	/** return the 'name' of the level... **/
 
@@ -374,8 +352,7 @@ int n;
 	}
 }
 
-int
-options()
+int options(void)
 {
 	/** change options... **/
 	/* return:
@@ -464,9 +441,7 @@ options()
 }
 
 
-
-on_or_off(var, x, y)
-int *var, x,y;
+int on_or_off(int *var, int x, int y)
 {
 	/** 'var' field at x.y toggles between on and off... **/
 
@@ -489,9 +464,7 @@ int *var, x,y;
 	MoveCursor(x,y+4); 	CleartoEOLN();	/* remove help prompt */
 }
 
-
-switch_user_level(ulevel, x, y)
-int *ulevel, x, y;
+int switch_user_level(int *ulevel, int x, int y)
 {
 	/** step through possible user levels... **/
 
@@ -508,14 +481,11 @@ int *ulevel, x, y;
 	MoveCursor(x,y+20); 	CleartoEOLN();	/* remove help prompt */
 }
 
-
-change_sort(var, x, y)
-int *var;
-int x,y;
+int change_sort(int *var, int x, int y)
 {
 	/** change the sorting scheme... **/
 	/** return !0 if new sort order, else 0 **/
-	
+
 	int last_sortby,	/* so we know if it changes... */
 	    sign = 1;		/* are we reverse sorting??    */
 	int ch;			/* character typed in ...      */
@@ -532,9 +502,9 @@ int x,y;
 	  ch = ReadCh();
 	  ch = tolower(ch);
 	  switch (ch) {
-	    case ' ' : if (sortby < 0) { 
-	    		   sign = -1; 
-	    		   sortby = - sortby; 
+	    case ' ' : if (sortby < 0) {
+	    		   sign = -1;
+	    		   sortby = - sortby;
 	  		 }
 			 else sign = 1;		/* insurance! */
 	  		 sortby = sign * ((sortby + 1) % (STATUS+2));
@@ -566,9 +536,7 @@ int x,y;
 	return(*var-sortby);
 }
 
-
-one_liner(string)
-char *string;
+int one_liner(char *string)
 {
 	/** A single-line description of the selected item... **/
 
@@ -577,16 +545,14 @@ char *string;
 		CenterLine(LINES-4, string);
 }
 
-
-sort_one_liner(sorting_by)
-int sorting_by;
+int sort_one_liner(int sorting_by)
 {
 	/** A one line summary of the particular sorting scheme... **/
 
 	ClearLine(LINES-2);
 
 	switch (sorting_by) {
-	  
+
 	  case REVERSE SENT_DATE:	CenterLine(LINES-2,
 				catgets(elm_msg_cat, ElmSet, ElmSortRSentDate,
 "This sort will order most-recently-sent to least-recently-sent"));
@@ -647,14 +613,11 @@ int sorting_by;
 }
 
 
-
-change_alias_sort(var, x, y)
-int *var;
-int x,y;
+int change_alias_sort(int *var, int x, int y)
 {
 	/** change the sorting scheme... **/
 	/** return !0 if new sort order, else 0 **/
-	
+
 	int last_sortby,	/* so we know if it changes... */
 	    sign = 1;		/* are we reverse sorting??    */
 	int ch;			/* character typed in ...      */
@@ -671,9 +634,9 @@ int x,y;
 	  ch = ReadCh();
 	  ch = tolower(ch);
 	  switch (ch) {
-	    case ' ' : if (alias_sortby < 0) { 
-	    		   sign = -1; 
-	    		   alias_sortby = - alias_sortby; 
+	    case ' ' : if (alias_sortby < 0) {
+	    		   sign = -1;
+	    		   alias_sortby = - alias_sortby;
 	  		 }
 			 else sign = 1;		/* insurance! */
 	  		 alias_sortby = sign * ((alias_sortby + 1)
@@ -708,15 +671,14 @@ int x,y;
 	return(*var-alias_sortby);
 }
 
-alias_sort_one_liner(sorting_by)
-int sorting_by;
+int alias_sort_one_liner(int sorting_by)
 {
 	/** A one line summary of the particular sorting scheme... **/
 
 	ClearLine(LINES-2);
 
 	switch (sorting_by) {
-	  
+
 	  case REVERSE ALIAS_SORT:	CenterLine(LINES-2,
 				catgets(elm_msg_cat, ElmSet, ElmASortRAlias,
 "This sort will order by alias name, in reverse alphabetical order"));
@@ -751,9 +713,7 @@ int sorting_by;
  * we can use save_info structure and tag the param as being changed
  * locally (so we know to save it to the .elm/elmrc file).
  */
-info_enter(name, ypos, xpos)
-char *name;
-int ypos, xpos;
+int info_enter(char *name, int ypos, int xpos)
 {
 	register int x,q;
 	char buffer[SLEN];
@@ -845,4 +805,3 @@ int ypos, xpos;
 
 	return(q != 0);
 }
-

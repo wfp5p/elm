@@ -30,8 +30,7 @@
 #include "mime.h"
 #include "s_elm.h"
 
-int mime_encoding_type(Encoding)
-const char *Encoding;
+int mime_encoding_type(const char *Encoding)
 {
     if (Encoding == NULL || *Encoding == '\0')
 	return ENCODING_NONE;
@@ -54,8 +53,7 @@ const char *Encoding;
 
 #ifdef MIME_RECV /*{*/
 
-needs_mmdecode(s)
-char *s;
+int needs_mmdecode(char *s)
 {
 	char buf[SLEN];
 	char *t;
@@ -78,8 +76,7 @@ char *s;
 	}
 }
 
-notplain(s)
-char *s;
+int notplain(char *s)
 {
 	char *t;
 	if (!s) return(1);
@@ -115,8 +112,7 @@ char *s;
 	return(0); /* no charset, was text/plain */
 }
 
-int charset_ok(s)
-char *s;
+int charset_ok(char *s)
 {
     /* Return true if configured charset could display us-ascii too */
     char buf[SLEN];	/* assumes sizeof(charset_compatlist) <= SLEN */

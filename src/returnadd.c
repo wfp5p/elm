@@ -46,11 +46,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-
-void
-get_existing_address(buffer, msgnum)
-char *buffer;
-int msgnum;
+void get_existing_address(char *buffer, int msgnum)
 {
 	/** This routine is called when the message being responded to has
 	    "To:xyz" as the return address, signifying that this message is
@@ -79,16 +75,16 @@ int msgnum;
 	}
         if (fseek(curr_folder.fp, curr_folder.headers[msgnum]->offset, 0) == -1) {
 	    err = errno;
-	    dprint(1, (debugfile, 
-		    "Error: seek %ld bytes into file hit errno %s (%s)", 
-		    curr_folder.headers[msgnum]->offset, strerror(err), 
+	    dprint(1, (debugfile,
+		    "Error: seek %ld bytes into file hit errno %s (%s)",
+		    curr_folder.headers[msgnum]->offset, strerror(err),
 		    "get_existing_address"));
 	    error2(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekBytesIntoFlle,
 		   "Couldn't seek %ld bytes into file (%s)."),
 	           curr_folder.headers[msgnum]->offset, strerror(err));
 	    return;
         }
- 
+
         /** okay!  Now we're there!  **/
 
         while (ok) {
@@ -111,13 +107,10 @@ int msgnum;
       }
 }
 
-int
-get_return(buffer, msgnum)
-char *buffer;
-int msgnum;
+int get_return(char *buffer, int msgnum)
 {
-	/** reads msgnum message again, building up the full return 
-	    address including all machines that might have forwarded 
+	/** reads msgnum message again, building up the full return
+	    address including all machines that might have forwarded
 	    the message.  Returns whether it is using the To line **/
 
 	char buf[SLEN], name1[SLEN], name2[SLEN], lastname[SLEN];
@@ -144,15 +137,15 @@ int msgnum;
 	if (fseek(curr_folder.fp, curr_folder.headers[msgnum]->offset, 0) == -1) {
 	  err = errno;
 	  dprint(1, (debugfile,
-		"Error: seek %ld bytes into file hit errno %s (%s)", 
-		curr_folder.headers[msgnum]->offset, strerror(err), 
+		"Error: seek %ld bytes into file hit errno %s (%s)",
+		curr_folder.headers[msgnum]->offset, strerror(err),
 	        "get_return"));
 	  error2(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekBytesIntoFlle,
 		"Couldn't seek %ld bytes into file (%s)."),
 	       curr_folder.headers[msgnum]->offset, strerror(err));
 	  return(using_to);
 	}
- 
+
 	/** okay!  Now we're there!  **/
 
 	lines = curr_folder.headers[msgnum]->lines;
@@ -188,10 +181,10 @@ int msgnum;
 /* At this point, "buf" contains the unfolded header line, while "buf2" contains
    the next single line of text from the mail file */
 
-	  if (strbegConst(buf, "From ")) 
+	  if (strbegConst(buf, "From "))
 	    sscanf(buf, "%*s %s", hold_return);
 	  else if (stribegConst(buf, ">From")) {
-	    sscanf(buf,"%*s %s %*s %*s %*s %*s %*s %*s %*s %s %s", 
+	    sscanf(buf,"%*s %s %*s %*s %*s %*s %*s %*s %*s %s %s",
 	           name1, name2, alt_name2);
 	    if (strcmp(name2, "from") == 0)		/* remote from xyz  */
 	      strcpy(name2, alt_name2);
@@ -241,7 +234,7 @@ int msgnum;
 		decnet_found = buffer[colon_offset + 1] == ':';
 	  else
 		decnet_found = NO;
-		
+
 	  if (qchloc(buffer, '@') < 0
 	   && qchloc(buffer, '%') < 0
 	   && qchloc(buffer, '!') < 0

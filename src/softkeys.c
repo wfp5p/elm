@@ -39,22 +39,19 @@
 #define f_key8	8
 
 
-static void define_key(key, display, send)
-int key;
-char *display, *send;
+static void define_key(int key, char *display, char *send)
 {
 	fprintf(stderr, "%c&f%dk%dd%dL%s%s", ESCAPE, key,
 		strlen(display), strlen(send), display, send);
 }
 
-static void clear_key(key)  
-{ 	
-       define_key(key, "                ", ""); 
+static void clear_key(int key)
+{
+       define_key(key, "                ", "");
 }
 
 
-PUBLIC int define_softkeys(sel)
-int sel;
+int define_softkeys(int sel)
 {
 	static int prev_selection = -1;
 	int ret_selection;
@@ -119,7 +116,7 @@ int sel;
 	  clear_key(f_key7);
 	  define_key(f_key8, catgets(elm_msg_cat, ElmSet, ElmKeyYF8,
 		"   No"),  "n");
-	
+
 	case SOFTKEYS_READ:
 	  define_key(f_key1, catgets(elm_msg_cat, ElmSet, ElmKeyRF1,
 		"  Next    Page  "), " ");
@@ -161,24 +158,23 @@ int sel;
 	return ret_selection;
 }
 
-PUBLIC void softkeys_on()	
-{ 
-	/* enable (esc&s1A) turn on softkeys (esc&jB) and turn on MENU 
+void softkeys_on(void)
+{
+	/* enable (esc&s1A) turn on softkeys (esc&jB) and turn on MENU
 	   and USER/SYSTEM options. */
 
 	if (hp_softkeys) {
-	  fprintf(stderr, "%c&s1A%c&jB%c&jR", ESCAPE, ESCAPE, ESCAPE); 
+	  fprintf(stderr, "%c&s1A%c&jB%c&jR", ESCAPE, ESCAPE, ESCAPE);
 	  fflush(stderr);
 	}
 }
 
-PUBLIC void softkeys_off()	
+void softkeys_off(void)
 {
 	/* turn off softkeys (esc&j@) */
 
 	if (hp_softkeys) {
-	  fprintf(stderr, "%c&s0A%c&j@", ESCAPE, ESCAPE); 
+	  fprintf(stderr, "%c&s0A%c&j@", ESCAPE, ESCAPE);
 	  fflush(stderr);
 	}
 }
-

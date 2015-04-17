@@ -37,7 +37,7 @@
  *
  ******************************************************************************/
 
-/**  screen display routines for ELM program 
+/**  screen display routines for ELM program
 
 **/
 
@@ -51,7 +51,7 @@ char *nameof(), *show_status();
 
 extern char version_buff[];
 
-showscreen()
+int showscreen(void)
 {
 
 	ClearScreen();
@@ -67,7 +67,7 @@ showscreen()
 	show_last_error();
 }
 
-update_title()
+int update_title(void)
 {
 	/** display a new title line, probably due to new mail arriving **/
 
@@ -107,7 +107,7 @@ update_title()
 	CenterLine(1, buffer);
 }
 
-show_menu()
+int show_menu(void)
 {
 	/** write main system menu... **/
 
@@ -128,17 +128,16 @@ show_menu()
 	}
 }
 
-int
-show_headers()
+int show_headers(void)
 {
-	/** Display page of headers (10) if present.  First check to 
+	/** Display page of headers (10) if present.  First check to
 	    ensure that header_page is in bounds, fixing silently if not.
-	    If out of bounds, return zero, else return non-zero 
+	    If out of bounds, return zero, else return non-zero
 	    Modified to only show headers that are "visible" to ze human
 	    person using ze program, eh?
 	**/
 
-	register int this_msg = 0, line = 4, last = 0, last_line, 
+	register int this_msg = 0, line = 4, last = 0, last_line,
 		     displayed = 0, using_to;
 	int max, do_standout;
 	char newfrom[SLEN], buffer[SLEN];
@@ -147,7 +146,7 @@ show_headers()
         headers_per_page = LINES - (mini_menu ? 13 : 8);
         if (headers_per_page < 1)
 	    headers_per_page = 1;
-    
+
 	if (fix_header_page())
 	  return(FALSE);
 
@@ -166,7 +165,7 @@ show_headers()
 	    return(FALSE);
 
 	  /** compute last header to display **/
-  
+
 	  this_msg = header_page * headers_per_page;
 	  last = this_msg + (headers_per_page - 1);
 	}
@@ -191,16 +190,16 @@ show_headers()
 	  }
 	  else {
 	  using_to = tail_of(curr_folder.headers[this_msg]->from, newfrom,
-	    curr_folder.headers[this_msg]->to); 
+	    curr_folder.headers[this_msg]->to);
 
-	  if (this_msg == curr_folder.curr_mssg-1) 
+	  if (this_msg == curr_folder.curr_mssg-1)
 	    build_header_line(buffer, curr_folder.headers[this_msg], this_msg+1,
 			    TRUE, newfrom, using_to);
 	  else
-	    build_header_line(buffer, curr_folder.headers[this_msg], 
+	    build_header_line(buffer, curr_folder.headers[this_msg],
 			    this_msg+1, FALSE, newfrom, using_to);
 	  }
-	  if (selected) 
+	  if (selected)
 	    displayed++;
 
 	  if (inalias)
@@ -223,8 +222,8 @@ show_headers()
 	      break;	/* GET OUTTA HERE! */
 
 	    /* the preceeding looks gross because we're using an INDEX
-	       variable to pretend to be a "current" counter, and the 
-	       current counter is always 1 greater than the actual 
+	       variable to pretend to be a "current" counter, and the
+	       current counter is always 1 greater than the actual
 	       index.  Does that make sense??
 	     */
 	  }
@@ -253,7 +252,7 @@ show_headers()
 	return(TRUE);
 }
 
-show_current()
+int show_current(void)
 {
 	/** Show the new header, with all the usual checks **/
 
@@ -277,13 +276,13 @@ show_current()
 	/* if not a full page adjust last to be the real last */
 	if (selected && last > selected)
 	  last = selected;
-	if (!selected && last > max) 
+	if (!selected && last > max)
 	  last = max;
 
 	/** okay, now let's show the pointers... **/
 
 	/** have we changed??? **/
-	if (curr == last_current) 
+	if (curr == last_current)
 	  return;
 
 	if (selected) {
@@ -294,15 +293,15 @@ show_current()
 	  last_line = ((last_current-1) % headers_per_page)+4;
 	  new_line  = ((curr-1) % headers_per_page)+4;
 	}
-	
+
 	if (! arrow_cursor) {
-  
+
 	  if (inalias)
 	    build_alias_line(new_buffer, aliases[curr_alias-1], curr_alias,
 		   TRUE);
 	  else {
 	    using_to = tail_of(curr_folder.headers[curr_folder.curr_mssg-1]->from, newfrom,
-		    curr_folder.headers[curr_folder.curr_mssg-1]->to); 
+		    curr_folder.headers[curr_folder.curr_mssg-1]->to);
 	    build_header_line(new_buffer, curr_folder.headers[curr_folder.curr_mssg-1],
 		    curr_folder.curr_mssg, TRUE, newfrom, using_to);
 	  }
@@ -312,8 +311,8 @@ show_current()
 	      && compute_visible(last_current) <= last
 	      && compute_visible(last_current) >= first) {
 
-	    dprint(5, (debugfile, 
-		  "\nlast_current = %d ... clearing [1] before we add [2]\n", 
+	    dprint(5, (debugfile,
+		  "\nlast_current = %d ... clearing [1] before we add [2]\n",
 		   last_current));
 	    dprint(5, (debugfile, "first = %d, and last = %d\n\n",
 		  first, last));
@@ -323,8 +322,8 @@ show_current()
 	                       last_current, FALSE);
 	    else {
 	    using_to = tail_of(curr_folder.headers[last_current-1]->from, newfrom,
-	      curr_folder.headers[last_current-1]->to); 
-	    build_header_line(old_buffer, curr_folder.headers[last_current-1], 
+	      curr_folder.headers[last_current-1]->to);
+	    build_header_line(old_buffer, curr_folder.headers[last_current-1],
 		 last_current, FALSE, newfrom, using_to);
 	    }
 
@@ -339,23 +338,21 @@ show_current()
 	      EndStandout();
 	}
 	else {
-	  if (on_page(last_current-1)) 
+	  if (on_page(last_current-1))
 	    PutLine0(last_line,0,"  ");	/* remove old pointer... */
 	  if (on_page(curr-1))
 	    PutLine0(new_line, 0,"->");
 	}
-	
+
 	last_current = curr;
 }
 
-build_header_line(buffer, entry, message_number, highlight, from, really_to)
-char *buffer;
-struct header_rec *entry;
-int message_number, highlight, really_to;
-char *from;
+int build_header_line(char *buffer, struct header_rec *entry,
+		      int message_number, int highlight, char *from,
+		      int really_to)
 {
 	/** Build in buffer the message header ... entry is the current
-	    message entry, 'from' is a modified (displayable) from line, 
+	    message entry, 'from' is a modified (displayable) from line,
 	    'highlight' is either TRUE or FALSE, and 'message_number'
 	    is the number of the message.
 	**/
@@ -364,7 +361,7 @@ char *from;
 	    subject line as possible given the dimensions of the screen.
 	    The key is that 'strncpy' returns a 'char *' to the string
 	    that it is handing to the dummy variable!  Neat, eh? **/
-	
+
 	int match;
 	int who_width = 18, subj_width, subj_field_width;
 	static int initialized = 0;
@@ -426,15 +423,15 @@ char *from;
 	 */
 
 	/* Note that one huge sprintf() is too hard for some compilers. */
-   
-        make_menu_date(entry); 
+
+        make_menu_date(entry);
 
 	sprintf(buffer, "%s%s%c%-3d %s ",
 		(highlight && arrow_cursor)? "->" : "  ",
 		show_status(entry->status),
 		(entry->status & TAGGED?  '+' : ' '),
 	        message_number,
-	        entry->time_menu); 
+	        entry->time_menu);
 
 	if (show_mlists) {
 	  mlist_parse_header_rec(entry);
@@ -522,7 +519,7 @@ char *from;
 		who_width,
 		from,
 
-		entry->lines, 
+		entry->lines,
 		(entry->lines / 1000   > 0? ""   :	/* spacing the  */
 		  entry->lines / 100   > 0? " "  :	/* same for the */
 		    entry->lines / 10  > 0? "  " :	/* lines in ()  */
@@ -531,8 +528,7 @@ char *from;
 		subj_width, subj_width, entry->subject);
 }
 
-int
-fix_header_page()
+int fix_header_page(void)
 {
 	/** this routine will check and ensure that the current header
 	    page being displayed contains messages!  It will silently
@@ -544,18 +540,16 @@ fix_header_page()
 	max = (inalias ? num_aliases : curr_folder.num_mssgs);
 
 	last_page = (int) ((max-1) / headers_per_page);
- 
-	if (header_page > last_page) 
+
+	if (header_page > last_page)
 	  header_page = last_page;
-	else if (header_page < 0) 
+	else if (header_page < 0)
           header_page = 0;
 
 	return(old_header != header_page);
 }
 
-int
-on_page(message)
-int message;
+int on_page(int message)
 {
 	/** Returns true iff the specified message is on the displayed page. **/
 
@@ -565,19 +559,18 @@ int message;
 	return ((message / headers_per_page) == header_page);
 }
 
-char *show_status(status)
-int status;
+char *show_status(int status)
 {
 	/** This routine returns a pair of characters indicative of
 	    the status of this message.  The first character represents
-	    the interim status of the message (e.g. the status within 
+	    the interim status of the message (e.g. the status within
 	    the mail system):
 
 		E = Expired message
 		N = New message
 		O = Unread old message	dsi mailx emulation addition
 		D = Deleted message
-		_ = (space) default 
+		_ = (space) default
 
 	    and the second represents the permanent attributes of the
 	    message:

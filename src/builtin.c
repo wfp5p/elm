@@ -48,12 +48,11 @@ int	lines_displayed,	    /* total number of lines displayed      */
 	total_lines_to_display,	    /* total number of lines in message     */
 	pages_displayed; 	    /* for the nth page titles and all      */
 
-start_builtin(lines_in_message)
-int lines_in_message;
+int start_builtin(int lines_in_message)
 {
 	/** clears the screen and resets the internal counters... **/
 
-	dprint(8,(debugfile, 
+	dprint(8,(debugfile,
 		"displaying %d lines from message using internal pager\n",
 		lines_in_message));
 
@@ -65,11 +64,8 @@ int lines_in_message;
 	total_lines_to_display = lines_in_message;
 }
 
-int
-next_line(inputptr, inputlenptr, output, outputlenptr, width)
-char **inputptr, *output;
-register unsigned width;
-int *inputlenptr, *outputlenptr;
+int next_line(char **inputptr, int *inputlenptr, char *output,
+	      int *outputlenptr, register unsigned width)
 {
 	/* Copy characters from input to output and copy
 	 * remainder of output to output. In copying use ^X notation for
@@ -96,13 +92,13 @@ int *inputlenptr, *outputlenptr;
 	while(ilen > 0) {	/* while there is something */
 
 	  if(chars_output >= width  ) {	/* no more room on line */
-	    *optr++ = '\r';	
+	    *optr++ = '\r';
 	    *optr++ = '\n';
 	    /* if next input character is newline or return,
-	     * we can skip over it since we are outputing a newline anyway */ 
+	     * we can skip over it since we are outputing a newline anyway */
 	    if((*iptr == '\n') || (*iptr == '\r'))
 	      { iptr++; --ilen; }
-	    break;		
+	    break;
 	  } else if (*iptr == '\n' || *iptr == '\r') {	/*newline or return */
 	    *optr++ = '\r';
 	    *optr++ = '\n';
@@ -110,7 +106,7 @@ int *inputlenptr, *outputlenptr;
 	    break;			/* end of line */
 	  } else if(*iptr == '\f') {		/* formfeed */
 	    /* if next input character is newline or return,
-	     * we can skip over it since we are outputing a formfeed anyway */ 
+	     * we can skip over it since we are outputing a formfeed anyway */
 	    if((*++iptr == '\n') || (*iptr == '\r'))
 	      { iptr++; --ilen; }
 	    --ilen;
@@ -154,22 +150,19 @@ int *inputlenptr, *outputlenptr;
 }
 
 
-int
-display_line(input_line, input_size)
-char *input_line;
-int  input_size;
+int display_line(char *input_line, int input_size)
 {
 	int	percent_done;
 	/** Display the given line on the screen, taking into account such
 	    dumbness as wraparound and such.  If displaying this would put
 	    us at the end of the screen, put out the "MORE" prompt and wait
 	    for some input.   Return non-zero if the user terminates the
-	    paging (e.g. 'i') or zero if we should continue. Also, 
-            this will pass back the value of any character the user types in 
+	    paging (e.g. 'i') or zero if we should continue. Also,
+            this will pass back the value of any character the user types in
 	    at the prompt instead, if needed... (e.g. if it can't deal with
 	    it at this point)
 	**/
-	
+
 	char *pending, footer[SLEN], display_buffer[SLEN];
 	int ch, formfeed, lines_more;
 	int pending_len = input_size, display_len = 0;
@@ -241,7 +234,7 @@ int  input_size;
 " %d lines more (you've seen %d%%) "),
 		 lines_more, percent_done);
 	  }
- 
+
 	  MoveCursor(LINES, 0);
 	  if (Term.status & TERM_CAN_SO)
 	      StartStandout();
@@ -286,11 +279,10 @@ int  input_size;
 	} while(pending_len > 0);
 	return(FALSE);
 }
-	  
-title_for_page(page)
-int page;
+
+int title_for_page(int page)
 {
-	/** Output a nice title for the second thru last pages of the message 
+	/** Output a nice title for the second thru last pages of the message
 	    we're currently reading. Note - this code is very similar to
 	    that which produces the title for the first page, except that
 	    page number replaces the date and the method by which it

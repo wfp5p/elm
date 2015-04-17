@@ -62,11 +62,8 @@ extern char *address_to_alias(const char *address);
  * the filenames right, and then invokes "save_mssg()" to do
  * the dirty work.
  */
-PUBLIC int save_copy(fname_dest, fname_mssg, shdr, form)
-const char *fname_dest;
-const char *fname_mssg;
-const SEND_HEADER *shdr;
-int form;
+int save_copy(const char *fname_dest, const char *fname_mssg,
+	      const SEND_HEADER *shdr, int form)
 {
 	char  buffer[SLEN],	/* read buffer 		       */
 	      savename[SLEN],	/* name of file saving into    */
@@ -238,11 +235,8 @@ int form;
 /*
  * save_mssg() - Append a mail message to fname_dest.
  */
-PUBLIC int save_mssg(fname_dest, fname_mssg, shdr, form)
-const char *fname_dest;
-const char *fname_mssg;
-const SEND_HEADER *shdr;
-int form;
+int save_mssg(const char *fname_dest, const char *fname_mssg,
+	      const SEND_HEADER *shdr, int form)
 {
     int rc, err, len;
     char *fmode;
@@ -328,8 +322,7 @@ done:
 
 
 /* FOO - should this routine use the file browser? */
-PUBLIC int name_copy_file(fn)
-char *fn;
+int name_copy_file(char *fn)
 {
     /*
      * Prompt user for name of file for saving copy of outbound msg to.
@@ -406,9 +399,7 @@ char *fn;
     return redraw;
 }
 
-
-static const char *cf_english(fn)
-const char *fn;
+static const char *cf_english(const char *fn)
 {
     /** Return "English" expansion for special copy file name abbreviations
 	or just the file name  **/

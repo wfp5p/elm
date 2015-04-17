@@ -102,8 +102,7 @@ static int outchar P_((int));
 
 extern char *tgetstr(), *tgoto();
 
-
-PUBLIC int InitScreen()
+int InitScreen(void)
 {
     int i;
     char *tp, *cp;
@@ -308,10 +307,7 @@ terminal (tgetent return code %d).\n"), i);
     return 0;
 }
 
-
-static void tget_complain(capname, descrip)
-const char *capname;
-const char *descrip;
+static void tget_complain(const char *capname, const char *descrip)
 {
     fprintf(stderr, S_(ElmInitScreenTcapMissing,
 		"Your terminal does not support the \"%s\" function (%s).\n"),
@@ -319,8 +315,7 @@ const char *descrip;
     ++TC_errors;
 }
 
-
-PUBLIC void ShutdownTerm()
+void ShutdownTerm(void)
 {
     int err;
 
@@ -343,8 +338,7 @@ PUBLIC void ShutdownTerm()
     errno = err;
 }
 
-
-static void SetScreenSize()
+static void SetScreenSize(void)
 {
     LINES = TC_lines - 1;  /* I'm sure I don't understand this lines-1 jazz */
     COLS = TC_columns;
@@ -365,7 +359,7 @@ static void SetScreenSize()
 /*
  * Allocate an empty (struct knode).
  */
-static struct knode *knode_new()
+static struct knode *knode_new(void)
 {
     struct knode *knode;
 
@@ -384,10 +378,7 @@ static struct knode *knode_new()
  * corresponds to the value when the key is struck, and the "kcode"
  * is the code that should be assigned to this key.
  */
-static int knode_addkey(capname, tp, kcode)
-const char *capname;
-char **tp;
-int kcode;
+static int knode_addkey(const char *capname, char **tp, int kcode)
 {
     int i;
     char *kstr;
@@ -444,8 +435,7 @@ int kcode;
  * Returns 0 if more bytes are needed to resolve this key.
  * Returns -1 if the sequence cannot be mapped to a key.
  */
-PUBLIC int knode_parse(kval)
-int kval;
+int knode_parse(int kval)
 {
     static struct knode *knode = NULL;
     int code, i;
@@ -475,9 +465,7 @@ int kval;
     return code;
 }
 
-
-PUBLIC void EnableFkeys(newstate)
-int newstate;
+void EnableFkeys(int newstate)
 {
     /*
      * Emit the sequence that some terminals require to
@@ -501,7 +489,7 @@ int newstate;
 
 #if defined(SIGWINCH) || defined(SIGCONT)
 /* if screen size changed, update and return TRUE */
-PUBLIC void ResizeScreen()
+void ResizeScreen(void)
 {
     /* reset the flag that indicates a sig was caught */
     caught_screen_change_sig = 0;
@@ -512,9 +500,7 @@ PUBLIC void ResizeScreen()
 }
 #endif /* defined(SIGWINCH) || defined(SIGCONT) */
 
-
-PUBLIC void GetCursorPos(line_p, col_p)
-int *line_p, *col_p;
+void GetCursorPos(int *line_p, int *col_p)
 {
     assert(TC_curr_col >= 0 && TC_curr_col < COLS);
     assert(TC_curr_line >= 0 && TC_curr_line <= LINES);
@@ -522,16 +508,14 @@ int *line_p, *col_p;
     *col_p = TC_curr_col;
 }
 
-
-PUBLIC void InvalidateCursor()
+void InvalidateCursor(void)
 {
     /* indicate the cursor might not be where we think it is */
     TC_curr_line = -1;
     TC_curr_col = -1;
 }
 
-
-PUBLIC void MoveCursor(line, col)
+void MoveCursor(int line, int col)
 {
     int d_col, d_line, d_total;
     assert(col >= 0 && col < COLS && line >= 0 && line <= LINES);
@@ -611,8 +595,7 @@ do_absolute_motion:
     assert(TC_curr_line == line);
 }
 
-
-PUBLIC void ClearScreen()
+void ClearScreen(void)
 {
     assert(TC_clearscreen != NULL);
     tputs(TC_clearscreen, 1, outchar);
@@ -620,41 +603,35 @@ PUBLIC void ClearScreen()
     FlushOutput();
 }
 
-
-PUBLIC void CleartoEOLN()
+void CleartoEOLN(void)
 {
     assert(TC_cleartoeoln != NULL);
     tputs(TC_cleartoeoln, 1, outchar);
     FlushOutput();
 }
 
-
-PUBLIC void CleartoEOS()
+void CleartoEOS(void)
 {
     assert(TC_cleartoeos != NULL);
     tputs(TC_cleartoeos, 1, outchar);
     FlushOutput();
 }
 
-
-PUBLIC void StartStandout()
+void StartStandout(void)
 {
     assert(TC_start_standout != NULL);
     tputs(TC_start_standout, 1, outchar);
     FlushOutput();
 }
 
-
-PUBLIC void EndStandout()
+void EndStandout(void)
 {
     assert(TC_end_standout != NULL);
     tputs(TC_end_standout, 1, outchar);
     FlushOutput();
 }
 
-
-PUBLIC void WriteChar(ch)
-int ch;
+void WriteChar(int ch)
 {
 	/** write a character to the current screen location. **/
 
@@ -772,8 +749,7 @@ int ch;
  * The character must be a plain printing character, and the insertion
  * cannot occur in the last column of the line.
  */
-PUBLIC void InsertChar(ch)
-int ch;
+void InsertChar(int ch)
 {
     assert(TC_start_insert || TC_char_insert);
     assert(isprint(ch) && TC_curr_col < COLS-1);
@@ -797,8 +773,7 @@ int ch;
  * not available.  Can be invoked with a negative value to check whether
  * delete can be done on this terminal.
  */
-PUBLIC void DeleteChar(n)
-int n;
+void DeleteChar(int n)
 {
     assert (TC_char_delete && n > 0);
     if (TC_start_delete && *TC_start_delete)
@@ -809,9 +784,7 @@ int n;
 	tputs(TC_end_delete, 1, outchar);
 }
 
-
-PUBLIC void Raw(state)
-int state;
+void Raw(int state)
 {
     int do_tite;
 
@@ -838,8 +811,7 @@ int state;
     }
 }
 
-
-PUBLIC int ReadCh()
+int ReadCh(void)
 {
     /*
      *	read a character with Raw mode set!
@@ -872,30 +844,24 @@ PUBLIC int ReadCh()
     return ch;
 }
 
-
-PUBLIC void UnreadCh(ch)
-int ch;
+void UnreadCh(int ch)
 {
     ungetc(ch, stdin);
 }
 
-
-PUBLIC void FlushOutput()
+void FlushOutput(void)
 {
     (void) fflush(stdout);
     (void) fflush(stderr);
 }
 
-
-PUBLIC void FlushInput()
+void FlushInput(void)
 {
     (void) fflush(stdin);
     (void) tcflush(STDIN_FILENO, TCIFLUSH);
 }
 
-
-static int outchar(c)
-int c;
+static int outchar(int c)
 {
     /** output the given character.  From tputs... **/
     /** Note: this CANNOT be a macro!              **/
@@ -910,7 +876,7 @@ static void debug_termstr P_((int, int, const char *, const char *));
 static void debug_termnum P_((int, int, const char *, int));
 static void debug_termflag P_((int, int, const char *, int));
 
-PUBLIC void debug_terminal()
+void debug_terminal(void)
 {
     int line;
 
@@ -960,20 +926,15 @@ PUBLIC void debug_terminal()
     debug_termnum(line, 0, "tabspacing", TC_tabspacing);
 }
 
-
-static void debug_termtitle(line, col, title)
-int line, col;
-const char *title;
+static void debug_termtitle(int line, int col, const char *title)
 {
     PutLine0(line, col*40, title);
     MoveCursor(line, col*40+16);
     return;
 }
 
-
-static void debug_termstr(line, col, title, value)
-int line, col;
-const char *title, *value;
+static void debug_termstr(int line, int col, const char *title,
+			  const char *value)
 {
     debug_termtitle(line, col, title);
     if (value == NULL) {
@@ -996,21 +957,14 @@ const char *title, *value;
     }
 }
 
-
-static void debug_termnum(line, col, title, value)
-int line, col;
-const char *title;
-int value;
+static void debug_termnum(int line, int col, const char *title, int value)
 {
     debug_termtitle(line, col, title);
     PutLine1(-1, -1, "%d", value);
 }
 
 
-static void debug_termflag(line, col, title, value)
-int line, col;
-const char *title;
-int value;
+static void debug_termflag(int line, int col, const char *title, int value)
 {
     debug_termtitle(line, col, title);
     PutLine0(-1, -1, (value ? "Yes" : "No"));

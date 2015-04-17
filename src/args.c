@@ -51,10 +51,7 @@
 extern char *optarg;		/* optional argument as we go */
 extern int   optind;			/* argnum + 1 when we leave   */
 
-char *
-parse_arguments(argc, argv, to_whom)
-int argc;
-char *argv[], *to_whom;
+char *parse_arguments(int argc, char *argv[], char *to_whom)
 {
 	char *bp;
 	int i, len;
@@ -147,7 +144,7 @@ char *argv[], *to_whom;
 	return req_mfile;
 }
 
-args_help()
+int args_help(void)
 {
 	/**  print out possible starting arguments... **/
 
@@ -175,7 +172,7 @@ args_help()
 	exit(1);
 }
 
-args_version()
+int args_version(void)
 {
 	/** print out version information **/
 

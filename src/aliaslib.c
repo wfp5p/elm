@@ -39,10 +39,7 @@
  * Expand "name" as an alias and return a pointer to static data containing
  * the expansion.  If "name" is not an alias, then NULL is returned.
  */
-char *get_alias_address(name, mailing, too_longp)
-char *name;	/* name to expand as an alias				*/
-int mailing;	/* TRUE to fully expand group names & recursive aliases	*/
-int *too_longp;	/* error code if expansion overflows buffer		*/
+char *get_alias_address(char *name, int mailing, int *too_longp)
 {
 	static char buffer[VERY_LONG_STRING];
 	char *bufptr;
@@ -88,14 +85,8 @@ int *too_longp;	/* error code if expansion overflows buffer		*/
  * Determine if "name" is an alias, and if so expand it and store the result in
  * "*bufptr".  TRUE returned if any expansion occurs, else FALSE is returned.
  */
-int do_get_alias(name, bufptr, bufsizep, mailing, sysalias, depth, too_longp)
-char *name;	/* name to expand as an alias				*/
-char **bufptr;	/* place to store result of expansion			*/
-int *bufsizep;	/* available space in the buffer			*/
-int mailing;	/* TRUE to fully expand group names & recursive aliases	*/
-int sysalias;	/* TRUE to suppress checks of the user's aliases	*/
-int depth;	/* recursion depth - initially call at depth=0		*/
-int *too_longp;	/* error code if expansion overflows buffer		*/
+int do_get_alias(char *name, char **bufptr, int *bufsizep, int mailing,
+		 int sysalias, int depth, int *too_longp)
 {
 	struct alias_rec *match;
 	char abuf[VERY_LONG_STRING];
@@ -210,15 +201,15 @@ do_expand:
 /*
  * Expand the comma-delimited group of names in "group", storing the result
  * in "*bufptr".  Returns TRUE if expansion occurs OK, else FALSE in the
- * event of errors.
- */
-int do_expand_group(group, bufptr, bufsizep, sysalias, depth, too_longp)
-char *group;	/* group list to expand					*/
-char **bufptr;	/* place to store result of expansion			*/
-int *bufsizep;	/* available space in the buffer			*/
-int sysalias;	/* TRUE to suppress checks of the user's aliases	*/
-int depth;	/* nesting depth					*/
-int *too_longp;	/* error code if expansion overflows buffer		*/
+ * event of errors. */
+/* char *group;	group list to expand */
+/* char **bufptr;	place to store result of expansion */
+/* int *bufsizep;	available space in the buffer */
+/* int sysalias;	TRUE to suppress checks of the user's aliases */
+/* int depth;	nesting depth */
+/* int *too_longp;	error code if expansion overflows buffer */
+int do_expand_group(char *group, char **bufptr, int *bufsizep,
+		    int sysalias, int depth, int *too_longp)
 {
 	char *name, *gecos;
 	char expanded_address[LONG_STRING];
@@ -269,10 +260,12 @@ int *too_longp;	/* error code if expansion overflows buffer		*/
  * reflect the stuff added to the buffer.  If a buffer overflow would occur,
  * an error message is printed and FALSE is returned, else TRUE is returned.
  */
-int add_name_to_list(name,bufptr,bufsizep)
-register char *name;	/* name to append to buffer			*/
-register char **bufptr;	/* pointer to pointer to end of buffer		*/
-register int *bufsizep;	/* pointer to space remaining in buffer		*/
+/* register char *name;	/\* name to append to buffer			*\/ */
+/* register char **bufptr;	/\* pointer to pointer to end of buffer		*\/ */
+/* register int *bufsizep;	/\* pointer to space remaining in buffer		*\/ */
+
+int add_name_to_list(register char *name, register char **bufptr,
+		     register int *bufsizep)
 {
 	if ( *bufsizep < 0 )
 	    return FALSE;

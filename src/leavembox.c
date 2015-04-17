@@ -40,7 +40,7 @@
  ******************************************************************************/
 
 /** leave current folder, updating etc. as needed...
-  
+
 **/
 
 
@@ -75,7 +75,7 @@
 
 /**********
    Since a number of machines don't seem to bother to define the utimbuf
-   structure for some *very* obscure reason.... 
+   structure for some *very* obscure reason....
 
    Suprise, though, BSD has a different utime() entirely...*sigh*
 **********/
@@ -84,7 +84,7 @@
 # ifndef UTIMBUF
 
 struct utimbuf {
-	time_t	actime;		/** access time       **/ 
+	time_t	actime;		/** access time       **/
 	time_t	modtime;	/** modification time **/
        };
 
@@ -92,9 +92,7 @@ struct utimbuf {
 #endif /* BSD */
 
 
-int
-leave_mbox(resyncing, quitting, prompt)
-int resyncing, quitting, prompt;
+int leave_mbox(int resyncing, int quitting, int prompt)
 {
 	/** Close folder, deleting some messages, storing others in mbox,
 	    and keeping others, as directed by user input and elmrc options.
@@ -156,7 +154,7 @@ int resyncing, quitting, prompt;
 	 */
 	for(i = 0; i < curr_folder.num_mssgs; i++)
 	  curr_folder.headers[i]->exit_disposition = UNSET;
-	  
+
 	/* Determine if deleted messages are really to be deleted */
 
 	/* we need to know if there are none, or one, or more to delete */
@@ -204,7 +202,7 @@ int resyncing, quitting, prompt;
 	  }
 	} else {
 
-	  /* Let's first see if user wants to store read messages 
+	  /* Let's first see if user wants to store read messages
 	   * that aren't slated for deletion */
 
 	  asked_storage_q = FALSE;
@@ -230,7 +228,7 @@ int resyncing, quitting, prompt;
 	    }
 
 	    for (i = 0; i < curr_folder.num_mssgs; i++) {
-	      if((isoff(curr_folder.headers[i]->status, UNREAD)) 
+	      if((isoff(curr_folder.headers[i]->status, UNREAD))
 		&& (curr_folder.headers[i]->exit_disposition == UNSET)) {
 
 		  if(answer) {
@@ -292,7 +290,7 @@ int resyncing, quitting, prompt;
 		      curr_folder.headers[i]->exit_disposition = KEEP;
 		      to_keep++;
 		    }
-	      
+
 		}
 	      }
 	    }
@@ -312,7 +310,7 @@ int resyncing, quitting, prompt;
 		"Something wrong in message counts! Folder unchanged.\n"));
 	  leave(LEAVE_EMERGENCY);
 	}
-	  
+
 
 	/* If we are not resyncing, we are leaving the mailfile and
 	 * the new messages are new no longer. Note that this changes
@@ -336,7 +334,7 @@ int resyncing, quitting, prompt;
 	for (num_chgd_status = 0, i = 0; i < curr_folder.num_mssgs; i++)
 	  if(curr_folder.headers[i]->status_chgd == TRUE)
 	    num_chgd_status++;
-	
+
 	if(!to_delete && !to_store && !num_chgd_status && !resyncing) {
 	  dprint(3, (debugfile, "Folder keep as is!\n"));
 	  error(catgets(elm_msg_cat, ElmSet, ElmFolderUnchanged,
@@ -367,31 +365,31 @@ int resyncing, quitting, prompt;
 	    if (to_delete > 0) {
 	      if (to_keep == 1)
 	        MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStoreDelete,
-		      "[Keeping 1 message, storing %d, and deleting %d.]"), 
+		      "[Keeping 1 message, storing %d, and deleting %d.]"),
 		    to_store, to_delete);
 	      else
 	        MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStoreDeletePlural,
-		      "[Keeping %d messages, storing %d, and deleting %d.]"), 
+		      "[Keeping %d messages, storing %d, and deleting %d.]"),
 		    to_keep, to_store, to_delete);
 	    } else {
 	      if (to_keep == 1)
 		sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStore,
-			"[Keeping 1 message and storing %d.]"), 
+			"[Keeping 1 message and storing %d.]"),
 		      to_store);
 	      else
 		MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStorePlural,
-			"[Keeping %d messages and storing %d.]"), 
+			"[Keeping %d messages and storing %d.]"),
 		      to_keep, to_store);
 	    }
 	  } else {
 	    if (to_delete > 0) {
 	      if (to_keep == 1)
 		sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepDelete,
-			"[Keeping 1 message and deleting %d.]"), 
+			"[Keeping 1 message and deleting %d.]"),
 		      to_delete);
 	      else
 		MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepDeletePlural,
-			"[Keeping %d messages and deleting %d.]"), 
+			"[Keeping %d messages and deleting %d.]"),
 		      to_keep, to_delete);
 	    } else {
 	      if (to_keep == 1)
@@ -406,11 +404,11 @@ int resyncing, quitting, prompt;
 	  if (to_delete > 0) {
 	    if (to_store == 1)
 	      sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveStoreDelete,
-		      "[Storing 1 message and deleting %d.]"), 
+		      "[Storing 1 message and deleting %d.]"),
 		    to_delete);
 	    else
 	      MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveStoreDeletePlural,
-		      "[Storing %d messages and deleting %d.]"), 
+		      "[Storing %d messages and deleting %d.]"),
 		    to_store, to_delete);
 	  } else {
 	    if (to_store == 1)
@@ -433,7 +431,7 @@ int resyncing, quitting, prompt;
 
 	if (curr_folder.flags & FOLDER_IS_SPOOL)
 	  elm_lock(LOCK_OUTGOING);
-	
+
 	fflush (curr_folder.fp);
 
 	if (curr_folder.size != bytes(curr_folder.filename)) {
@@ -442,11 +440,11 @@ int resyncing, quitting, prompt;
 			  "New mail has just arrived. Resynchronizing..."));
 	    return(-1);
 	}
-	
+
 	/* Everything's GO - so ouput that user message and go to it. */
 
 	block_signals();
-	
+
 	dprint(2, (debugfile, "Action: %s\n", buffer));
 	error(buffer);
 
@@ -468,7 +466,7 @@ int resyncing, quitting, prompt;
 	    return(0);
 	  }
 	  if ((temp = fopen(recvd_mail,"a")) == NULL) {
-	    dprint(1, (debugfile, "Error: could not append to file %s [%s]\n", 
+	    dprint(1, (debugfile, "Error: could not append to file %s [%s]\n",
 	      recvd_mail, strerror(errno)));
 	    ShutdownTerm();
 	    error1(stderr, catgets(elm_msg_cat, ElmSet,
@@ -495,7 +493,7 @@ int resyncing, quitting, prompt;
 
         if (lstat(curr_folder.filename, &lbuf) != 0) {
 	  err = errno;
-	  dprint(1, (debugfile, "Error: errno %s attempting to stat file %s\n", 
+	  dprint(1, (debugfile, "Error: errno %s attempting to stat file %s\n",
 		     strerror(err), curr_folder.filename));
           error2(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorOnStat,
 		"Error %s on stat(%s)."), strerror(err), curr_folder.filename);
@@ -525,7 +523,7 @@ int resyncing, quitting, prompt;
 	    return(0);
 	  }
 	  if ((temp = file_open(temp_keep_file,"w")) == NULL) {
-	    dprint(1, (debugfile, "Error: could not create file %s [%s]\n", 
+	    dprint(1, (debugfile, "Error: could not create file %s [%s]\n",
 	      temp_keep_file, strerror(errno)));
 	    ShutdownTerm();
 	    error1(catgets(elm_msg_cat, ElmSet, ElmLeaveCouldNotCreate,
@@ -572,10 +570,10 @@ int resyncing, quitting, prompt;
 	  if (sleepmsg > 0)
 		sleep(sleepmsg);
 	}
-	  
+
         if (stat(curr_folder.filename, &buf) != 0) {
 	  err = errno;
-	  dprint(1, (debugfile, "Error: errno %s attempting to stat file %s\n", 
+	  dprint(1, (debugfile, "Error: errno %s attempting to stat file %s\n",
 		     strerror(err), curr_folder.filename));
           error2(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorOnStat,
 		"Error %s on stat(%s)."), strerror(err), curr_folder.filename);
@@ -665,7 +663,7 @@ int resyncing, quitting, prompt;
 		err = errno;
 		ShutdownTerm();
 		dprint(1, (debugfile,
-			"rename(%s, %s) failed (leavembox) [%s]\n", 
+			"rename(%s, %s) failed (leavembox) [%s]\n",
 		       temp_keep_file, curr_folder.filename, strerror(err)));
 		error1(catgets(elm_msg_cat, ElmSet, ElmLeaveRenameFailed,
 			"Rename failed! [%s]"), strerror(err));
@@ -694,8 +692,8 @@ int resyncing, quitting, prompt;
 		/* couldn't copy to special file either */
 		err = errno;
 		ShutdownTerm();
-		dprint(1, (debugfile, 
-			"leavembox: couldn't copy to %s either!!  Help! [%s]", 
+		dprint(1, (debugfile,
+			"leavembox: couldn't copy to %s either!!  Help! [%s]",
 			curr_folder.filename, strerror(err)));
 		error1(catgets(elm_msg_cat, ElmSet,
 			ElmLeaveCantCopyMailbox,
@@ -706,7 +704,7 @@ int resyncing, quitting, prompt;
 		leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
 	      } else {
 		dprint(1, (debugfile,
-			"\nWoah! Confused - Saved mail in %s (leavembox)\n", 
+			"\nWoah! Confused - Saved mail in %s (leavembox)\n",
 			curr_folder.filename));
 		error1(catgets(elm_msg_cat, ElmSet, ElmLeaveSavedMailIn,
 			"Saved mail in %s."), curr_folder.filename);
@@ -722,7 +720,7 @@ int resyncing, quitting, prompt;
 	} else if ((curr_folder.flags & FOLDER_IS_SPOOL)
 		    || keep_empty_files || is_symlink || resyncing) {
 
-	  /* If this is an empty spool file, or if this is an empty non-spool 
+	  /* If this is an empty spool file, or if this is an empty non-spool
 	   * file and we keep empty non-spool files (we always keep empty
 	   * spool files), or if this is an empty non-spool file and it's a
 	   * symbolic link, or if we're resynching and not keeping any
@@ -763,17 +761,17 @@ int resyncing, quitting, prompt;
 #endif
 
 #if defined(BSD) && !defined(UTIMBUF)
-	if (utime(curr_folder.filename, utime_buffer) != 0) 
+	if (utime(curr_folder.filename, utime_buffer) != 0)
 #else
-	if (utime(curr_folder.filename, &utime_buffer) != 0) 
+	if (utime(curr_folder.filename, &utime_buffer) != 0)
 #endif
 	{
 	  err = errno;
-	  dprint(1, (debugfile, 
+	  dprint(1, (debugfile,
 		 "Error: encountered error doing utime (leavmbox)\n"));
 	  dprint(1, (debugfile, "** %s **\n", strerror(err)));
 	  error2(catgets(elm_msg_cat, ElmSet, ElmLeaveChangingAccessTime,
-		"Error %s trying to change file %s access time."), 
+		"Error %s trying to change file %s access time."),
 		   strerror(err), curr_folder.filename);
 	}
 	if (mailgroupid != groupid && (curr_folder.flags & FOLDER_IS_SPOOL))
@@ -787,7 +785,7 @@ int resyncing, quitting, prompt;
 	if (!resyncing && (curr_folder.flags & FOLDER_IS_SPOOL))
 	    (void) unlink(curr_folder.tempname);
 	unblock_signals();
-	return(1);	
+	return(1);
 }
 
 #ifdef HASSIGPROCMASK
@@ -813,8 +811,7 @@ int resyncing, quitting, prompt;
  * particular, a SIGHUP (from logging out under /bin/sh), can
  * corrupt a spool mailbox during an elm autosync.
  */
-
-block_signals()
+int block_signals(void)
 {
 	dprint(1,(debugfile, "block_signals\n"));
 #ifdef HASSIGPROCMASK
@@ -863,7 +860,7 @@ block_signals()
  * Inverse of the previous function.  Restore keyboard generated
  * signals.
  */
-unblock_signals()
+int unblock_signals(void)
 {
 	dprint(1,(debugfile, "unblock_signals\n"));
 #ifdef HASSIGPROCMASK
@@ -894,4 +891,3 @@ unblock_signals()
 #  endif /* HASSIGBLOCK */
 #endif /* HASSIGPROCMASK */
 }
-

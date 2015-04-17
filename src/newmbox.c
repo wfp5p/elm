@@ -82,10 +82,7 @@ extern void rewind();
 extern long atol();
 #endif
 
-
-int newmbox(new_filename, adds_only)
-const char *new_filename;
-int adds_only;
+int newmbox(const char *new_filename, int adds_only)
 {
 	/** Read a folder.
 
@@ -188,21 +185,20 @@ int adds_only;
 	  selected = 0;		/* because we loose the 'Visible' flag */
 
 	dprint(1, (debugfile,
-	  "New folder %s type %s temp file %s (%s)\n", curr_folder.filename, 
+	  "New folder %s type %s temp file %s (%s)\n", curr_folder.filename,
 	  ((curr_folder.flags & FOLDER_IS_SPOOL) ? "spool" : "non-spool"),
 	  (curr_folder.tempname[0] != '\0' ? curr_folder.tempname : "none"), "newmbox"));
 
 	return(0);
 }
 
-static int folder_is_spool(filename)
-const char *filename;
+static int folder_is_spool(const char *filename)
 {
 	int i;
 
 	assert(filename != NULL && filename[0] != '\0');
-        
- 
+
+
 	/* if file name == default mailbox, its a spool file also
 	 * even if its not in the spool directory. (SVR4)
 	 */
@@ -228,10 +224,7 @@ const char *filename;
 	return FALSE;
 }
 
-
-static void mk_temp_mail_fn(tempfn, mbox)
-char *tempfn;
-const char *mbox;
+static void mk_temp_mail_fn(char *tempfn, const char *mbox)
 {
 	/** create in tempfn the name of the temp file corresponding to
 	    mailfile mbox. Mbox is presumed to be a file in mailhome;
@@ -248,14 +241,14 @@ const char *mbox;
 	  else
  */
        strcat(tempfn, cp);
-	   
+
         strcat(tempfn, ".");
         strcat(tempfn, user_name);
-	   
-	      
+
+
 }
 
-static void mailFile_write_error()
+static void mailFile_write_error(void)
 {
 	ShutdownTerm();
 	error2(catgets(elm_msg_cat, ElmSet, ElmWriteToTempFailed,
@@ -264,16 +257,14 @@ static void mailFile_write_error()
 	leave(LEAVE_ERROR);
 }
 
-
-static int read_headers(add_new_only)
-int add_new_only;
+static int read_headers(int add_new_only)
 {
 	/** Reads the headers into the curr_folder.headers[] array and leaves the
 	    file rewound for further I/O requests.   If the file being
 	    read is a mail spool file (ie incoming) then it is copied to
-	    a temp file and closed, to allow more mail to arrive during 
+	    a temp file and closed, to allow more mail to arrive during
 	    the elm session.  If 'add_new_only' is set, the program will copy
-	    the status flags from the previous data structure to the new 
+	    the status flags from the previous data structure to the new
 	    one if possible and only read in newly added messages.
 	**/
 
@@ -371,7 +362,7 @@ int add_new_only;
 	     ShutdownTerm();
 	     error3(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekEndFolder,
 		    "Couldn't seek to %ld (end of folder) in %s! [%s]"),
-		    curr_folder.size, curr_folder.filename, strerror(errno));	
+		    curr_folder.size, curr_folder.filename, strerror(errno));
 	     leave(LEAVE_EMERGENCY);
 	   }
 	   count = curr_folder.num_mssgs;		/* next available  */
@@ -382,7 +373,7 @@ int add_new_only;
 
 	fflush(curr_folder.fp);
 	curr_folder.size = bytes(curr_folder.filename);
-        if (!(curr_folder.flags & FOLDER_IS_SPOOL)) 
+        if (!(curr_folder.flags & FOLDER_IS_SPOOL))
    	   elm_unlock();
 
 	/** now let's copy it all across accordingly... **/
@@ -403,7 +394,7 @@ int add_new_only;
           /** remember if last line was a blank line **/
           was_empty_line = last_line_bytes == 1L;
           last_line_bytes = line_bytes;
- 
+
 
 	  /* Fix below to increment line count ONLY if we got a full line.
 	   * Input lines longer than the mail_gets buffer size would
@@ -417,11 +408,11 @@ int add_new_only;
 	  /* preload first char of line for fast string comparisons */
 	  fast_comp_load(buffer[0]);
 
-	  if (fbytes == 0L || first_line) { 	/* first line of file... */	
+	  if (fbytes == 0L || first_line) { 	/* first line of file... */
 	    if (curr_folder.flags & FOLDER_IS_SPOOL) {
 	      if (fast_stribegConst(buffer, "Forward to ")) {
 	        set_central_message(catgets(elm_msg_cat, ElmSet, ElmMailBeingForwardTo,
-			"Mail being forwarded to %s"), 
+			"Mail being forwarded to %s"),
                    	(char *) (buffer + 11));
 	        forwarding_mail = TRUE;
 	      }
@@ -430,7 +421,7 @@ int add_new_only;
 	    /** flush leading blank lines before next test... **/
 	    if (line_bytes == 1) {
 	      fbytes++;
-	      continue;	
+	      continue;
 	    }
 	    else
 	      first_line = FALSE;
@@ -462,7 +453,7 @@ int add_new_only;
 		while (curr_folder.max_headers < new_max)
 		  curr_folder.headers[curr_folder.max_headers++] = NULL;
 	      }
-	      
+
 	      /** allocate new header structure, if needed... **/
 
 	      if (curr_folder.headers[count] == NULL) {
@@ -470,7 +461,7 @@ int add_new_only;
 			safe_malloc(sizeof(struct header_rec));
 	      }
 
-	      dprint(1, (debugfile, 
+	      dprint(1, (debugfile,
 		   "\n**** Calling real_from for \"From_\" ****\n"));
 	      if (real_from(buffer, curr_folder.headers[count])) {
 
@@ -555,7 +546,7 @@ int add_new_only;
 		error2(catgets(elm_msg_cat, ElmSet,
 		    ElmCouldntSeekBytesIntoFolder,
 		   "Couldn't seek %ld bytes into folder. [%s]"),
-		   curr_folder.size, strerror(errno));	
+		   curr_folder.size, strerror(errno));
 		leave(LEAVE_EMERGENCY);
 	      }
 	      fbytes = content_start;
@@ -572,7 +563,7 @@ int add_new_only;
 	      strfcpy(current_header->allfrom, buffer+7, STRING);
 	      parse_arpa_who(buffer+6, current_header->from);
 	    }
-	    else if (fast_stribegConst(buffer,">From")) 
+	    else if (fast_stribegConst(buffer,">From"))
 	      forwarded(buffer, current_header); /* return address */
 	    else if (fast_header_cmp(buffer,"Subject", (char *)NULL) ||
 		     fast_header_cmp(buffer,"Subj", (char *)NULL) ||
@@ -587,7 +578,7 @@ int add_new_only;
 	    else if (fast_header_cmp(buffer,"From", (char *)NULL)) {
 	      buffer[line_bytes - 1] = '\0';
 	      strfcpy(current_header->allfrom, buffer+6, STRING);
-	      dprint(1, (debugfile, 
+	      dprint(1, (debugfile,
 		   "\n**** Calling parse_arpa_who for \"From\" ****\n"));
 	      parse_arpa_who(buffer+5, current_header->from);
 	    }
@@ -608,11 +599,11 @@ int add_new_only;
 
 	    }
 
-	    
+
 	    /** when it was sent... **/
 
 	    else if (fast_header_cmp(buffer, "Date", (char *)NULL)) {
-	      dprint(1, (debugfile, 
+	      dprint(1, (debugfile,
 		      "\n**** Calling parse_arpa_date for \"Date\" ****\n"));
 	      strfcpy(tbuffer, buffer, sizeof(tbuffer));
 	      remove_header_keyword(tbuffer);
@@ -705,7 +696,7 @@ int add_new_only;
 		clearit(current_header->org_status, NEW);
 		setit(current_header->org_status, UNREAD);
 	      }
-	      
+
 	      if (strchr(current_header->mailx_status, 'r') != NULL) {
 		setit(current_header->status, REPLIED_TO);
 		setit(current_header->org_status, REPLIED_TO);
@@ -808,7 +799,7 @@ int add_new_only;
 	    leave(LEAVE_ERROR);
 	  }
 	}
-	else 
+	else
           rewind(curr_folder.fp);
 
 	/* Sort folder *before* we establish the current message, so that
@@ -860,4 +851,3 @@ int add_new_only;
         get_page(curr_folder.curr_mssg);
 	return(count);
 }
-

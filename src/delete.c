@@ -37,8 +37,7 @@
 
 char *show_status();
 
-delete_msg(real_del, update_screen)
-int real_del, update_screen;
+int delete_msg(int real_del, int update_screen)
 {
 	/** Delete current message.  If real-del is false, then we're
 	    actually requested to toggle the state of the current
@@ -79,9 +78,7 @@ int real_del, update_screen;
 	    show_msg_status(curr_folder.curr_mssg-1);
 }
 
-
-undelete_msg(update_screen)
-int update_screen;
+int undelete_msg(int update_screen)
 {
     /** clear the deleted message flag **/
 
@@ -97,9 +94,7 @@ int update_screen;
 
 }
 
-
-show_msg_status(msg)
-int msg;
+int show_msg_status(int msg)
 {
     /** show the status of the current message only.  **/
 
@@ -124,9 +119,7 @@ int msg;
     }
 }
 
-int
-tag_message(update_screen)
-int update_screen;
+int tag_message(int update_screen)
 {
     /** Tag current message and return TRUE.
     If already tagged, untag it and return FALSE. **/
@@ -158,9 +151,7 @@ int update_screen;
     return istagged;
 }
 
-
-show_msg_tag(msg)
-int msg;
+int show_msg_tag(int msg)
 {
     /** show the tag status of the current message only.  **/
 
@@ -183,8 +174,7 @@ int msg;
     }
 }
 
-show_new_status(msg)
-int msg;
+int show_new_status(int msg)
 {
     /** If the specified message is on this screen, show
 	the new status (could be marked for deletion now,

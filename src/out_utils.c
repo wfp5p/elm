@@ -34,10 +34,7 @@
 #include "elm_defs.h"
 #include "elm_globals.h"
 
-
-PUBLIC void PutLine0(x, y, line)
-int x,y;
-const char *line;
+void PutLine0(int x, int y, const char *line)
 {
     if (x >= 0 && y >= 0)
 	MoveCursor(x, y);
@@ -46,10 +43,7 @@ const char *line;
 }
 
 /*VARARGS3*/
-PUBLIC void PutLine1(x,y, line, arg1)
-int x,y;
-const char *line;
-const char *arg1;
+void PutLine1(int x, int y, const char *line, const char *arg1)
 {
     char buffer[VERY_LONG_STRING];
     sprintf(buffer, line, arg1);
@@ -57,10 +51,8 @@ const char *arg1;
 }
 
 /*VARARGS3*/
-PUBLIC void PutLine2(x,y, line, arg1, arg2)
-int x,y;
-const char *line;
-const char *arg1, *arg2;
+void PutLine2(int x, int y, const char *line, const char *arg1,
+	      const char *arg2)
 {
     char buffer[VERY_LONG_STRING];
     MCsprintf(buffer, line, arg1, arg2);
@@ -68,20 +60,15 @@ const char *arg1, *arg2;
 }
 
 /*VARARGS3*/
-PUBLIC void PutLine3(x,y, line, arg1, arg2, arg3)
-int x,y;
-const char *line;
-const char *arg1, *arg2, *arg3;
+void PutLine3(int x, int y, const char *line, const char *arg1,
+	      const char *arg2, const char *arg3)
 {
     char buffer[VERY_LONG_STRING];
     MCsprintf(buffer, line, arg1, arg2, arg3);
     PutLine0(x, y, buffer);
 }
 
-
-PUBLIC void CenterLine(line, str)
-int line;
-const char *str;
+void CenterLine(int line, const char *str)
 {
     int col;
 
@@ -95,7 +82,7 @@ const char *str;
 
 static char err_buffer[SLEN];		/* store last error message */
 
-PUBLIC void show_last_error()
+void show_last_error(void)
 {
     int lines_of_msg;
 
@@ -114,7 +101,7 @@ PUBLIC void show_last_error()
     FlushOutput();
 }
 
-PUBLIC int clear_error()
+int clear_error(void)
 {
     if (err_buffer[0] == '\0')
 	return FALSE;
@@ -123,22 +110,19 @@ PUBLIC int clear_error()
     return TRUE;
 }
 
-PUBLIC void set_error(s)
-const char *s;
+void set_error(const char *s)
 {
     strcpy(err_buffer, s);
 }
 
-PUBLIC void error(s)
-const char *s;
+void error(const char *s)
 {
   strcpy(err_buffer, s);
   show_last_error();
 }
 
 /*VARARGS1*/
-PUBLIC void error1(s, a)
-const char *s, *a;
+void error1(const char *s, const char *a)
 {
     char buffer[SLEN];
     sprintf(buffer, s, a);
@@ -146,8 +130,7 @@ const char *s, *a;
 }
 
 /*VARARGS1*/
-PUBLIC void error2(s, a1, a2)
-const char *s, *a1, *a2;
+void error2(const char *s, const char *a1, const char *a2)
 {
     char buffer[SLEN];
     MCsprintf(buffer, s, a1, a2);
@@ -155,16 +138,14 @@ const char *s, *a1, *a2;
 }
 
 /*VARARGS1*/
-PUBLIC void error3(s, a1, a2, a3)
-const char *s, *a1, *a2, *a3;
+void error3(const char *s, const char *a1, const char *a2, const char *a3)
 {
     char buffer[SLEN];
     MCsprintf(buffer, s, a1, a2, a3);
     error(buffer);
 }
 
-PUBLIC void lower_prompt(s)
-const char *s;
+void lower_prompt(const char *s)
 {
 	/** prompt user for input on LINES-1 line, left justified **/
 
@@ -172,9 +153,7 @@ const char *s;
 	CleartoEOLN();
 }
 
-
-PUBLIC void prompt(s)
-const char *s;
+void prompt(const char *s)
 {
 	/** prompt user for input on LINES-3 line, left justified **/
 
@@ -185,8 +164,7 @@ const char *s;
 
 static char central_message_buffer[SLEN];
 
-PUBLIC void set_central_message(string, arg)
-const char *string, *arg;
+void set_central_message(const char *string, const char *arg)
 {
 	/** set up the given message to be displayed in the center of
 	    the current window **/ 
@@ -194,7 +172,7 @@ const char *string, *arg;
 	sprintf(central_message_buffer, string, arg);
 }
 
-PUBLIC void display_central_message()
+void display_central_message(void)
 {
 	/** display the message if set... **/
 
@@ -205,7 +183,7 @@ PUBLIC void display_central_message()
 	}
 }
 
-PUBLIC void clear_central_message()
+void clear_central_message(void)
 {
 	/** clear the central message buffer **/
 

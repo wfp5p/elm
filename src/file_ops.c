@@ -19,9 +19,7 @@
  * with a message showing on the error line (via the error() routines).
  */
 
-
-PUBLIC FILE *file_open(fname, fmode)
-const char *fname, *fmode;
+FILE *file_open(const char *fname, const char *fmode)
 {
     FILE *fp;
     const char *modestr;
@@ -75,10 +73,7 @@ const char *fname, *fmode;
     return (FILE *) NULL;
 }
 
-
-PUBLIC int file_close(fp, fname)
-FILE *fp;
-const char *fname;
+int file_close(FILE *fp, const char *fname)
 {
     int err;
 
@@ -103,10 +98,7 @@ done:
     return -1;
 }
 
-
-PUBLIC int file_access(name, mode)
-const char *name;
-int mode;
+int file_access(const char *name, int mode)
 {
     int rc, err;
 
@@ -120,12 +112,7 @@ int mode;
     return rc;
 }
 
-
-PUBLIC int file_seek(fp, offset, whence, fname)
-FILE *fp;
-long offset;
-int whence;
-const char *fname;
+int file_seek(FILE *fp, long offset, int whence, const char *fname)
 {
     int err;
 
@@ -161,9 +148,7 @@ const char *fname;
 # define BUFSIZ 1024
 #endif
 
-PUBLIC int file_copy(fpsrc, fpdest, srcname, destname)
-FILE *fpsrc, *fpdest;
-const char *srcname, *destname;
+int file_copy(FILE *fpsrc, FILE *fpdest, const char *srcname, const char *destname)
 {
     char buf[BUFSIZ];
     int i, err;
@@ -208,9 +193,7 @@ const char *srcname, *destname;
     return 0;
 }
 
-
-PUBLIC int file_rename(srcname, destname)
-const char *srcname, *destname;
+int file_rename(const char *srcname, const char *destname)
 {
     int err;
 

@@ -36,9 +36,7 @@
 #include "s_aliases.h"
 
 
-int
-delete_aliases(newaliases, prompt)
-int newaliases, prompt;
+int delete_aliases(int newaliases, int prompt)
 {
 /*
  *	Update aliases by processing deletions.  Prompting is
@@ -151,7 +149,7 @@ int newaliases, prompt;
 	return(1);
 }
 
-exit_alias()
+int exit_alias(void)
 {
 
 	register int i;

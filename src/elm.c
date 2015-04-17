@@ -43,7 +43,7 @@
  *
  ******************************************************************************/
 
-/* Main program of the ELM mail system! 
+/* Main program of the ELM mail system!
 */
 
 #define INTERN
@@ -65,9 +65,7 @@
 long bytes();
 char *format_long(), *parse_arguments();
 
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
 	int  ch;
 	char address[SLEN], to_whom[SLEN], *req_mfile;
@@ -94,14 +92,14 @@ char *argv[];
 	      dprint(3, (debugfile, "Mail-only; no recipient specified\n"));
 
 	  (void) send_message(to_whom, (char *)NULL, batch_subject,
-		SM_ORIGINAL); 
+		SM_ORIGINAL);
 	  leave(LEAVE_NORMAL);
 	}
 
         headers_per_page = LINES - (mini_menu ? 13 : 8);
         if (headers_per_page < 1)
 	    headers_per_page = 1;
-    
+
         /* read in the folder */
         newmbox(req_mfile, FALSE);
 
@@ -119,7 +117,7 @@ char *argv[];
 		  fflush (curr_folder.fp);
 
 	  if ((num = bytes(curr_folder.filename)) != curr_folder.size) {
-	    dprint(2, (debugfile, "Just received %d bytes more mail (elm)\n", 
+	    dprint(2, (debugfile, "Just received %d bytes more mail (elm)\n",
 		    num - curr_folder.size));
 	    error(catgets(elm_msg_cat, ElmSet, ElmNewMailHangOn,
 	      "New mail has arrived! Hang on..."));
@@ -142,7 +140,7 @@ char *argv[];
 		       "1 new message received."));
 	      else
 	        error1(catgets(elm_msg_cat, ElmSet, ElmNewMessageRecvPlural,
-		       "%d new messages received."), 
+		       "%d new messages received."),
 		       curr_folder.num_mssgs - last_in_folder);
 	    }
 	  }
@@ -181,19 +179,19 @@ char *argv[];
 			   nucurr = get_page(curr_folder.curr_mssg);
 			   break;
 
-	    case '|'    :  WriteChar('|'); 
+	    case '|'    :  WriteChar('|');
 			   if (curr_folder.num_mssgs < 1) {
 			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToPipe,
 			       "No mail to pipe!"));
 			     FlushInput();
 			   } else {
-                             redraw += do_pipe();		
+                             redraw += do_pipe();
 			   }
 			   break;
 
 #ifdef ALLOW_SUBSHELL
-	    case '!'    :  WriteChar('!'); 
-                           redraw += subshell();		
+	    case '!'    :  WriteChar('!');
+                           redraw += subshell();
 			   break;
 #endif
 
@@ -204,7 +202,7 @@ char *argv[];
 			   } else {
 			     error(catgets(elm_msg_cat, ElmSet, ElmMagicOff,
 						   "[Magic Off]"));
-			   } 
+			   }
 	                  break;
 
 
@@ -212,10 +210,10 @@ char *argv[];
 			     get_return(address, curr_folder.curr_mssg-1);
 			     clear_error();
 			     PutLine1(LINES,(COLS-strlen(address))/2,
-				      "%.78s", address);	
+				      "%.78s", address);
 			   } else {
 			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailReturnAddress,
-			       "No mail to get return address of!")); 
+			       "No mail to get return address of!"));
 			   }
 			   break;
 
@@ -225,7 +223,7 @@ char *argv[];
 	    case 'a'    :  alias();
 			   redraw++;
 			   break;
-			
+
 	    case 'b'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
 					ElmSet, ElmBounceMessage,
 					"Bounce message"));
@@ -235,7 +233,7 @@ char *argv[];
 			       "No mail to bounce!"));
 			     FlushInput();
 			   }
-			   else 
+			   else
 			     nufoot = remail();
 			   break;
 
@@ -263,7 +261,7 @@ char *argv[];
 		    "Folder editing isn't configured in this version of ELM."));
 			  break;
 #endif
-		
+
 	    case 'f'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmForward,
 				"Forward"));
@@ -289,12 +287,12 @@ char *argv[];
 			       FlushInput();
 			     }
 			     else {
-			       redraw += reply_to_everyone();	
+			       redraw += reply_to_everyone();
 			     }
 			   }
 			   else {
 			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToReply,
-			       "No mail to reply to!")); 
+			       "No mail to reply to!"));
 			     FlushInput();
 			   }
 			   break;
@@ -322,25 +320,25 @@ char *argv[];
 			       "No mail to read!"));
 			   break;
 
-	    case 'M'	:  if (show_mlists) 
+	    case 'M'	:  if (show_mlists)
 	                   {
 			     char buffer[SLEN];
-			      
+
 			     strcpy(buffer, catgets(elm_msg_cat, ElmSet,
 						    ElmMlistOff,
 						    "[Mlists Off]"));
-			      
+
 			     PutLine0(LINES,(COLS-10)/2,buffer);
 			     show_mlists = 0;
-			   } 
-	                   else 
+			   }
+	                   else
 	                   {
 			     char buffer[SLEN];
-			      
+
 			     strcpy(buffer, catgets(elm_msg_cat, ElmSet,
 						    ElmMlistOn,
 						    "[Mlists On]"));
-			      
+
 			     PutLine0(LINES,(COLS-10)/2,buffer);
 
 			     show_mlists = 1;
@@ -353,14 +351,14 @@ char *argv[];
 				ElmSet, ElmMail,
 				"Mail"));
 			   redraw += send_message((char *)NULL,
-			       (char *)NULL, (char *)NULL, SM_ORIGINAL); 
+			       (char *)NULL, (char *)NULL, SM_ORIGINAL);
 			   break;
 
-	    case ' '    : 
+	    case ' '    :
 	    case ctrl('J'):
 	    case ctrl('M'): PutLine0(-1, -1, catgets(elm_msg_cat,
 			      ElmSet, ElmDisplayMessage,
-			      "Display message"));	
+			      "Display message"));
 			   if(curr_folder.curr_mssg > 0 ) {
 			     define_softkeys(SOFTKEYS_READ);
 			     i = show_msg(curr_folder.curr_mssg);
@@ -415,23 +413,23 @@ char *argv[];
 	    case 'q'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmQuit,
 				"Quit"));
-			   quit(TRUE);		
+			   quit(TRUE);
 			   break;
 
 	    case 'Q'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmQuickQuit,
 				"Quick quit"));
-			   quit(FALSE);		
+			   quit(FALSE);
 			   break;
 
 	    case 'r'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
 			     ElmSet, ElmReplyToMessage,
 			     "Reply to message"));
-			   if (curr_folder.curr_mssg > 0) 
-			     redraw += reply();	
+			   if (curr_folder.curr_mssg > 0)
+			     redraw += reply();
 			   else {
 			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToReplyTo,
-			       "No mail to reply to!")); 
+			       "No mail to reply to!"));
 			     FlushInput();
 			   }
 			   break;
@@ -457,7 +455,7 @@ char *argv[];
 			       }
 			     }
 			   }
-			   ClearLine(LINES-2);		
+			   ClearLine(LINES-2);
 			   break;
 
 #ifdef ALLOW_STATUS_CHANGING
@@ -481,10 +479,10 @@ char *argv[];
 	    case ctrl('Q') :
 	    case 'x'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmExit,
-				"Exit"));  
+				"Exit"));
 			   quit_abandon(TRUE);
 			   break;
-	    
+
 	    case '@':
 	    case '#':
 			for (;;) {
@@ -517,14 +515,14 @@ char *argv[];
 	  }
 
           check_range();
-	    
-	  if (nucurr == NEW_PAGE) 
+
+	  if (nucurr == NEW_PAGE)
 	    show_headers();
 	  else if (nucurr == SAME_PAGE)
 	    show_current();
 	  else if (nufoot) {
 	    if (mini_menu) {
-	      MoveCursor(LINES-7, 0);  
+	      MoveCursor(LINES-7, 0);
               CleartoEOS();
 	      show_menu();
 	    }
@@ -540,13 +538,13 @@ char *argv[];
 	} /* the BIG while loop! */
 }
 
-debug_page()
+int debug_page(void)
 {
     int i, first, last, line;
     char buffer[SLEN];
 
     first = header_page * headers_per_page;	/* starting header */
-    if ((last = first + (headers_per_page-1)) >= curr_folder.num_mssgs) 
+    if ((last = first + (headers_per_page-1)) >= curr_folder.num_mssgs)
 	last = curr_folder.num_mssgs-1;
 
     ClearScreen();
@@ -562,10 +560,10 @@ debug_page()
 
     line = 5;
     for (i = first ; i <= last ; ++i) {
-	sprintf(buffer, 
+	sprintf(buffer,
 		    "%3d %-16.16s %-35.35s %4d %8d %8d",
 		    i+1,
-		    curr_folder.headers[i]->from, 
+		    curr_folder.headers[i]->from,
 		    curr_folder.headers[i]->subject,
 		    curr_folder.headers[i]->lines,
 		    curr_folder.headers[i]->offset,
@@ -575,12 +573,11 @@ debug_page()
 
 }
 
-
-debug_message()
+int debug_message(void)
 {
 	/**** Spit out the current message record.  Include EVERYTHING
 	      in the record structure. **/
-	
+
 	struct header_rec *hdr;
 	char buffer[SLEN];
 	time_t tval;
@@ -660,7 +657,7 @@ debug_message()
 	WriteChar('|');
 }
 
-check_range()
+int check_range(void)
 {
 	int count, curr, i;
 
@@ -710,8 +707,7 @@ static char *no_aliases = NULL;
 
 #define ifmain(a,b)     (inalias ? (b) : (a))
 
-motion(ch)
-int ch;
+int motion(int ch)
 {
 	/* Consolidated the standard menu navigation and delete/tag
 	 * commands to a function.                                   */
@@ -805,10 +801,10 @@ int ch;
 			   break;
 
 	    case KEY_END:
-	    case '*'    :  if (selected) 
+	    case '*'    :  if (selected)
 			     curr = (visible_to_index(selected)+1);
 			   else
-			     curr = count;	
+			     curr = count;
 			   nucurr = get_page(curr);
 			   break;
 
@@ -827,10 +823,10 @@ int ch;
 
 			       /* if current item did not become deleted,
 				* don't to move to the next undeleted item */
-			       if(!meta_match(MATCH_DELETE)) 
+			       if(!meta_match(MATCH_DELETE))
 				  break;
 
-			     } else 
+			     } else
  			       delete_msg((ch == 'd'), TRUE);
 
 			     if (resolve_mode) 	/* move after mail resolved */
@@ -950,9 +946,9 @@ next_undel_msg:
 				  "No %s to tag!"), nls_items);
 			      }
 			      else if (ch == 't')
-				tag_message(TRUE); 
+				tag_message(TRUE);
 			      else if (ch == 'T') {
-				tag_message(TRUE); 
+				tag_message(TRUE);
 				goto next_undel_msg;
 			      }
 			      else
@@ -963,13 +959,13 @@ next_undel_msg:
 			     error1(catgets(elm_msg_cat, ElmSet, ElmNoItemToMarkUndeleted,
 			       "No %s to mark as undeleted!"), nls_items);
 			   }
-			   else 
+			   else
 	                   {
-			      
+
 			      /* Overload u to have it mark unread a read
 			       * message which is not deleted.
 			       */
-			      
+
 			      if ( (!inalias) && (isoff(curr_folder.headers[curr_folder.curr_mssg-1]->status, DELETED)))
 			      {
 				 setit(curr_folder.headers[curr_folder.curr_mssg-1]->status, UNREAD);
@@ -1000,14 +996,14 @@ next_undel_msg:
 			       error1(catgets(elm_msg_cat, ElmSet, ElmNoItemToUndelete,
 				 "No %s to undelete!"), nls_items);
 			     }
-			     else 
+			     else
 			       (void) meta_match(MATCH_UNDELETE);
 			     break;
 
 	    case ctrl('L') : redraw++;	break;
 
 	    default	: if (ch > '0' && ch <= '9') {
-			    PutLine1(LINES-3, strlen(nls_Prompt), 
+			    PutLine1(LINES-3, strlen(nls_Prompt),
 				    catgets(elm_msg_cat, ElmSet, ElmNewCurrentItem,
 				    "New Current %s"), nls_Item);
 			    UnreadCh(ch);

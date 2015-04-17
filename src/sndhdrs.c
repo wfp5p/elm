@@ -13,7 +13,7 @@ static int add_mailheaders P_((FILE *));
 static int expand_backquote P_((FILE *, const char *));
 
 
-PUBLIC SEND_HEADER *sndhdr_new()
+SEND_HEADER *sndhdr_new(void)
 {
     SEND_HEADER *shdr;
     char *p;
@@ -49,16 +49,13 @@ PUBLIC SEND_HEADER *sndhdr_new()
 }
 
 
-PUBLIC void sndhdr_destroy(shdr)
-SEND_HEADER *shdr;
+void sndhdr_destroy(SEND_HEADER *shdr)
 {
 	free((malloc_t)shdr);
 }
 
 
-static void write_header_line(fp, hdrname, hdrvalue)
-FILE *fp;
-const char *hdrname, *hdrvalue;
+static void write_header_line(FILE *fp, const char *hdrname, const char *hdrvalue)
 {
     fputs(hdrname, fp);
     putc(' ', fp);
@@ -66,10 +63,7 @@ const char *hdrname, *hdrvalue;
     putc('\n', fp);
 }
 
-PUBLIC int sndhdr_output(fp, shdr, is_form, is_copy)
-FILE *fp;
-const SEND_HEADER *shdr;
-int is_form, is_copy;
+int sndhdr_output(FILE *fp, const SEND_HEADER *shdr, int is_form, int is_copy)
 {
     /** Write mail headers to stream "fp".
 	Added the ability to have backquoted stuff in the users
@@ -132,9 +126,7 @@ int is_form, is_copy;
 }
 
 
-PUBLIC void generate_in_reply_to(shdr, msg)
-SEND_HEADER *shdr;
-int msg;
+void generate_in_reply_to(SEND_HEADER *shdr, int msg)
 {
     char from_buf[SLEN], *q;
     struct header_rec *hdr = curr_folder.headers[msg];
@@ -159,8 +151,7 @@ int msg;
  * Add contents of ~/.elm/elmheaders file to output stream.
  * Allows `backquote` expansion to do fortune(6) type things. (*shudder*)
  */
-static int add_mailheaders(fp_mssg)
-FILE *fp_mssg;
+static int add_mailheaders(FILE *fp_mssg)
 {
     char buf[SLEN], *s, *beg_cmd, *end_cmd;
     int rc;
@@ -207,9 +198,7 @@ done:
  * Execute command dump output to stream.  Blank lines are discarded.
  * Multiple lines are tab indented to allow header continuations.
  */
-static int expand_backquote(fp_mssg, cmd)
-FILE *fp_mssg;
-const char *cmd;
+static int expand_backquote(FILE *fp_mssg, const char *cmd)
 {
     FILE *fp_expan;
     char fname[SLEN], buf[SLEN];

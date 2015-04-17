@@ -45,9 +45,7 @@ void leave P_((int));
  * The initialize() procedure sets the "xalloc_fail_handler" vector to
  * point here in the event that xmalloc() or friends fail.
  */
-void malloc_failed_exit(proc, len)
-char *proc;
-int len;
+void malloc_failed_exit(char *proc, int len)
 {
     ShutdownTerm();
     error2(catgets(elm_msg_cat, ElmSet, ElmCouldntMallocBytes,
@@ -76,8 +74,7 @@ static int ignore_sigs[] = {
 };
 
 
-void leave(mode)
-int mode;
+void leave(int mode)
 {
     char buf[SLEN], *s;
     int i;
@@ -141,9 +138,7 @@ int mode;
 }
 
 
-int
-get_page(msg_pointer)
-int msg_pointer;
+int get_page(int msg_pointer)
 {
 	/** Ensure that 'current' is on the displayed page,
 	    returning NEW_PAGE iff the page changed! **/
@@ -175,8 +170,7 @@ int msg_pointer;
 	  return(SAME_PAGE);
 }
 
-char *nameof(filename)
-char *filename;
+char *nameof(char *filename)
 {
 	/** checks to see if 'filename' has any common prefixes, if
 	    so it returns a string that is the same filename, but

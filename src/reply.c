@@ -52,11 +52,7 @@ char *get_token();
 
 
 /* Determine the subject to use for a reply.  */
-void
-get_reply_subj(out_subj,in_subj,dflt_subj)
-char *out_subj;		/* store the resulting subject here		*/
-char *in_subj;		/* subject of the original message		*/
-char *dflt_subj;	/* default to use if "in_subj" is empty		*/
+void get_reply_subj(char *out_subj, char *in_subj, char *dflt_subj)
 {
 	if ( *in_subj == '\0' ) {
 	  strcpy(out_subj,dflt_subj);
@@ -72,9 +68,7 @@ char *dflt_subj;	/* default to use if "in_subj" is empty		*/
 	strcat( strcpy( out_subj, "Re: " ), in_subj);
 }
 
-int
-optimize_and_add(new_address, full_address)
-char *new_address, *full_address;
+int optimize_and_add(char *new_address, char *full_address)
 {
 	/** This routine will add the new address to the list of addresses
 	    in the full address buffer IFF it doesn't already occur.  It
@@ -143,9 +137,7 @@ char *new_address, *full_address;
 	return(0);
 }
 
-void
-get_and_expand_everyone(return_address, full_address)
-char *return_address, *full_address;
+void get_and_expand_everyone(char *return_address, char *full_address)
 {
 	/** Read the current message, extracting addresses from the 'To:'
 	    and 'Cc:' lines.   As each address is taken, ensure that it
@@ -280,8 +272,7 @@ next_header:
     }
 }
 
-int
-reply()
+int reply(void)
 {
     /** Reply to the current message.  Returns non-zero iff
 	the screen has to be rewritten. **/
@@ -319,8 +310,7 @@ reply()
     /*NOTREACHED*/
 }
 
-int
-reply_to_everyone()
+int reply_to_everyone(void)
 {
 	/** Reply to everyone who received the current message.
 	    This includes other people in the 'To:' line and people
@@ -345,8 +335,7 @@ reply_to_everyone()
 	return send_message(return_address, full_address, subject, SM_REPLY);
 }
 
-int
-forward()
+int forward(void)
 {
     /** Forward the current message.
 	Return TRUE if the main part of the screen has been changed
@@ -382,8 +371,7 @@ forward()
     return send_message((char *)NULL, (char *)NULL, subject, msgtype);
 }
 
-get_return_address(address, single_address)
-char *address, *single_address;
+int get_return_address(char *address, char *single_address)
 {
 	char *sa;
 	int i;
@@ -401,10 +389,7 @@ char *address, *single_address;
 	*sa = '\0';
 }
 
-int
-get_return_name(address, name, trans_to_lowercase)
-char *address, *name;
-int   trans_to_lowercase;
+int get_return_name(char *address, char *name, int trans_to_lowercase)
 {
 	/** Given the address (either a single address or a combined list
 	    of addresses) extract the login name of the first person on
@@ -561,7 +546,7 @@ int   trans_to_lowercase;
 	return 0;
 }
 
-int remail()
+int remail(void)
 {
     /** remail a message... returns TRUE if new foot needed ... **/
 

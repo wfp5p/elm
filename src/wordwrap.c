@@ -41,12 +41,8 @@ unsigned alarm();
 	/* WARNING: this macro destroys nr */
 #define erase_tab(nr)		do WriteChar(BACKSPACE); while (--(nr) > 0)
 
-int
-wrapped_enter(string, tail, x, y, edit_fd, append_current)
-char *string, *tail;
-int  x,y, *append_current;
-FILE *edit_fd;
-
+int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
+		  int *append_current)
 {
 	/** This will display the string on the screen and allow the user to
 	    either accept it (by pressing RETURN) or alter it according to
@@ -60,7 +56,7 @@ FILE *edit_fd;
 		 append_current  means that we have an initial string and that
 			   the cursor should be placed at the END of the line,
 			   not the beginning (the default).
-	      
+
 	    If we hit an interrupt or EOF we'll return non-zero.
 	**/
 
@@ -74,7 +70,7 @@ FILE *edit_fd;
 
 	if(!(x >=0 && y >= 0))
 	  GetCursorPos(&x, &y);
-	PutLine1(x, y, "%s", string);	
+	PutLine1(x, y, "%s", string);
 
 	CleartoEOLN();
 
@@ -84,7 +80,7 @@ FILE *edit_fd;
 	else
 	  iindex = strlen(string);
 
-	/** now we have the screen as we want it and the cursor in the 
+	/** now we have the screen as we want it and the cursor in the
 	    right place, we can loop around on the input and return the
 	    string as soon as the user presses <RETURN> or the line wraps.
 	**/
@@ -221,7 +217,7 @@ FILE *edit_fd;
 
 	  case ctrl('R'):
 	    string[iindex] = '\0';
-	    PutLine1(x,y, "%s", string);	
+	    PutLine1(x,y, "%s", string);
 	    CleartoEOLN();
 	    break;
 
@@ -251,12 +247,7 @@ FILE *edit_fd;
 	return(0);
 }
 
-int
-line_wrap(string,tail,count,tabs)
-char *string;	/* The string to be wrapped */
-char *tail;	/* The part of the string which is wrapped */
-int *count;	/* Offset of string terminator */
-int *tabs;	/* List of how many spaces each tab adds */
+int line_wrap(char *string, char *tail, int *count, int *tabs)
 {
 	/** This will check for line wrap.  If the line was wrapped,
 	    it will back up to white space (if possible), write the

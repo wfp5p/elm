@@ -63,9 +63,7 @@ unsigned short getgid(), getuid();
 /* FOO - need to update message catalog */
 static char def_ans_quit[] = "q";	/*FOO*/
 
-
-void initialize(requestedmfile)
-char *requestedmfile;	/* first mail file to open, empty if the default */
+void initialize(char *requestedmfile)
 {
     char buf[SLEN];
 
@@ -252,9 +250,7 @@ local_signature, remote_signature);
 
 }
 
-
-static void create_private_dir(path)
-const char *path;
+static void create_private_dir(const char *path)
 {
     int ans, ch;
 

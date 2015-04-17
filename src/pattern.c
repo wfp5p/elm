@@ -36,7 +36,7 @@
  *
  ******************************************************************************/
 
-/**    General pattern matching for the ELM mailer.     
+/**    General pattern matching for the ELM mailer.
 
 **/
 
@@ -56,12 +56,10 @@ static int comment_matches();
 static int address_matches();
 static int match_in_message();
 
-int
-meta_match(function)
-int function;
+int meta_match(int function)
 {
-    /** Perform specific function based on whether an entered string 
-	matches either the From or Subject lines.. 
+    /** Perform specific function based on whether an entered string
+	matches either the From or Subject lines..
 	Return TRUE if the current message was matched, else FALSE.
     **/
 
@@ -101,13 +99,13 @@ int function;
     }
 
     PutLine2(LINES-3, strlen(nls_Prompt), catgets(elm_msg_cat, ElmSet,
-	    ElmMessagesMatchPattern, "%s %s that match pattern..."), 
+	    ElmMessagesMatchPattern, "%s %s that match pattern..."),
 	    word_Action, nls_items);
 
     /* clear any existing tags? */
     if (function == MATCH_TAG)
 	ask_clear_existing_tags();
-  
+
     PutLine0(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmEnterPattern,
 	    "Enter pattern: "));
     if (enter_string(pat, sizeof(pat), -1, -1, ESTR_REPLACE) < 0
@@ -201,7 +199,7 @@ int function;
     return(curtag);
 }
 
-static void ask_clear_existing_tags()
+static void ask_clear_existing_tags(void)
 {
     int tagged, i;
     char tagmsg[SLEN], msg[SLEN];
@@ -266,8 +264,7 @@ static void ask_clear_existing_tags()
  * and FALSE is returned.  If the user aborts the match then
  * we silently return FALSE.
  */
-int
-pattern_match()
+int pattern_match(void)
 {
     char inpbuf[SLEN], *sel_pat;
     int inp_line, inp_col, anywhere, matched, ch, i;
@@ -371,51 +368,32 @@ not_matched:
 /*
  * Local Procedures
  */
-
-static int
-from_matches(message_number, pat)
-int message_number;
-char *pat;
+static int from_matches(int message_number, char *pat)
 {
     return patmatch(pat, curr_folder.headers[message_number]->from, PM_NOCASE|PM_WSFOLD);
 }
 
-static int
-subject_matches(message_number, pat)
-int message_number;
-char *pat;
+static int subject_matches(int message_number, char *pat)
 {
     return patmatch(pat, curr_folder.headers[message_number]->subject, PM_NOCASE|PM_WSFOLD);
 }
 
-static int
-name_matches(message_number, pat)
-int message_number;
-char *pat;
+static int name_matches(int message_number, char *pat)
 {
     return patmatch(pat, aliases[message_number]->name, PM_NOCASE|PM_WSFOLD);
 }
 
-static int
-alias_matches(message_number, pat)
-int message_number;
-char *pat;
+static int alias_matches(int message_number, char *pat)
 {
     return patmatch(pat, aliases[message_number]->alias, PM_NOCASE|PM_WSFOLD);
 }
 
-static int
-comment_matches(message_number, pat)
-int message_number;
-char *pat;
+static int comment_matches(int message_number, char *pat)
 {
     return patmatch(pat, aliases[message_number]->comment, PM_NOCASE|PM_WSFOLD);
 }
 
-static int
-address_matches(message_number, pat)
-int message_number;
-char *pat;
+static int address_matches(int message_number, char *pat)
 {
     char *exp;
     int dummy;
@@ -424,13 +402,11 @@ char *pat;
     return (exp != NULL && patmatch(pat, exp, PM_NOCASE|PM_WSFOLD));
 }
 
-static int
-match_in_message(pat)
-char *pat;
+static int match_in_message(char *pat)
 {
-	/** Match a string INSIDE a message...starting at the current 
+	/** Match a string INSIDE a message...starting at the current
 	    message read each line and try to find the pattern.  As
-	    soon as we do, set current and leave! 
+	    soon as we do, set current and leave!
 	    Returns 1 if found, 0 if not
 	**/
 
@@ -454,7 +430,7 @@ char *pat;
 	    err = errno;
 	    dprint(1, (debugfile,
 		"Error: seek %ld bytes into file failed. errno %d (%s)\n",
-		curr_folder.headers[message_number]->offset, err, 
+		curr_folder.headers[message_number]->offset, err,
 		"match_in_message"));
 	    error2(catgets(elm_msg_cat, ElmSet, ElmMatchSeekFailed,
 		   "ELM [match] failed looking %ld bytes into file (%s)."),
@@ -467,11 +443,11 @@ char *pat;
 
 	  while ((line_len = mail_gets(buffer, VERY_LONG_STRING, curr_folder.fp)) &&
 		line < lines) {
-	
+
 	    if(buffer[line_len - 1] == '\n') line++;
 
 	    if (patmatch(pat, buffer, PM_NOCASE|PM_WSFOLD)) {
-	      curr_folder.curr_mssg = message_number+1; 
+	      curr_folder.curr_mssg = message_number+1;
 	      clear_error();
 	      return TRUE;
 	    }
@@ -480,4 +456,3 @@ char *pat;
 
 	return FALSE;
 }
-

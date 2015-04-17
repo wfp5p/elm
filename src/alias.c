@@ -61,9 +61,10 @@
 
 #define resync_aliases(newaliases)	delete_aliases(newaliases,TRUE)
 
-extern char *alias_type();
-void get_realnames();
-void install_aliases();
+char *alias_type(int type);
+static void get_realnames(char *aliasname, char *firstname, char *lastname,
+			  char *comment, char *buffer);
+void install_aliases(void);
 
 int  is_system=0;		/* system file updating?     */
 
@@ -71,8 +72,7 @@ int num_duplicates;
 DBZ *system_hash = NULL, *user_hash = NULL;
 
 
-open_alias_files(are_in_aliases)
-int are_in_aliases;
+int open_alias_files(int are_in_aliases)
 {
 	if(open_system_aliases() || open_user_aliases()) {
 	    dprint(5, (debugfile,
@@ -81,8 +81,7 @@ int are_in_aliases;
 	}
 }
 
-int
-open_system_aliases()
+int open_system_aliases(void)
 {
 /*
  *	Open the system alias file, if present,
@@ -138,8 +137,7 @@ open_system_aliases()
 
 }
 
-int
-open_user_aliases()
+int open_user_aliases(void)
 {
 /*
  *	Open the user alias file, if present,
@@ -198,9 +196,7 @@ open_user_aliases()
 
 }
 
-int
-add_alias(replace, to_replace)
-int replace, to_replace;
+int add_alias(int replace, int to_replace)
 {
 /*
  *	Add an alias to the user alias text file.  If there
@@ -295,7 +291,7 @@ int replace, to_replace;
 	 *  alias.  If so, we need to ask a question.
 	 */
 	    if(aliases[to_replace]->type & SYSTEM) {
-	        dprint(3, (debugfile, 
+	        dprint(3, (debugfile,
 	            "Aliasname [%s] is SYSTEM in add_alias\n", aliasname));
 	    /*
 	     *  If they don't want to superceed the SYSTEM alias then
@@ -314,7 +310,7 @@ int replace, to_replace;
 	    CleartoEOLN();
 	    *aliasname = '\0';
 	    if ((replace = get_aliasname(aliasname, buffer, &to_replace)) < 0) {
-	        dprint(3, (debugfile, 
+	        dprint(3, (debugfile,
 	            "Aliasname [%s] was rejected in add_alias\n", aliasname));
 	        ClearLine(LINES-2);
 	        return(0);
@@ -392,8 +388,7 @@ int replace, to_replace;
 
 }
 
-int
-add_current_alias()
+int add_current_alias(void)
 {
 /*
  *	Alias the current message to the specified name and
@@ -415,21 +410,21 @@ add_current_alias()
 	int replace, to_replace;
 
 	if (curr_folder.curr_mssg == 0) {
-	 dprint(4, (debugfile, 
+	 dprint(4, (debugfile,
 		"Add current alias called without any current message!\n"));
 	 error(catgets(elm_msg_cat, AliasesSet, AliasesNoMessage,
 		"No message to alias to!"));
 	 return(0);
 	}
 	current_header = curr_folder.headers[curr_folder.curr_mssg-1];
-	
+
 	strcpy(buffer, catgets(elm_msg_cat, AliasesSet, AliasesCurrentMessage,
 		"Current message address aliased to: "));
 	PutLine0(LINES-2,0, buffer);
 	CleartoEOLN();
 	*aliasname = '\0';
 	if ((replace = get_aliasname(aliasname, buffer, &to_replace)) < 0) {
-	    dprint(3, (debugfile, 
+	    dprint(3, (debugfile,
 	        "Aliasname [%s] was rejected in add_current_alias\n",
 	        aliasname));
 	    ClearLine(LINES-2);
@@ -534,26 +529,26 @@ above:	    if ((chspace = strchr(bufptr, ' ')) != NULL) {
 
 }
 
-add_to_alias_text(aliasname, firstname, lastname, comment, address)
-char *aliasname, *firstname, *lastname, *comment, *address;
+int add_to_alias_text(char *aliasname, char *firstname, char *lastname,
+		      char *comment, char *address)
 {
 /*
  *	Add the data to the user alias text file.
  *
  *	Return zero if we succeeded, 1 if not.
  */
-	
+
 	FILE *file;
 	char fname[SLEN];
 	char buffer[SLEN];
 	int  err;
-	
+
 	sprintf(fname,"%s/%s", user_home, ALIAS_TEXT);
-	
+
 	save_file_stats(fname);
 	if ((file = fopen(fname, "a")) == NULL) {
 	  err = errno;
-	  dprint(2, (debugfile, 
+	  dprint(2, (debugfile,
 		 "Failure attempting to add alias to file %s within %s",
 		   fname, "add_to_alias_text"));
 	  dprint(2, (debugfile, "** %s **\n", strerror(err)));
@@ -563,7 +558,7 @@ char *aliasname, *firstname, *lastname, *comment, *address;
 	}
 
 	if (strlen(firstname) == 0) {
-	    strcpy(buffer, lastname);  
+	    strcpy(buffer, lastname);
 	}
 	else {
 	    sprintf(buffer, "%s; %s", lastname, firstname);
@@ -591,16 +586,14 @@ char *aliasname, *firstname, *lastname, *comment, *address;
 	return(0);
 }
 
-delete_from_alias_text(name, num_to_delete)
-char **name;
-int num_to_delete;
+int delete_from_alias_text(char **name, int num_to_delete)
 {
 /*
  *	Delete the data from the user alias text file.
  *
  *	Return zero if we succeeded, 1 if not.
  */
-	
+
 	FILE *file, *tmp_file;
 
 	char fname[SLEN], tmpfname[SLEN];
@@ -616,16 +609,16 @@ int num_to_delete;
 	delete_continues = FALSE;
 
 	for (i=0; i < num_to_delete; i++)
-	  strcat(name[i], ","); 
+	  strcat(name[i], ",");
 
 	sprintf(fname,"%s/%s", user_home, ALIAS_TEXT);
 	sprintf(tmpfname,"%s/%s.t", user_home, ALIAS_TEXT);
-	
+
 	save_file_stats(fname);
 
 	if ((file = fopen(fname, "r")) == NULL) {
 	  err = errno;
-	  dprint(2, (debugfile, 
+	  dprint(2, (debugfile,
 		 "Failure attempting to delete alias from file %s within %s",
 		   fname, "delete_from_alias_text"));
 	  dprint(2, (debugfile, "** %s **\n", strerror(err)));
@@ -634,9 +627,9 @@ int num_to_delete;
 	  return(1);
 	}
 
-	if ((tmp_file = file_open(tmpfname, "w")) == NULL) { 
+	if ((tmp_file = file_open(tmpfname, "w")) == NULL) {
 	  err = errno;
-	  dprint(2, (debugfile, 
+	  dprint(2, (debugfile,
 		 "Failure attempting to open temp file %s within %s",
 		   tmpfname, "delete_from_alias_text"));
 	  dprint(2, (debugfile, "** %s **\n", strerror(err)));
@@ -704,7 +697,7 @@ int num_to_delete;
 	return(0);
 }
 
-alias()
+int alias(void)
 {
 /*
  *	Work with alias commands...
@@ -740,7 +733,7 @@ alias()
 	  ch = GetKey(0);
 
 	  MoveCursor(LINES-3,strlen(nls_Prompt)); CleartoEOS();
-	  
+
 	  dprint(3, (debugfile, "\n-- Alias command: %c\n\n", ch));
 
 	  switch (ch) {
@@ -876,7 +869,7 @@ alias()
 		          else {
 	                      PutLine1(LINES-1, 0, catgets(elm_msg_cat,
 	                              AliasesSet, AliasesAliasedAddress,
-				      "Aliased address: %-60.60s"), 
+				      "Aliased address: %-60.60s"),
 	                          aliases[curr_alias-1]->address);
 		          }
 		      }
@@ -983,7 +976,7 @@ alias()
 	    show_current();
 	  else if (nufoot) {
 	    if (mini_menu) {
-	      MoveCursor(LINES-7, 0);  
+	      MoveCursor(LINES-7, 0);
               CleartoEOS();
 	      show_alias_menu();
 	    }
@@ -998,12 +991,11 @@ alias()
 	}			/* BIG while loop... */
 }
 
-void
-install_aliases()
+void install_aliases(void)
 {
 /*
  *	Run the 'newalias' program and update the
- *	aliases before going back to the main program! 
+ *	aliases before going back to the main program!
  *
  *	No return value.....
  */
@@ -1020,7 +1012,7 @@ install_aliases()
 	sprintf(odatafile, "%s/%s", user_home, ALIAS_DATA);
 
 /*
- *	We need to unlimit everything since aliases are 
+ *	We need to unlimit everything since aliases are
  * 	eing read in from scratch.
  */
 	selected = 0;
@@ -1037,19 +1029,19 @@ install_aliases()
 	}
 }
 
-alias_help()
+int alias_help(void)
 {
 /*
  *	Help section for the alias menu...
  *
  *	Return non-0 if main part of screen overwritten, else 0
  */
-	
+
 	int  ch;
 	int  redraw=0;
 	char *alias_prompt;
-	
-	
+
+
 	if (mini_menu)
 		alias_prompt = catgets(elm_msg_cat, AliasesSet, AliasesShortKey,
 			"Key: ");
@@ -1068,7 +1060,7 @@ alias_help()
 
 	while ((ch = ReadCh()) != '.') {
 	  switch(ch) {
-	    case '?' : display_helpfile("alias");	
+	    case '?' : display_helpfile("alias");
 		       redraw++;
 		       return(redraw);
 
@@ -1086,7 +1078,7 @@ alias_help()
 	    case 'v': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpv,
 	    "v = View the address for the currently selected alias."));
 		      break;
-	
+
 	    case 'a': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpa,
 	    "a = Add (return) address of current message to alias database."));
 		      break;
@@ -1132,21 +1124,21 @@ alias_help()
 	    case 'i': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpi,
 		      "r,q,i = Return from alias menu (with prompting)."));
 	   	      break;
-		      
+
 	    case 'R':
 	    case 'Q':
 	    case 'I': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpQ,
 		      "R,Q,I = Return from alias menu (no prompting)."));
 	   	      break;
-		      
+
 	    case 't': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpt,
 		      "t = Tag current alias for further operations."));
 		      break;
-	
+
 	    case 'T': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpT,
 		      "T = Tag current alias and go to next alias."));
 		      break;
-	
+
 	    case ctrl('T'): error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlT,
 	    "^T = Tag aliases matching specified pattern."));
 		      break;
@@ -1176,14 +1168,13 @@ alias_help()
 	return(redraw);
 }
 
-get_aliases(are_in_aliases)
-int are_in_aliases;
+int get_aliases(int are_in_aliases)
 {
 /*
  *	Get all the system and user alias info
  *
  *	If we get this far, we must be needing to re-read from
- *	at least one data file.  Unfortunately that means we 
+ *	at least one data file.  Unfortunately that means we
  *	really need to read both since the aliases may be sorted
  *	and all mixed up...  :-(
  */
@@ -1253,9 +1244,7 @@ int are_in_aliases;
 
 }
 
-get_one_alias(db, current)
-DBZ *db;
-int current;
+int get_one_alias(DBZ *db, int current)
 {
 /*
  *	Get an alias (name, address, etc.) from the data file
@@ -1287,7 +1276,7 @@ int current;
 }
 
 
-main_state()
+int main_state(void)
 {
 /*	Save the globals that are shared for both menus
  *	so that we can return to the main menu without
@@ -1339,9 +1328,7 @@ main_state()
 	}
 }
 
-int
-parse_aliases(buffer, remainder)
-char *buffer, *remainder;
+int parse_aliases(char *buffer, char *remainder)
 {
 /*
  *	This routine will parse out the individual aliases present
@@ -1352,7 +1339,7 @@ char *buffer, *remainder;
  *	2. Setting remainder to point to the rest of the line starting
  *	   at the '=' (for later rewriting if needed).
  *
- *	3. Parsing the aliases into an string padded with ',' at 
+ *	3. Parsing the aliases into an string padded with ',' at
  *	   the end.
  *
  *	4. Returning the number of aliases found (0 if test #1 fails).
@@ -1389,10 +1376,7 @@ char *buffer, *remainder;
 	return (number);
 }
 
-int
-get_aliasname(aliasname, buffer, duplicate)
-char *aliasname, *buffer;
-int *duplicate;
+int get_aliasname(char *aliasname, char *buffer, int *duplicate)
 {
 
 /*
@@ -1428,9 +1412,9 @@ int *duplicate;
  *	Check to see if there is already a USER alias by this name.
  */
 	if ((loc = find_alias(aliasname, USER)) >= 0) {
-	    dprint(3, (debugfile, 
+	    dprint(3, (debugfile,
 	         "Attempt to add a duplicate alias [%s] in get_aliasname\n",
-	         aliases[loc]->alias)); 
+	         aliases[loc]->alias));
 	    if (aliases[loc]->type & GROUP )
 	        PutLine1(LINES-2,0, catgets(elm_msg_cat,
 	                AliasesSet, AliasesAlreadyGroup,
@@ -1460,10 +1444,10 @@ int *duplicate;
  *	Of course we do check if there was no USER alias match.
  */
 	if ((loc = find_alias(aliasname, SYSTEM)) >= 0) {
-	    dprint(3, (debugfile, 
+	    dprint(3, (debugfile,
 	      "Attempt to add a duplicate system alias [%s] in get_aliasname\n",
-	      aliases[loc]->address)); 
-	  
+	      aliases[loc]->address));
+
 	    if( ! superceed_system(loc, buffer))
 	        return(-1);
 	}
@@ -1471,10 +1455,7 @@ int *duplicate;
 
 }
 
-int
-superceed_system(this_alias, buffer)
-int this_alias;
-char *buffer;
+int superceed_system(int this_alias, char *buffer)
 {
 
 	PutLine2(LINES-2, 0, catgets(elm_msg_cat,
@@ -1488,9 +1469,7 @@ char *buffer;
 	        "Superceed?"), FALSE, LINES-3, FALSE);
 }
 
-void
-get_realnames(aliasname, firstname, lastname, comment, buffer)
-char *aliasname, *firstname, *lastname, *comment, *buffer;
+void get_realnames(char *aliasname, char *firstname, char *lastname, char *comment, char *buffer)
 {
 	/* FOO - this is not handling enter_string() aborts properly */
 
@@ -1506,10 +1485,10 @@ char *aliasname, *firstname, *lastname, *comment, *buffer;
 
 	if (strlen(lastname) == 0) {
 	    if (strlen(firstname) == 0) {
-	        strcpy(lastname, aliasname);  
+	        strcpy(lastname, aliasname);
 	    }
 	    else {
-	        strcpy(lastname, firstname);  
+	        strcpy(lastname, firstname);
 	        *firstname = '\0';
 	    }
 	}
@@ -1521,13 +1500,10 @@ char *aliasname, *firstname, *lastname, *comment, *buffer;
 
 }
 
-int
-ask_accept(aliasname, firstname, lastname, comment, address, buffer,
-	replace, replacement)
-char *aliasname, *firstname, *lastname, *comment, *address, *buffer;
-int replace, replacement;
+int ask_accept(char *aliasname, char *firstname, char *lastname,
+	       char *comment, char *address, char *buffer,
+	       int replace, int replacement)
 {
-
 	int ans;
 	char *(old_alias[1]);
 /*
@@ -1540,7 +1516,7 @@ int replace, replacement;
 	}
 
 	if (strlen(firstname) == 0) {
-	    strcpy(buffer, lastname);  
+	    strcpy(buffer, lastname);
 	}
 	else {
 	    sprintf(buffer, "%s %s", firstname, lastname);
@@ -1603,8 +1579,7 @@ int replace, replacement;
 
 /* Check whether an address is aliased; if so return the alias, otherwise
  * return NULL. */
-char *address_to_alias(address)
-char *address;
+char *address_to_alias(char *address)
 {
 	int i;
 	char return_address[SLEN];
@@ -1612,7 +1587,7 @@ char *address;
 	(void) open_alias_files(FALSE);
 
 	get_return_address(address, return_address);
-	
+
 	for (i = 0; i < num_aliases; i++) {
 	    if (strcasecmp(return_address, aliases[i]->address) == 0)
 		return aliases[i]->alias;

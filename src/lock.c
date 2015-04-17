@@ -34,7 +34,7 @@
  ******************************************************************************/
 
 /** leave current folder, updating etc. as needed...
-  
+
 **/
 
 
@@ -82,9 +82,7 @@ static int flock_fd,	/* file descriptor for flocking mailbox itself */
 static struct flock lock_info;
 #endif
 
-static int
-Grab_the_file(flock_fd)
-int flock_fd;
+static int Grab_the_file(int flock_fd)
 {
     errno = 0;
 
@@ -128,9 +126,7 @@ int flock_fd;
     return FLOCKING_OK;
 }
 
-static int
-Release_the_file(flock_fd)
-int flock_fd;
+static int Release_the_file(int flock_fd)
 {
     int	fcntlret = 0,
 	flockret = 0,
@@ -165,12 +161,11 @@ int flock_fd;
     return 0;
 }
 
-elm_lock(direction)
-int direction;
+int elm_lock(int direction)
 {
-      /** Create lock file to ensure that we don't get any mail 
+      /** Create lock file to ensure that we don't get any mail
 	  while altering the folder contents!
-	  If it already exists sit and spin until 
+	  If it already exists sit and spin until
 	     either the lock file is removed...indicating new mail
 	  or
 	     we have iterated MAX_ATTEMPTS times, in which case we
@@ -229,7 +224,7 @@ int direction;
 	create_iteration = 0;
       }
 
-	      
+
       /* try to assert create lock file MAX_ATTEMPTS times */
       do {
 
@@ -250,7 +245,7 @@ int direction;
 	    leave(LEAVE_ERROR);
 	  }
 	}
-	dprint(2, (debugfile,"File '%s' already exists!  Waiting...(lock)\n", 
+	dprint(2, (debugfile,"File '%s' already exists!  Waiting...(lock)\n",
 	  lockfile));
 	error1(catgets(elm_msg_cat, ElmSet, ElmLeaveWaitingToRead,
 	  "Waiting to read mailbox while mail is being received: attempt #%d"),
@@ -258,15 +253,15 @@ int direction;
 	sleep(2);
       } while (create_iteration++ < MAX_ATTEMPTS);
       clear_error();
-   
+
       if(!(create_fd >= 0 || errno == ENOENT)) {
-	
+
 	/* we weren't able to create the lock file */
 
 #ifdef REMOVE_AT_LAST
 
 	/** time to waste the lock file!  Must be there in error! **/
-	dprint(2, (debugfile, 
+	dprint(2, (debugfile,
 	   "Warning: I'm giving up waiting - removing lock file(lock)\n"));
 	if (direction == LOCK_INCOMING)
 	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveTimedOutRemoving,
@@ -333,22 +328,22 @@ int direction;
       write(create_fd, pid_buffer, strlen(pid_buffer)+1);
 
       (void)close(create_fd);
-     if (mailgroupid != groupid)	   
+     if (mailgroupid != groupid)
        setegid(groupid);
 #endif	/* } USE_DOTLOCK_LOCKING */
-				   
+
 #ifdef SYSCALL_LOCKING
       /* Now we also need to lock the file with flock(2) */
 
       /* Open mail file separately for locking */
       if((flock_fd = open(curr_folder.filename, O_RDWR)) < 0) {
-	dprint(1, (debugfile, 
+	dprint(1, (debugfile,
 	    "Error encountered attempting to reopen %s for lock\n", curr_folder.filename));
 	dprint(1, (debugfile, "** %s **\n", strerror(errno)));
 	MoveCursor(LINES, 0);
 	Raw(OFF);
 	printf(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorReopenMailbox,
- "\nError encountered while attempting to reopen mailbox %s for lock;\n"), 
+ "\nError encountered while attempting to reopen mailbox %s for lock;\n"),
 	      curr_folder.filename);
 	printf("** %s. **\n\n", strerror(errno));
 
@@ -422,8 +417,7 @@ EXIT_RETRY_LOOP:
       return(0);
 }
 
-int
-elm_unlock()
+int elm_unlock(void)
 {
 	/** Remove the lock file!    This must be part of the interrupt
 	    processing routine to ensure that the lock file is NEVER
@@ -452,13 +446,13 @@ elm_unlock()
 	    if (retcode = Release_the_file (flock_fd)) {
 
 		dprint(1, (debugfile,
-			   "Error %s\n\ttrying to unlock file %s (%s)\n", 
+			   "Error %s\n\ttrying to unlock file %s (%s)\n",
 			   strerror(errno), curr_folder.filename, "unlock"));
 
 		/* try to force unlock by closing file */
 		if (close (flock_fd) == -1) {
 		    dprint (1, (debugfile,
-	      "Error %s\n\ttrying to force unlock file %s via close() (%s)\n", 
+	      "Error %s\n\ttrying to force unlock file %s via close() (%s)\n",
 				strerror(errno),
 				curr_folder.filename, "unlock"));
 		    error1 (catgets (elm_msg_cat, ElmSet,
@@ -480,7 +474,7 @@ elm_unlock()
 	    lock_state = OFF;		/* indicate we don't have a lock on */
 	  } else {
 	    dprint(1, (debugfile,
-	      "Error %s\n\ttrying to unlink file %s (%s)\n", 
+	      "Error %s\n\ttrying to unlink file %s (%s)\n",
 	      strerror(errno), lockfile,"unlock"));
 	      error1(catgets(elm_msg_cat, ElmSet, ElmLeaveCouldntRemoveOwnLock,
 		"Couldn't remove my own lock file %s!"), lockfile);

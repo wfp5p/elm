@@ -41,7 +41,7 @@
  *
  ******************************************************************************/
 
-/** This file contains addressing utilities 
+/** This file contains addressing utilities
 
 **/
 
@@ -50,18 +50,17 @@
 #include "s_elm.h"
 
 
-translate_return(addr, ret_addr)
-char *addr, *ret_addr;
+int translate_return(char *addr, char *ret_addr)
 {
-	/** Return ret_addr to be the same as addr, but with the login 
-            of the person sending the message replaced by '%s' for 
-            future processing... 
-	    Fixed to make "%xx" "%%xx" (dumb 'C' system!) 
+	/** Return ret_addr to be the same as addr, but with the login
+            of the person sending the message replaced by '%s' for
+            future processing...
+	    Fixed to make "%xx" "%%xx" (dumb 'C' system!)
 	**/
 
 	register int loc, loc2, iindex = 0;
 	register char *remaining_addr;
-	
+
 /*
  *	check for RFC-822 source route: format @site:usr@site
  *	if found, skip to after the first : and then retry.
@@ -96,7 +95,7 @@ char *addr, *ret_addr;
 	  for (loc = loc2; loc > -1 && remaining_addr[loc] != '!'; loc--)
 	      ;
 	}
-	
+
 	/** now copy up to 'loc' into destination... **/
 
 	while (iindex <= loc) {
@@ -123,13 +122,11 @@ char *addr, *ret_addr;
 	  if (remaining_addr[loc2-1] == '%')	/* tweak for "printf" */
 	    ret_addr[iindex++] = '%';
 	}
-	
+
 	ret_addr[iindex] = '\0';
 }
 
-int
-build_address(to, full_to)
-char *to, *full_to;
+int build_address(char *to, char *full_to)
 {
 	/** loop on all words in 'to' line...append to full_to as
 	    we go along, until done or length > len.  Modified to
@@ -260,12 +257,12 @@ char *to, *full_to;
                     a_in_parens = 0;
 
                     while (l > 0) {
-                      if (next_word_a[0] == '(') 
+                      if (next_word_a[0] == '(')
                         ++a_in_parens;
-                      if (next_word_a[strlen(next_word_a)-1] == ')') 
+                      if (next_word_a[strlen(next_word_a)-1] == ')')
                         --a_in_parens;
                       l = get_word(ptr, l, next_word_a, sizeof(next_word_a));
-                      if (! a_in_parens) 
+                      if (! a_in_parens)
                         break;
                     }
                   }
@@ -288,7 +285,7 @@ char *to, *full_to;
 	 /*
 	  *   We don't do any real work here.  But we need some
 	  *   sort of test in this line of tests to make sure
-	  *   that none of the other else's are tried if the 
+	  *   that none of the other else's are tried if the
 	  *   alias expansion failed because it was too long.
 	  */
 	      dprint(2,(debugfile,"Overflowed alias expansion for %s\n", word));
@@ -320,13 +317,10 @@ char *to, *full_to;
 	return( expanded_information > 0 ? 1 : 0 );
 }
 
-
-forwarded(buffer, entry)
-char *buffer;
-struct header_rec *entry;
+int forwarded(char *buffer, struct header_rec *entry)
 {
-	/** Change 'from' and date fields to reflect the ORIGINATOR of 
-	    the message by iteratively parsing the >From fields... 
+	/** Change 'from' and date fields to reflect the ORIGINATOR of
+	    the message by iteratively parsing the >From fields...
 	    Modified to deal with headers that include the time zone
 	    of the originating machine... **/
 
@@ -372,12 +366,11 @@ struct header_rec *entry;
 }
 
 
-fix_arpa_address(address)
-char *address;
+int fix_arpa_address(char *address)
 {
 	/** Given a pure ARPA address, try to make it reasonable.
 
-	    This means that if you have something of the form a@b@b make 
+	    This means that if you have something of the form a@b@b make
             it a@b.  If you have something like a%b%c%b@x make it a%b@x...
 	**/
 
@@ -387,7 +380,7 @@ char *address;
 	extern char *get_token();
 
 	/*  break down into a list of machine names, checking as we go along */
-	
+
 	addrptr = (char *) address;
 
 	while ((host = get_token(addrptr, "%@", 2)) != NULL) {
@@ -397,14 +390,14 @@ char *address;
 	  if (i == host_count) {
 	    strcpy(hosts[host_count++], host);
 	    if (host_count == MAX_HOPS) {
-	       dprint(2, (debugfile, 
+	       dprint(2, (debugfile,
            "Can't build return address - hit MAX_HOPS in fix_arpa_address\n"));
 	       error(catgets(elm_msg_cat, ElmSet, ElmCantBuildRetAddr,
 			"Can't build return address - hit MAX_HOPS limit!"));
 	       return(1);
 	    }
 	  }
-	  else 
+	  else
 	    host_count = i + 1;
 	  addrptr = NULL;
 	}
@@ -414,8 +407,8 @@ char *address;
 	address[0] = '\0';
 
 	for (i = 0; i < host_count; i++)
-	  sprintf(address, "%s%s%s", address, 
-	          address[0] == '\0'? "" : 
+	  sprintf(address, "%s%s%s", address,
+	          address[0] == '\0'? "" :
 	 	    (i == host_count - 1 ? "@" : "%"),
 	          hosts[i]);
 

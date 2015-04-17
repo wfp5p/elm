@@ -54,8 +54,7 @@ void _exit();
 
 #ifdef ALLOW_SUBSHELL
 
-int
-subshell()
+int subshell(void)
 {
 	/** spawn a subshell with either the specified command
 	    returns non-zero if screen rewrite needed
@@ -127,9 +126,7 @@ subshell()
 # undef SIGWINCH
 #endif
 
-int system_call(string, options)
-char *string;
-int options;
+int system_call(char *string, int options)
 {
 	/** The following might be encoded into the "options" parameter:
 
@@ -358,8 +355,7 @@ int options;
 	return(retstat);
 }
 
-int
-do_pipe()
+int do_pipe(void)
 {
 	/** pipe the current message or tagged messages to
 	    the specified sequence.. **/
@@ -409,8 +405,7 @@ do_pipe()
 	return(1);
 }
 
-int print_msg(pause_on_scroll)
-int pause_on_scroll;
+int print_msg(int pause_on_scroll)
 {
 	/*
 	 * Print the tagged messages, or the current message if none are
@@ -569,7 +564,7 @@ static char folder_state_env_param[SLEN], *folder_state_fname;
  *   folder is empty.  The number of "S" records will match the value
  *   indicated in the "C" record.
  */
-int create_folder_state_file()
+int create_folder_state_file(void)
 {
     int count, i;
     FILE *fp;
@@ -634,7 +629,7 @@ int create_folder_state_file()
 }
 
 
-int remove_folder_state_file()
+int remove_folder_state_file(void)
 {
     /*
      * We simply leave the FOLDER_STATE_ENV environment variable set.

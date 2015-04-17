@@ -32,7 +32,7 @@
 #include "elm_defs.h"
 #include "elm_globals.h"
 
-edit_aliases_text()
+int edit_aliases_text(void)
 {
 	/** Allow the user to edit their aliases text, always resynchronizing
 	    afterwards.   This routine calls the function edit_a_file()

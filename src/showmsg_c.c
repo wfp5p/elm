@@ -63,10 +63,10 @@
 	   m    = mail a message out to someone
 	   p    = print this (all tagged) message
 	   r    = reply to this message
-	   s    = save this message to a maibox/folder 
+	   s    = save this message to a maibox/folder
 	   t    = tag this message
 	   u    = undelete message
-	   x    = Exit Elm NOW 
+	   x    = Exit Elm NOW
 
     all commands not explicitly listed here are beeped at.  Use i)ndex
     to get back to the main index page, please.
@@ -88,9 +88,7 @@ static char *put_help_prompt = NULL;
 #define POST_PROMPT_COL	strlen(nls_Prompt)
 
 
-int
-process_showmsg_cmd(command)
-int command;
+int process_showmsg_cmd(int command)
 {
 	int ch, i;
 
@@ -117,7 +115,7 @@ int command;
 		       (void) do_pipe();     /* do pipe - ignore return val */
 		       ClearScreen();
 		       build_bottom();
-		       break; 
+		       break;
 
 #ifdef ALLOW_SUBSHELL
 	    case '!' : put_cmd_name(catgets(elm_msg_cat, ElmSet, ElmSystemCall,
@@ -160,13 +158,13 @@ int command;
 		       break;
 
 	    case 'h' : screen_mangled = 0;
-		       if (filter) { 
-		         filter = 0; 
-		         i = show_msg(curr_folder.curr_mssg); 
+		       if (filter) {
+		         filter = 0;
+		         i = show_msg(curr_folder.curr_mssg);
 		         filter = 1;
 			 return(i);
 		       } else
-		         return(show_msg(curr_folder.curr_mssg)); 
+		         return(show_msg(curr_folder.curr_mssg));
 
 	    case 'q' :
 	    case 'i' : (void) get_page(curr_folder.curr_mssg);
@@ -174,7 +172,7 @@ int command;
 		       EnableFkeys(ON);
 		       screen_mangled = 0;
 		       return(0);		/* avoid <return> looping */
- 
+
 next_undel_msg :	/* a target for resolve mode actions */
 
 	    case KEY_DOWN:
@@ -233,7 +231,7 @@ next_msg:
 		       if(tag_message(FALSE))
 			 store_msg(catgets(elm_msg_cat, ElmSet, ElmMessageTagged,
 				"Message tagged."));
-		       else 
+		       else
 			 store_msg(catgets(elm_msg_cat, ElmSet, ElmMessageUntagged,
 				"Message untagged."));
 		       if (ch == 'T')
@@ -264,7 +262,7 @@ next_msg:
 	    case 'x' : put_cmd_name(catgets(elm_msg_cat, ElmSet, ElmExit, "Exit"), TRUE);
 		       quit_abandon(TRUE);
 		       break;
-	    
+
 	    case ctrl('J'):
 	    case ctrl('M'):  screen_mangled = 0;
 			     return(show_msg(curr_folder.curr_mssg));
@@ -274,7 +272,7 @@ next_msg:
 
 	  /* display prompt */
 	  if (screen_mangled) {
-	    /* clear what was left over from previous command 
+	    /* clear what was left over from previous command
 	     * and display last generated message.
 	     */
 	    put_prompt();
@@ -298,12 +296,10 @@ next_msg:
 	}
 }
 
-put_cmd_name(command, will_mangle)
-char *command;
-int will_mangle;
+int put_cmd_name(char *command, int will_mangle)
 {
 
-	/* If screen is or will be mangled display the command name 
+	/* If screen is or will be mangled display the command name
 	 * and erase the bottom of the screen.
 	 * But first if the border line hasn't yet been drawn, draw it.
 	 */
@@ -317,13 +313,13 @@ int will_mangle;
 	}
 }
 
-put_border()
+int put_border(void)
 {
-	 PutLine0(LINES-4, 0, 
+	 PutLine0(LINES-4, 0,
 "--------------------------------------------------------------------------\n");
 }
 
-build_bottom()
+int build_bottom(void)
 {
 	 MoveCursor(LINES-4, 0);
 	 CleartoEOS();

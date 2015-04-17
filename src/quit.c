@@ -25,7 +25,7 @@
  ******************************************************************************/
 
 /** quit: leave the current folder and quit the program.
-  
+
 **/
 
 #include "elm_defs.h"
@@ -34,8 +34,7 @@
 
 long bytes();
 
-void quit(prompt)
-int prompt;
+void quit(int prompt)
 {
     if (leave_mbox(FALSE, TRUE, prompt) == -1) {
 	/* new mail has arrived */
@@ -44,9 +43,7 @@ int prompt;
     leave(LEAVE_NORMAL);
 }
 
-
-void quit_abandon(do_prompt)
-int do_prompt;
+void quit_abandon(int do_prompt)
 {
 	/** Exit, abandoning all changes to the mailbox (if there were
 	    any, and if the user say's it's ok)
@@ -65,7 +62,7 @@ int do_prompt;
 	    for (changes = 0, i = 0; i < curr_folder.num_mssgs; i++)
 	      if (ison(curr_folder.headers[i]->status, DELETED) || curr_folder.headers[i]->status_chgd)
 		changes++;
-	    
+
 	    if (changes) {
 	      if (changes == 1)
 		msg = catgets(elm_msg_cat, ElmSet, ElmAbandonChange,
@@ -91,8 +88,7 @@ int do_prompt;
 	leave(LEAVE_NORMAL);
 }
 
-int
-resync()
+int resync(void)
 {
 	/** Resync on the current folder. Leave current and read it back in.
 	    Return indicates whether a redraw of the screen is needed.
@@ -122,9 +118,7 @@ resync()
 	  return(TRUE);
 }
 
-
-change_file(p1)
-char *p1;
+int change_file(char *p1)
 {
     int screen_changed;
     char newfile[SLEN], prompt1[SLEN];
@@ -149,4 +143,3 @@ char *p1;
     newmbox(newfile, FALSE);
     return TRUE;
 }
-

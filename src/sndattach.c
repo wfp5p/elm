@@ -98,8 +98,7 @@ static int atlist_getflags P_((int));
 static int atlist_tagged_clrcnt P_((int));
 static int atlist_tagged_move P_((int));
 
-PUBLIC int attachment_menu(user_attachments_p)
-SEND_MULTIPART **user_attachments_p;
+int attachment_menu(SEND_MULTIPART **user_attachments_p)
 {
     SEND_MULTIPART *mp;
     SEND_BODYPART *att;
@@ -604,8 +603,7 @@ SEND_MULTIPART **user_attachments_p;
 }
 
 
-static void at_disp_entry(line, n, selected)
-int line, n, selected;
+static void at_disp_entry(int line, int n, int selected)
 {
     int flags, len, i;
     char out_buf[SLEN], trunc_buf[SLEN], *bp;
@@ -648,10 +646,8 @@ int line, n, selected;
 }
 
 
-static void at_disp_currline(line, title, value, do_erase)
-int line;
-const char *title, *value;
-int do_erase;
+static void at_disp_currline(int line, const char *title, const char *value,
+			     int do_erase)
 {
     char trunc_buf[SLEN];
 
@@ -667,9 +663,8 @@ int do_erase;
 }
 
 
-static void at_disp_instr(instr_normal, instr_dummy1, instr_dummy2, do_erase)
-const char *instr_normal, *instr_dummy1, *instr_dummy2;
-int do_erase;
+static void at_disp_instr(const char *instr_normal, const char *instr_dummy1,
+			  const char *instr_dummy2, int do_erase)
 {
     if (AT_DUMMYMODE) {
 	if (do_erase)
@@ -692,9 +687,8 @@ int do_erase;
 
 
 /* set "att" NULL to create a new attachment */
-static SEND_BODYPART *at_do_change_file(att, do_redraw_p, mssg_ok_p)
-SEND_BODYPART *att;
-int *do_redraw_p, *mssg_ok_p;
+static SEND_BODYPART *at_do_change_file(SEND_BODYPART *att, int *do_redraw_p,
+					int *mssg_ok_p)
 {
     SEND_BODYPART *att_new;
     char fname[SLEN], fb_dir[SLEN], fb_pat[SLEN], *s;
@@ -786,9 +780,7 @@ int *do_redraw_p, *mssg_ok_p;
 }
 
 
-static int at_do_change_type(att, do_redraw_p)
-SEND_BODYPART *att;
-int *do_redraw_p;
+static int at_do_change_type(SEND_BODYPART *att, int *do_redraw_p)
 {
     char cont_type[SLEN];
 
@@ -823,9 +815,7 @@ int *do_redraw_p;
 }
 
 
-static int at_do_change_encoding(att, do_redraw_p)
-SEND_BODYPART *att;
-int *do_redraw_p;
+static int at_do_change_encoding(SEND_BODYPART *att, int *do_redraw_p)
 {
     char cont_encoding[SLEN];
 
@@ -858,9 +848,7 @@ int *do_redraw_p;
 }
 
 
-static int at_do_change_descrip(att, do_redraw_p)
-SEND_BODYPART *att;
-int *do_redraw_p;
+static int at_do_change_descrip(SEND_BODYPART *att, int *do_redraw_p)
 {
     char cont_descrip[SLEN];
 
@@ -891,9 +879,7 @@ int *do_redraw_p;
 }
 
 
-static int at_do_change_disposition(att, do_redraw_p)
-SEND_BODYPART *att;
-int *do_redraw_p;
+static int at_do_change_disposition(SEND_BODYPART *att, int *do_redraw_p)
 {
     const char *cp;
     char orig_fname[SLEN], new_fname[SLEN], *s;
@@ -960,9 +946,7 @@ int *do_redraw_p;
 }
 
 
-static char *strtruncate(str, len)
-char *str;
-int len;
+static char *strtruncate(char *str, int len)
 {
     int i;
 
@@ -989,7 +973,7 @@ int len;
 }
 
 
-static void atlist_initialize()
+static void atlist_initialize(void)
 {
     int i;
 
@@ -1001,16 +985,13 @@ static void atlist_initialize()
 }
 
 
-static int atlist_full()
+static int atlist_full(void)
 {
     return (at_attachmenu_count >= AT_MAX_ATTACH);
 }
 
 
-static void atlist_insert(sel, att, flags)
-int sel;
-SEND_BODYPART *att;
-int flags;
+static void atlist_insert(int sel, SEND_BODYPART *att, int flags)
 {
     int i;
 
@@ -1028,8 +1009,7 @@ int flags;
 }
 
 
-static void atlist_remove(sel)
-int sel;
+static void atlist_remove(int sel)
 {
     int i;
 
@@ -1050,10 +1030,7 @@ int sel;
 }
 
 
-static void atlist_replace(sel, att, flags)
-int sel;
-SEND_BODYPART *att;
-int flags;
+static void atlist_replace(int sel, SEND_BODYPART *att, int flags)
 {
     assert(at_attachmenu_count > 0 && at_attachmenu_count <= AT_MAX_ATTACH);
     assert(sel >= 0 && sel < at_attachmenu_count);
@@ -1068,8 +1045,7 @@ int flags;
 }
 
 
-static SEND_BODYPART *atlist_getbodypart(sel)
-int sel;
+static SEND_BODYPART *atlist_getbodypart(int sel)
 {
     assert(at_attachmenu_count > 0 && at_attachmenu_count <= AT_MAX_ATTACH);
     assert(sel >= 0 && sel < at_attachmenu_count);
@@ -1079,8 +1055,7 @@ int sel;
 }
 
 
-static int atlist_getflags(sel)
-int sel;
+static int atlist_getflags(int sel)
 {
     assert(at_attachmenu_count > 0 && at_attachmenu_count <= AT_MAX_ATTACH);
     assert(sel >= 0 && sel < at_attachmenu_count);
@@ -1090,8 +1065,8 @@ int sel;
 }
 
 
-static int atlist_tagged_clrcnt(do_clear)
-int do_clear;	/* if TRUE clear all tags, if FALSE just return count */
+static int atlist_tagged_clrcnt(int do_clear)
+/* if do_clear TRUE clear all tags, if FALSE just return count */
 {
     int count, i;
 
@@ -1110,8 +1085,7 @@ int do_clear;	/* if TRUE clear all tags, if FALSE just return count */
 }
 
 
-static int atlist_tagged_move(sel)
-int sel;
+static int atlist_tagged_move(int sel)
 {
     int nmoved, i, j;
     struct at_attachmenu_entry tmp_att;

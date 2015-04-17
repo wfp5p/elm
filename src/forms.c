@@ -45,7 +45,7 @@
 	this program will ignore the first and third sections completely.  The
 	program will assume that the user merely enteres the form-image section,
 	and will append and prepend the triple asterisk sequences that *MUST*
-	be part of the message.  The messages are also expected to have a 
+	be part of the message.  The messages are also expected to have a
 	specific header - "Content-Type: mailform" - which will be added on all
 	outbound mail and checked on inbound...
 **/
@@ -54,9 +54,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-
-check_form_file(filename)
-char *filename;
+int check_form_file(char *filename)
 {
 	/** This routine returns the number of fields in the specified file,
 	    or -1 if an error is encountered. **/
@@ -71,7 +69,7 @@ char *filename;
 		  strerror(errno), filename);
 	  return(-1);
 	}
-	
+
 	while (mail_gets(buffer, SLEN, form)) {
 	  field_count += occurances_of(':', buffer);
 	}
@@ -81,15 +79,14 @@ char *filename;
 	return(field_count);
 }
 
-format_form(filename)
-char *filename;
+int format_form(char *filename)
 {
-	/** This routine accepts a validated file that is the middle 
-	    section of a form message and prepends and appends the appropriate 
-	    instructions.  It's pretty simple. 
+	/** This routine accepts a validated file that is the middle
+	    section of a form message and prepends and appends the appropriate
+	    instructions.  It's pretty simple.
 	    This returns the number of forms in the file, or -1 on errors
 	**/
-	
+
 	FILE *form, *newform;
 	char  newfname[SLEN], buffer[SLEN];
 	register int form_count = 0;
@@ -115,7 +112,7 @@ char *filename;
 	  err = errno;
 	  error(catgets(elm_msg_cat, ElmSet, ElmCouldntOpenNewformOutput,
 		"Couldn't open newform file for form output!"));
-	  dprint(1, (debugfile, 
+	  dprint(1, (debugfile,
               "** Error encountered opening file \"%s\" - %s (check_form) **\n",
 	      newfname, strerror(err)));
 	  return(-1);
@@ -158,15 +155,13 @@ char *filename;
 	  error2(catgets(elm_msg_cat, ElmSet, ElmErrorUnlinkingFile,
 	        "Error %s unlinking file %s."),
 		strerror(errno), newfname);
-	  return(-1);	
+	  return(-1);
 	}
 
 	return(form_count);
 }
 
-int
-mail_filled_in_form(address, subject)
-char *address, *subject;
+int mail_filled_in_form(char *address, char *subject)
 {
 	/** This is the interesting routine.  This one will read the
 	    message and prompt the user, line by line, for each of
@@ -177,28 +172,28 @@ char *address, *subject;
 	register int lines = 0, count, len_buf, max_lines;
 	char         buffer[SLEN];
 
-	dprint(4, (debugfile, 
+	dprint(4, (debugfile,
 		"replying to form with;\n\taddress=%s and\n\t subject=%s\n",
 		 address, subject));
 
         if (fseek(curr_folder.fp, curr_folder.headers[curr_folder.curr_mssg-1]->offset, 0) == -1) {
 	  dprint(1, (debugfile,
-		   "Error: seek %ld resulted in errno %s (%s)\n", 
-		   curr_folder.headers[curr_folder.curr_mssg-1]->offset, strerror(errno), 
+		   "Error: seek %ld resulted in errno %s (%s)\n",
+		   curr_folder.headers[curr_folder.curr_mssg-1]->offset, strerror(errno),
 		   "mail_filled_in_form"));
 	  error2(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
 		"ELM [seek] couldn't read %d bytes into file (%s)."),
 	         curr_folder.headers[curr_folder.curr_mssg-1]->offset, strerror(errno));
 	  return(0);
         }
- 
+
 	/* now we can fly along and get to the message body... */
 
 	max_lines = curr_folder.headers[curr_folder.curr_mssg-1]->lines;
 	while (len_buf = mail_gets(buffer, SLEN, curr_folder.fp)) {
 	  if (len_buf == 1)	/* <return> only */
 	    break;
-	  else if (lines >= max_lines) { 
+	  else if (lines >= max_lines) {
 	    error(catgets(elm_msg_cat, ElmSet, ElmNoFormInMessage,
 		"No form in this message!?"));
 	    return(0);
@@ -215,15 +210,15 @@ char *address, *subject;
 	}
 
 	dprint(6, (debugfile, "- past header of form message -\n"));
-	
+
 	/* at this point we're at the beginning of the body of the message */
 
-	/* now we can skip to the FORM-IMAGE section by reading through a 
+	/* now we can skip to the FORM-IMAGE section by reading through a
 	   line with a triple asterisk... */
 
 	while (len_buf = mail_gets(buffer, SLEN, curr_folder.fp)) {
 	  if (strcmp(buffer, "***\n") == 0)
-	    break;	/* we GOT it!  It's a miracle! */	
+	    break;	/* we GOT it!  It's a miracle! */
 
 	  if (buffer[len_buf - 1] == '\n')
 	    lines++;
@@ -242,9 +237,9 @@ char *address, *subject;
 	}
 
 	dprint(6, (debugfile, "- skipped the non-forms-image stuff -\n"));
-	
+
 	/* one last thing - let's open the tempfile for output... */
-	
+
 	sprintf(buffer, "%s%s%d", temp_dir, temp_form_file, getpid());
 
 	dprint(2, (debugfile,"-- forms sending using file %s --\n", buffer));
@@ -271,13 +266,13 @@ char *address, *subject;
 
 	  if (buffer[len_buf - 1] == '\n')
 	    lines++;
-	 
+
 	  if (lines > max_lines)
 	    break; /* end of message */
 
 	  switch ((count = occurances_of(':', buffer))) {
 	    case 0 : fwrite(buffer, 1, len_buf, stdout);	/* output line */
-		     fwrite(buffer, 1, len_buf, fd); 	
+		     fwrite(buffer, 1, len_buf, fd);
 		     break;
             case 1 : if (buffer[0] == ':') {
 	               printf(catgets(elm_msg_cat, ElmSet, ElmEnterAsManyLines,
@@ -286,11 +281,11 @@ char *address, *subject;
 		         no_ret(buffer);
 	                 if (strcmp(buffer, ".") == 0)
 	                   break;
-	                 else 
+	                 else
 			   fprintf(fd,"%s\n", buffer);
 		       }
 	             }
-	             else 
+	             else
 		       prompt_for_entries(buffer, fd, count);
 	             break;
             default: prompt_for_entries(buffer, fd, count);
@@ -307,10 +302,7 @@ char *address, *subject;
 	return(1);
 }
 
-prompt_for_entries(buffer, fd, entries)
-char *buffer;
-FILE *fd;
-int  entries;
+int prompt_for_entries(char *buffer, FILE *fd, int entries)
 {
 	/** deals with lines that have multiple colons on them.  It must first
 	    figure out how many spaces to allocate for each field then prompts
@@ -320,7 +312,7 @@ int  entries;
 	char mybuffer[SLEN], prompt[SLEN], spaces[SLEN];
 	register int  field_size, i, j, offset = 0, extra_tabs = 0;
 
-	dprint(7, (debugfile, 
+	dprint(7, (debugfile,
 		"prompt-for-multiple [%d] -entries \"%s\"\n", entries,
 		buffer));
 
@@ -328,7 +320,7 @@ int  entries;
 		"No Prompt Available:"));
 
 	while (entries--) {
-	  j=0; 
+	  j=0;
 	  i = chloc((char *) buffer + offset, ':') + 1;
 	  while (j < i - 1) {
 	    prompt[j] = buffer[j+offset];
@@ -349,7 +341,7 @@ int  entries;
 	  }
 
 	  offset += i;
-	
+
 	  if (field_size == 0) 	/* probably last prompt in line... */
 	    field_size = 78 - (offset + extra_tabs);
 
@@ -369,19 +361,17 @@ int  entries;
 	fprintf(fd, "\n");
 }
 
-prompt_for_sized_entry(prompt, buffer, field_size)
-char *prompt, *buffer;
-int   field_size;
+int prompt_for_sized_entry(char *prompt, char *buffer, int field_size)
 {
 	/* This routine prompts for an entry of the size specified. */
 
 	register int i;
 
-	dprint(7, (debugfile, "prompt-for-sized-entry \"%s\" %d chars\n", 
+	dprint(7, (debugfile, "prompt-for-sized-entry \"%s\" %d chars\n",
 		prompt, field_size));
 
 	printf("%s: ", prompt);
-	
+
 	for (i=0;i<field_size; i++)
 	  putchar('_');
 	for (i=0;i<field_size; i++)

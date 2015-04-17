@@ -33,18 +33,17 @@
 #include "elm_globals.h"
 #include "s_aliases.h"
 
-char *alias_sort_name();
+char *alias_sort_name(int longname);
 
-sort_aliases(entries, visible, are_in_aliases)
-int entries, visible, are_in_aliases;
+int sort_aliases(int entries, int visible, int are_in_aliases)
 {
 	/** Sort the header_table definitions... If 'visible', then
 	    put the status lines etc **/
-	
+
 	long last_index = -1;
 	int compare_aliases();	/* for sorting */
 
-	dprint(2, (debugfile, "\n** sorting aliases by %s **\n\n", 
+	dprint(2, (debugfile, "\n** sorting aliases by %s **\n\n",
 		alias_sort_name(TRUE)));
 
 	/* Don't get last_index if no entries or no current. */
@@ -56,7 +55,7 @@ int entries, visible, are_in_aliases;
 	    error1(catgets(elm_msg_cat, AliasesSet, AliasesSort,
 		    "Sorting aliases by %s..."), alias_sort_name(TRUE));
 	}
-	
+
 	if (entries > 1)
 	  qsort((char *) aliases, (unsigned) entries,
 	        sizeof (struct alias_rec *), compare_aliases);
@@ -69,9 +68,7 @@ int entries, visible, are_in_aliases;
 	}
 }
 
-int
-compare_aliases(p1, p2)
-struct alias_rec **p1, **p2;
+int compare_aliases(struct alias_rec **p1, struct alias_rec **p2)
 {
 	/** compare two aliases according to the sortby value.
 
@@ -133,8 +130,7 @@ struct alias_rec **p1, **p2;
 	return ret;
 }
 
-char *alias_sort_name(longname)
-int longname;
+char *alias_sort_name(int longname)
 {
 
     if (alias_sortby < 0) {
@@ -178,10 +174,9 @@ int longname;
     return("*UNKNOWN-SORT-PARAMETER*");
 }
 
-alias_old_current(iindex)
-long iindex;
+int alias_old_current(long iindex)
 {
-	/** Set current to the message that has "index" as it's 
+	/** Set current to the message that has "index" as it's
 	    index number.  This is to track the current message
 	    when we resync... **/
 

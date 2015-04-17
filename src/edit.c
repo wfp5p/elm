@@ -43,8 +43,7 @@ long   bytes();
 
 #ifdef ALLOW_MAILBOX_EDITING
 
-static void copy_failed_emergency_exit(cur_folder, edited_file)
-char *cur_folder, *edited_file;
+static void copy_failed_emergency_exit(char *cur_folder, char *edited_file)
 {
 	ShutdownTerm();
 	error3(catgets(elm_msg_cat, ElmSet, ElmCouldntCopyMailfile,
@@ -54,7 +53,7 @@ char *cur_folder, *edited_file;
 }
 
 
-edit_mailbox()
+void edit_mailbox(void)
 {
 	/** Allow the user to edit their folder, always resynchronizing
 	    afterwards.   Due to intense laziness on the part of the
@@ -196,9 +195,7 @@ edit_mailbox()
 
 #endif
 
-int
-edit_a_file(editfile)
-char *editfile;
+int edit_a_file(char *editfile)
 {
 	/** Edit a file.  This routine is used by edit_mailbox()
 	    and edit_aliases_text().  It gets all the editor info

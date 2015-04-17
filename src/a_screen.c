@@ -32,11 +32,10 @@
 #include "elm_globals.h"
 #include "s_aliases.h"
 
-char *show_status();
-char *alias_type();
+extern char *show_status(int status);
+char *alias_type(int type);
 
-alias_screen(modified)
-int modified;
+int alias_screen(int modified)
 {
 	/* Stolen from showscreen() */
 
@@ -54,8 +53,7 @@ int modified;
 
 }
 
-alias_title(modified)
-int modified;
+int alias_title(int modified)
 {
 	/** display a new title line, due to re-sync'ing the aliases **/
 	/* Stolen from update_title() */
@@ -87,7 +85,7 @@ int modified;
 	CenterLine(1, buffer);
 }
 
-show_alias_menu()
+int show_alias_menu(void)
 {
 	/** write alias menu... **/
 	/* Moved from alias.c */
@@ -113,10 +111,8 @@ show_alias_menu()
 
 }
 
-build_alias_line(buffer, entry, message_number, highlight)
-char *buffer;
-struct alias_rec *entry;
-int message_number, highlight;
+int build_alias_line(char *buffer, struct alias_rec *entry,
+		     int message_number, int highlight)
 {
 	/** Build in buffer the alias header ... entry is the current
 	    message entry, 'highlight' is either TRUE or FALSE,
@@ -158,8 +154,7 @@ int message_number, highlight;
 		entry->alias);
 }
 
-char *alias_type(type)
-int type;
+char *alias_type(int type)
 {
 	/** This routine returns a string showing the alias type,
 	    'Person' or 'Group' aliases.  Additionally, a '(S)'
