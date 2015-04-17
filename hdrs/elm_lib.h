@@ -351,12 +351,24 @@ int main_state(void);
 
 /* src/a_edit.c */
 int edit_aliases_text(void);
+void alias(void);
+void alias(void);
+int delete_from_alias_text(char **name, int num_to_delete);
+
+/* src/args.c */
+char *parse_arguments(int argc, char *argv[], char *to_whom);
 
 /* src/a_quit.c */
 int delete_aliases(int newaliases, int prompt);
+int exit_alias(void);
 
 /* src/a_screen.c */
 int alias_screen(int modified);
+int alias_title(int modified);
+int show_alias_menu(void);
+int build_alias_line(char *buffer, struct alias_rec *entry,
+		     int message_number, int highlight);
+
 
 /* src/a_sendmsg.c */
 int a_sendmsg(void);
@@ -365,16 +377,33 @@ int a_sendmsg(void);
 int show_msg_tag(int msg);
 int show_msg_status(int msg);
 
+/* src/elm.c */
+int motion(int ch);
+int check_range(void);
+
 /* src/fileio.c */
 int save_file_stats(const char *fname);
 int restore_file_stats(const char *fname);
 
+/* src/help.c */
+int display_helpfile(char *topic);
+
+/* src/reply.c */
+int get_return_address(char *address, char *single_address);
+
 /* src/returnadd.c */
 int get_return(char *buffer, int msgnum);
+
+/* src/screen.c */
+int show_headers(void);
+int show_current(void);
 
 /* src/strings.c */
 char *strip_commas(char *string);
 char *get_token(char *source, char *keys, int depth);
+
+/* src/string2.c */
+int remove_possible_trailing_spaces(char *string);
 
 /* src/syscall.c */
 int subshell(void);
