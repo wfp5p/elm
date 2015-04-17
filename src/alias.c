@@ -708,7 +708,7 @@ int delete_from_alias_text(char **name, int num_to_delete)
 	return(0);
 }
 
-int alias(void)
+void alias(void)
 {
 /*
  *	Work with alias commands...
