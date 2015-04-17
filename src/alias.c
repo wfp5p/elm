@@ -71,7 +71,7 @@ static int get_one_alias(DBZ *db, int current);
 
 int  is_system=0;		/* system file updating?     */
 
-int num_duplicates;
+static int num_duplicates;
 static DBZ *system_hash = NULL, *user_hash = NULL;
 
 
@@ -1596,4 +1596,23 @@ char *address_to_alias(char *address)
 		return aliases[i]->alias;
 	}
 	return NULL;
+}
+
+int find_alias(char *word, int alias_type)
+{
+	/** find word and return loc, or -1 **/
+	register int loc = -1;
+
+	/** cannot be an alias if its longer than NLEN chars **/
+	if (strlen(word) > NLEN)
+	    return(-1);
+
+	while (++loc < (num_aliases+num_duplicates)) {
+	    if ( aliases[loc]->type & alias_type ) {
+	        if (strcasecmp(word, aliases[loc]->alias) == 0)
+	            return(loc);
+	    }
+	}
+
+	return(-1);				/* Not found */
 }

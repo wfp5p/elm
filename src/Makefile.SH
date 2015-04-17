@@ -70,7 +70,7 @@ SRCS = addr_util.c alias.c aliaslib.c args.c a_edit.c a_screen.c \
 	a_sendmsg.c a_sort.c a_quit.c bouncebk.c builtin.c \
 	chstatus.c curses.c date.c delete.c edit.c editmsg.c elm.c \
 	fbrowser.c file_ops.c file_util.c fileio.c \
-	find_alias.c forms.c hdrconfg.c help.c in_utils.c init.c \
+	forms.c hdrconfg.c help.c in_utils.c init.c \
 	leavembox.c lock.c limit.c mime.c newmbox.c options.c out_utils.c \
 	pattern.c quit.c read_rc.c reply.c returnadd.c save.c save_opts.c \
 	savecopy.c screen.c showmsg.c showmsg_c.c signals.c sndattach.c \
@@ -81,7 +81,7 @@ OBJS = addr_util.o alias.o aliaslib.o args.o a_edit.o a_screen.o \
 	a_sendmsg.o a_sort.o a_quit.o bouncebk.o builtin.o \
 	chstatus.o curses.o date.o delete.o edit.o editmsg.o elm.o \
 	fbrowser.o file_ops.o file_util.o fileio.o \
-	find_alias.o forms.o hdrconfg.o help.o in_utils.o init.o \
+	forms.o hdrconfg.o help.o in_utils.o init.o \
 	leavembox.o lock.o limit.o mime.o newmbox.o options.o out_utils.o \
 	pattern.o quit.o read_rc.o reply.o returnadd.o save.o save_opts.o \
 	savecopy.o screen.o showmsg.o showmsg_c.o signals.o sndattach.o \

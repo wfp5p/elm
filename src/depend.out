@@ -99,10 +99,6 @@ fileio.o : fileio.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	../config.h $(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h \
 	$(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h ../sysdefs.h \
 	$(INCLDIR)/elm_curses.h
-find_alias.o : find_alias.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
-	../config.h $(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h \
-	$(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h ../sysdefs.h \
-	$(INCLDIR)/elm_curses.h
 forms.o : forms.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	$(INCLDIR)/s_elm.h ../config.h $(INCLDIR)/elm_lib.h \
 	$(INCLDIR)/mcprt.h $(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h \
@@ -350,10 +346,6 @@ file_util.o : file_util.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	$(INCLDIR)/parseaddrs.h ../sysdefs.h $(INCLDIR)/elm_curses.h
 fileio.o : fileio.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	$(INCLDIR)/mailfile.h $(INCLDIR)/port_stat.h $(INCLDIR)/s_elm.h \
-	../config.h $(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h \
-	$(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h ../sysdefs.h \
-	$(INCLDIR)/elm_curses.h
-find_alias.o : find_alias.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	../config.h $(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h \
 	$(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h ../sysdefs.h \
 	$(INCLDIR)/elm_curses.h

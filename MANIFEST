@@ -187,7 +187,6 @@ src/fbrowser.c
 src/file_ops.c
 src/file_util.c
 src/fileio.c
-src/find_alias.c
 src/forms.c
 src/hdrconfg.c
 src/help.c
