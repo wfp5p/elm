@@ -67,7 +67,15 @@ static void get_realnames(char *aliasname, char *firstname, char *lastname,
 			  char *comment, char *buffer);
 void install_aliases(void);
 static int get_one_alias(DBZ *db, int current);
-
+static int open_system_aliases(void);
+static int superceed_system(int this_alias, char *buffer);
+static int get_aliasname(char *aliasname, char *buffer, int *duplicate);
+static int open_user_aliases(void);
+static int ask_accept(char *aliasname, char *firstname, char *lastname,
+		      char *comment, char *address, char *buffer,
+		      int replace, int replacement);
+static int parse_aliases(char *buffer, char *remainder);
+static int alias_help(void);
 
 int  is_system=0;		/* system file updating?     */
 
@@ -84,7 +92,7 @@ int open_alias_files(int are_in_aliases)
 	}
 }
 
-int open_system_aliases(void)
+static int open_system_aliases(void)
 {
 /*
  *	Open the system alias file, if present,
@@ -140,7 +148,7 @@ int open_system_aliases(void)
 
 }
 
-int open_user_aliases(void)
+static int open_user_aliases(void)
 {
 /*
  *	Open the user alias file, if present,
@@ -1032,7 +1040,7 @@ void install_aliases(void)
 	}
 }
 
-int alias_help(void)
+static int alias_help(void)
 {
 /*
  *	Help section for the alias menu...
@@ -1331,7 +1339,7 @@ int main_state(void)
 	}
 }
 
-int parse_aliases(char *buffer, char *remainder)
+static int parse_aliases(char *buffer, char *remainder)
 {
 /*
  *	This routine will parse out the individual aliases present
@@ -1379,7 +1387,7 @@ int parse_aliases(char *buffer, char *remainder)
 	return (number);
 }
 
-int get_aliasname(char *aliasname, char *buffer, int *duplicate)
+static int get_aliasname(char *aliasname, char *buffer, int *duplicate)
 {
 
 /*
@@ -1503,7 +1511,7 @@ void get_realnames(char *aliasname, char *firstname, char *lastname, char *comme
 
 }
 
-int ask_accept(char *aliasname, char *firstname, char *lastname,
+static int ask_accept(char *aliasname, char *firstname, char *lastname,
 	       char *comment, char *address, char *buffer,
 	       int replace, int replacement)
 {
