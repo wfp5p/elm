@@ -410,11 +410,8 @@ EXTERN char *nls_Prompt;		/* Command or Alias */
 char *bounce_off_remote();
 char *expand_system();
 char *format_long();
-char *get_alias_address();
 char *get_date();
-char *get_token();
 char *level_name();
-char *strip_commas();
 
 
 /*

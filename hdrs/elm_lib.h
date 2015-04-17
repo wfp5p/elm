@@ -333,3 +333,47 @@ char *trim_trailing_spaces P_((char *));
 
 int valid_name P_((const char *));
 
+/* src/addr_util.c */
+int translate_return(char *addr, char *ret_addr);
+int build_address(char *to, char *full_to);
+int forwarded(char *buffer, struct header_rec *entry);
+int fix_arpa_address(char *address);
+
+/* src/aliaslib.c */
+char *get_alias_address(char *name, int mailing, int *too_longp);
+
+
+/* src/alias.c */
+int open_alias_files(int are_in_aliases);
+int find_alias(char *word, int alias_type);
+int sort_aliases(int entries, int visible, int are_in_aliases);
+int main_state(void);
+
+/* src/a_edit.c */
+int edit_aliases_text(void);
+
+/* src/a_quit.c */
+int delete_aliases(int newaliases, int prompt);
+
+/* src/a_screen.c */
+int alias_screen(int modified);
+
+/* src/a_sendmsg.c */
+int a_sendmsg(void);
+
+/* src/delete.c */
+int show_msg_tag(int msg);
+int show_msg_status(int msg);
+
+/* src/returnadd.c */
+int get_return(char *buffer, int msgnum);
+
+/* src/strings.c */
+char *strip_commas(char *string);
+char *get_token(char *source, char *keys, int depth);
+
+/* src/syscall.c */
+int subshell(void);
+
+/* src/utils.c */
+int get_page(int msg_pointer);

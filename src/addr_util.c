@@ -377,7 +377,6 @@ int fix_arpa_address(char *address)
 	register int host_count = 0, i;
 	char     hosts[MAX_HOPS][LONG_STRING];	/* array of machine names */
 	char     *host, *addrptr;
-	extern char *get_token();
 
 	/*  break down into a list of machine names, checking as we go along */
 

@@ -62,6 +62,7 @@
 #define resync_aliases(newaliases)	delete_aliases(newaliases,TRUE)
 
 char *alias_type(int type);
+static int get_aliases(int are_in_aliases);
 static void get_realnames(char *aliasname, char *firstname, char *lastname,
 			  char *comment, char *buffer);
 void install_aliases(void);
@@ -69,7 +70,7 @@ void install_aliases(void);
 int  is_system=0;		/* system file updating?     */
 
 int num_duplicates;
-DBZ *system_hash = NULL, *user_hash = NULL;
+static DBZ *system_hash = NULL, *user_hash = NULL;
 
 
 int open_alias_files(int are_in_aliases)
@@ -1168,7 +1169,7 @@ int alias_help(void)
 	return(redraw);
 }
 
-int get_aliases(int are_in_aliases)
+static int get_aliases(int are_in_aliases)
 {
 /*
  *	Get all the system and user alias info
