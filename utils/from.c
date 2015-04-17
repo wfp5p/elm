@@ -42,7 +42,7 @@
  *
  ******************************************************************************/
 
-/** print out whom each message is from in the pending folder or specified 
+/** print out whom each message is from in the pending folder or specified
     one, including a subject line if available.
 
 **/
@@ -90,7 +90,7 @@ int columns = 0;	/* columns on the screen */
 char infile[SLEN];	/* current file name */
 
 extern char *whos_mail(), *explain();
-
+static int from_forwarded(char *buffer, char *who);
 
 main(argc, argv)
 int argc;
@@ -126,14 +126,14 @@ char *argv[];
 	  case 'r': selct |= READ_MSG; break;
 	}
 
-	while ((c = getopt(argc, argv, "lMhnQqSs:tv")) != EOF) 
+	while ((c = getopt(argc, argv, "lMhnQqSs:tv")) != EOF)
 	  switch (c) {
 	    case 'l': useMlists++;	break;
 	    case 'n': number++;	break;
             case 'M': TreatAsSpool++;break;
 	    case 'Q': veryquiet++;	break;
 	    case 'q': quiet++;	break;
-	    case 'S': summarize++; break; 
+	    case 'S': summarize++; break;
 	    case 't': tidy++;      break;
 	    case 'v': verbose++;	break;
 	    case 's': if (optarg[1] == '\0') {
@@ -192,7 +192,7 @@ char *argv[];
 
 #ifdef TIOCGWINSZ
 	{
-	  struct winsize w; 
+	  struct winsize w;
 	  if (ioctl(1,TIOCGWINSZ,&w) != -1 && w.ws_col > 0)
 	    columns = w.ws_col;
 	}
@@ -213,14 +213,14 @@ char *argv[];
 	while (*argv != NULL) {
 
 	  (void) strfcpy(infile, rawarg = *argv++, sizeof(infile));
-	
+
 	  if (argc > 1 && verbose)
 	    printf("%s%s:\n", (output_files++ > 0 ? "\n" : ""), infile);
 
 	  if (metachar(infile[0]) && expand(infile) == 0) {
 	     fprintf(stderr,catgets(elm_msg_cat,
 				    FromSet,FromCouldntExpandFilename,
-				    "%s: couldn't expand filename %s!\n"), 
+				    "%s: couldn't expand filename %s!\n"),
 		     argv[0], infile);
 	     exit(EXIT_ERROR);
 	  }
@@ -350,7 +350,7 @@ int *selected;
 	int indent, width;
 	int summary[ALL_MSGS];
 	int line_bytes;
-	struct mailFile mailFile; 
+	struct mailFile mailFile;
 	int flush_lines = FALSE;
 	extern struct addrs patterns;
 	extern struct addrs mlnames;
@@ -398,10 +398,10 @@ int *selected;
 	for (i=0; i<ALL_MSGS; i++)
 	  summary[i] = 0;
 
-	mailFile_attach(&mailFile, mailfile); 
+	mailFile_attach(&mailFile, mailfile);
 
-	while ((line_bytes = mailFile_gets(&buffer, &mailFile)) != 0) { 
-	  if (expect_header && buffer[0] == '\n') continue; 
+	while ((line_bytes = mailFile_gets(&buffer, &mailFile)) != 0) {
+	  if (expect_header && buffer[0] == '\n') continue;
 	  flush_lines = (buffer[line_bytes-1] != '\n');
 
 	  /* preload first char of line for fast string comparisons */
@@ -431,8 +431,8 @@ int *selected;
 	  else if (in_header) {
 	    if (!isspace(buffer[0]))
 	      in_to_list = FALSE;
-		    if (fast_strbegConst(buffer,">From ")) 
-	      forwarded(buffer, from_whom); /* return address */
+		    if (fast_strbegConst(buffer,">From "))
+  	     from_forwarded(buffer, from_whom); /* return address */
 	    else if (fast_header_cmp(buffer,"Subject", (char *)NULL) ||
 		     fast_header_cmp(buffer,"Re", (char *)NULL)) {
 	      if (subject[0] == '\0') {
@@ -452,7 +452,7 @@ int *selected;
 	    }
 	    else if (useMlists && fast_header_cmp(buffer, "Apparently-To", NULL)) {
 	      strfcat(all_to, buffer+14, LONG_STRING);
-	      in_to_list = TRUE; 
+	      in_to_list = TRUE;
 	    }
 	    else if (useMlists && fast_header_cmp(buffer, "Cc", (char *)NULL)) {
 	      strfcat(all_to, buffer+3, LONG_STRING);
@@ -544,7 +544,7 @@ int *selected;
 		    bp += strlen(bp);
 		    *bp++ = ' ';
 		  }
- 
+
 		  /***
 		  *	Print subject on next line if the Who part blows
 		  *	the alignment
@@ -608,7 +608,7 @@ int *selected;
 		  else
 		       printf("%s",catgets(elm_msg_cat,
 				   FromSet,FromMessagePlural,"messages"));
-		  
+
 		  output = TRUE;
 		  break;
 		default:
@@ -619,18 +619,18 @@ int *selected;
 	  if (unknown)
 	  {
 	       printf("%d ",unknown);
-	       
+
 	       if (unknown == 1)
 		    printf("%s",catgets(elm_msg_cat,
 					FromSet,FromMessage,"message"));
 	       else
 		    printf("%s",catgets(elm_msg_cat,
 					FromSet,FromMessagePlural,"messages"));
-	       
+
 	       printf("%s "," of unknown status");
 	       output = TRUE;
 	  }
-	  
+
 	  if (output)
 	    printf(".\n");
 	  else
@@ -640,10 +640,9 @@ int *selected;
 }
 
 
-forwarded(buffer, who)
-char *buffer, *who;
+static int from_forwarded(char *buffer, char *who)
 {
-	/** change 'from' and date fields to reflect the ORIGINATOR of 
+	/** change 'from' and date fields to reflect the ORIGINATOR of
 	    the message by iteratively parsing the >From fields... **/
 
 	char machine[SLEN], buff[SLEN], holding_from[SLEN];
@@ -713,7 +712,7 @@ print_help()
 
      printf(catgets(elm_msg_cat,FromSet,FromHelpTitle,
  "frm -- list from and subject lines of messages in mailbox or folder\n"));
-		    
+
      usage("frm");
      printf(catgets(elm_msg_cat,FromSet,FromHelpText,
 "\noption summary:\n\

@@ -60,7 +60,7 @@
 
     If we're monitoring more than one mailbox the program will prefix
     each line output (if 'newmail') or each cluster of mail (if 'wnewmail')
-    with the basename of the folder the mail has arrived in.  In the 
+    with the basename of the folder the mail has arrived in.  In the
     interest of exhaustive functionality, you can also use the "=prefix"
     suffix (eh?) to specify your own strings to prefix messages with.
 
@@ -107,7 +107,7 @@
 
 /**********
    Since a number of machines don't seem to bother to define the utimbuf
-   structure for some *very* obscure reason.... 
+   structure for some *very* obscure reason....
 
    Suprise, though, BSD has a different utime() entirely...*sigh*
 **********/
@@ -115,7 +115,7 @@
 /*if defined (BSD) && !defined(UTIMBUF) */
 #if !defined(UTIMBUF)
 struct utimbuf {
-        time_t  actime;         /** access time       **/ 
+        time_t  actime;         /** access time       **/
         time_t  modtime;        /** modification time **/
        };
 
@@ -138,6 +138,7 @@ struct utimbuf {
 
 #define metachar(c)	(c == '+' || c == '=' || c == '%')
 
+static int newmail_forwarded(char *buffer, char *who);
 long  bytes();
 
 struct folder_struct {
@@ -290,7 +291,7 @@ char *argv[];
 	    dprint(1, (debugfile, "[checking folder #%d: %s]\n",
 		i, cur_folder->foldername));
 
-	    if ((newsize = bytes(cur_folder->foldername)) == 
+	    if ((newsize = bytes(cur_folder->foldername)) ==
 	        cur_folder->filesize) 	/* no new mail has arrived! */
 	    	continue;
 
@@ -309,7 +310,7 @@ char *argv[];
 	      continue;
 	    }
 
-	    if ((newsize = bytes(cur_folder->foldername)) > 
+	    if ((newsize = bytes(cur_folder->foldername)) >
 	        cur_folder->filesize) {	/* new mail has arrived! */
 
 	      dprint(1, (debugfile,
@@ -318,7 +319,7 @@ char *argv[];
 
 	      /* skip what we've read already... */
 
-	      if (fseek(fd, cur_folder->filesize, 
+	      if (fseek(fd, cur_folder->filesize,
 			BEGINNING) != 0)
 	        perror("fseek()");
 
@@ -349,8 +350,8 @@ char *argv[];
 	          lastsize = newsize;
 		else
 	          done++;
-	      } 
-	        
+	      }
+
 	      cur_folder->filesize = newsize;
 	    }
 	    (void) fclose(fd);			/* close it and ...         */
@@ -399,7 +400,7 @@ register struct folder_struct *cur_folder;
 	   * Search for the start of a message.
 	   */
 	  if (!in_header) {
-	    in_header = 
+	    in_header =
 	      strbegConst(buffer, "From ") && real_from(buffer, &hdr);
 	    continue;
 	  }
@@ -434,7 +435,7 @@ register struct folder_struct *cur_folder;
 	  }
 
 	  if (strcasecmp(fld_name, ">From") == 0) {
-	    forwarded(fld_val, hdr.from);
+  	    newmail_forwarded(fld_val, hdr.from);
 	    continue;
 	  }
 
@@ -548,7 +549,7 @@ char *name;
 	    exit(1);
 	  }
 
-	folders[current_folder].filesize = 
+	folders[current_folder].filesize =
 	      bytes(folders[current_folder].foldername);
 
 	/* and finally let's output what we did */
@@ -577,7 +578,7 @@ add_default_folder()
 	 * prefix it either...
 	 */
 	strcpy(folders[0].foldername, incoming_folder);
-	
+
 	fd = fopen(folders[0].foldername, "r");
 	folders[0].filesize = bytes(folders[0].foldername);
 
@@ -593,10 +594,9 @@ add_default_folder()
 }
 
 
-forwarded(buffer, who)
-char *buffer, *who;
+static int newmail_forwarded(char *buffer, char *who)
 {
-	/** change 'from' and date fields to reflect the ORIGINATOR of 
+	/** change 'from' and date fields to reflect the ORIGINATOR of
 	    the message by iteratively parsing the >From fields...
 	    The leading >From will already be stripped off the line. **/
 
@@ -691,7 +691,7 @@ char *name;
 	  }
 	  else
 	    ok = 0;
-	
+
 	/* retain the access times for later use */
 
 #if defined(BSD) && !defined(UTIMBUF)
@@ -753,7 +753,7 @@ pad_prefixes()
 	for (i=0; i < total_folders; i++)
 	  if (len < (j=strlen(folders[i].prefix)))
 	    len = j;
-	
+
 	for (i=0; i < total_folders; i++)
 	  for (j = strlen(folders[i].prefix); j < len; j++)
 	    strcat(folders[i].prefix, " ");
