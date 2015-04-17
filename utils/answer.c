@@ -49,7 +49,9 @@
 int user_data;		/* fileno of user data file   */
 DBZ *hash;		/* dbz file for same */
 
-char *get_alias_address(), *get_token(), *strip_parens(), *shift_lower();
+static char *answer_get_alias_address(char *name, int mailing, int depth);
+
+char *get_token(), *strip_parens(), *shift_lower();
 
 static char *quit_word, *exit_word, *done_word, *bye_word;
 
@@ -64,7 +66,7 @@ char *argv[];
 	int   ans_pid = getpid();
 
 	initialize_common();
-	
+
 	quit_word = catgets(elm_msg_cat, AnswerSet, AnswerQuitWord, "quit");
 	exit_word = catgets(elm_msg_cat, AnswerSet, AnswerExitWord, "exit");
 	done_word = catgets(elm_msg_cat, AnswerSet, AnswerDoneWord, "done");
@@ -93,7 +95,7 @@ char *argv[];
 
 	while (1) {
 	  if (msgnum > 9999) msgnum = 0;
-	
+
 	  printf("\n-------------------------------------------------------------------------------\n");
 
 prompt:   printf(catgets(elm_msg_cat, AnswerSet, AnswerMessageTo, "\nMessage to: "));
@@ -103,7 +105,7 @@ prompt:   printf(catgets(elm_msg_cat, AnswerSet, AnswerMessageTo, "\nMessage to:
 	  }
 	  if(recip_name[0] == '\0')
 	    goto prompt;
-	  
+
 	  cp = &recip_name[strlen(recip_name)-1];
 	  if(*cp == '\n') *cp = '\0';
 	  if(recip_name[0] == '\0')
@@ -118,7 +120,7 @@ prompt:   printf(catgets(elm_msg_cat, AnswerSet, AnswerMessageTo, "\nMessage to:
 	  if (translate(recip_name, name) == 0)
 	    goto prompt;
 
-	  address = get_alias_address(name, 1, 0);
+	  address = answer_get_alias_address(name, 1, 0);
 
 	  if (address == NULL || strlen(address) == 0) {
 	    if (allow_name)
@@ -215,19 +217,19 @@ prompt:   printf(catgets(elm_msg_cat, AnswerSet, AnswerMessageTo, "\nMessage to:
 	  }
 
 	  printf(catgets(elm_msg_cat, AnswerSet, AnswerEnterMessage,
-		"\n\nEnter message for %s ending with a blank line.\n\n"), 
+		"\n\nEnter message for %s ending with a blank line.\n\n"),
 		 recip_name);
 
 	  fprintf(fd,"\n\n");
 
 	  do {
 	   printf("> ");
-	   if (! (eof = (fgets(buffer, SLEN, stdin) == NULL))) 
+	   if (! (eof = (fgets(buffer, SLEN, stdin) == NULL)))
 	     fprintf(fd, "%s", buffer);
 	  } while (! eof && strlen(buffer) > 1);
-	
+
 	  fclose(fd);
- 
+
 	  sprintf(buffer, catgets(elm_msg_cat, AnswerSet, AnswerElmCommand,
 	     "( ( %s -s \"While You Were Out\" %s < %s ; %s %s) & ) > /dev/null"),
 	     ELM, strip_parens(address), tempfile, remove_cmd, tempfile);
@@ -251,7 +253,7 @@ char *fullname, *name;
 
 	  fullname[i] = tolower(fullname[i]);
 
-	  if (fullname[i] == ' ') 
+	  if (fullname[i] == ' ')
 	    if (lastname) {
 	      printf(catgets(elm_msg_cat, AnswerSet, AnswerCannotHaveMoreNames,
 	      "** Can't have more than 'FirstName LastName' as address!\n"));
@@ -259,10 +261,10 @@ char *fullname, *name;
 	    }
 	    else
 	      lastname = i+1;
-	
+
 	}
 
-	if (lastname) 
+	if (lastname)
 	  sprintf(name, "%c_%s", fullname[0], (char *) fullname + lastname);
 	else
 	  strcpy(name, fullname);
@@ -270,27 +272,25 @@ char *fullname, *name;
 	return(1);
 }
 
-	    
+
 open_alias_file()
 {
 	/** open the user alias file **/
 
 	char fname[SLEN];
 
-	sprintf(fname,  "%s/.elm/aliases", getenv("HOME")); 
+	sprintf(fname,  "%s/.elm/aliases", getenv("HOME"));
 
-	if ((hash = dbz_open(fname, O_RDONLY, 0)) == NULL) 
+	if ((hash = dbz_open(fname, O_RDONLY, 0)) == NULL)
 	  exit(printf("** Fatal Error: Could not open %s!\n", fname));
 
-	if ((user_data = open(fname, O_RDONLY)) == -1) 
+	if ((user_data = open(fname, O_RDONLY)) == -1)
 	  return;
 }
 
-char *get_alias_address(name, mailing, depth)
-char *name;
-int   mailing, depth;
+static char *answer_get_alias_address(char *name, int mailing, int depth)
 {
-	/** return the line from either datafile that corresponds 
+	/** return the line from either datafile that corresponds
 	    to the specified name.  If 'mailing' specified, then
 	    fully expand group names.  Returns NULL if not found.
 	    Depth is the nesting depth, and varies according to the
@@ -343,7 +343,7 @@ int   depth;
 	depth++;		/* one more deeply into stack */
 
 	while ((word = (char *) get_token(bufptr, "!, ", depth)) != NULL) {
-	  if ((address = (char *) get_alias_address(word, 1, depth)) == NULL) {
+	  if ((address = (char *) answer_get_alias_address(word, 1, depth)) == NULL) {
 	    fprintf(stderr, catgets(elm_msg_cat, AnswerSet, AnswerNotFoundForGroup,
 		"Alias %s not found for group expansion!\n"), word);
 	    return -1;
@@ -362,11 +362,11 @@ char *buffer;
 int   init_len;
 {
 	/** print buffer out, 80 characters (or less) per line, for
-	    as many lines as needed.  If 'init_len' is specified, 
+	    as many lines as needed.  If 'init_len' is specified,
 	    it is the length that the first line can be.
 	**/
 
-	register int i, loc=0, space, length, len; 
+	register int i, loc=0, space, length, len;
 
 	/* In general, go to 80 characters beyond current character
 	   being processed, and then work backwards until space found! */
