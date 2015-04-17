@@ -66,6 +66,8 @@ static int get_aliases(int are_in_aliases);
 static void get_realnames(char *aliasname, char *firstname, char *lastname,
 			  char *comment, char *buffer);
 void install_aliases(void);
+static int get_one_alias(DBZ *db, int current);
+
 
 int  is_system=0;		/* system file updating?     */
 
@@ -1245,7 +1247,7 @@ static int get_aliases(int are_in_aliases)
 
 }
 
-int get_one_alias(DBZ *db, int current)
+static int get_one_alias(DBZ *db, int current)
 {
 /*
  *	Get an alias (name, address, etc.) from the data file
