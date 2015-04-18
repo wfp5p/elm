@@ -95,12 +95,19 @@ struct knode {
 static struct knode *Knode_root;
 
 static struct knode *knode_new P_((void));
-static int knode_addkey P_((const char *, char **, int));
+static int knode_addkey P_((char *, char **, int));
 
 static void SetScreenSize P_((void));
 static int outchar P_((int));
 
-extern char *tgetstr(), *tgoto();
+/* FIXME we should include curses.h, but right that will cause a
+ * whole lot of hurt in here, so this will have to do for now */
+extern char *tgetstr(char *id, char **area);
+extern char *tgoto(const char *cap, int col, int row);
+extern int tgetent(char *bp, const char *name);
+extern int tgetflag(char *id);
+extern int tgetnum(char *id);
+extern int tputs(const char *str, int affcnt, int (*putc)(int));
 
 int InitScreen(void)
 {
@@ -378,7 +385,7 @@ static struct knode *knode_new(void)
  * corresponds to the value when the key is struck, and the "kcode"
  * is the code that should be assigned to this key.
  */
-static int knode_addkey(const char *capname, char **tp, int kcode)
+static int knode_addkey(char *capname, char **tp, int kcode)
 {
     int i;
     char *kstr;
