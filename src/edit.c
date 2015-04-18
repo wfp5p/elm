@@ -229,3 +229,34 @@ int edit_a_file(char *editfile)
 
 	return 0;
 }
+
+int edit_aliases_text(void)
+{
+	/** Allow the user to edit their aliases text, always resynchronizing
+	    afterwards.   This routine calls the function edit_a_file()
+	    to do the actual editing.  Thus editing is done the same
+	    way here as in mailbox editing.
+
+	    We will ALWAYS resync on the aliases text file
+	    even if nothing has changed since, not unreasonably, it's
+	    hard to figure out what occurred in the edit session...
+	**/
+
+	char     at_file[SLEN];
+
+	sprintf(at_file,"%s/%s", user_home, ALIAS_TEXT);
+	if (edit_a_file(at_file) < 0) {
+	    return (0);
+	}
+/*
+ *	Redo the hash table...always!
+ */
+	install_aliases();
+
+/*
+ *	clear any limit in effect.
+ */
+	selected = 0;
+
+	return 1;
+}

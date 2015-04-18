@@ -66,7 +66,7 @@ ALL = $(BINDIR)/elm
 
 INSTS = $(DESTBIN)/elm
 
-SRCS = addr_util.c alias.c aliaslib.c args.c a_edit.c a_screen.c \
+SRCS = addr_util.c alias.c aliaslib.c args.c a_screen.c \
 	a_sendmsg.c a_sort.c a_quit.c bouncebk.c builtin.c \
 	chstatus.c curses.c date.c delete.c edit.c editmsg.c elm.c \
 	fbrowser.c file_ops.c file_util.c fileio.c \
@@ -77,7 +77,7 @@ SRCS = addr_util.c alias.c aliaslib.c args.c a_edit.c a_screen.c \
 	sndhdrs.c sndmsg.c sndpart_io.c sndpart_lib.c softkeys.c sort.c \
 	string2.c strings.c syscall.c utils.c wordwrap.c
 
-OBJS = addr_util.o alias.o aliaslib.o args.o a_edit.o a_screen.o \
+OBJS = addr_util.o alias.o aliaslib.o args.o a_screen.o \
 	a_sendmsg.o a_sort.o a_quit.o bouncebk.o builtin.o \
 	chstatus.o curses.o date.o delete.o edit.o editmsg.o elm.o \
 	fbrowser.o file_ops.o file_util.o fileio.o \

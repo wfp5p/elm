@@ -359,6 +359,9 @@ int delete_from_alias_text(char **name, int num_to_delete);
 /* src/args.c */
 char *parse_arguments(int argc, char *argv[], char *to_whom);
 
+/* src/edit.c */
+int edit_aliases_text(void);
+
 /* src/a_quit.c */
 int delete_aliases(int newaliases, int prompt);
 int exit_alias(void);
@@ -377,6 +380,9 @@ int a_sendmsg(void);
 /* src/delete.c */
 int show_msg_tag(int msg);
 int show_msg_status(int msg);
+
+/* src/edit.c */
+int edit_aliases_text(void);
 
 /* src/elm.c */
 int motion(int ch);

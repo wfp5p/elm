@@ -18,10 +18,6 @@ args.o : args.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	$(INCLDIR)/patchlevel.h $(INCLDIR)/s_elm.h ../config.h \
 	$(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h $(INCLDIR)/nl_types.h \
 	$(INCLDIR)/parseaddrs.h ../sysdefs.h $(INCLDIR)/elm_curses.h
-a_edit.o : a_edit.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
-	../config.h $(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h \
-	$(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h ../sysdefs.h \
-	$(INCLDIR)/elm_curses.h
 a_screen.o : a_screen.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	$(INCLDIR)/s_aliases.h ../config.h $(INCLDIR)/elm_lib.h \
 	$(INCLDIR)/mcprt.h $(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h \
@@ -268,10 +264,6 @@ args.o : args.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	$(INCLDIR)/patchlevel.h $(INCLDIR)/s_elm.h ../config.h \
 	$(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h $(INCLDIR)/nl_types.h \
 	$(INCLDIR)/parseaddrs.h ../sysdefs.h $(INCLDIR)/elm_curses.h
-a_edit.o : a_edit.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
-	../config.h $(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h \
-	$(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h ../sysdefs.h \
-	$(INCLDIR)/elm_curses.h
 a_screen.o : a_screen.c $(INCLDIR)/elm_defs.h $(INCLDIR)/elm_globals.h \
 	$(INCLDIR)/s_aliases.h ../config.h $(INCLDIR)/elm_lib.h \
 	$(INCLDIR)/mcprt.h $(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h \

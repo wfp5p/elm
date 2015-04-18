@@ -163,7 +163,6 @@ nls/gencat/gencat.h
 nls/gencat/genlib.c
 src/Makefile.SH
 src/depend.out
-src/a_edit.c
 src/a_quit.c
 src/a_screen.c
 src/a_sendmsg.c
