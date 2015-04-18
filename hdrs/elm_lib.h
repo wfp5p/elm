@@ -384,6 +384,10 @@ char *alias_sort_name(int longname);
 char *bounce_off_remote(register char *to);
 int uucp_hops(register char *to);
 
+/* src/builtin.c */
+int start_builtin(int lines_in_message);
+int display_line(char *input_line, int input_size);
+
 /* src/delete.c */
 int show_msg_tag(int msg);
 int show_msg_status(int msg);
