@@ -33,6 +33,8 @@
 #include "elm_globals.h"
 #include "s_aliases.h"
 
+static void alias_old_current(long iindex);
+
 int sort_aliases(int entries, int visible, int are_in_aliases)
 {
 	/** Sort the header_table definitions... If 'visible', then
@@ -172,7 +174,7 @@ char *alias_sort_name(int longname)
     return("*UNKNOWN-SORT-PARAMETER*");
 }
 
-int alias_old_current(long iindex)
+static void alias_old_current(long iindex)
 {
 	/** Set current to the message that has "index" as it's
 	    index number.  This is to track the current message
