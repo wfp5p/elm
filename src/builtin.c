@@ -41,8 +41,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-static	unfilled_lines,
-	form_title;
+static	int unfilled_lines, form_title;
 
 int	lines_displayed;	    /* total number of lines displayed      */
 static int total_lines_to_display;  /* total number of lines in message     */
@@ -290,7 +289,7 @@ int title_for_page(int page)
 
 	static char title1[SLEN], title2[SLEN];
 	char titlebuf[SLEN], title3[SLEN], who[SLEN];
-	static t1_len, t2_len;
+	static int t1_len, t2_len;
 	register int padding, showing_to;
 	struct header_rec *hdr;
 
