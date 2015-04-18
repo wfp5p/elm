@@ -407,7 +407,6 @@ EXTERN char *nls_Prompt;		/* Command or Alias */
  * old declarations
  */
 
-char *bounce_off_remote();
 char *expand_system();
 char *format_long();
 char *get_date();

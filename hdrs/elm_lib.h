@@ -380,6 +380,10 @@ int a_sendmsg(void);
 /* src/a_sort.c */
 char *alias_sort_name(int longname);
 
+/* src/bouncebk.c */
+char *bounce_off_remote(register char *to);
+int uucp_hops(register char *to);
+
 /* src/delete.c */
 int show_msg_tag(int msg);
 int show_msg_status(int msg);

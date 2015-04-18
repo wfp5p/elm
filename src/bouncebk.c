@@ -36,8 +36,6 @@
 #include "elm_defs.h"
 #include "elm_globals.h"
 
-char *bounce_off_remote(register char *to);
-
 int uucp_hops(register char *to)
 {
 	/** Given the entire "To:" list, return the number of hops in the

@@ -41,7 +41,6 @@
 #include "s_elm.h"
 #include <assert.h>
 
-extern char *bounce_off_remote();
 extern char *strip_commas();
 
 static void display_subject P_((const char *));
