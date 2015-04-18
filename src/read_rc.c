@@ -983,7 +983,7 @@ int dump_rc_results(void)
 	char buf[SLEN], *s;
 
 	for (i = 0; i < NUMBER_OF_SAVEABLE_OPTIONS; i++) {
-	    extern char *sort_name(), *alias_sort_name();
+		extern char *sort_name();
 
 	    switch (save_info[i].flags & DT_MASK) {
 		case DT_SYN:

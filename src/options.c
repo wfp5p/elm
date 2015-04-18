@@ -90,7 +90,7 @@
 
 #define CONFIG_OPTIONS "^_defsopv_am_un"
 
-extern char *alias_sort_name(), *sort_name();
+extern char *sort_name();
 
 char *level_name();
 static char *on_name = NULL;

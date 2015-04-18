@@ -37,7 +37,7 @@
 
 extern char version_buff[];
 
-extern char *sort_name(), *alias_sort_name(), *level_name();
+extern char *sort_name(), *level_name();
 
 /* local procedures */
 PUBLIC char *str_opt_nam P_((const char *, int));

@@ -33,8 +33,6 @@
 #include "elm_globals.h"
 #include "s_aliases.h"
 
-char *alias_sort_name(int longname);
-
 int sort_aliases(int entries, int visible, int are_in_aliases)
 {
 	/** Sort the header_table definitions... If 'visible', then

@@ -377,6 +377,9 @@ int build_alias_line(char *buffer, struct alias_rec *entry,
 /* src/a_sendmsg.c */
 int a_sendmsg(void);
 
+/* src/a_sort.c */
+char *alias_sort_name(int longname);
+
 /* src/delete.c */
 int show_msg_tag(int msg);
 int show_msg_status(int msg);
