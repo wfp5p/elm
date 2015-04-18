@@ -406,6 +406,9 @@ int restore_file_stats(const char *fname);
 /* src/help.c */
 int display_helpfile(char *topic);
 
+/* src/quit.c */
+void quit_abandon(int do_prompt);
+
 /* src/reply.c */
 int get_return_address(char *address, char *single_address);
 
