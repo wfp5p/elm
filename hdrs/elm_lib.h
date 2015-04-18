@@ -431,3 +431,6 @@ int subshell(void);
 
 /* src/utils.c */
 int get_page(int msg_pointer);
+void leave(int mode);
+
+
