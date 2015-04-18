@@ -47,6 +47,9 @@ int	lines_displayed;	    /* total number of lines displayed      */
 static int total_lines_to_display;  /* total number of lines in message     */
 static int pages_displayed; 	    /* for the nth page titles and all      */
 
+
+static int title_for_page(int page);
+
 int start_builtin(int lines_in_message)
 {
 	/** clears the screen and resets the internal counters... **/
@@ -63,8 +66,8 @@ int start_builtin(int lines_in_message)
 	total_lines_to_display = lines_in_message;
 }
 
-int next_line(char **inputptr, int *inputlenptr, char *output,
-	      int *outputlenptr, register unsigned width)
+static int next_line(char **inputptr, int *inputlenptr, char *output,
+		     int *outputlenptr, register unsigned width)
 {
 	/* Copy characters from input to output and copy
 	 * remainder of output to output. In copying use ^X notation for
@@ -279,7 +282,7 @@ int display_line(char *input_line, int input_size)
 	return(FALSE);
 }
 
-int title_for_page(int page)
+static int title_for_page(int page)
 {
 	/** Output a nice title for the second thru last pages of the message
 	    we're currently reading. Note - this code is very similar to
