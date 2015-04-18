@@ -57,13 +57,13 @@ static char *oneline_new = NULL, *oneline_replied = NULL;
 static char *cycle_str[] = { NULL, NULL, NULL };
 #define CYCLE_STRS (3)
 
-int new, undo_new, org_new, replied, undo_replied, org_replied;
+static int new, undo_new, org_new, replied, undo_replied, org_replied;
 
 
 static void display_status(void)
 {
     /*  Display all the available status items */
-    
+
     char buf[SLEN];
     static char *scurrent = NULL, *soriginal = NULL;
 
@@ -71,7 +71,7 @@ static void display_status(void)
 	scurrent = catgets(elm_msg_cat, ElmSet, ElmStatusCurrent, "Current");
 	soriginal = catgets(elm_msg_cat, ElmSet, ElmStatusOriginal, "Original");
     }
-    
+
     ClearScreen();
 
     CenterLine(0, catgets(elm_msg_cat, ElmSet, ElmStatusEditor,
@@ -239,7 +239,7 @@ int ch_status(void)
 
 	ch = ReadCh();
 
-	clear_error();	/*  remove possible message etc... */ 
+	clear_error();	/*  remove possible message etc... */
 
 	ClearLine(LINES-5);
 	ClearLine(LINES-4);
@@ -270,7 +270,7 @@ int ch_status(void)
 	    break;
 
 	case '?':
-	    status_help(); 
+	    status_help();
 	    PutLine0(LINES-2,0, prompt);
 	    break;
 
