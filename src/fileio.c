@@ -64,7 +64,7 @@ static void copy_write_error_exit(int err)
 }
 
 
-int copy_message(FILE *dest_file, int msgnum, int cm_options)
+void copy_message(FILE *dest_file, int msgnum, int cm_options)
 {
 	/** Copy selected message to destination file, with optional 'prefix'
 	    as the prefix for each line.  If remove_header is true, it will

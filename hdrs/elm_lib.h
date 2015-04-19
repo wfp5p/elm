@@ -413,6 +413,7 @@ int check_range(void);
 /* src/fileio.c */
 int save_file_stats(const char *fname);
 int restore_file_stats(const char *fname);
+void copy_message(FILE *dest_file, int msgnum, int cm_options);
 
 /* src/file_util.c */
 long fsize(FILE *fd);
