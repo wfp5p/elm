@@ -54,9 +54,6 @@ static void create_private_dir(const char *);
 static void create_private_dir();
 
 
-extern void init_opts_menu();
-extern void malloc_failed_exit();
-
 #ifndef ANSI_C
 char *getlogin();
 unsigned short getgid(), getuid(); 
