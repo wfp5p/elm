@@ -142,7 +142,7 @@ int GetKey P_((int));
 /* out_utils.c */
 
 void PutLine0 P_((int, int, const char *));
-void PutLine1();
+void PutLine1(int x, int y, const char *line, ...);
 void PutLine2();
 void PutLine3();
 void CenterLine P_((int, const char *));

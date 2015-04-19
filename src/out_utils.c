@@ -33,6 +33,7 @@
 
 #include "elm_defs.h"
 #include "elm_globals.h"
+#include <stdarg.h>
 
 void PutLine0(int x, int y, const char *line)
 {
@@ -42,15 +43,17 @@ void PutLine0(int x, int y, const char *line)
 	WriteChar(*line++);
 }
 
-/*VARARGS3*/
-void PutLine1(int x, int y, const char *line, const char *arg1)
+void PutLine1(int x, int y, const char *line, ...)
 {
-    char buffer[VERY_LONG_STRING];
-    sprintf(buffer, line, arg1);
-    PutLine0(x, y, buffer);
+	va_list args;
+
+	char buffer[VERY_LONG_STRING];
+	va_start(args, line);
+	sprintf(buffer, line, args);
+	va_end(args);
+	PutLine0(x, y, buffer);
 }
 
-/*VARARGS3*/
 void PutLine2(int x, int y, const char *line, const char *arg1,
 	      const char *arg2)
 {
