@@ -32,9 +32,6 @@
 #include "elm_globals.h"
 #include "s_aliases.h"
 
-extern char *show_status(int status);
-char *alias_type(int type);
-
 int alias_screen(int modified)
 {
 	/* Stolen from showscreen() */

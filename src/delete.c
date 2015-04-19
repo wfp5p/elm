@@ -35,8 +35,6 @@
 
 #define msg_line(msg) (((compute_visible((msg)+1)-1) % headers_per_page) + 4)
 
-char *show_status();
-
 int delete_msg(int real_del, int update_screen)
 {
 	/** Delete current message.  If real-del is false, then we're
