@@ -375,6 +375,7 @@ int alias_screen(int modified);
 int alias_title(int modified);
 int show_alias_menu(void);
 char *alias_type(int type);
+int on_page(int message);
 int build_alias_line(char *buffer, struct alias_rec *entry,
 		     int message_number, int highlight);
 
@@ -396,6 +397,10 @@ int display_line(char *input_line, int input_size);
 /* src/delete.c */
 int show_msg_tag(int msg);
 int show_msg_status(int msg);
+int delete_msg(int real_del, int update_screen);
+int undelete_msg(int update_screen);
+int tag_message(int update_screen);
+int show_new_status(int msg);
 
 /* src/edit.c */
 int edit_aliases_text(void);
@@ -411,6 +416,9 @@ int restore_file_stats(const char *fname);
 /* src/help.c */
 int display_helpfile(char *topic);
 
+/* src/limit.c */
+int compute_visible(int message);
+
 /* src/quit.c */
 void quit_abandon(int do_prompt);
 
@@ -423,6 +431,7 @@ int get_return(char *buffer, int msgnum);
 /* src/screen.c */
 int show_headers(void);
 int show_current(void);
+char *show_status(int status);
 
 /* src/strings.c */
 char *strip_commas(char *string);
