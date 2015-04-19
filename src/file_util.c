@@ -48,7 +48,7 @@ long bytes(const char *name)
 	  return 0L;
 
 	ShutdownTerm();
-	error2(stderr, catgets(elm_msg_cat, ElmSet, ElmErrorFstat,
+	error2(catgets(elm_msg_cat, ElmSet, ElmErrorFstat,
 	    "Cannot fstat \"%s\"! [%s]"), name, strerror(errno));
 	leave(LEAVE_EMERGENCY);
 }

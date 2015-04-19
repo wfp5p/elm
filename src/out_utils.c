@@ -103,14 +103,13 @@ void set_error(const char *s)
     strcpy(err_buffer, s);
 }
 
-void error(const char *s)
+static void do_showerror(const char *s)
 {
   strcpy(err_buffer, s);
   show_last_error();
 }
 
-/*VARARGS1*/
-void error1(const char *s, ...)
+void error(const char *s, ...)
 {
 	va_list args;
 	char buffer[SLEN];
@@ -119,23 +118,7 @@ void error1(const char *s, ...)
 	vsprintf(buffer, s, args);
 	va_end(args);
 
-	error(buffer);
-}
-
-/*VARARGS1*/
-void error2(const char *s, const char *a1, const char *a2)
-{
-    char buffer[SLEN];
-    MCsprintf(buffer, s, a1, a2);
-    error(buffer);
-}
-
-/*VARARGS1*/
-void error3(const char *s, const char *a1, const char *a2, const char *a3)
-{
-    char buffer[SLEN];
-    MCsprintf(buffer, s, a1, a2, a3);
-    error(buffer);
+	do_showerror(buffer);
 }
 
 void lower_prompt(const char *s)

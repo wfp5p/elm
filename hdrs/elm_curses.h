@@ -146,10 +146,10 @@ void show_last_error P_((void));
 int clear_error P_((void));
 void set_error P_((const char *));
 
-void error P_((const char *));
-void error1(const char *s, ...);
-void error2();
-void error3();
+void error(const char *s, ...);
+#define error1(...) error(__VA_ARGS__)
+#define error2(...) error(__VA_ARGS__)
+#define error3(...) error(__VA_ARGS__)
 
 void lower_prompt P_((const char *));
 void prompt P_((const char *));
