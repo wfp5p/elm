@@ -64,9 +64,6 @@ static void get_with_expansion P_((const char *, char *, char *, const char *));
 static SIGHAND_TYPE builtin_interrupt_handler P_((int));
 static int builtin_editor P_((const char *, SEND_HEADER *));
 
-extern char *format_long(), *strip_commas();
-extern long  fsize();
-
 #define IS_BUILTIN(s)	(streq((s), "builtin") || streq((s), "none"))
 
 

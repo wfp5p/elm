@@ -349,6 +349,7 @@ int find_alias(char *word, int alias_type);
 int sort_aliases(int entries, int visible, int are_in_aliases);
 int main_state(void);
 void alias(void);
+void install_aliases(void);
 
 /* src/a_edit.c */
 int edit_aliases_text(void);
@@ -358,13 +359,6 @@ int delete_from_alias_text(char **name, int num_to_delete);
 
 /* src/args.c */
 char *parse_arguments(int argc, char *argv[], char *to_whom);
-
-/* src/data.c */
-char *elm_date_str(char *buf, struct header_rec *entry);
-int make_menu_date(struct header_rec *entry);
-
-/* src/edit.c */
-int edit_aliases_text(void);
 
 /* src/a_quit.c */
 int delete_aliases(int newaliases, int prompt);
@@ -394,6 +388,10 @@ int uucp_hops(register char *to);
 int start_builtin(int lines_in_message);
 int display_line(char *input_line, int input_size);
 
+/* src/data.c */
+char *elm_date_str(char *buf, struct header_rec *entry);
+int make_menu_date(struct header_rec *entry);
+
 /* src/delete.c */
 int show_msg_tag(int msg);
 int show_msg_status(int msg);
@@ -412,6 +410,9 @@ int check_range(void);
 /* src/fileio.c */
 int save_file_stats(const char *fname);
 int restore_file_stats(const char *fname);
+
+/* src/file_util.c */
+long fsize(FILE *fd);
 
 /* src/help.c */
 int display_helpfile(char *topic);
@@ -442,9 +443,15 @@ int remove_possible_trailing_spaces(char *string);
 
 /* src/syscall.c */
 int subshell(void);
+int system_call(char *string, int options);
+int remove_folder_state_file(void);
+int create_folder_state_file(void);
 
 /* src/utils.c */
 int get_page(int msg_pointer);
 void leave(int mode);
 
+/* src/wordwrap.c */
+int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
+		  int *append_current);
 
