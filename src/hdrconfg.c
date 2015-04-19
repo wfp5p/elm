@@ -91,7 +91,7 @@ struct hdr_menu_item {
     char *expval;	/* Pointer to the expanded header value to	*/
 			/*   display.  If no special expansions are	*/
 			/*   required then this will point to "inpval".	*/
-    int (*hdrproc)();	/* Pointer to a procedure which verifies the	*/
+    int (*hdrproc)(struct hdr_menu_item *h);	/* Pointer to a procedure which verifies the	*/
 			/*   user data entry, and if required converts	*/
 			/*   the "inpval" value to "expval" value.  If	*/
 			/*   no verification or expansion is needed	*/
@@ -101,15 +101,15 @@ struct hdr_menu_item {
 /*
  * Local procedures.
  */
-static void hdrmenu_clear_promptarea();
-static int hdrmenu_get();
-static void hdrmenu_put();
-static int hdrproc_addr();
-static int hdrproc_precedence();
-static int hdrproc_userhdr();
-static void domainize_submenu();
-static void domainize();
-static void domainize_addr();
+static void hdrmenu_clear_promptarea(void);
+static int hdrmenu_get(struct hdr_menu_item *h);
+static void hdrmenu_put(struct hdr_menu_item *h, int already_clear);
+static int hdrproc_addr(struct hdr_menu_item *h);
+static int hdrproc_precedence(struct hdr_menu_item *h);
+static int hdrproc_userhdr(struct hdr_menu_item *h);
+static void domainize_submenu(void);
+static void domainize(char *addresses);
+static void domainize_addr(char *src, char *dest);
 
 /*
  * Buffer to hold the message header during editing.
@@ -126,7 +126,7 @@ static SEND_HEADER H;
 /*
  * Definition of all the header editing menu fields.
  */
-struct hdr_menu_item hmenu_item_list[] = {
+static struct hdr_menu_item hmenu_item_list[] = {
     { 't', "T)o",		 2, HF_DISP_3ROW|HF_APPENDENTRY,
 					H.to, H.expanded_to, hdrproc_addr },
     { 'c', "C)c",		 5, HF_DISP_3ROW|HF_APPENDENTRY,
