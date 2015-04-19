@@ -653,7 +653,7 @@ int expandFilenamesInMagicList(void)
    for (i=0; i < magiccount; i++)
    {
       strcpy(filename,magiclist[i]);
-      expand_filename (filename, FALSE);
+      expand_filename(filename);
       free(magiclist[i]);
       magiclist[i] = safe_strdup(filename);
    }
