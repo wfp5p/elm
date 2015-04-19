@@ -139,7 +139,9 @@ struct utimbuf {
 #define metachar(c)	(c == '+' || c == '=' || c == '%')
 
 static int newmail_forwarded(char *buffer, char *who);
-long  bytes();
+static long newmail_bytes(char *name);
+static void newmail_expand_filename(char *name, char *store_space);
+
 
 struct folder_struct {
 	  char		foldername[SLEN];
@@ -291,7 +293,7 @@ char *argv[];
 	    dprint(1, (debugfile, "[checking folder #%d: %s]\n",
 		i, cur_folder->foldername));
 
-	    if ((newsize = bytes(cur_folder->foldername)) ==
+	    if ((newsize = newmail_bytes(cur_folder->foldername)) ==
 	        cur_folder->filesize) 	/* no new mail has arrived! */
 	    	continue;
 
@@ -310,7 +312,7 @@ char *argv[];
 	      continue;
 	    }
 
-	    if ((newsize = bytes(cur_folder->foldername)) >
+	    if ((newsize = newmail_bytes(cur_folder->foldername)) >
 	        cur_folder->filesize) {	/* new mail has arrived! */
 
 	      dprint(1, (debugfile,
@@ -339,13 +341,13 @@ char *argv[];
 	    }
 	    else {	/* file SHRUNK! */
 
-	      cur_folder->filesize = bytes(cur_folder->foldername);
+	      cur_folder->filesize = newmail_bytes(cur_folder->foldername);
 	      lastsize = cur_folder->filesize;
 	      done     = 0;
 
 	      while (! done) {
 	        sleep(1);	/* wait for the size to stabilize */
-	        newsize = bytes(cur_folder->foldername);
+	        newsize = newmail_bytes(cur_folder->foldername);
 	        if (newsize != lastsize)
 	          lastsize = newsize;
 		else
@@ -526,7 +528,7 @@ char *name;
 	*/
 
 	if (metachar(name[0]))
-	  expand_filename(name, folders[current_folder].foldername);
+	  newmail_expand_filename(name, folders[current_folder].foldername);
 	else if (access(name, 00) == -1) {
 	  /* let's try it in the mail home directory */
 	  sprintf(buf, "%s%s", mailhome, name);
@@ -550,7 +552,7 @@ char *name;
 	  }
 
 	folders[current_folder].filesize =
-	      bytes(folders[current_folder].foldername);
+	      newmail_bytes(folders[current_folder].foldername);
 
 	/* and finally let's output what we did */
 
@@ -580,7 +582,7 @@ add_default_folder()
 	strcpy(folders[0].foldername, incoming_folder);
 
 	fd = fopen(folders[0].foldername, "r");
-	folders[0].filesize = bytes(folders[0].foldername);
+	folders[0].filesize = newmail_bytes(folders[0].foldername);
 
 	dprint(1, (debugfile, "default folder: \"%s\" <%s> %s, size = %ld\n",
 	      folders[0].foldername,
@@ -672,9 +674,7 @@ struct folder_struct *cur_folder;
 	}
 }
 
-long
-bytes(name)
-char *name;
+static long newmail_bytes(char *name)
 {
 	/** return the number of bytes in the specified file.  This
 	    is to check to see if new mail has arrived....  **/
@@ -729,8 +729,7 @@ identifier other than the basename of the file\n\n"));
 }
 
 
-expand_filename(name, store_space)
-char *name, *store_space;
+static void newmail_expand_filename(char *name, char *store_space)
 {
 	strcpy(store_space, name);
 	if (expand(store_space) == 0) {
