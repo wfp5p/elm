@@ -54,6 +54,9 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
+static int prompt_for_entries(char *buffer, FILE *fd, int entries);
+static int prompt_for_sized_entry(char *prompt, char *buffer, int field_size);
+
 int check_form_file(char *filename)
 {
 	/** This routine returns the number of fields in the specified file,
@@ -302,7 +305,7 @@ int mail_filled_in_form(char *address, char *subject)
 	return(1);
 }
 
-int prompt_for_entries(char *buffer, FILE *fd, int entries)
+static int prompt_for_entries(char *buffer, FILE *fd, int entries)
 {
 	/** deals with lines that have multiple colons on them.  It must first
 	    figure out how many spaces to allocate for each field then prompts
@@ -361,7 +364,7 @@ int prompt_for_entries(char *buffer, FILE *fd, int entries)
 	fprintf(fd, "\n");
 }
 
-int prompt_for_sized_entry(char *prompt, char *buffer, int field_size)
+static int prompt_for_sized_entry(char *prompt, char *buffer, int field_size)
 {
 	/* This routine prompts for an entry of the size specified. */
 
