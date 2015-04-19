@@ -50,10 +50,10 @@ extern time_t	  time();
 
 #define leapyear(year)  (((year) % 4 == 0) && (((year) % 100 != 0) || ((year) % 400 == 0)) )
 
-int  days_in_month[] = { 31,    28,    31,    30,    31,     30,
+static int  days_in_month[] = { 31,    28,    31,    30,    31,     30,
 		  31,     31,    30,   31,    30,     31,  -1};
 
-int days_ahead(int days, char *buffer)
+static int days_ahead(int days, char *buffer)
 {
 	/** return in buffer the date (Day, Mon Day, Year) of the date
 	    'days' days after today.
@@ -98,7 +98,7 @@ int days_ahead(int days, char *buffer)
 	strftime(buffer, SLEN, "%a, %d %B %y", the_time);
 }
 
-int month_number(char *name)
+static int month_number(char *name)
 {
 	int retval;
 	if (cvt_monthname_to_monthnum(name, &retval) < 0) {

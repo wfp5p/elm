@@ -52,8 +52,6 @@
 void _exit();
 #endif
 
-extern char *elm_date_str();
-
 int    pipe_abort  = FALSE;	/* did we receive a SIGNAL(SIGPIPE)? */
 
 FILE *pipe_wr_fp;		/* file pointer to write to external pager */

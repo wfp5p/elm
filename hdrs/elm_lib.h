@@ -359,6 +359,10 @@ int delete_from_alias_text(char **name, int num_to_delete);
 /* src/args.c */
 char *parse_arguments(int argc, char *argv[], char *to_whom);
 
+/* src/data.c */
+char *elm_date_str(char *buf, struct header_rec *entry);
+int make_menu_date(struct header_rec *entry);
+
 /* src/edit.c */
 int edit_aliases_text(void);
 
