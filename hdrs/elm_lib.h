@@ -374,6 +374,7 @@ int exit_alias(void);
 int alias_screen(int modified);
 int alias_title(int modified);
 int show_alias_menu(void);
+char *alias_type(int type);
 int build_alias_line(char *buffer, struct alias_rec *entry,
 		     int message_number, int highlight);
 

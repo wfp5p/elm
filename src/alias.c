@@ -61,7 +61,6 @@
 
 #define resync_aliases(newaliases)	delete_aliases(newaliases,TRUE)
 
-char *alias_type(int type);
 static int get_aliases(int are_in_aliases);
 static void get_realnames(char *aliasname, char *firstname, char *lastname,
 			  char *comment, char *buffer);
