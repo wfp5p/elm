@@ -62,9 +62,6 @@
 #  include <sys/timeb.h>
 #endif
 
-long bytes();
-char *format_long(), *parse_arguments();
-
 int main(int argc, char *argv[])
 {
 	int  ch;

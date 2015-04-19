@@ -49,8 +49,6 @@
 #endif
 
 
-char *format_long();
-
 static const char *cf_english P_((const char *));
 
 extern char *address_to_alias(const char *address);

@@ -440,6 +440,7 @@ char *show_status(int status);
 /* src/strings.c */
 char *strip_commas(char *string);
 char *get_token(char *source, char *keys, int depth);
+char *format_long(const char *inbuff, int init_len);
 
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);

@@ -36,10 +36,6 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-/** forward declarations **/
-
-char *format_long(), *strip_commas(), *tail_of_string(), *get_token();
-
 int copy_sans_escape(unsigned char *dest, unsigned char *source, int len)
 {
 	/** this performs the same function that strncpy() does, but
@@ -69,7 +65,7 @@ int copy_sans_escape(unsigned char *dest, unsigned char *source, int len)
 	dest[j] = '\0';
 }
 
-char *format_long(char *inbuff, int init_len)
+char *format_long(const char *inbuff, int init_len)
 {
 	/** Return buffer with \n\t sequences added at each point where it
 	    would be more than 80 chars long.  It only allows the breaks at

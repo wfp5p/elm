@@ -402,17 +402,6 @@ EXTERN char *nls_Item;			/* Message or Alias */
 EXTERN char *nls_Items;			/* Messages or Aliases */
 EXTERN char *nls_Prompt;		/* Command or Alias */
 
-
-/*
- * old declarations
- */
-
-char *expand_system();
-char *format_long();
-char *get_date();
-char *level_name();
-
-
 /*
  * The files I've been through sorting out the public and private routines
  * are marked internally as either "PUBLIC" or "static".

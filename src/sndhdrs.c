@@ -6,9 +6,6 @@
 #include <assert.h>
 
 
-extern char *format_long();
-extern char *strip_commas();
-
 static int add_mailheaders P_((FILE *));
 static int expand_backquote P_((FILE *, const char *));
 
