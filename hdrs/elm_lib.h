@@ -417,6 +417,7 @@ int restore_file_stats(const char *fname);
 /* src/file_util.c */
 long fsize(FILE *fd);
 long bytes(const char *name);
+int check_mailfile_size(char *mfile);
 
 /* src/help.c */
 int display_helpfile(char *topic);
@@ -437,6 +438,7 @@ int newmbox(const char *new_filename, int adds_only);
 
 /* src/options.c */
 int options(void);
+void init_opts_menu(void);
 
 /* src/pattern.c */
 int meta_match(int function);
@@ -449,6 +451,7 @@ int resync(void);
 int change_file(char *p1);
 
 /* src/read_rc.c */
+int read_rc_file(void);
 int expand_env(register char *dst, const char *src, int len);
 
 /* src/reply.c */
@@ -463,6 +466,7 @@ int get_return(char *buffer, int msgnum);
 
 /* src/save.c */
 int save(int *redraw_p, int silently, int delete);
+int expand_filename(char *filename);
 
 /* src/screen.c */
 int show_headers(void);
@@ -475,6 +479,10 @@ int show_menu(void);
 /* src/showmsg.c */
 int show_msg(int number);
 int process_showmsg_cmd(int command);
+int put_border(void);
+
+/* src/signals.c */
+void initialize_signals(void);
 
 /* src/strings.c */
 char *strip_commas(char *string);
@@ -483,6 +491,7 @@ char *format_long(const char *inbuff, int init_len);
 
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);
+int occurances_of(int ch, char *string);
 
 /* src/syscall.c */
 int subshell(void);
