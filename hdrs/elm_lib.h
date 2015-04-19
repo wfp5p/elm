@@ -388,6 +388,9 @@ int uucp_hops(register char *to);
 int start_builtin(int lines_in_message);
 int display_line(char *input_line, int input_size);
 
+/* src/chstatus.c */
+int ch_status(void);
+
 /* src/data.c */
 char *elm_date_str(char *buf, struct header_rec *entry);
 int make_menu_date(struct header_rec *entry);
@@ -413,29 +416,65 @@ int restore_file_stats(const char *fname);
 
 /* src/file_util.c */
 long fsize(FILE *fd);
+long bytes(const char *name);
 
 /* src/help.c */
 int display_helpfile(char *topic);
+int help(int pager_help);
+
+/* src/init.c */
+void initialize(char *requestedmfile);
 
 /* src/limit.c */
+int limit(void);
 int compute_visible(int message);
+int next_message(register int iindex, register int skipdel);
+int prev_message(register int iindex, register int skipdel);
+int visible_to_index(int message);
+
+/* src/newmbox.c */
+int newmbox(const char *new_filename, int adds_only);
+
+/* src/options.c */
+int options(void);
+
+/* src/pattern.c */
+int meta_match(int function);
+int pattern_match(void);
 
 /* src/quit.c */
+void quit(int prompt);
 void quit_abandon(int do_prompt);
+int resync(void);
+int change_file(char *p1);
 
 /* src/read_rc.c */
 int expand_env(register char *dst, const char *src, int len);
 
 /* src/reply.c */
 int get_return_address(char *address, char *single_address);
+int remail(void);
+int forward(void);
+int reply_to_everyone(void);
+int reply(void);
 
 /* src/returnadd.c */
 int get_return(char *buffer, int msgnum);
+
+/* src/save.c */
+int save(int *redraw_p, int silently, int delete);
 
 /* src/screen.c */
 int show_headers(void);
 int show_current(void);
 char *show_status(int status);
+int showscreen(void);
+int update_title(void);
+int show_menu(void);
+
+/* src/showmsg.c */
+int show_msg(int number);
+int process_showmsg_cmd(int command);
 
 /* src/strings.c */
 char *strip_commas(char *string);
@@ -450,6 +489,8 @@ int subshell(void);
 int system_call(char *string, int options);
 int remove_folder_state_file(void);
 int create_folder_state_file(void);
+int do_pipe(void);
+int print_msg(int pause_on_scroll);
 
 /* src/utils.c */
 int get_page(int msg_pointer);

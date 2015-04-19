@@ -38,7 +38,7 @@
 
 extern char *getlogin();
 
-long bytes(char *name)
+long bytes(const char *name)
 {
 	struct stat sbuf;
 
