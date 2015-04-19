@@ -767,7 +767,7 @@ static char *daynames[7] = {
 ** Returns:  number of characters read from source
 **
 */
-int read_env_var(register char *dst, register char *src)
+static int read_env_var(register char *dst, const char *src)
 {
     register int	nread = 0;
 
@@ -827,7 +827,7 @@ int read_env_var(register char *dst, register char *src)
 **
 **
 */
-int expand_env(register char *dst, register char *src, int len)
+int expand_env(register char *dst, const char *src, int len)
 {
     int			n;
     register char	*var, *env;

@@ -423,6 +423,9 @@ int compute_visible(int message);
 /* src/quit.c */
 void quit_abandon(int do_prompt);
 
+/* src/read_rc.c */
+int expand_env(register char *dst, const char *src, int len);
+
 /* src/reply.c */
 int get_return_address(char *address, char *single_address);
 
