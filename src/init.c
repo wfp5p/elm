@@ -42,6 +42,8 @@
 #  include <sys/time.h>
 #endif
 
+#include <sys/stat.h>
+
 /*
 static void check_elm_dir(void);
 static void check_folder_dir(void);
