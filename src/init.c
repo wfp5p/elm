@@ -56,7 +56,7 @@ static void create_private_dir();
 
 #ifndef ANSI_C
 char *getlogin();
-unsigned short getgid(), getuid(); 
+unsigned short getgid(), getuid();
 #endif
 
 /* FOO - need to update message catalog */
@@ -86,7 +86,7 @@ void initialize(char *requestedmfile)
 
     /* save original user and group ids */
     userid = getuid();
-    groupid = getgid();	
+    groupid = getgid();
     mailgroupid = getegid();
     if (mailgroupid != groupid)
 	setegid(groupid);
@@ -111,7 +111,7 @@ void initialize(char *requestedmfile)
 	    exit(1);
 	}
 	chown(filename, userid, groupid);
-	fprintf(debugfile, 
+	fprintf(debugfile,
 "Debug output of the ELM program (at debug level %d).  Version %s\n\n",
 	      debug, version_buff);
     }
@@ -312,4 +312,3 @@ static void create_private_dir(const char *path)
     }
 
 }
-
