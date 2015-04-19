@@ -62,6 +62,9 @@
 #  include <sys/timeb.h>
 #endif
 
+static int debug_page(void);
+static void debug_message(void);
+
 int main(int argc, char *argv[])
 {
 	int  ch;
@@ -535,7 +538,7 @@ int main(int argc, char *argv[])
 	} /* the BIG while loop! */
 }
 
-int debug_page(void)
+static int debug_page(void)
 {
     int i, first, last, line;
     char buffer[SLEN];
@@ -570,7 +573,7 @@ int debug_page(void)
 
 }
 
-int debug_message(void)
+static void debug_message(void)
 {
 	/**** Spit out the current message record.  Include EVERYTHING
 	      in the record structure. **/
