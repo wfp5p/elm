@@ -35,7 +35,7 @@
 #include "elm_globals.h"
 #include <stdarg.h>
 
-void PutLine0(int x, int y, const char *line)
+static void do_PutLine(int x, int y, const char *line)
 {
     if (x >= 0 && y >= 0)
 	MoveCursor(x, y);
@@ -43,32 +43,16 @@ void PutLine0(int x, int y, const char *line)
 	WriteChar(*line++);
 }
 
-void PutLine1(int x, int y, const char *line, ...)
+void PutLine(int x, int y, const char *line, ...)
 {
 	va_list args;
-
 	char buffer[VERY_LONG_STRING];
+
 	va_start(args, line);
 	sprintf(buffer, line, args);
 	va_end(args);
-	PutLine0(x, y, buffer);
-}
 
-void PutLine2(int x, int y, const char *line, const char *arg1,
-	      const char *arg2)
-{
-    char buffer[VERY_LONG_STRING];
-    MCsprintf(buffer, line, arg1, arg2);
-    PutLine0(x, y, buffer);
-}
-
-/*VARARGS3*/
-void PutLine3(int x, int y, const char *line, const char *arg1,
-	      const char *arg2, const char *arg3)
-{
-    char buffer[VERY_LONG_STRING];
-    MCsprintf(buffer, line, arg1, arg2, arg3);
-    PutLine0(x, y, buffer);
+	do_PutLine(x, y, line);
 }
 
 void CenterLine(int line, const char *str)
