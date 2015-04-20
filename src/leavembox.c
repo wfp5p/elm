@@ -91,6 +91,8 @@ struct utimbuf {
 # endif /* UTIMBUF */
 #endif /* BSD */
 
+static int unblock_signals(void);
+static int block_signals(void);
 
 int leave_mbox(int resyncing, int quitting, int prompt)
 {
@@ -131,7 +133,6 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 		     already_unlinked = FALSE;
 	int answer;
 	int  err;
-	long bytes();
 
 	dprint(1, (debugfile, "\n\n-- leaving folder --\n\n"));
 
@@ -789,10 +790,10 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 }
 
 #ifdef HASSIGPROCMASK
-	sigset_t	toblock, oldset;
+     static sigset_t	toblock, oldset;
 #else  /* HASSIGPROCMASK */
 #  ifdef HASSIGBLOCK
-	int		toblock, oldset;
+	static int		toblock, oldset;
 #  else /* HASSIGBLOCK */
 #    ifdef HASSIGHOLD
 	/* Nothing required */
@@ -811,7 +812,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
  * particular, a SIGHUP (from logging out under /bin/sh), can
  * corrupt a spool mailbox during an elm autosync.
  */
-int block_signals(void)
+static int block_signals(void)
 {
 	dprint(1,(debugfile, "block_signals\n"));
 #ifdef HASSIGPROCMASK
@@ -860,7 +861,7 @@ int block_signals(void)
  * Inverse of the previous function.  Restore keyboard generated
  * signals.
  */
-int unblock_signals(void)
+static int unblock_signals(void)
 {
 	dprint(1,(debugfile, "unblock_signals\n"));
 #ifdef HASSIGPROCMASK

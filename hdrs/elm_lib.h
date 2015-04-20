@@ -424,6 +424,11 @@ long bytes(const char *name);
 int check_mailfile_size(char *mfile);
 int copy_file(const char *fname_src, const char *fname_dest, int isspool);
 
+/* src/forms.c */
+int check_form_file(char *filename);
+int format_form(char *filename);
+int mail_filled_in_form(char *address, char *subject);
+
 /* src/help.c */
 int display_helpfile(char *topic);
 int help(int pager_help);
@@ -431,12 +436,19 @@ int help(int pager_help);
 /* src/init.c */
 void initialize(char *requestedmfile);
 
+/* src/leavembox.c */
+int leave_mbox(int resyncing, int quitting, int prompt);
+
 /* src/limit.c */
 int limit(void);
 int compute_visible(int message);
 int next_message(register int iindex, register int skipdel);
 int prev_message(register int iindex, register int skipdel);
 int visible_to_index(int message);
+
+/* src/lock.c */
+int elm_lock(int direction);
+int elm_unlock(void);
 
 /* src/newmbox.c */
 int newmbox(const char *new_filename, int adds_only);
@@ -488,6 +500,9 @@ int put_border(void);
 
 /* src/signals.c */
 void initialize_signals(void);
+
+/* src/sort.c */
+int sort_mailbox(int entries, int visible);
 
 /* src/strings.c */
 char *strip_commas(char *string);
