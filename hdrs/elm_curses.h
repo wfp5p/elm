@@ -145,10 +145,12 @@ void CenterLine P_((int, const char *));
 void show_last_error P_((void));
 int clear_error P_((void));
 void set_error P_((const char *));
+
 void error P_((const char *));
-void error1();
+void error1(const char *s, ...);
 void error2();
 void error3();
+
 void lower_prompt P_((const char *));
 void prompt P_((const char *));
 void set_central_message P_((const char *, const char *));

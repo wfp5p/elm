@@ -110,11 +110,16 @@ void error(const char *s)
 }
 
 /*VARARGS1*/
-void error1(const char *s, const char *a)
+void error1(const char *s, ...)
 {
-    char buffer[SLEN];
-    sprintf(buffer, s, a);
-    error(buffer);
+	va_list args;
+	char buffer[SLEN];
+
+	va_start(args, s);
+	vsprintf(buffer, s, args);
+	va_end(args);
+
+	error(buffer);
 }
 
 /*VARARGS1*/

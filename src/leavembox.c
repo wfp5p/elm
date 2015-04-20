@@ -469,7 +469,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	    dprint(1, (debugfile, "Error: could not append to file %s [%s]\n",
 	      recvd_mail, strerror(errno)));
 	    ShutdownTerm();
-	    error1(stderr, catgets(elm_msg_cat, ElmSet,
+	    error1(catgets(elm_msg_cat, ElmSet,
 		ElmLeaveCouldNotAppend,
 		"Could not append to folder %s!"), recvd_mail);
 	    leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
