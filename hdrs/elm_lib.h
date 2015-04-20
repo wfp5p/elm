@@ -457,7 +457,7 @@ int read_rc_file(void);
 int expand_env(register char *dst, const char *src, int len);
 
 /* src/reply.c */
-int get_return_address(char *address, char *single_address);
+void get_return_address(const char *address, char *single_address);
 int remail(void);
 int forward(void);
 int reply_to_everyone(void);

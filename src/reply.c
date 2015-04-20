@@ -371,7 +371,7 @@ int forward(void)
     return send_message((char *)NULL, (char *)NULL, subject, msgtype);
 }
 
-int get_return_address(char *address, char *single_address)
+void get_return_address(const char *address, char *single_address)
 {
 	char *sa;
 	int i;
