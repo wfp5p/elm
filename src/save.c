@@ -60,8 +60,6 @@ static char prev_fold[SLEN];	/* saved target of most recent save/copy */
 int select_folder P_((char *, int, int, int, const char *, const char *, int *));
 int verify_create P_((const char *));
 int expand_filename P_((char *));
-char *address_to_alias P_((char *address));
-
 extern char *nameof();
 
 /*

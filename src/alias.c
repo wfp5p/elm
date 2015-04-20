@@ -1590,7 +1590,7 @@ static int ask_accept(char *aliasname, char *firstname, char *lastname,
 
 /* Check whether an address is aliased; if so return the alias, otherwise
  * return NULL. */
-char *address_to_alias(char *address)
+char *address_to_alias(const char *address)
 {
 	int i;
 	char return_address[SLEN];

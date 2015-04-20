@@ -51,9 +51,6 @@
 
 static const char *cf_english P_((const char *));
 
-extern char *address_to_alias(const char *address);
-
-
 /*
  * save_copy() - Append a copy of the message contained in "filename" to
  * the file specified by "copy_file".  This routine simply gets all of

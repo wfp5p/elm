@@ -350,6 +350,7 @@ int sort_aliases(int entries, int visible, int are_in_aliases);
 int main_state(void);
 void alias(void);
 void install_aliases(void);
+char *address_to_alias(const char *address);
 
 /* src/a_edit.c */
 int edit_aliases_text(void);
