@@ -22,12 +22,10 @@ sed -i "s|LIB_DIR|%{_libdir}|" config.sh
 
 echo "ELM_VERSION = %{version}" >ELM-VERSION-FILE
 
-
-%build
-
 sh ./Make.defs.SH
 find . -depth -name 'Makefile.SH' -exec sh ./{} \;
 
+%build
 make
 
 %install
