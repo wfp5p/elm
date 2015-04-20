@@ -653,7 +653,8 @@ int delete_from_alias_text(char **name, int num_to_delete)
 	  if (! whitespace(line_in_file[0])) {
 	    delete_continues = FALSE;
 	    if (line_in_file[0] != '#') {
-	      if (num_aliases = parse_aliases(line_in_file, rest_of_line)) {
+	      num_aliases = parse_aliases(line_in_file, rest_of_line);
+	      if (num_aliases > 0) {
 	        for (i=0; i < num_to_delete && num_aliases; i++) {
 	          if ( ((s = strstr(line_in_file, name[i])) == line_in_file) ||
 		       ((s != NULL) && (*(s-1) == ',')) ) {
