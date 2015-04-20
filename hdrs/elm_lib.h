@@ -386,6 +386,8 @@ char *bounce_off_remote(register char *to);
 int uucp_hops(register char *to);
 
 /* src/builtin.c */
+int get_lines_displayed(void);
+void set_lines_displayed(int x);
 int start_builtin(int lines_in_message);
 int display_line(char *input_line, int input_size);
 

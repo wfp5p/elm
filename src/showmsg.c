@@ -55,8 +55,6 @@ void _exit();
 int    pipe_abort  = FALSE;	/* did we receive a SIGNAL(SIGPIPE)? */
 
 FILE *pipe_wr_fp;		/* file pointer to write to external pager */
-extern int lines_displayed,	/* defined in "builtin" */
-	   lines_put_on_screen;	/*    ditto too!        */
 
 /*
  * FOO - I believe the SIGWINCH handling is botched.  By ignoring it,
@@ -286,7 +284,7 @@ int show_msg(int number)
 	  }
 
 	  /* and that's it! */
-	  lines_displayed = 0;
+	  set_lines_displayed(0);
 #ifdef	SIGTSTP
 	  oldstop = signal(SIGTSTP,SIG_DFL);
 	  oldcont = signal(SIGCONT,SIG_DFL);
@@ -447,8 +445,8 @@ int show_msg(int number)
 	    if (buf_len > 0)  {
 	      if(buffer[buf_len - 1] == '\n') {
 	        lines--;
-	        lines_displayed++;
-		}
+	        set_lines_displayed(get_lines_displayed() + 1);
+	      }
 	      while(buf_len > 0 && (buffer[buf_len - 1] == '\n'
 				    ||buffer[buf_len - 1] == '\r'))
 		--buf_len;

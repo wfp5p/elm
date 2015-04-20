@@ -43,12 +43,22 @@
 
 static	int unfilled_lines, form_title;
 
-int	lines_displayed;	    /* total number of lines displayed      */
+static int lines_displayed;	    /* total number of lines displayed      */
 static int total_lines_to_display;  /* total number of lines in message     */
 static int pages_displayed; 	    /* for the nth page titles and all      */
 
 
 static int title_for_page(int page);
+
+int get_lines_displayed(void)
+{
+	return lines_displayed;
+}
+
+void set_lines_displayed(int x)
+{
+	lines_displayed = x;
+}
 
 int start_builtin(int lines_in_message)
 {
