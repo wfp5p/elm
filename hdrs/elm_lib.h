@@ -510,6 +510,7 @@ char *strip_commas(char *string);
 char *get_token(char *source, char *keys, int depth);
 char *format_long(const char *inbuff, int init_len);
 int split_word(char *buffer, char *first, char *rest);
+int copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
 
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);

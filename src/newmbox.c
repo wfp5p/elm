@@ -62,6 +62,7 @@
 #include "mailfile.h"
 #include "s_elm.h"
 #include <assert.h>
+#include <sys/stat.h>
 
 #ifdef I_TIME
 #  include <time.h>
@@ -74,13 +75,6 @@ static int folder_is_spool P_((const char *));
 static void mk_temp_mail_fn P_((char *, const char *));
 static void mailFile_write_error P_((void));
 static int read_headers P_((int));
-
-
-long bytes();
-#if  !defined(ANSI_C) && !defined(atol) /* avoid problems with systems that declare atol as a macro */
-extern void rewind();
-extern long atol();
-#endif
 
 int newmbox(const char *new_filename, int adds_only)
 {
