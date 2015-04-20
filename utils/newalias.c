@@ -48,7 +48,7 @@ or  alias1, alias2, ... = groupname= member, member, member, ...
 #include "elm_defs.h"
 #include "s_newalias.h"
 
-void error();
+static void na_error(char *err_message);
 
 int  is_system=0;		/* system file updating?     */
 int  sleepmsg=0;		/* not in elm, dont wait for messages */
@@ -102,9 +102,7 @@ char *argv[];
 	/*NOTREACHED*/
 }
 
-void
-error(err_message)
-char *err_message;
+static void na_error(char *err_message)
 {
 	fflush(stdout);
 	fprintf(stderr, "\n%s\n", err_message);
