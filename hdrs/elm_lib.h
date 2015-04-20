@@ -508,6 +508,7 @@ int sort_mailbox(int entries, int visible);
 char *strip_commas(char *string);
 char *get_token(char *source, char *keys, int depth);
 char *format_long(const char *inbuff, int init_len);
+int split_word(char *buffer, char *first, char *rest);
 
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);

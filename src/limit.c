@@ -47,6 +47,10 @@
 #define TO		1
 #define FROM		2
 
+static int limit_selection(int based_on, char *pattern,
+			   int additional_criteria);
+static int limit_alias_selection(int based_on, char *pattern,
+				 int additional_criteria);
 
 int limit(void)
 {
@@ -201,7 +205,7 @@ int limit(void)
 	}
 }
 
-int limit_selection(int based_on, char *pattern, int additional_criteria)
+static int limit_selection(int based_on, char *pattern, int additional_criteria)
 {
 	/** Given the type of criteria, and the pattern, mark all
 	    non-matching curr_folder.headers as ! VISIBLE.  If additional_criteria,
@@ -248,7 +252,8 @@ int limit_selection(int based_on, char *pattern, int additional_criteria)
 	return(count);
 }
 
-int limit_alias_selection(int based_on, char *pattern, int additional_criteria)
+static int limit_alias_selection(int based_on, char *pattern,
+				 int additional_criteria)
 {
 	/** Given the type of criteria, and the pattern, mark all
 	    non-matching aliases as ! VISIBLE.  If additional_criteria,
