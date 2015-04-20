@@ -62,7 +62,7 @@ long fsize(FILE *fd)
 	return (long) sbuf.st_size;
 }
 
-int copy(const char *fname_src, const char *fname_dest, int isspool)
+int copy_file(const char *fname_src, const char *fname_dest, int isspool)
 {
     /*
      * Copy a specified file to the indicated destination.

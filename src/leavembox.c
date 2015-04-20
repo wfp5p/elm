@@ -676,7 +676,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 
 	  if(need_to_copy) {
 
-	    if (copy(temp_keep_file, curr_folder.filename, TRUE) < 0) {
+	    if (copy_file(temp_keep_file, curr_folder.filename, TRUE) < 0) {
 
 		/*
 		 * WARNING - on systems that drop locks when any
@@ -687,7 +687,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 
 	      /* copy to curr_folder.filename failed - try to copy to special file */
 	      sprintf(curr_folder.filename,"%s/%s", user_home, unedited_mail);
-	      if (copy(temp_keep_file, curr_folder.filename, FALSE) < 0) {
+	      if (copy_file(temp_keep_file, curr_folder.filename, FALSE) < 0) {
 
 		/* couldn't copy to special file either */
 		err = errno;

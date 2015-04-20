@@ -422,6 +422,7 @@ void copy_message(FILE *dest_file, int msgnum, int cm_options);
 long fsize(FILE *fd);
 long bytes(const char *name);
 int check_mailfile_size(char *mfile);
+int copy_file(const char *fname_src, const char *fname_dest, int isspool);
 
 /* src/help.c */
 int display_helpfile(char *topic);
