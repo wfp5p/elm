@@ -58,7 +58,7 @@ static char *makeAttString
 static void copy_write_error_exit(int err)
 {
 	ShutdownTerm();
-	error1(catgets(elm_msg_cat, ElmSet, ElmWriteCopyMessageFailed,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmWriteCopyMessageFailed,
 		"Write failed in copy_message()! [%s]"), strerror(err));
 	leave(LEAVE_EMERGENCY);
 }
@@ -125,7 +125,7 @@ void copy_message(FILE *dest_file, int msgnum, int cm_options)
        dprint(1, (debugfile,
 		"ERROR: Attempt to seek %d bytes into file failed (%s)",
 		msg_header->offset, "copy_message"));
-       error1(catgets(elm_msg_cat, ElmSet, ElmSeekFailed,
+       show_error(catgets(elm_msg_cat, ElmSet, ElmSeekFailed,
 	     "ELM [seek] failed trying to read %d bytes into file."),
 	     msg_header->offset);
        return;

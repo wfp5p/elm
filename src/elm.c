@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 	  if ((num = bytes(curr_folder.filename)) != curr_folder.size) {
 	    dprint(2, (debugfile, "Just received %d bytes more mail (elm)\n",
 		    num - curr_folder.size));
-	    error(catgets(elm_msg_cat, ElmSet, ElmNewMailHangOn,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmNewMailHangOn,
 	      "New mail has arrived! Hang on..."));
 	    last_in_folder = curr_folder.num_mssgs;
 	    pageon = header_page;
@@ -136,10 +136,10 @@ int main(int argc, char *argv[])
 	      update_title();
 	      ClearLine(LINES-1);	     /* remove reading message... */
 	      if ((curr_folder.num_mssgs - last_in_folder) == 1)
-	        error(catgets(elm_msg_cat, ElmSet, ElmNewMessageRecv,
+	        show_error(catgets(elm_msg_cat, ElmSet, ElmNewMessageRecv,
 		       "1 new message received."));
 	      else
-	        error1(catgets(elm_msg_cat, ElmSet, ElmNewMessageRecvPlural,
+	        show_error(catgets(elm_msg_cat, ElmSet, ElmNewMessageRecvPlural,
 		       "%d new messages received."),
 		       curr_folder.num_mssgs - last_in_folder);
 	    }
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 
 	    case '|'    :  WriteChar('|');
 			   if (curr_folder.num_mssgs < 1) {
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToPipe,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToPipe,
 			       "No mail to pipe!"));
 			     FlushInput();
 			   } else {
@@ -197,10 +197,10 @@ int main(int argc, char *argv[])
 
 	     case '&'   : TreatAsSpooled = !TreatAsSpooled;
 			  if (TreatAsSpooled) {
-			     error(catgets(elm_msg_cat, ElmSet, ElmMagicOn,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmMagicOn,
 						   "[Magic On]"));
 			   } else {
-			     error(catgets(elm_msg_cat, ElmSet, ElmMagicOff,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmMagicOff,
 						   "[Magic Off]"));
 			   }
 	                  break;
@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
 			     PutLine(LINES,(COLS-strlen(address))/2,
 				      "%.78s", address);
 			   } else {
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailReturnAddress,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailReturnAddress,
 			       "No mail to get return address of!"));
 			   }
 			   break;
@@ -228,7 +228,7 @@ int main(int argc, char *argv[])
 					ElmSet, ElmBounceMessage,
 					"Bounce message"));
 			   if (curr_folder.num_mssgs < 1) {
-			     error(catgets(elm_msg_cat,
+			     show_error(catgets(elm_msg_cat,
 			       ElmSet, ElmNoMailToBounce,
 			       "No mail to bounce!"));
 			     FlushInput();
@@ -252,12 +252,12 @@ int main(int argc, char *argv[])
 			     edit_mailbox();
 			   }
 			   else {
-			     error(catgets(elm_msg_cat, ElmSet, ElmFolderIsEmpty,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmFolderIsEmpty,
 			       "Folder is empty!"));
 			   }
 			   break;
 #else
-	    case 'e'    : error(catgets(elm_msg_cat, ElmSet, ElmNoFolderEdit,
+	    case 'e'    : show_error(catgets(elm_msg_cat, ElmSet, ElmNoFolderEdit,
 		    "Folder editing isn't configured in this version of ELM."));
 			  break;
 #endif
@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
 			     else
 			       nufoot++;
 			   } else {
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToForward,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToForward,
 			       "No mail to forward!"));
 			     FlushInput();
 			   }
@@ -282,7 +282,7 @@ int main(int argc, char *argv[])
 				"Group reply"));
 			   if (curr_folder.curr_mssg > 0) {
 			     if (curr_folder.headers[curr_folder.curr_mssg-1]->status & FORM_LETTER) {
-			       error(catgets(elm_msg_cat, ElmSet, ElmCantGroupReplyForm,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmCantGroupReplyForm,
 				 "Can't group reply to a Form!!"));
 			       FlushInput();
 			     }
@@ -291,7 +291,7 @@ int main(int argc, char *argv[])
 			     }
 			   }
 			   else {
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToReply,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToReply,
 			       "No mail to reply to!"));
 			     FlushInput();
 			   }
@@ -316,7 +316,7 @@ int main(int argc, char *argv[])
 			     redraw++;
 			     (void)get_page(curr_folder.curr_mssg);
 			   } else
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToRead,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToRead,
 			       "No mail to read!"));
 			   break;
 
@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
 			     redraw++;
 			     (void)get_page(curr_folder.curr_mssg);
 			   } else
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToRead,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToRead,
 			       "No mail to read!"));
 			   break;
 
@@ -388,7 +388,7 @@ int main(int argc, char *argv[])
 			       curr_folder.curr_mssg = curr_folder.num_mssgs;
 			     (void)get_page(curr_folder.curr_mssg);
 			   } else
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToRead,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToRead,
 			       "No mail to read!"));
 			   break;
 
@@ -404,7 +404,7 @@ int main(int argc, char *argv[])
 				ElmSet, ElmPrintMail,
 				"Print mail"));
 			   if (curr_folder.num_mssgs < 1) {
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToPrint,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToPrint,
 			       "No mail to print!"));
 			   } else if (print_msg(TRUE) != 0)
 			     redraw++;
@@ -428,7 +428,7 @@ int main(int argc, char *argv[])
 			   if (curr_folder.curr_mssg > 0)
 			     redraw += reply();
 			   else {
-			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailToReplyTo,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToReplyTo,
 			       "No mail to reply to!"));
 			     FlushInput();
 			   }
@@ -439,10 +439,10 @@ int main(int argc, char *argv[])
 	    case 'C'	:
 	    case 's'    :  if  (curr_folder.num_mssgs < 1) {
 			     if (ch != 'C')
-			       error(catgets(elm_msg_cat, ElmSet, ElmNoMailToSave,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToSave,
 				 "No mail to save!"));
 			     else
-			       error(catgets(elm_msg_cat, ElmSet, ElmNoMailToCopy,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmNoMailToCopy,
 				 "No mail to copy!"));
 			     FlushInput();
 			   }
@@ -466,7 +466,7 @@ int main(int argc, char *argv[])
 			   redraw++;	/* always fix da screen... */
 			   break;
 #else
-	    case 'S'    : error(catgets(elm_msg_cat, ElmSet, ElmNoStatusChange,
+	    case 'S'    : show_error(catgets(elm_msg_cat, ElmSet, ElmNoStatusChange,
 		"Status changing isn't configured in this version of ELM."));
 			  break;
 #endif
@@ -486,7 +486,7 @@ int main(int argc, char *argv[])
 	    case '@':
 	    case '#':
 			for (;;) {
-			    error(
+			    show_error(
 "Debug:  display p)age, current m)essage, t)erminal, or q)uit to return.");
 			    if ((i = ReadCh()) == 'q')
 				break;
@@ -734,7 +734,7 @@ int motion(int ch)
 
 	    case '/'    :  /* scan mbox or aliases for string */
 			   if  (count < 1) {
-			     error1(catgets(elm_msg_cat, ElmSet,
+			     show_error(catgets(elm_msg_cat, ElmSet,
 				ElmNoItemToScan, "No %s to scan!"), nls_items);
 			     FlushInput();
 			   }
@@ -768,7 +768,7 @@ int motion(int ch)
 				 curr = header_page * headers_per_page + 1;
 			     }
 			   } else
-			     error(catgets(elm_msg_cat, ElmSet, ElmAlreadyOnLastPage,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmAlreadyOnLastPage,
 			       "Already on last page."));
 			   break;
 
@@ -788,7 +788,7 @@ int motion(int ch)
 				 curr = header_page * headers_per_page + 1;
 			     }
 			   } else
-			     error(catgets(elm_msg_cat, ElmSet, ElmAlreadyOnFirstPage,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmAlreadyOnFirstPage,
 			       "Already on first page."));
 			   break;
 
@@ -814,7 +814,7 @@ int motion(int ch)
 	    case ctrl('D') :
 	    case '^'    :
 	    case 'd'    :  if (count < 1) {
-			     error1(catgets(elm_msg_cat, ElmSet, ElmNoItemToDelete,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoItemToDelete,
 			       "No %s to delete!"), nls_item);
 /*			     fflush(stdin);*/
 			   }
@@ -861,9 +861,9 @@ int motion(int ch)
 			       curr = i+1;
 			       nucurr = get_page(curr);
 			     } else
-			       error1(catgets(elm_msg_cat, ElmSet, ElmNoMoreItemBelow,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmNoMoreItemBelow,
 				 "No more %s below."), nls_items);
-			   } else error(ifmain(no_mail, no_aliases));
+			   } else show_error(ifmain(no_mail, no_aliases));
 			   break;
 
 next_undel_msg:
@@ -873,9 +873,9 @@ next_undel_msg:
 			       curr = i+1;
 			       nucurr = get_page(curr);
 			     } else
-			       error1(catgets(elm_msg_cat, ElmSet, ElmNoItemUndeletedBelow,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmNoItemUndeletedBelow,
 				 "No more undeleted %s below."), nls_items);
-			   } else error(ifmain(no_mail, no_aliases));
+			   } else show_error(ifmain(no_mail, no_aliases));
 			   break;
 
 	   case ctrl('P'):
@@ -884,9 +884,9 @@ next_undel_msg:
 			       curr = i+1;
 			       nucurr = get_page(curr);
 			     } else
-			       error1(catgets(elm_msg_cat, ElmSet, ElmNoMoreItemAbove,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmNoMoreItemAbove,
 				 "No more %s above."), nls_items);
-			   } else error(ifmain(no_mail, no_aliases));
+			   } else show_error(ifmain(no_mail, no_aliases));
 			   break;
 
 	    case KEY_UP:
@@ -895,9 +895,9 @@ next_undel_msg:
 			       curr = i+1;
 			       nucurr = get_page(curr);
 			     } else
-			       error1(catgets(elm_msg_cat, ElmSet, ElmNoMoreUndeletedAbove,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmNoMoreUndeletedAbove,
 				 "No more undeleted %s above."), nls_items);
-			   } else error(ifmain(no_mail, no_aliases));
+			   } else show_error(ifmain(no_mail, no_aliases));
 			   break;
 
 	    case 'L'	: { /* move to last line of page */
@@ -942,7 +942,7 @@ next_undel_msg:
             case ctrl('T') :
 	    case 'T'	   :
 	    case 't'       :  if (count < 1) {
-				error1(catgets(elm_msg_cat, ElmSet, ElmNoItemToTag,
+				show_error(catgets(elm_msg_cat, ElmSet, ElmNoItemToTag,
 				  "No %s to tag!"), nls_items);
 			      }
 			      else if (ch == 't')
@@ -956,7 +956,7 @@ next_undel_msg:
 			      break;
 
 	    case 'u'    :  if (count < 1) {
-			     error1(catgets(elm_msg_cat, ElmSet, ElmNoItemToMarkUndeleted,
+			     show_error(catgets(elm_msg_cat, ElmSet, ElmNoItemToMarkUndeleted,
 			       "No %s to mark as undeleted!"), nls_items);
 			   }
 			   else
@@ -993,7 +993,7 @@ next_undel_msg:
 			   break;
 
 	    case ctrl('U') : if (count < 1) {
-			       error1(catgets(elm_msg_cat, ElmSet, ElmNoItemToUndelete,
+			       show_error(catgets(elm_msg_cat, ElmSet, ElmNoItemToUndelete,
 				 "No %s to undelete!"), nls_items);
 			     }
 			     else
@@ -1010,12 +1010,12 @@ next_undel_msg:
 			    i = enter_number(LINES-3, curr, nls_item);
 
 			    if( i > count)
-			      error1(catgets(elm_msg_cat, ElmSet, ElmNotThatMany,
+			      show_error(catgets(elm_msg_cat, ElmSet, ElmNotThatMany,
 				"Not that many %s."), nls_items);
 			    else if(selected
 				&& isoff(ifmain(curr_folder.headers[i-1]->status,
 			                        aliases[i-1]->status), VISIBLE))
-			      error1(catgets(elm_msg_cat, ElmSet, ElmNotInLimitedDisplay,
+			      show_error(catgets(elm_msg_cat, ElmSet, ElmNotInLimitedDisplay,
 				"%s not in limited display."), nls_Item);
 			    else {
 			      curr = i;
@@ -1023,7 +1023,7 @@ next_undel_msg:
 			    }
 			  }
 			  else {
-			    error(catgets(elm_msg_cat, ElmSet, ElmUnknownCommand,
+			    show_error(catgets(elm_msg_cat, ElmSet, ElmUnknownCommand,
 			      "Unknown command. Use '?' for help."));
 			    FlushInput();
 			  }

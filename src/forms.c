@@ -67,7 +67,7 @@ int check_form_file(char *filename)
 	register int field_count = 0;
 
 	if ((form = fopen(filename, "r")) == NULL) {
-	  error2(catgets(elm_msg_cat, ElmSet, ElmErrorOpeningCheckFields,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmErrorOpeningCheckFields,
 		  "Error %s trying to open %s to check fields!"),
 		  strerror(errno), filename);
 	  return(-1);
@@ -101,7 +101,7 @@ int format_form(char *filename)
 
 	if ((form = fopen(filename, "r")) == NULL) {
 	  err = errno;
-	  error(catgets(elm_msg_cat, ElmSet, ElmCantReadMessageToValidate,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmCantReadMessageToValidate,
 		"Can't read the message to validate the form!"));
 	  dprint(1, (debugfile,
               "** Error encountered opening file \"%s\" - %s (check_form) **\n",
@@ -113,7 +113,7 @@ int format_form(char *filename)
 
 	if ((newform = file_open(newfname, "w")) == NULL) {
 	  err = errno;
-	  error(catgets(elm_msg_cat, ElmSet, ElmCouldntOpenNewformOutput,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntOpenNewformOutput,
 		"Couldn't open newform file for form output!"));
 	  dprint(1, (debugfile,
               "** Error encountered opening file \"%s\" - %s (check_form) **\n",
@@ -141,13 +141,13 @@ int format_form(char *filename)
 
 	if (form_count > 0) {
 	  if (unlink(filename) != 0) {
-	    error2(catgets(elm_msg_cat, ElmSet, ElmErrorUnlinkingFile,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmErrorUnlinkingFile,
 		"Error %s unlinking file %s."),
 		strerror(errno), filename);
 	    return(-1);
 	  }
 	  if (link(newfname, filename)) {
-	    error3(catgets(elm_msg_cat, ElmSet, ElmErrorLinkingFile,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmErrorLinkingFile,
 		"Error %s linking %s to %s."),
 		    strerror(errno), newfname, filename);
 	    return(-1);
@@ -155,7 +155,7 @@ int format_form(char *filename)
 	}
 
 	if (unlink(newfname)) {
-	  error2(catgets(elm_msg_cat, ElmSet, ElmErrorUnlinkingFile,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmErrorUnlinkingFile,
 	        "Error %s unlinking file %s."),
 		strerror(errno), newfname);
 	  return(-1);
@@ -184,7 +184,7 @@ int mail_filled_in_form(char *address, char *subject)
 		   "Error: seek %ld resulted in errno %s (%s)\n",
 		   curr_folder.headers[curr_folder.curr_mssg-1]->offset, strerror(errno),
 		   "mail_filled_in_form"));
-	  error2(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
 		"ELM [seek] couldn't read %d bytes into file (%s)."),
 	         curr_folder.headers[curr_folder.curr_mssg-1]->offset, strerror(errno));
 	  return(0);
@@ -197,7 +197,7 @@ int mail_filled_in_form(char *address, char *subject)
 	  if (len_buf == 1)	/* <return> only */
 	    break;
 	  else if (lines >= max_lines) {
-	    error(catgets(elm_msg_cat, ElmSet, ElmNoFormInMessage,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmNoFormInMessage,
 		"No form in this message!?"));
 	    return(0);
 	  }
@@ -207,7 +207,7 @@ int mail_filled_in_form(char *address, char *subject)
 	}
 
 	if (len_buf == 0) {
-	  error(catgets(elm_msg_cat, ElmSet, ElmNoFormInMessage,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmNoFormInMessage,
 	      "No form in this message!?"));
 	  return(0);
 	}
@@ -227,14 +227,14 @@ int mail_filled_in_form(char *address, char *subject)
 	    lines++;
 
 	  if (lines >= max_lines) {
-	    error(catgets(elm_msg_cat, ElmSet, ElmBadForm,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmBadForm,
 		"Badly constructed form.  Can't reply!"));
 	    return(0);
 	  }
 	}
 
 	if (len_buf == 0) {
-	  error(catgets(elm_msg_cat, ElmSet, ElmBadForm,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmBadForm,
 		"Badly constructed form.  Can't reply!"));
 	  return(0);
 	}
@@ -248,7 +248,7 @@ int mail_filled_in_form(char *address, char *subject)
 	dprint(2, (debugfile,"-- forms sending using file %s --\n", buffer));
 
 	if ((fd = file_open(buffer,"w")) == NULL) {
-	  error2(catgets(elm_msg_cat, ElmSet, ElmCantOpenAsOutputFile,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmCantOpenAsOutputFile,
 		"Can't open \"%s\" as output file! (%s)."),
 		buffer, strerror(errno));
 	  dprint(1, (debugfile,

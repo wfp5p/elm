@@ -48,7 +48,7 @@ void leave P_((int));
 void malloc_failed_exit(const char *proc, unsigned int len)
 {
     ShutdownTerm();
-    error2(catgets(elm_msg_cat, ElmSet, ElmCouldntMallocBytes,
+    show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntMallocBytes,
 	"Out of memory!  [%s couldn't allocate %d bytes]"), proc, len);
     leave(LEAVE_EMERGENCY);
 }
@@ -92,7 +92,7 @@ void leave(int mode)
     ShutdownTerm();
 
     if (mode == LEAVE_EMERGENCY) {
-	error(catgets(elm_msg_cat, ElmSet, ElmLeaveEmergencyExitTaken,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveEmergencyExitTaken,
 		"Emergency exit taken!"));
     }
 
@@ -100,7 +100,7 @@ void leave(int mode)
     sprintf(buf, "%s%s%d", temp_dir, temp_file, getpid());
     if (access(buf, ACCESS_EXISTS) == 0) {
 	if (mode & LEAVE_KEEP_EDITTMP)
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeavePreservingEditor,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeavePreservingEditor,
 			"Preserving editor composition file \"%s\" ..."), buf);
 	else
 	    (void) unlink(buf);
@@ -109,11 +109,11 @@ void leave(int mode)
     /* delete temporary copy of spool folder */
     if (curr_folder.tempname[0] && access(curr_folder.tempname, ACCESS_EXISTS) == 0) {
 	if (mode & LEAVE_KEEP_TEMPFOLDER) {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeavePreservingTemp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeavePreservingTemp,
 			"Preserving temporary folder \"%s\" ..."),
 			curr_folder.tempname);
 	} else {
-	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveDiscardingChanges,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveDiscardingChanges,
 		      "Discarding any changes made to mail folder ..."));
 	  (void) unlink(curr_folder.tempname);
 	}
@@ -124,7 +124,7 @@ void leave(int mode)
 	if (mode & LEAVE_KEEP_LOCK) {
 	    s = mk_lockname(curr_folder.filename);
 	    if (access(s, ACCESS_EXISTS) == 0) {
-		error1(catgets(elm_msg_cat, ElmSet, ElmLeavePreservingLock,
+		show_error(catgets(elm_msg_cat, ElmSet, ElmLeavePreservingLock,
 			    "Preserving folder lock file \"%s\" ..."), s);
 	    }
 	} else {

@@ -100,7 +100,7 @@ int edit_message(const char *filename, SEND_HEADER *shdr,
 	    "System call failed with status %d (edit_message)\n", rc));
 	dprint(1, (debugfile, "** %s **\n", strerror(err)));
 	ClearLine(LINES-1);
-	error1(catgets(elm_msg_cat, ElmSet, ElmCantInvokeEditor,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmCantInvokeEditor,
 	    "Can't invoke editor '%s' for composition."), sel_editor);
 	if (sleepmsg > 0)
 	    sleep(sleepmsg);

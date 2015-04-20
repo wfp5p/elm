@@ -107,7 +107,7 @@ int subshell(void)
 	EnableFkeys(ON);
 
 	if (ret)
-	  error1(catgets(elm_msg_cat, ElmSet, ElmReturnCodeWas,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmReturnCodeWas,
 		"Return code was %d."), ret);
 
 	return 1;
@@ -400,7 +400,7 @@ int do_pipe(void)
 	EnableFkeys(ON);
 
 	if (ret != 0)
-	  error1(catgets(elm_msg_cat, ElmSet, ElmReturnCodeWas,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmReturnCodeWas,
 		"Return code was %d."), ret);
 	return(1);
 }
@@ -439,7 +439,7 @@ int print_msg(int pause_on_scroll)
 	 * Make sure we know how to print.
 	 */
 	if (printout[0] == '\0') {
-	    error(catgets(elm_msg_cat, ElmSet, ElmPrintDontKnowHow,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPrintDontKnowHow,
 		"Don't know how to print - option \"printmail\" undefined!"));
 	    return 0;
 	}
@@ -483,7 +483,7 @@ int print_msg(int pause_on_scroll)
 	fflush(stdout);
 	nlines = 0;
 	if ((fp = popen(command, "r")) == NULL) {
-	    error(catgets(elm_msg_cat, ElmSet, ElmPrintPipeFailed,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPrintPipeFailed,
 		"Cannot create pipe to print command."));
 	    goto done;
 	}
@@ -507,13 +507,13 @@ int print_msg(int pause_on_scroll)
 	 * Display a status message.
 	 */
 	if ((retcode = pclose(fp)) == 0) {
-	    error(catgets(elm_msg_cat, ElmSet, ElmPrintJobSpooled,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPrintJobSpooled,
 		"Print job has been spooled."));
 	} else if ((retcode & 0xFF) == 0) {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmPrintFailCode,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPrintFailCode,
 		"Printout failed with return code %d."), (retcode>>8));
 	} else {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmPrintFailStatus,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPrintFailStatus,
 		"Printout failed with status 0x%04x."), (retcode>>8));
 	}
 
@@ -576,7 +576,7 @@ int create_folder_state_file(void)
 
     /* open up the folder state file for writing */
     if ((fp = file_open(folder_state_fname, "w")) == NULL) {
-	error1(catgets(elm_msg_cat, ElmSet, ElmCannotCreateFolderState,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmCannotCreateFolderState,
 		"Cannot create folder state file \"%s\"."), folder_state_fname);
 	return -1;
     }
@@ -620,7 +620,7 @@ int create_folder_state_file(void)
 
     /* put pointer to the file in the environment */
     if (putenv(folder_state_env_param) != 0) {
-	error1(catgets(elm_msg_cat, ElmSet, ElmCannotCreateEnvParam,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmCannotCreateEnvParam,
 	    "Cannot create environment parameter \"%s\"."), FOLDER_STATE_ENV);
 	return -1;
     }

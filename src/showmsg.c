@@ -176,7 +176,7 @@ int show_msg(int number)
 	  dprint(1, (debugfile,
 		  "Error: seek %d bytes into file, errno %s (show_message)\n",
 		  current_header->offset, strerror(err)));
-	  error2(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
 		  "ELM [seek] couldn't read %d bytes into file (%s)."),
 		  current_header->offset, strerror(err));
 	  return(val);
@@ -203,7 +203,7 @@ int show_msg(int number)
 	    err = errno;
 	    dprint(1, (debugfile, "Error: pipe failed, errno %s (show_msg)\n",
 	      strerror(err)));
-	    error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerPipe,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPreparePagerPipe,
 	      "Could not prepare for external pager(pipe()-%s)."),
 	      strerror(err));
 	    Raw(ON);
@@ -215,7 +215,7 @@ int show_msg(int number)
 	    err = errno;
 	    dprint(1, (debugfile, "Error: fork failed, errno %s (show_msg)\n",
 	      strerror(err)));
-	    error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerFork,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPreparePagerFork,
 	      "Could not prepare for external pager(fork()-%s)."),
 	      strerror(err));
 	    Raw(ON);
@@ -233,7 +233,7 @@ int show_msg(int number)
 	      err = errno;
 	      dprint(1, (debugfile, "Error: dup failed, errno %s (show_msg)\n",
 		strerror(err)));
-	      error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerDup,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmPreparePagerDup,
 	        "Could not prepare for external pager(dup()-%s)."),
 		strerror(err));
 	      _exit(err);
@@ -246,7 +246,7 @@ int show_msg(int number)
 	      dprint(1,
 		(debugfile, "Error: child fdopen failed, errno %s (show_msg)\n",
 		strerror(err)));
-	      error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerChildFdopen,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmPreparePagerChildFdopen,
 		"Could not prepare for external pager(child fdopen()-%s)."),
 		strerror(err));
 	      _exit(err);
@@ -272,7 +272,7 @@ int show_msg(int number)
 	    dprint(1,
 	      (debugfile, "Error: parent fdopen failed, errno %s (show_msg)\n",
 	      strerror(err)));
-	    error1(catgets(elm_msg_cat, ElmSet, ElmPreparePagerParentFdopen,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPreparePagerParentFdopen,
 	      "Could not prepare for external pager(parent fdopen()-%s)."),
 	      strerror(err));
 
@@ -438,7 +438,7 @@ int show_msg(int number)
 		"Premature end of file! Lines left = %d msg = %s (show_msg)\n",
 		lines, number));
 
-	      error(catgets(elm_msg_cat, ElmSet, ElmPrematureEndOfFile,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmPrematureEndOfFile,
 		"Premature end of file!"));
 	      if (sleepmsg > 0)
 		    sleep(sleepmsg);

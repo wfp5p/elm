@@ -206,7 +206,7 @@ static int expand_backquote(FILE *fp_mssg, const char *cmd)
     sprintf(buf, "%s > %s", cmd, fname);
 
     if (system_call(buf, 0) != 0 || (fp_expan = fopen(fname, "r")) == NULL) {
-	error1(catgets(elm_msg_cat, ElmSet, ElmBackquoteCmdFailed,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmBackquoteCmdFailed,
 		"Backquoted command \"%s\" in elmheaders failed."), cmd);
 	goto done;
     }

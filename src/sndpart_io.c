@@ -212,7 +212,7 @@ static SEND_BODYPART *process_attach_line(char *cmdline)
 
     len = strlen(trim_trailing_spaces(cmdline));
     if (cmdline[0] != '[' || cmdline[len-1] != ']') {
-	error("malformed \"[attach/include ...]\" line");
+	show_error("malformed \"[attach/include ...]\" line");
 	return (SEND_BODYPART *) NULL;
     }
     cmdline[len-1] = '\0';
@@ -240,10 +240,10 @@ static SEND_BODYPART *process_attach_line(char *cmdline)
 
     switch (fldno) {
     case 0:
-	error("malformed \"[attach/include ...]\" line");
+	show_error("malformed \"[attach/include ...]\" line");
 	return (SEND_BODYPART *) NULL;
     case 1:
-	error1("filename missing from \"[%s ...]\" line", cmd);
+	show_error("filename missing from \"[%s ...]\" line", cmd);
 	return (SEND_BODYPART *) NULL;
     case 2:
 	cont_type = NULL;
@@ -254,7 +254,7 @@ static SEND_BODYPART *process_attach_line(char *cmdline)
     case 4:
 	break;
     default:
-	error1("too many fields in \"[%s ...]\" line", cmd);
+	show_error("too many fields in \"[%s ...]\" line", cmd);
 	return (SEND_BODYPART *) NULL;
     }
 
@@ -384,7 +384,7 @@ static int do_emit_mssgtext_body(FILE *fp_dest, SEND_BODYPART *part)
 	    if (strbegConst(buf+1, MSSG_INCLUDE)) {
 		assert(!MULTIPART_IS_EMPTY(part->subparts));
 		if ((mp = multipart_find(part->subparts, fpos)) == NULL) {
-		    error1(catgets(elm_msg_cat, ElmSet,
+		    show_error(catgets(elm_msg_cat, ElmSet,
 			    ElmCannotRefindInclusion,
 			    "Cannot re-find inclusion located at offset %lu!"),
 			    (unsigned long)fpos);
@@ -423,7 +423,7 @@ static int do_emit_mssgtext_body(FILE *fp_dest, SEND_BODYPART *part)
 
 	/* emit the line of output */
 	if (fwrite(buf, 1, len, fp_dest) != len) {
-	    error1("Error writing message body to temp file.  [%s]",
+	    show_error("Error writing message body to temp file.  [%s]",
 		strerror(errno));
 	    goto done;
 	}
@@ -487,7 +487,7 @@ static int do_emit_mimepart_body(FILE *fp_dest, SEND_BODYPART *part)
 
     case ENCODING_QUOTED:
 	if ((fname_tmp = tempnam(temp_dir, "emm.")) == NULL) {
-	    error("Cannot make temp file name.");
+	    show_error("Cannot make temp file name.");
 	    return -1;
 	}
 	MIME_ENCODE_CMD_QUOTED(cmd_buf, part->fname, fname_tmp);
@@ -495,7 +495,7 @@ static int do_emit_mimepart_body(FILE *fp_dest, SEND_BODYPART *part)
 
     case ENCODING_BASE64:
 	if ((fname_tmp = tempnam(temp_dir, "emm.")) == NULL) {
-	    error("Cannot make temp file name.");
+	    show_error("Cannot make temp file name.");
 	    return -1;
 	}
 	MIME_ENCODE_CMD_BASE64(cmd_buf, part->fname, fname_tmp);
@@ -503,7 +503,7 @@ static int do_emit_mimepart_body(FILE *fp_dest, SEND_BODYPART *part)
 
     case ENCODING_UUENCODE:
 	if ((fname_tmp = tempnam(temp_dir, "emm.")) == NULL) {
-	    error("Cannot make temp file name.");
+	    show_error("Cannot make temp file name.");
 	    return -1;
 	}
 	MIME_ENCODE_CMD_UUENCODE(cmd_buf, part->fname, fname_tmp);
@@ -524,7 +524,7 @@ static int do_emit_mimepart_body(FILE *fp_dest, SEND_BODYPART *part)
 	    ;
 	*s = '\0';
 	s = (cmd_buf[0] != '\0' ? basename(cmd_buf) : "encoder");
-	error2("Cannot encode \"%s\".  (\"%s\" exit status %d)",
+	show_error("Cannot encode \"%s\".  (\"%s\" exit status %d)",
 		    basename(part->fname), s, i);
 	goto done;
     }

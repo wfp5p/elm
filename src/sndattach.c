@@ -126,7 +126,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 	    if (mp == NULL)
 		break;
 	    if (atlist_full()) {
-		error(S_(AttachTooManyAttachments,
+		show_error(S_(AttachTooManyAttachments,
 			    "Too many attachments for menu to handle!"));
 		return 0;
 	    }
@@ -365,10 +365,10 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 	    i = enter_number(ATLINE_PROMPT, curr_sel+1,
 			S_(AttachAttachment, "attachment")) - 1;
 	    if (i < AT_first_sel_of_list || i > AT_last_sel_of_list) {
-		error(S_(AttachNoAttachmentThere,
+		show_error(S_(AttachNoAttachmentThere,
 			    "There isn't an attachment there!"));
 	    } else if (i == curr_sel) {
-		error(S_(AttachSelectionNotChanged,
+		show_error(S_(AttachSelectionNotChanged,
 			    "Selection not changed."));
 	    } else {
 		curr_sel = i;
@@ -378,7 +378,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case 'a':			/* add attachment */
 	    if (atlist_full()) {
-		error(S_(AttachNoRoom,
+		show_error(S_(AttachNoRoom,
 			    "Sorry - no room for any more attachments."));
 		break;
 	    }
@@ -395,7 +395,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 	    if (att == NULL) {
 		atlist_remove(curr_sel--);
 		if (mssg_ok) {
-			error(S_(AttachAttachmentNotAdded,
+			show_error(S_(AttachAttachmentNotAdded,
 				    "Attachment not added."));
 		}
 		do_redraw |= ATDRAW_LIST;
@@ -403,7 +403,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 	    }
 	    atlist_replace(curr_sel, att, 0);
 	    if (mssg_ok) {
-		error(S_(AttachAttachmentHasBeenAdded,
+		show_error(S_(AttachAttachmentHasBeenAdded,
 			    "Attachment has been added to this message."));
 	    }
 	    do_redraw |= ATDRAW_LIST_SEL;
@@ -411,38 +411,38 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case 'd':			/* delete attachment */
 	    if (atlist_getflags(curr_sel) & AT_FL_NOTOUCH) {
-		error(S_(AttachYouCantDelete, "Hey!  You can't delete that!"));
+		show_error(S_(AttachYouCantDelete, "Hey!  You can't delete that!"));
 		break;
 	    }
 	    do_redraw = (ATDRAW_INSTR|ATDRAW_PROMPT);
 	    if (!enter_yn(S_(AttachReallyDelete, "Really delete attachment?"),
 			FALSE, ATLINE_PROMPT, FALSE)) {
-		error(S_(AttachAttachmentNotDeleted,
+		show_error(S_(AttachAttachmentNotDeleted,
 			    "Attachment not deleted."));
 		break;
 	    }
 	    atlist_remove(curr_sel);
 	    if (curr_sel > AT_last_sel_of_list)
 		--curr_sel;
-	    error(S_(AttachAttachmentHasBeenDeleted,
+	    show_error(S_(AttachAttachmentHasBeenDeleted,
 			"Attachment has been deleted from this message."));
 	    do_redraw |= (ATDRAW_LIST|ATDRAW_CURR_ALL);
 	    break;
 
 	case 'f':			/* change "f)ile name" */
 	    if (atlist_getflags(curr_sel) & AT_FL_NOTOUCH) {
-		error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
+		show_error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
 		break;
 	    }
 	    att = at_do_change_file(atlist_getbodypart(curr_sel),
 			&do_redraw, &mssg_ok);
 	    if (att == NULL) {
 		if (mssg_ok)
-			error(S_(AttachNotChanged, "Attachment not changed."));
+			show_error(S_(AttachNotChanged, "Attachment not changed."));
 	    } else {
 		atlist_replace(curr_sel, att, ~0);
 		if (mssg_ok) {
-		    error(S_(AttachAttachmentFileChanged,
+		    show_error(S_(AttachAttachmentFileChanged,
 				"Attachment file has been changed."));
 		}
 		do_redraw |= (ATDRAW_LIST|ATDRAW_CURR_ALL);
@@ -452,13 +452,13 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case 'c':			/* change "c)ontent type" */
 	    if (atlist_getflags(curr_sel) & AT_FL_NOTOUCH) {
-		error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
+		show_error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
 		break;
 	    }
 	    if (!at_do_change_type(atlist_getbodypart(curr_sel), &do_redraw))
-		error(S_(AttachNotChanged, "Attachment not changed."));
+		show_error(S_(AttachNotChanged, "Attachment not changed."));
 	    else {
-		error(S_(AttachAttachmentContTypeChanged,
+		show_error(S_(AttachAttachmentContTypeChanged,
 			"Attachment content type has been changed."));
 		do_redraw |= (ATDRAW_LIST_SEL|ATDRAW_CURR_ALL);
 	    }
@@ -466,13 +466,13 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case 'e':			/* change "content e)ncoding" */
 	    if (atlist_getflags(curr_sel) & AT_FL_NOTOUCH) {
-		error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
+		show_error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
 		break;
 	    }
 	    if (!at_do_change_encoding(atlist_getbodypart(curr_sel), &do_redraw))
-		error(S_(AttachNotChanged, "Attachment not changed."));
+		show_error(S_(AttachNotChanged, "Attachment not changed."));
 	    else {
-		error(S_(AttachAttachmentContEncodingChanged,
+		show_error(S_(AttachAttachmentContEncodingChanged,
 			    "Attachment content encoding has been changed."));
 		do_redraw |= (ATDRAW_LIST_SEL|ATDRAW_CURR_ALL);
 	    }
@@ -480,13 +480,13 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case 's':			/* change "content de(s)cription" */
 	    if (atlist_getflags(curr_sel) & AT_FL_NOTOUCH) {
-		error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
+		show_error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
 		break;
 	    }
 	    if (!at_do_change_descrip(atlist_getbodypart(curr_sel), &do_redraw))
-		error(S_(AttachNotChanged, "Attachment not changed."));
+		show_error(S_(AttachNotChanged, "Attachment not changed."));
 	    else {
-		error(S_(AttachAttachmentContDescriptionChanged,
+		show_error(S_(AttachAttachmentContDescriptionChanged,
 			"Attachment content description has been changed."));
 		do_redraw |= (ATDRAW_LIST_SEL|ATDRAW_CURR_ALL);
 	    }
@@ -494,13 +494,13 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case 'p':			/* change "content dis(p)osition" */
 	    if (atlist_getflags(curr_sel) & AT_FL_NOTOUCH) {
-		error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
+		show_error(S_(AttachYouCantChange, "Hey!  You can't change that!"));
 		break;
 	    }
 	    if (!at_do_change_disposition(atlist_getbodypart(curr_sel), &do_redraw))
-		error(S_(AttachNotChanged, "Attachment not changed."));
+		show_error(S_(AttachNotChanged, "Attachment not changed."));
 	    else {
-		error(S_(AttachAttachmentContDispositionChanged,
+		show_error(S_(AttachAttachmentContDispositionChanged,
 			"Attachment content disposition has been changed."));
 		do_redraw |= (ATDRAW_LIST_SEL|ATDRAW_CURR_ALL);
 	    }
@@ -508,16 +508,16 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case 't':			/* tag attachment */
 	    if (atlist_getflags(curr_sel) & AT_FL_NOTOUCH) {
-		error(S_(AttachYouCantTag, "Hey!  You can't tag that!"));
+		show_error(S_(AttachYouCantTag, "Hey!  You can't tag that!"));
 		break;
 	    }
 	    i = (atlist_getflags(curr_sel) ^ AT_FL_TAGGED);
 	    atlist_replace(curr_sel, (SEND_BODYPART *)NULL, i);
 	    if (i & AT_FL_TAGGED) {
-		error(S_(AttachAttachmentHasBeenTagged,
+		show_error(S_(AttachAttachmentHasBeenTagged,
 			    "Current attachment has been tagged."));
 	    } else {
-		error(S_(AttachTagHasBeenRemoved,
+		show_error(S_(AttachTagHasBeenRemoved,
 			    "Tag has been removed from current attachment."));
 	    }
 	    do_redraw |= ATDRAW_LIST_SEL;
@@ -525,24 +525,24 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 
 	case ctrl('T'):			/* remove all tags */
 	    if (atlist_tagged_clrcnt(FALSE) == 0) {
-		error(S_(AttachTagsAlreadyClear,
+		show_error(S_(AttachTagsAlreadyClear,
 			    "All tags already are cleared."));
 		break;
 	    }
 	    do_redraw = ATDRAW_PROMPT;
 	    if (!enter_yn(S_(AttachReallyClearTags, "Really clear all tags?"),
 			FALSE, ATLINE_PROMPT, FALSE)) {
-		error(S_(AttachTagsNotChanged, "Tags not changed."));
+		show_error(S_(AttachTagsNotChanged, "Tags not changed."));
 		break;
 	    }
 	    atlist_tagged_clrcnt(TRUE);
-	    error(S_(AttachTagsHaveBeenCleared, "All tags have been cleared."));
+	    show_error(S_(AttachTagsHaveBeenCleared, "All tags have been cleared."));
 	    do_redraw |= ATDRAW_LIST;
 	    break;
 
 	case 'm':			/* move tagged attachments */
 	    if ((i = atlist_tagged_clrcnt(FALSE)) == 0) {
-		error(S_(AttachMustTagAttachments,
+		show_error(S_(AttachMustTagAttachments,
 			    "You must tag the attachments you want to move."));
 		break;
 	    }
@@ -554,20 +554,20 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 			    "Move tagged attachment after selection?"));
 	    if (!enter_yn(s, FALSE, ATLINE_PROMPT, FALSE)) {
 		if (i > 1) {
-		    error(S_(AttachAttachmentsNotMoved,
+		    show_error(S_(AttachAttachmentsNotMoved,
 				"Attachments not moved."));
 		} else {
-		    error(S_(AttachAttachmentNotMoved,
+		    show_error(S_(AttachAttachmentNotMoved,
 				"Attachment not moved."));
 		}
 		break;
 	    }
 	    curr_sel = atlist_tagged_move(curr_sel);
 	    if (i > 1) {
-		error(S_(AttachAttachmentsHaveBeenMoved,
+		show_error(S_(AttachAttachmentsHaveBeenMoved,
 			    "Attachments have been moved."));
 	    } else {
-		error(S_(AttachAttachmentHaveBeenMoved,
+		show_error(S_(AttachAttachmentHaveBeenMoved,
 			    "Attachment has been moved."));
 	    }
 	    do_redraw |= ATDRAW_LIST;
@@ -749,7 +749,7 @@ static SEND_BODYPART *at_do_change_file(SEND_BODYPART *att, int *do_redraw_p,
 	}
 
 	if (fname[0] == '\0') {
-	    error("Please enter a filename for the attachment.");
+	    show_error("Please enter a filename for the attachment.");
 	    continue;
 	}
 
@@ -805,7 +805,7 @@ static int at_do_change_type(SEND_BODYPART *att, int *do_redraw_p)
 	    return FALSE;
 	clear_error();
 	if (cont_type[0] == '\0') {
-	    error(S_(AttachChgTypeEnterType, "Please enter a content type."));
+	    show_error(S_(AttachChgTypeEnterType, "Please enter a content type."));
 	    continue;
 	}
 	bodypart_set_content(att, BP_CONT_TYPE, cont_type);

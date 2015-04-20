@@ -89,7 +89,7 @@ int save_copy(const char *fname_dest, const char *fname_mssg,
 	    /* can't get file name from 'to' -- use sent_mail instead */
 	    dprint(3, (debugfile,
 		"Warning: get_return_name couldn't break down %s\n", shdr->to));
-	    error1(catgets(elm_msg_cat, ElmSet, ElmCannotDetermineToName,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCannotDetermineToName,
 "Cannot determine `to' name to save by! Saving to \"sent\" folder %s instead."),
 	      sent_mail);
 	    strcpy(savename, "<");
@@ -203,7 +203,7 @@ int save_copy(const char *fname_dest, const char *fname_mssg,
 	  /* Lets try sent_mail before giving up */
 	  if(strcmp(sent_mail, savename) == 0) {
 	    /* we are ALREADY using sent_mail! */
-	    error1(catgets(elm_msg_cat, ElmSet, ElmCannotSaveTo,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCannotSaveTo,
 			"Cannot save to %s!"), savename);
 	    return(FALSE);
 	  }
@@ -213,12 +213,12 @@ int save_copy(const char *fname_dest, const char *fname_mssg,
 	  "Error: attempt to autosave to a file that can't be appended to!\n"));
 	    dprint(2, (debugfile, "\tfilename = \"%s\"\n", sent_mail));
 	    dprint(2, (debugfile, "** %s **\n", strerror(err)));
-	    error2(catgets(elm_msg_cat, ElmSet, ElmCannotSaveToNorSent,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCannotSaveToNorSent,
 		    "Cannot save to %s nor to \"sent\" folder %s!"),
 		    savename, sent_mail);
 	    return(FALSE);
 	  }
-	  error2(catgets(elm_msg_cat, ElmSet, ElmCannotSaveToSavingInstead,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmCannotSaveToSavingInstead,
 		"Cannot save to %s! Saving to \"sent\" folder %s instead."),
 	        savename, sent_mail);
 	  if (sleepmsg > 0)
@@ -275,7 +275,7 @@ int save_mssg(const char *fname_dest, const char *fname_mssg,
 
 	if (fwrite(buf, 1, len, fp_copy) != len) {
 	    ShutdownTerm();
-	    error1(catgets(elm_msg_cat, ElmSet, ElmWriteFailedSaveMssg,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmWriteFailedSaveMssg,
 			"Write failed in save_mssg! [%s]"), strerror(errno));
 	    leave(LEAVE_EMERGENCY);
 	}

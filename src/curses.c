@@ -843,9 +843,9 @@ int ReadCh(void)
 #endif
 	ShutdownTerm();
 	if (feof(stdin))
-	    error("Unexepcted EOF from terminal!");
+	    show_error("Unexepcted EOF from terminal!");
 	else
-	    error1("Error reading terminal! [%s]", strerror(errno));
+	    show_error("Error reading terminal! [%s]", strerror(errno));
 	leave(LEAVE_EMERGENCY);
     }
     return ch;

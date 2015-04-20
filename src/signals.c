@@ -180,7 +180,7 @@ static void bailout_handler(int sig)
 
     dprint(1, (debugfile, "\n\n** Received %s **\n\n", signame[sig]));
     ShutdownTerm();
-    error1("Received %s signal!", sigdescr[sig]);
+    show_error("Received %s signal!", sigdescr[sig]);
 
     switch (sig) {
 

@@ -212,7 +212,7 @@ Elm Reference Guide for further information.\n\n"),
 	/* with mini menu, this allows for 5 messages */
 	if (LINES < 18) {
 	    ShutdownTerm();
-	    error(catgets(elm_msg_cat, ElmSet, ElmWindowSizeTooSmall,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmWindowSizeTooSmall,
 		    "The window is too small to run Elm!"));
 	    exit(1);
 	}

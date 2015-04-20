@@ -77,7 +77,7 @@ int sort_mailbox(int entries, int visible)
 	  last_index = curr_folder.headers[curr_folder.curr_mssg-1]->index_number;
 
 	if (entries > 30 && visible)
-	  error1(catgets(elm_msg_cat, ElmSet, ElmSortingMessagesBy,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmSortingMessagesBy,
 		"Sorting messages by %s..."), sort_name(TRUE));
 
 	if (entries > 1)

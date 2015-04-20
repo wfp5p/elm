@@ -117,13 +117,13 @@ int newmbox(const char *new_filename, int adds_only)
 	  if (!same_file) {
 	    if (elm_access(new_tempname, ACCESS_EXISTS) == 0) {
 	      ShutdownTerm();
-	      error(catgets(elm_msg_cat, ElmSet, ElmAlreadyRunning1,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmAlreadyRunning1,
 		  "You seem to have ELM already reading this mail!"));
-	      error(catgets(elm_msg_cat, ElmSet, ElmAlreadyRunning2,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmAlreadyRunning2,
 		  "You may not have two copies of ELM running simultaneously."));
-	      error(catgets(elm_msg_cat, ElmSet, ElmAlreadyRunning3,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmAlreadyRunning3,
 		  "If this is in error, then you'll need to remove the following file:"));
-	      error1("%\t%s", new_tempname);
+	      show_error("%\t%s", new_tempname);
 	      leave(LEAVE_ERROR|LEAVE_KEEP_LOCK|LEAVE_KEEP_TEMPFOLDER);
 	    }
 	  }
@@ -136,7 +136,7 @@ int newmbox(const char *new_filename, int adds_only)
 	    if (curr_folder.tempname[0] && elm_access(curr_folder.tempname, ACCESS_EXISTS) == 0) {
 	      if (unlink(curr_folder.tempname) != 0) {
 		ShutdownTerm();
-		error2(catgets(elm_msg_cat, ElmSet, ElmSorryCantUnlinkTemp,
+		show_error(catgets(elm_msg_cat, ElmSet, ElmSorryCantUnlinkTemp,
 		  "Sorry, can't unlink the temp file %s [%s]!"),
 		  curr_folder.tempname, strerror(errno));
 		leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
@@ -165,7 +165,7 @@ int newmbox(const char *new_filename, int adds_only)
 	if ((curr_folder.fp = fopen(curr_folder.filename,"r")) == NULL)  {
 	  if (errno != ENOENT) {
 	    ShutdownTerm();
-	    error2(catgets(elm_msg_cat, ElmSet, ElmFailOnOpenNewmbox,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmFailOnOpenNewmbox,
 		    "Cannot open \"%s\"! [%s]"),
 		    curr_folder.filename, strerror(errno));
 	    leave(LEAVE_ERROR);
@@ -251,7 +251,7 @@ static void mk_temp_mail_fn(char *tempfn, const char *mbox)
 static void mailFile_write_error(void)
 {
 	ShutdownTerm();
-	error2(catgets(elm_msg_cat, ElmSet, ElmWriteToTempFailed,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmWriteToTempFailed,
 			"Write to \"%s\" failed! [%s]"),
 			curr_folder.tempname, strerror(errno));
 	leave(LEAVE_ERROR);
@@ -292,14 +292,14 @@ static int read_headers(int add_new_only)
 	      /* Hey!  What the hell is this?  The temp file already exists? */
 	      /* Looks like a potential clash of processes on the same file! */
 	      ShutdownTerm();
-	      error1(catgets(elm_msg_cat, ElmSet, ElmWhatsThisTempExists,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmWhatsThisTempExists,
 		"What's this?  The temp folder \"%s\" already exists??"),
 		curr_folder.tempname);
 	      leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
 	    }
 	    if ((temp = file_open(curr_folder.tempname,"w")) == NULL) {
 	      ShutdownTerm();
-	      error2(catgets(elm_msg_cat, ElmSet, ElmCouldntOpenForTemp,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntOpenForTemp,
 		     "Cannot open \"%s\"! [%s]"),
 		     curr_folder.tempname, strerror(errno));
 	      leave(LEAVE_ERROR);
@@ -321,7 +321,7 @@ static int read_headers(int add_new_only)
 	    */
 	   if ((temp = fopen(curr_folder.tempname,"r+")) == NULL) {
 	     ShutdownTerm();
-	     error2(catgets(elm_msg_cat, ElmSet,
+	     show_error(catgets(elm_msg_cat, ElmSet,
 		     ElmCouldntReopenForTemp,
 		     "Cannot reopen \"%s\"! [%s]"),
 		     curr_folder.tempname, strerror(errno));
@@ -329,7 +329,7 @@ static int read_headers(int add_new_only)
 	   }
 	   if (fseek(temp, 0, 2) == -1) {
 	     ShutdownTerm();
-	     error1(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekTempEnd,
+	     show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekTempEnd,
 		     "Couldn't fseek to end of reopened temp mbox! [%s]"),
 		     strerror(errno));
 	     leave(LEAVE_ERROR);
@@ -360,7 +360,7 @@ static int read_headers(int add_new_only)
 	if (add_new_only) {
 	   if (fseek(curr_folder.fp, curr_folder.size, 0) == -1) {
 	     ShutdownTerm();
-	     error3(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekEndFolder,
+	     show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekEndFolder,
 		    "Couldn't seek to %ld (end of folder) in %s! [%s]"),
 		    curr_folder.size, curr_folder.filename, strerror(errno));
 	     leave(LEAVE_EMERGENCY);
@@ -428,7 +428,7 @@ static int read_headers(int add_new_only)
 
 	    if (!fast_strbegConst(buffer, "From ") && !forwarding_mail) { /*}*/
 	      ShutdownTerm();
-	      error(catgets(elm_msg_cat, ElmSet, ElmFolderCorrupt,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmFolderCorrupt,
 		  "Folder is corrupt!!  I can't read it!!"));
               leave(LEAVE_ERROR);
 	    }
@@ -531,7 +531,7 @@ static int read_headers(int add_new_only)
 	       * not of the proper format, we've got a corrupt folder.
 	       */
 	      ShutdownTerm();
-	      error(catgets(elm_msg_cat, ElmSet, ElmFolderCorrupt,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmFolderCorrupt,
 		  "Folder is corrupt!!  I can't read it!!"));
 	      leave(LEAVE_ERROR);
 	    } else if (in_header == FALSE && content_length_found == TRUE && line_bytes > 1) {
@@ -543,7 +543,7 @@ static int read_headers(int add_new_only)
 		 */
 	      if (mailFile_seek(&mailFile, content_start) == -1) {
 		ShutdownTerm();
-		error2(catgets(elm_msg_cat, ElmSet,
+		show_error(catgets(elm_msg_cat, ElmSet,
 		    ElmCouldntSeekBytesIntoFolder,
 		   "Couldn't seek %ld bytes into folder. [%s]"),
 		   curr_folder.size, strerror(errno));
@@ -769,7 +769,7 @@ static int read_headers(int add_new_only)
 	  elm_unlock();	/* remove lock file! */
 	  if ((ferror(curr_folder.fp)) || (fclose(curr_folder.fp) == EOF)) {
 	    ShutdownTerm();
-	    error2(catgets(elm_msg_cat, ElmSet, ElmCloseOnFolderFailed,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCloseOnFolderFailed,
 			   "Close failed on folder \"%s\"! [%s]"),
 			    curr_folder.filename, strerror(errno));
 	    leave(LEAVE_ERROR);
@@ -777,7 +777,7 @@ static int read_headers(int add_new_only)
 
 	  if ((ferror(temp)) || (fclose(temp) == EOF)) {
 	      ShutdownTerm();
-	      error2(catgets(elm_msg_cat, ElmSet, ElmCloseOnTempFailed,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmCloseOnTempFailed,
 			      "Close failed on temp file \"%s\"! [%s]"),
 			      curr_folder.tempname, strerror(errno));
 	      leave(LEAVE_ERROR);
@@ -786,14 +786,14 @@ static int read_headers(int add_new_only)
 	  /* sanity check on append - is resulting temp file longer??? */
 	  if (bytes(curr_folder.tempname) != curr_folder.size) {
 	    ShutdownTerm();
-	    error(catgets(elm_msg_cat, ElmSet, ElmLengthNESpool,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLengthNESpool,
 	       "Huh!?  newmbox - length of mbox != spool mailbox length!!"));
 	    leave(LEAVE_ERROR);
 	  }
 
 	  if ((curr_folder.fp = fopen(curr_folder.tempname,"r")) == NULL) {
 	    ShutdownTerm();
-	    error2(catgets(elm_msg_cat, ElmSet, ElmCouldntReopenForTemp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntReopenForTemp,
 		   "Cannot reopen \"%s\"! [%s]"),
 	           curr_folder.tempname, strerror(errno));
 	    leave(LEAVE_ERROR);

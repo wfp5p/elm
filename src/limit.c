@@ -96,10 +96,10 @@ int limit(void)
 	  if (inalias) {
 	    if (streq(first, "?")) {
 	      if (last_selected)
-	        error(catgets(elm_msg_cat, AliasesSet, AliasesEnterLastSelected,
+	        show_error(catgets(elm_msg_cat, AliasesSet, AliasesEnterLastSelected,
 	          "Enter:{\"name\",\"alias\"} [pattern] OR {\"person\",\"group\",\"user\",\"system\"} OR \"all\""));
 	      else
-	        error(catgets(elm_msg_cat, AliasesSet, AliasesEnterSelected,
+	        show_error(catgets(elm_msg_cat, AliasesSet, AliasesEnterSelected,
 	          "Enter: {\"name\",\"alias\"} [pattern] OR {\"person\",\"group\",\"user\",\"system\"}"));
 	      continue;
 	    }
@@ -120,7 +120,7 @@ int limit(void)
 	    else if (streq(first, "system"))
 	      selected = limit_alias_selection(SYSTEM, rest, selected);
 	    else {
-	      error1(catgets(elm_msg_cat, ElmSet, ElmLimitNotValidCriterion,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmLimitNotValidCriterion,
 		"\"%s\" not a valid criterion."), first);
 	      continue;
 	    }
@@ -129,10 +129,10 @@ int limit(void)
 	  else {
 	    if (streq(first, "?")) {
 	      if (last_selected)
-	        error(catgets(elm_msg_cat, ElmSet, ElmEnterLastSelected,
+	        show_error(catgets(elm_msg_cat, ElmSet, ElmEnterLastSelected,
 	          "Enter: {\"subject\",\"to\",\"from\"} [pattern] OR \"all\""));
 	      else
-	        error(catgets(elm_msg_cat, ElmSet, ElmEnterSelected,
+	        show_error(catgets(elm_msg_cat, ElmSet, ElmEnterSelected,
 		  "Enter: {\"subject\",\"to\",\"from\"} [pattern]"));
 	      continue;
 	    }
@@ -147,7 +147,7 @@ int limit(void)
 	    else if (streq(first, "from"))
 	      selected = limit_selection(FROM, rest, selected);
 	    else {
-	      error1(catgets(elm_msg_cat, ElmSet, ElmLimitNotValidCriterion,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmLimitNotValidCriterion,
 		"\"%s\" not a valid criterion."), first);
 	      continue;
 	    }

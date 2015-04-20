@@ -69,7 +69,7 @@ void get_existing_address(char *buffer, int msgnum)
 	  dprint(1, (debugfile,
 		"Error: %d not a valid message number num_mssgs = %d (%s)",
 		msgnum, curr_folder.num_mssgs, "get_existing_address"));
-	  error1(catgets(elm_msg_cat, ElmSet, ElmNotAValidMessageNum,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmNotAValidMessageNum,
 		"%d not a valid message number!"), msgnum);
 	  return;
 	}
@@ -79,7 +79,7 @@ void get_existing_address(char *buffer, int msgnum)
 		    "Error: seek %ld bytes into file hit errno %s (%s)",
 		    curr_folder.headers[msgnum]->offset, strerror(err),
 		    "get_existing_address"));
-	    error2(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekBytesIntoFlle,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekBytesIntoFlle,
 		   "Couldn't seek %ld bytes into file (%s)."),
 	           curr_folder.headers[msgnum]->offset, strerror(err));
 	    return;
@@ -129,7 +129,7 @@ int get_return(char *buffer, int msgnum)
 	  dprint(1, (debugfile,
 		"Error: %d not a valid message number num_mssgs = %d (%s)",
 		msgnum, curr_folder.num_mssgs, "get_return"));
-	  error1(catgets(elm_msg_cat, ElmSet, ElmNotAValidMessageNum,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmNotAValidMessageNum,
 		"%d not a valid message number!"), msgnum);
 	  return(using_to);
 	}
@@ -140,7 +140,7 @@ int get_return(char *buffer, int msgnum)
 		"Error: seek %ld bytes into file hit errno %s (%s)",
 		curr_folder.headers[msgnum]->offset, strerror(err),
 	        "get_return"));
-	  error2(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekBytesIntoFlle,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntSeekBytesIntoFlle,
 		"Couldn't seek %ld bytes into file (%s)."),
 	       curr_folder.headers[msgnum]->offset, strerror(err));
 	  return(using_to);

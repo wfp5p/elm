@@ -16,7 +16,7 @@
  * their Unix namesakes.  (The chief difference is that some require
  * some additional filename args in the event an error message must be
  * displayed.)  Whenever an error occurs, these routines will terminate
- * with a message showing on the error line (via the error() routines).
+ * with a message showing on the error line (via the show_error() routines).
  */
 
 FILE *file_open(const char *fname, const char *fmode)
@@ -65,7 +65,7 @@ FILE *file_open(const char *fname, const char *fmode)
 	modestr = fmode;
 	break;
     }
-    error3(catgets(elm_msg_cat, ElmSet, ElmFileOpenFailed,
+    show_error(catgets(elm_msg_cat, ElmSet, ElmFileOpenFailed,
 	    "Cannot open \"%s\" for %s.  [%s]"),
 	    fname, modestr, strerror(err));
 
@@ -92,7 +92,7 @@ int file_close(FILE *fp, const char *fname)
     return 0;
 
 done:
-    error2(catgets(elm_msg_cat, ElmSet, ElmFileCloseFailed,
+    show_error(catgets(elm_msg_cat, ElmSet, ElmFileCloseFailed,
 		"Error closing \"%s\".  [%s]"), fname, strerror(errno));
     errno = err;
     return -1;
@@ -104,7 +104,7 @@ int file_access(const char *name, int mode)
 
     if ((rc = can_access(name, mode)) < 0) {
 	err = errno;
-	error2(catgets(elm_msg_cat, ElmSet, ElmFileAccessFailed,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmFileAccessFailed,
 		    "Cannot access file \"%s\".  [%s]"),
 		    basename(name), strerror(err));
 	errno = err;
@@ -123,18 +123,18 @@ int file_seek(FILE *fp, long offset, int whence, const char *fname)
 	fname, (unsigned long) offset, whence, strerror(err)));
     switch (whence) {
     case SEEK_END:
-	error3(catgets(elm_msg_cat, ElmSet, ElmFileSeekEndFailed,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmFileSeekEndFailed,
 		    "Error seeking %lu bytes from end in \"%s\".  [%s]"),
 		    (unsigned long)offset, fname, strerror(err));
 	break;
     case SEEK_CUR:
-	error3(catgets(elm_msg_cat, ElmSet, ElmFileSeekCurFailed,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmFileSeekCurFailed,
 		    "Error seeking ahead %lu bytes in \"%s\".  [%s]"),
 		    (unsigned long)offset, fname, strerror(err));
 	break;
     case SEEK_SET:
     default:
-	error3(catgets(elm_msg_cat, ElmSet, ElmFileSeekSetFailed,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmFileSeekSetFailed,
 		    "Error seeking byte %lu in \"%s\".  [%s]"),
 		    (unsigned long)offset, fname, strerror(err));
 	break;
@@ -161,12 +161,12 @@ int file_copy(FILE *fpsrc, FILE *fpdest, const char *srcname, const char *destna
 		    (destname ? destname: "<dest>"),
 		    strerror(err)));
 	    if (destname) {
-		error2(catgets(elm_msg_cat, ElmSet,
+		show_error(catgets(elm_msg_cat, ElmSet,
 			ElmFileCopyErrorWritingFile,
 			"Error writing \"%s\".  [%s]"),
 			destname, strerror(err));
 	    } else {
-		error1(catgets(elm_msg_cat, ElmSet,
+		show_error(catgets(elm_msg_cat, ElmSet,
 			ElmFileCopyErrorWritingOutput,
 			"Error writing output file.  [%s]"),
 			strerror(err));
@@ -181,10 +181,10 @@ int file_copy(FILE *fpsrc, FILE *fpdest, const char *srcname, const char *destna
 		(destname ? destname: "<dest>"),
 		strerror(err)));
 	if (srcname) {
-	    error2(catgets(elm_msg_cat, ElmSet, ElmFileCopyErrorReadingFile,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmFileCopyErrorReadingFile,
 		    "Error reading \"%s\".  [%s]"), srcname, strerror(err));
 	} else {
-	    error2(catgets(elm_msg_cat, ElmSet, ElmFileCopyErrorReadingInput,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmFileCopyErrorReadingInput,
 		    "Error reading input file.  [%s]"), strerror(err));
 	}
 	return -1;
@@ -202,7 +202,7 @@ int file_rename(const char *srcname, const char *destname)
     err = errno;
     dprint(1, (debugfile, "file_rename(%s,%s) FAILED [%s]\n",
 	    srcname, destname, strerror(err)));
-    error2(catgets(elm_msg_cat, ElmSet, ElmFileRenameFailed,
+    show_error(catgets(elm_msg_cat, ElmSet, ElmFileRenameFailed,
 	    "Error renaming \"%s\".  [%s]"), srcname, strerror(err));
     return -1;
 }

@@ -183,15 +183,15 @@ int meta_match(int function)
     CleartoEOS();
     switch (count) {
     case 0:
-	error2(catgets(elm_msg_cat, ElmSet, ElmNoMatchesNoTags,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmNoMatchesNoTags,
 		    "No matches. No %s %s."), nls_items, word_actioned);
 	break;
     case 1:
-	error2(catgets(elm_msg_cat, ElmSet, ElmTaggedMessage,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmTaggedMessage,
 		    "%s 1 %s."),  word_Actioned, nls_item);
 	break;
     default:
-	error3(catgets(elm_msg_cat, ElmSet, ElmTaggedMessages,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmTaggedMessages,
 		    "%s %d %s."), word_Actioned, count, nls_items);
 	break;
     }
@@ -359,7 +359,7 @@ int pattern_match(void)
     }
 
 not_matched:
-    error(catgets(elm_msg_cat, ElmSet, ElmPatternNotFound,
+    show_error(catgets(elm_msg_cat, ElmSet, ElmPatternNotFound,
 		"pattern not found!"));
     return FALSE;
 }
@@ -415,7 +415,7 @@ static int match_in_message(char *pat)
 
 	message_number = curr_folder.curr_mssg-1;
 
-	error(catgets(elm_msg_cat, ElmSet, ElmSearchingFolderPattern,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmSearchingFolderPattern,
 		"Searching folder for pattern..."));
 
 	for ( ; message_number < curr_folder.num_mssgs; message_number++) {
@@ -432,7 +432,7 @@ static int match_in_message(char *pat)
 		"Error: seek %ld bytes into file failed. errno %d (%s)\n",
 		curr_folder.headers[message_number]->offset, err,
 		"match_in_message"));
-	    error2(catgets(elm_msg_cat, ElmSet, ElmMatchSeekFailed,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmMatchSeekFailed,
 		   "ELM [match] failed looking %ld bytes into file (%s)."),
 		   curr_folder.headers[message_number]->offset, strerror(err));
 	    return TRUE; /* fake it out to avoid replacing error message */

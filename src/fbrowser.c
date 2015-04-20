@@ -193,7 +193,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
     if (!safe_copy(curr_pat, start_pat, sizeof(curr_pat)))
 	return FALSE;
     if ((new_dlist = fb_start_dir(curr_dir, curr_pat, FALSE)) == NULL) {
-	error2(S_(FbrowserCannotBrowse, "Cannot browse \"%s/%s\"."),
+	show_error(S_(FbrowserCannotBrowse, "Cannot browse \"%s/%s\"."),
 		    curr_dir, curr_pat);
 	return FALSE;
     }
@@ -357,11 +357,11 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 
 	case ctrl('R'):			/* recall previous dir */
 	    if (fb_save_dir[0] == '\0') {
-		error(S_(FbrowserNoDirectorySaved, "No directory saved."));
+		show_error(S_(FbrowserNoDirectorySaved, "No directory saved."));
 		break;
 	    }
 	    if (strcmp(fb_save_dir, curr_dir) == 0) {
-		error1(S_(FbrowserAlreadyIn,
+		show_error(S_(FbrowserAlreadyIn,
 			    "Already in \"%s\"."), fb_save_dir);
 		break;
 	    }
@@ -434,7 +434,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 	    if (enter_string(tmp_buf, sizeof(tmp_buf), -1, -1, ESTR_REPLACE) < 0
 			|| tmp_buf[0] == '\0'
 			|| strcmp(tmp_buf, curr_pat) == 0) {
-		error(S_(FbrowserNotChanged, "Not changed."));
+		show_error(S_(FbrowserNotChanged, "Not changed."));
 		break;
 	    }
 	    if ((new_dlist = fb_start_dir(curr_dir, tmp_buf, TRUE)) != NULL)
@@ -460,7 +460,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 	    PutLine(FBLINE_INPUT, 0, S_(FbrowserDirPrompt, "New Directory: "));
 	    if (enter_string(tmp_buf, sizeof(tmp_buf), -1, -1, ESTR_ENTER) < 0
 			|| tmp_buf[0] == '\0') {
-		error(S_(FbrowserNotChanged, "Not changed."));
+		show_error(S_(FbrowserNotChanged, "Not changed."));
 		break;
 	    }
 	    (void) strcat(tmp_buf, "/");	/* expand_filename silliness */
@@ -515,7 +515,7 @@ enter_value:
 	    PutLine(FBLINE_INPUT, 0, S_(FbFOO, "Select: "));
 	    if (enter_string(tmp_buf, sizeof(tmp_buf), -1, -1, ESTR_UPDATE) < 0
 			|| tmp_buf[0] == '\0') {
-		error(S_(FbrowserNotChanged, "Not changed."));
+		show_error(S_(FbrowserNotChanged, "Not changed."));
 		break;
 	    }
 	    trim_trailing_slashes(tmp_buf);
@@ -535,7 +535,7 @@ enter_value:
 	    {
 		char tmp_dir[SLEN], tmp_pat[SLEN];
 		if (!fbrowser_analyze_spec(tmp_buf, tmp_dir, tmp_pat)) {
-		    error(S_(FbFOO, "Not a valid directory or pattern."));
+		    show_error(S_(FbFOO, "Not a valid directory or pattern."));
 		    break;
 		}
 		if ((new_dlist = fb_start_dir(tmp_dir, tmp_pat,
@@ -725,7 +725,7 @@ static void fb_submenu_options(FB_DIR **dl_p, const char *curr_dir, const char *
 	    MoveCursor(inp_line, inp_col);
 	    break;
 	default:
-	    error1(S_(FbrowserOptionsBogusSel,
+	    show_error(S_(FbrowserOptionsBogusSel,
 			"Wierd!!  curr_sell was %d??  It's fixed now."),
 			curr_sel);
 	    curr_sel = FBOSEL_NONE;
@@ -985,7 +985,7 @@ static FB_DIR *fb_start_dir(const char *sel_dir, const char *sel_pat,
     np = pname+plen;
 
     if ((dirp = opendir(sel_dir)) == NULL) {
-	error2(S_(FbrowserEnterdirCannotRead,
+	show_error(S_(FbrowserEnterdirCannotRead,
 		    "Cannot read \"%s\".  [%s]"), sel_dir, strerror(errno));
 	return (FB_DIR *)NULL;
     }
@@ -997,7 +997,7 @@ static FB_DIR *fb_start_dir(const char *sel_dir, const char *sel_pat,
     dl->alloc_entries = FB_CHUNK;
 
     nread = nsel = 0;
-    error1(S_(FbrowserEnterdirScanning, "Scanning %s ..."), sel_dir);
+    show_error(S_(FbrowserEnterdirScanning, "Scanning %s ..."), sel_dir);
     FlushOutput();
 
     while ((dirent = readdir(dirp)) != NULL) {
@@ -1202,7 +1202,7 @@ static int fb_mbox_check(char *fname, int options)
 
     if (stat(fname, &sbuf) < 0) {
 	if (options & FB_EXIST) {
-	    error2(S_(FbrowserMboxCannotGetStatus,
+	    show_error(S_(FbrowserMboxCannotGetStatus,
 			"Cannot get \"%s\" status.  [%s]"),
 			fname, strerror(errno));
 	    return FALSE;
@@ -1211,7 +1211,7 @@ static int fb_mbox_check(char *fname, int options)
     }
 
     if (!S_ISREG(sbuf.st_mode)) {
-	error1(S_(FbrowserMboxNotRegularFile,
+	show_error(S_(FbrowserMboxNotRegularFile,
 		    "\"%s\" is not a regular file."), fname);
 	return FALSE;
     }
@@ -1224,7 +1224,7 @@ static int fb_mbox_check(char *fname, int options)
 	else
 	    ok = !!(sbuf.st_mode & 0004);
 	if (!ok) {
-	    error1(S_(FbrowserMboxNoPermissionRead,
+	    show_error(S_(FbrowserMboxNoPermissionRead,
 			"No permission to read \"%s\"."), fname);
 	    return FALSE;
 	}
@@ -1238,7 +1238,7 @@ static int fb_mbox_check(char *fname, int options)
 	else
 	    ok = !!(sbuf.st_mode & 0002);
 	if (!ok) {
-	    error1(S_(FbrowserMboxNoPermissionWrite,
+	    show_error(S_(FbrowserMboxNoPermissionWrite,
 			"No permission to write \"%s\"."), fname);
 	    return FALSE;
 	}
@@ -1253,7 +1253,7 @@ static int fb_mbox_check(char *fname, int options)
 	    return FALSE;
 	ok = strbegConst(buf, "From ");
 	if (!ok) {
-	    error1(S_(FbrowserNotValidMailbox,
+	    show_error(S_(FbrowserNotValidMailbox,
 			"\"%s\" is not a valid mailbox."), fname);
 	    return FALSE;
 	}
@@ -1272,7 +1272,7 @@ static int safe_copy(char *dst, const char *src, int dstsiz)
 	if (dst[dstsiz-1] == '\0')
 	    return TRUE;
     }
-    error(S_(FbrowserSafeCopyOverflow,
+    show_error(S_(FbrowserSafeCopyOverflow,
       "Internal Error - buffer not large enough to hold return result."));
     return FALSE;
 }

@@ -48,7 +48,7 @@ int delete_msg(int real_del, int update_screen)
     if (real_del) {
 	if (inalias) {
 	    if (aliases[curr_alias-1]->type & SYSTEM)
-		error(catgets(elm_msg_cat, ElmSet, ElmNoDelSysAlias,
+		show_error(catgets(elm_msg_cat, ElmSet, ElmNoDelSysAlias,
 			"Can't delete a system alias!"));
 	    else
 		setit(aliases[curr_alias-1]->status, DELETED);
@@ -57,7 +57,7 @@ int delete_msg(int real_del, int update_screen)
     } else {
 	if (inalias) {
 	    if (aliases[curr_alias-1]->type & SYSTEM)
-		error(catgets(elm_msg_cat, ElmSet, ElmNoDelSysAlias,
+		show_error(catgets(elm_msg_cat, ElmSet, ElmNoDelSysAlias,
 			"Can't delete a system alias!"));
 	    else if (ison(aliases[curr_alias-1]->status, DELETED))
 		clearit(aliases[curr_alias-1]->status, DELETED);

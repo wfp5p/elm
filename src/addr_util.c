@@ -391,7 +391,7 @@ int fix_arpa_address(char *address)
 	    if (host_count == MAX_HOPS) {
 	       dprint(2, (debugfile,
            "Can't build return address - hit MAX_HOPS in fix_arpa_address\n"));
-	       error(catgets(elm_msg_cat, ElmSet, ElmCantBuildRetAddr,
+	       show_error(catgets(elm_msg_cat, ElmSet, ElmCantBuildRetAddr,
 			"Can't build return address - hit MAX_HOPS limit!"));
 	       return(1);
 	    }

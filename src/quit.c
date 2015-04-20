@@ -107,7 +107,7 @@ int resync(void)
 	    err = errno;
 	    if (!streq(curr_folder.filename, incoming_folder) || err != ENOENT) {
 	      ShutdownTerm();
-	      error2(catgets(elm_msg_cat, ElmSet, ElmCantOpenFolderRead,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmCantOpenFolderRead,
 			"Can't open '%s' for reading! [%s]"),
 			curr_folder.filename, strerror(err));
 	      leave(LEAVE_ERROR);

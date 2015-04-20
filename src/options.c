@@ -311,25 +311,25 @@ void options_help(void)
 	  }
 
 	  if ((ptr = one_liner_for(c)) != NULL)
-	    error2("%c = %s", c, ptr);
+	    show_error("%c = %s", c, ptr);
 	  else
 	    switch (c) {
-	      case ctrl('L'): error(catgets(elm_msg_cat, ElmSet,
+	      case ctrl('L'): show_error(catgets(elm_msg_cat, ElmSet,
 				  ElmOptionCtrlLHelp,
 				  "^L = Rewrite the screen."));		break;
 
-	      case '>' : error(catgets(elm_msg_cat, ElmSet,ElmOptionGreaterHelp,
+	      case '>' : show_error(catgets(elm_msg_cat, ElmSet,ElmOptionGreaterHelp,
 				"> = Save to elmrc file."));		break;
 
 	      case 'q' :
-	      case 'i' : error(catgets(elm_msg_cat, ElmSet, ElmOptionReturnHelp,
+	      case 'i' : show_error(catgets(elm_msg_cat, ElmSet, ElmOptionReturnHelp,
 				"i,q = Return from option menu."));	break;
 
-	      case 'x' : error(catgets(elm_msg_cat, ElmSet, ElmHelpQuickExit,
+	      case 'x' : show_error(catgets(elm_msg_cat, ElmSet, ElmHelpQuickExit,
 				"X = Exit leaving the folder untouched, unconditionally."));
 				break;
 
-	      default: error(catgets(elm_msg_cat, ElmSet, ElmKeyIsntUsed,
+	      default: show_error(catgets(elm_msg_cat, ElmSet, ElmKeyIsntUsed,
 				"That key isn't used in this section."));
 	    }
 	  lower_prompt(prompt);
@@ -398,7 +398,7 @@ int options(void)
 		  if (o->post)
 		      (o->post)(y);
 	      } else {
-	          error(catgets(elm_msg_cat, ElmSet, ElmCommandUnknown,
+	          show_error(catgets(elm_msg_cat, ElmSet, ElmCommandUnknown,
 			"Command unknown!"));
 	      }
 	      continue;
@@ -431,7 +431,7 @@ int options(void)
 	    break;
 
 	  default:
-	    error(catgets(elm_msg_cat, ElmSet, ElmCommandUnknown,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCommandUnknown,
 		  "Command unknown!"));
 	  }
 
@@ -524,7 +524,7 @@ int change_sort(int *var, int x, int y)
 	MoveCursor(x, COLS-30);	CleartoEOLN();
 
 	if (sortby != last_sortby) {
-	  error(catgets(elm_msg_cat, ElmSet, ElmResortingFolder,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmResortingFolder,
 		"Resorting folder..."));
 	  if (sleepmsg > 0)
 		sleep((sleepmsg + 1) / 2);
@@ -657,7 +657,7 @@ int change_alias_sort(int *var, int x, int y)
 	MoveCursor(x, COLS-30);	CleartoEOLN();
 
 	if (alias_sortby != last_sortby) {
-	  error(catgets(elm_msg_cat, ElmSet, ElmResortingAliases,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmResortingAliases,
 			"Resorting aliases..."));
 	  if (sleepmsg > 0)
 		sleep((sleepmsg + 1) / 2);

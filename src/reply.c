@@ -98,7 +98,7 @@ int optimize_and_add(char *new_address, char *full_address)
 	       dprint(2, (debugfile,
               "Error: hit max_hops limit trying to build return address (%s)\n",
 		      "optimize_and_add"));
-	       error(catgets(elm_msg_cat, ElmSet, ElmBuildRAHitMaxHops,
+	       show_error(catgets(elm_msg_cat, ElmSet, ElmBuildRAHitMaxHops,
 		"Can't build return address. Hit MAX_HOPS limit!"));
 	       return(1);
 	    }
@@ -165,7 +165,7 @@ void get_and_expand_everyone(char *return_address, char *full_address)
 		 curr_folder.headers[curr_folder.curr_mssg-1]->offset,
 		 strerror(err),
 		 "get_and_expand_everyone"));
-	error2(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
 		"ELM [seek] couldn't read %d bytes into file (%s)."),
 		curr_folder.headers[curr_folder.curr_mssg-1]->offset,
 		strerror(err));
@@ -347,7 +347,7 @@ int forward(void)
     struct header_rec *hdr = curr_folder.headers[curr_folder.curr_mssg-1];
 
     if (hdr->status & FORM_LETTER) {
-	error(catgets(elm_msg_cat, ElmSet, ElmFormsCannotForward, /*(*/
+	show_error(catgets(elm_msg_cat, ElmSet, ElmFormsCannotForward, /*(*/
 "Forms cannot be forwarded.  You might want to try \"b)ounce\" instead."));
 	return FALSE;
     }

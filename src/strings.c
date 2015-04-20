@@ -256,7 +256,7 @@ char *get_token(char *source, char *keys, int depth)
 
 	if (depth > MAX_RECURSION) {
 	   ShutdownTerm();
-	   error1(catgets(elm_msg_cat, ElmSet, ElmGetTokenOverNested,
+	   show_error(catgets(elm_msg_cat, ElmSet, ElmGetTokenOverNested,
 		"Get_token calls nested greater than %d deep!"),
 		  MAX_RECURSION);
 	   leave(LEAVE_EMERGENCY);

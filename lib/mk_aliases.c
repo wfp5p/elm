@@ -63,6 +63,8 @@
 #define group(s)		(strchr((s), ',') != NULL)
 #define ok_alias_char(c)	(isalnum(c) || (c)=='-' || (c)=='_' || (c)=='.')
 
+extern void show_error(const char *s, ...);
+
 static int  buff_loaded;	/* for file input overlap... */
 static int  err_flag;		/* if errors, don't save!    */
 static int  al_count;		/* how many aliases so far?  */
@@ -126,11 +128,11 @@ static int get_alias(FILE *file, int fromelm)
 	                  NewaliasSet, NewaliasLineToLong,
 	              "Line + continuations exceeds maximum length of %ld:"),
 	              buffer_size);
-	          error(msg_buff);
+	          show_error(msg_buff);
 	          if (fromelm && sleepmsg > 0)
 	              sleep(sleepmsg);
 	          sprintf(msg_buff, "%.40s", buffer);
-	          error(msg_buff);
+	          show_error(msg_buff);
 		  err_flag++;
 	      } else
 		  strcat(buffer, s);
@@ -164,7 +166,7 @@ static int get_line(FILE *file, char *buffer, int first_line, int fromelm)
 
 	  if (buffer[len - 1] != '\n') {
 	    if (fromelm) {
-		error(catgets(elm_msg_cat, NewaliasSet, NewaliasSplitShort,
+		show_error(catgets(elm_msg_cat, NewaliasSet, NewaliasSplitShort,
 		"Line too long, split using continuation line format:"));
 		if (sleepmsg > 0)
 			sleep(sleepmsg);
@@ -175,7 +177,7 @@ static int get_line(FILE *file, char *buffer, int first_line, int fromelm)
 			NewaliasSet, NewaliasSplit,
 		"Line too long, split using continuation line format (starting line\nwith whitespace):\n%.40s\n"), buffer);
 	    }
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    err_flag++;
 	    return(-1);
 	  }
@@ -227,7 +229,7 @@ static int add_to_hash_table(char *word, int32 offset)
 	            NewaliasSet, NewaliasDupAlias,
 		    "** Duplicate alias '%s' in file.  Multiples ignored."),
 		word);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    return(-1);
 	}
 
@@ -235,7 +237,7 @@ static int add_to_hash_table(char *word, int32 offset)
 	    sprintf(msg_buff, catgets(elm_msg_cat,
 	            NewaliasSet, NewaliasErrWrite,
 		    "** Error writing alias '%s'."), word);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    err_flag++;
 	    return(-1);
 	}
@@ -349,7 +351,7 @@ int check_alias(char *aliases)
 	        NewaliasSet, NewaliasAliasWSNotAllowed,
 	        "Error - whitespace in alias '%.30s' is not allowed."),
 	        aliases);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    return(-1);
 	}
 
@@ -362,7 +364,7 @@ int check_alias(char *aliases)
 	            NewaliasSet, NewaliasCharNotSupported,
 		    "Error - character '%c' in alias '%s' is not supported."),
 	        *s, aliases);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    return(-1);
 	}
 	return(0);
@@ -405,7 +407,7 @@ static int check_address(char *addresses)
 	        NewaliasSet, NewaliasAddressWSNotAllowed,
 	        "Error - whitespace in address '%.30s' is not allowed."),
 	        addresses);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    return(-1);
 	}
 	return(0);
@@ -459,7 +461,7 @@ static void put_alias(FILE *data)
 	            NewaliasSet, NewaliasNoFieldSep,
 	            "Error - alias \"%.40s\" missing '=' field separator."),
 	        aliases);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    err_flag++;
 	    return;
 	}
@@ -503,7 +505,7 @@ static void put_alias(FILE *data)
 	            NewaliasSet, NewaliasNoFieldSep,
 		    "Error - alias \"%.40s\" missing '=' field separator."),
 		aliases);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    err_flag++;
 	    return;
 	}
@@ -617,7 +619,7 @@ int do_newalias(char *inputname, char *dataname, int fromelm, int textwarn)
  */
 	if ((buffer = malloc(20 * VERY_LONG_STRING)) == NULL) {
 	    if ((buffer = malloc(2 * VERY_LONG_STRING)) == NULL) {
-	        error(catgets(elm_msg_cat, NewaliasSet, NewaliasNoAlloc,
+	        show_error(catgets(elm_msg_cat, NewaliasSet, NewaliasNoAlloc,
 	                "Unable to allocate space for alias buffer!"));
 	        return(-1);
 	    }
@@ -639,7 +641,7 @@ int do_newalias(char *inputname, char *dataname, int fromelm, int textwarn)
 	    else {
 	        *msg_buff = '\0';
 	    }
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    free(buffer);
 	    return(-1);
 	}
@@ -649,7 +651,7 @@ int do_newalias(char *inputname, char *dataname, int fromelm, int textwarn)
 	            NewaliasSet, NewaliasNoOpendbz,
 		    "Couldn't open %s.pag or %s.dir for output!"),
 	        dataname, dataname);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    free(buffer);
 	    return(-1);
 	}
@@ -658,7 +660,7 @@ int do_newalias(char *inputname, char *dataname, int fromelm, int textwarn)
 	    sprintf(msg_buff, catgets(elm_msg_cat,
 	            NewaliasSet, NewaliasNoOpenOut,
 	            "Couldn't open %s for output!"), dataname);
-	    error(msg_buff);
+	    show_error(msg_buff);
 	    free(buffer);
 	    return(-1);
 	}
@@ -676,7 +678,7 @@ int do_newalias(char *inputname, char *dataname, int fromelm, int textwarn)
 	if (err_flag) {
 	    if (fromelm && sleepmsg > 0)
 		sleep(sleepmsg);
-	    error(catgets(elm_msg_cat, NewaliasSet, NewaliasNoSave,
+	    show_error(catgets(elm_msg_cat, NewaliasSet, NewaliasNoSave,
 	            "** Not saving tables!  Please fix and re-run!"));
 	    free(buffer);
 	    return(-1);
@@ -710,7 +712,7 @@ static void delete_alias_files(char *dataname, int fromelm)
 	  sprintf(msg_buff,
 		catgets(elm_msg_cat, NewaliasSet, NewaliasCouldntDeleteData,
 		"Could not delete alias data file %s!"), fname);
-	  error(msg_buff);
+	  show_error(msg_buff);
 	  if (fromelm && sleepmsg > 0)
 		sleep(sleepmsg);
 	}
@@ -720,7 +722,7 @@ static void delete_alias_files(char *dataname, int fromelm)
 	  sprintf(msg_buff,
 		catgets(elm_msg_cat, NewaliasSet, NewaliasCouldntDeleteHash,
 		"Could not delete alias hash file %s!"), fname);
-	  error(msg_buff);
+	  show_error(msg_buff);
 	  if (fromelm && sleepmsg > 0)
 		sleep(sleepmsg);
 	}
@@ -730,7 +732,7 @@ static void delete_alias_files(char *dataname, int fromelm)
 	  sprintf(msg_buff,
 		catgets(elm_msg_cat, NewaliasSet, NewaliasCouldntDeleteHash,
 		"Could not delete alias hash file %s!"), fname);
-	  error(msg_buff);
+	  show_error(msg_buff);
 	  if (fromelm && sleepmsg > 0)
 		sleep(sleepmsg);
 	}

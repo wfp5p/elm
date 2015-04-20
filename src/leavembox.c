@@ -305,7 +305,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	  dprint(1, (debugfile,
 	  "Error: %d to delete + %d to store + %d to keep != %d message cnt\n",
 	    to_delete, to_store, to_keep, curr_folder.num_mssgs));
-	  error(catgets(elm_msg_cat, ElmSet,
+	  show_error(catgets(elm_msg_cat, ElmSet,
 	        ElmSomethingWrongInCounts,
 		"Something wrong in message counts! Folder unchanged.\n"));
 	  leave(LEAVE_EMERGENCY);
@@ -337,7 +337,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 
 	if(!to_delete && !to_store && !num_chgd_status && !resyncing) {
 	  dprint(3, (debugfile, "Folder keep as is!\n"));
-	  error(catgets(elm_msg_cat, ElmSet, ElmFolderUnchanged,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmFolderUnchanged,
 		"Folder unchanged."));
 	  if (!resyncing && (curr_folder.flags & FOLDER_IS_SPOOL))
 		(void) unlink(curr_folder.tempname);
@@ -436,7 +436,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 
 	if (curr_folder.size != bytes(curr_folder.filename)) {
 	    elm_unlock();
-	    error(catgets(elm_msg_cat, ElmSet, ElmLeaveNewMailArrived,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveNewMailArrived,
 			  "New mail has just arrived. Resynchronizing..."));
 	    return(-1);
 	}
@@ -446,12 +446,12 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	block_signals();
 
 	dprint(2, (debugfile, "Action: %s\n", buffer));
-	error(buffer);
+	show_error(buffer);
 
 	/* Store messages slated for storage in received mail folder */
 	if (to_store > 0) {
 	  if ((err = can_open(recvd_mail, "a"))) {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeaveAppendDenied,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveAppendDenied,
 	      "Permission to append to %s denied!  Leaving folder intact."),
 	      recvd_mail);
 	    dprint(1, (debugfile,
@@ -469,7 +469,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	    dprint(1, (debugfile, "Error: could not append to file %s [%s]\n",
 	      recvd_mail, strerror(errno)));
 	    ShutdownTerm();
-	    error1(catgets(elm_msg_cat, ElmSet,
+	    show_error(catgets(elm_msg_cat, ElmSet,
 		ElmLeaveCouldNotAppend,
 		"Could not append to folder %s!"), recvd_mail);
 	    leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
@@ -495,7 +495,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	  err = errno;
 	  dprint(1, (debugfile, "Error: errno %s attempting to stat file %s\n",
 		     strerror(err), curr_folder.filename));
-          error2(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorOnStat,
+          show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorOnStat,
 		"Error %s on stat(%s)."), strerror(err), curr_folder.filename);
 	}
 
@@ -508,7 +508,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	if (to_keep > 0) {
 	  sprintf(temp_keep_file, "%s%s%d", temp_dir, temp_file, getpid());
 	  if ((err = can_open(temp_keep_file, "w"))) {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeaveTempFileDenied,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveTempFileDenied,
 "Permission to create temp file %s for writing denied! Leaving folder intact."),
 	      temp_keep_file);
 	    dprint(1, (debugfile,
@@ -526,7 +526,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	    dprint(1, (debugfile, "Error: could not create file %s [%s]\n",
 	      temp_keep_file, strerror(errno)));
 	    ShutdownTerm();
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeaveCouldNotCreate,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveCouldNotCreate,
 		"Could not create temp file %s!\n"), temp_keep_file);
 	    leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
 	  }
@@ -539,7 +539,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	  }
 	  if ( fclose(temp) == EOF ) {
 	    ShutdownTerm();
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeaveCloseFailedTemp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveCloseFailedTemp,
 		"Close failed on temp file in leavembox()! [%s]"),
 		strerror(errno));
 	    leave(LEAVE_ERROR);
@@ -565,7 +565,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	 * mail folder before we remove it.
 	 */
 	if(save_file_stats(curr_folder.filename) != 0) {
-	  error1(catgets(elm_msg_cat, ElmSet, ElmLeaveProblemsSavingPerms,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveProblemsSavingPerms,
 		"Problems saving permissions of folder %s!"), curr_folder.filename);
 	  if (sleepmsg > 0)
 		sleep(sleepmsg);
@@ -575,7 +575,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	  err = errno;
 	  dprint(1, (debugfile, "Error: errno %s attempting to stat file %s\n",
 		     strerror(err), curr_folder.filename));
-          error2(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorOnStat,
+          show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorOnStat,
 		"Error %s on stat(%s)."), strerror(err), curr_folder.filename);
 	}
 
@@ -665,7 +665,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 		dprint(1, (debugfile,
 			"rename(%s, %s) failed (leavembox) [%s]\n",
 		       temp_keep_file, curr_folder.filename, strerror(err)));
-		error1(catgets(elm_msg_cat, ElmSet, ElmLeaveRenameFailed,
+		show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveRenameFailed,
 			"Rename failed! [%s]"), strerror(err));
 		if (mailgroupid != groupid && (curr_folder.flags & FOLDER_IS_SPOOL))
 		  setegid(groupid);
@@ -695,7 +695,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 		dprint(1, (debugfile,
 			"leavembox: couldn't copy to %s either!!  Help! [%s]",
 			curr_folder.filename, strerror(err)));
-		error1(catgets(elm_msg_cat, ElmSet,
+		show_error(catgets(elm_msg_cat, ElmSet,
 			ElmLeaveCantCopyMailbox,
 			"Can't copy folder!  Contents preserved in %s."),
 			temp_keep_file);
@@ -706,7 +706,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 		dprint(1, (debugfile,
 			"\nWoah! Confused - Saved mail in %s (leavembox)\n",
 			curr_folder.filename));
-		error1(catgets(elm_msg_cat, ElmSet, ElmLeaveSavedMailIn,
+		show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveSavedMailIn,
 			"Saved mail in %s."), curr_folder.filename);
 		if (sleepmsg > 0)
 		    sleep((sleepmsg + 1) / 2);
@@ -727,7 +727,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	   * messages, create an empty file. */
 
 	  if (!(curr_folder.flags & FOLDER_IS_SPOOL))
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeaveKeepingEmpty,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveKeepingEmpty,
 		"Keeping empty folder '%s'."), curr_folder.filename);
 	  temp = fopen(curr_folder.filename, "w");
 	  fclose(temp);
@@ -744,7 +744,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 
 	if (!need_to_copy || already_unlinked) {
 	  if(restore_file_stats(curr_folder.filename) == -1) {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmLeaveProblemsRestoringPerms,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveProblemsRestoringPerms,
 		  "Problems restoring permissions of folder %s!"),
 		  curr_folder.filename);
 	    if (sleepmsg > 0)
@@ -770,7 +770,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	  dprint(1, (debugfile,
 		 "Error: encountered error doing utime (leavmbox)\n"));
 	  dprint(1, (debugfile, "** %s **\n", strerror(err)));
-	  error2(catgets(elm_msg_cat, ElmSet, ElmLeaveChangingAccessTime,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveChangingAccessTime,
 		"Error %s trying to change file %s access time."),
 		   strerror(err), curr_folder.filename);
 	}

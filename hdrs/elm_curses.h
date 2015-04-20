@@ -145,12 +145,7 @@ void CenterLine P_((int, const char *));
 void show_last_error P_((void));
 int clear_error P_((void));
 void set_error P_((const char *));
-
-void error(const char *s, ...);
-#define error1(...) error(__VA_ARGS__)
-#define error2(...) error(__VA_ARGS__)
-#define error3(...) error(__VA_ARGS__)
-
+void show_error(const char *s, ...);
 void lower_prompt P_((const char *));
 void prompt P_((const char *));
 void set_central_message P_((const char *, const char *));

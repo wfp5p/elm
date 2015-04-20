@@ -110,7 +110,7 @@ void save_options(void)
     /* create an "elmrc" file */
     if ((fp_elmrc = fopen(rcfname, "w")) == NULL) {
 	err_pause(TRUE);
-	error2(catgets(elm_msg_cat, ElmrcSet, ElmrcCannotOpenElmrc,
+	show_error(catgets(elm_msg_cat, ElmrcSet, ElmrcCannotOpenElmrc,
 		"Error: cannot open \"%s\" to save.  [%s]"),
 		rcfname, strerror(errno));
 	return;
@@ -119,7 +119,7 @@ void save_options(void)
     /* the "elmrc-info" file describes the option settings */
     if ((fp_rcinfo = fopen(system_rcinfo_file, "r")) == NULL) {
 	err_pause(TRUE);
-	error2(catgets(elm_msg_cat, ElmrcSet, ElmrcCannotOpenRcinfo,
+	show_error(catgets(elm_msg_cat, ElmrcSet, ElmrcCannotOpenRcinfo,
 	      "Warning: cannot open \"%s\" file.  [%s]"),
 	      basename(system_rcinfo_file), strerror(errno));
     }
@@ -128,7 +128,7 @@ void save_options(void)
     for (i = 1 ; i < NUMBER_OF_SAVEABLE_OPTIONS ; ++i) {
 	if (strcmp(save_info[i-1].name, save_info[i].name) > 0) {
 	    err_pause(TRUE);
-	    error1(catgets(elm_msg_cat, ElmrcSet, ElmrcSortOrderCorrupt,
+	    show_error(catgets(elm_msg_cat, ElmrcSet, ElmrcSortOrderCorrupt,
 		    "INTERNAL ERROR: save_info[] sort order corrupt at \"%s\"."),
 		    save_info[i].name);
 	    /* a raw dump probably will work alright */
@@ -152,7 +152,7 @@ void save_options(void)
     if (fp_rcinfo == NULL) {
 	/* should be a mssg on the display explaining why we are doing this */
 	err_pause(TRUE);
-	error(catgets(elm_msg_cat, ElmrcSet, ElmrcSavedRaw,
+	show_error(catgets(elm_msg_cat, ElmrcSet, ElmrcSavedRaw,
 		"Due to problems - options being saved as raw, uncommented dump."));
 	for (i = 0 ; i < NUMBER_OF_SAVEABLE_OPTIONS ; ++i) {
 	    if (!(save_info[i].flags & FL_SYS))
@@ -188,7 +188,7 @@ void save_options(void)
 	default:		/* should be name of an option setting */
 	    if ((i = find_opt(buf)) < 0) {
 		err_pause(TRUE);
-		error2(catgets(elm_msg_cat, ElmrcSet, ElmrcUnknownOptionWarning,
+		show_error(catgets(elm_msg_cat, ElmrcSet, ElmrcUnknownOptionWarning,
 			"Warning: unknown option \"%s\" in \"%s\" file."),
 			buf, basename(system_rcinfo_file));
 		fprintf(fp_elmrc,
@@ -216,7 +216,7 @@ void save_options(void)
 		break;
 	    default:
 		err_pause(TRUE);
-		error2(catgets(elm_msg_cat, ElmrcSet, ElmrcMissingOptionWarning,
+		show_error(catgets(elm_msg_cat, ElmrcSet, ElmrcMissingOptionWarning,
 			"Warning: option \"%s\" missing from \"%s\" file."),
 			buf, basename(system_rcinfo_file));
 		fprintf(fp_elmrc,
@@ -235,7 +235,7 @@ done:
     fclose(fp_elmrc);
     restore_file_stats(rcfname);
     err_pause(TRUE);
-    error1(catgets(elm_msg_cat, ElmrcSet, ElmrcOptionsSavedIn,
+    show_error(catgets(elm_msg_cat, ElmrcSet, ElmrcOptionsSavedIn,
 	    "Options saved in file %s."), rcfname);
 }
 

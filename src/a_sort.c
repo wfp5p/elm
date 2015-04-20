@@ -52,7 +52,7 @@ int sort_aliases(int entries, int visible, int are_in_aliases)
 	  last_index = aliases[curr_alias-1]->length;
 
 	if ((entries > 30) && visible && are_in_aliases) {
-	    error1(catgets(elm_msg_cat, AliasesSet, AliasesSort,
+	    show_error(catgets(elm_msg_cat, AliasesSet, AliasesSort,
 		    "Sorting aliases by %s..."), alias_sort_name(TRUE));
 	}
 

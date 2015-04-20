@@ -209,7 +209,7 @@ int save(int *redraw_p, int silently, int delete)
 
 	if (!silently)
 	    show_new_status(i);
-	error3(S_(ElmSavecmdMessageSavedTo,
+	show_error(S_(ElmSavecmdMessageSavedTo,
 		    "Message %d %s to \"%s\"."),
 		    i+1, word_saved, canon_filename);
 #ifdef notdef /*FOO*/
@@ -237,7 +237,7 @@ int save(int *redraw_p, int silently, int delete)
 	if (*redraw_p)
 	    set_error(lbuf);
 	else
-	    error(lbuf);
+	    show_error(lbuf);
     }
 
     /* remember this folder */
@@ -450,7 +450,7 @@ int expand_filename(char *filename)
 	      dprint(3,(debugfile,
 		      "Error: Can't get home directory for %s (%s)\n",
 		      logname, "expand_filename"));
-	      error1(catgets(elm_msg_cat, ElmSet, ElmDontKnowHomeCursor,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmDontKnowHomeCursor,
 			"Don't know what the home directory of \"%s\" is!"),
 			logname);
 	      return(0);
@@ -481,7 +481,7 @@ int expand_filename(char *filename)
 	    sprintf(filename, "%s/%s", folders, buffer);
 	  }
           else {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmCannotExpand,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCannotExpand,
 		   "Cannot expand alias '%s'!"), &(temp_filename[1]) );
 	    return(0);
 	  }
@@ -499,7 +499,7 @@ int expand_filename(char *filename)
 	    dprint(3,(debugfile,
 		    "Error: Can't expand environment variable $%s (%s)\n",
 		    varname, "expand_filename"));
-	    error1(catgets(elm_msg_cat, ElmSet, ElmDontKnowValueCursor,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmDontKnowValueCursor,
 		  "Don't know what the value of $%s is!"), varname);
 	    return(0);
 	  }

@@ -372,7 +372,7 @@ int display_helpfile(char *topic)
 	if ((fileptr = fopen(fname, "r")) == NULL) {
 	  dprint(1, (debugfile,
 		 "Error: Couldn't open file %s (help)\n", fname));
-	  error1(catgets(elm_msg_cat, ElmSet, ElmHelpCouldntOpenFile,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmHelpCouldntOpenFile,
 		"Couldn't open file %s."), fname);
 	  return(FALSE);
 	}

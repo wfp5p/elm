@@ -38,11 +38,11 @@ int encoding_is_reasonable(const char *value)
 	return TRUE;
     case ENCODING_BINARY:
     case ENCODING_EXPERIMENTAL:
-	error1("Content encoding value \"%s\" is not reasonable.", value);
+	show_error("Content encoding value \"%s\" is not reasonable.", value);
 	return FALSE;
     case ENCODING_ILLEGAL:
     default:
-	error1("Content encoding value \"%s\" is illegal.", value);
+	show_error("Content encoding value \"%s\" is illegal.", value);
 	return FALSE;
     }
     /*NOTREACHED*/

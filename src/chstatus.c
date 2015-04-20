@@ -114,22 +114,22 @@ static void status_help(void)
 	}
 	switch (c) {
 	case ctrl('L'):
-	    error(catgets(elm_msg_cat, ElmSet, ElmOptionCtrlLHelp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmOptionCtrlLHelp,
 		    "^L = Rewrite the screen."));
 	    break;
 
 	case 'n':
-	    error(catgets(elm_msg_cat, ElmSet, ElmStatusNewHelp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmStatusNewHelp,
   "Whether the message is new and unread, old and unread, or already read."));
 	    break;
 
 	case 'o':
-	    error(catgets(elm_msg_cat, ElmSet, ElmStatusOriginalHelp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmStatusOriginalHelp,
     "Restore original status of message as of entry to elm or last resync."));
 	    break;
 
 	case 'r':
-	    error(catgets(elm_msg_cat, ElmSet, ElmStatusRepliedHelp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmStatusRepliedHelp,
 		    "Whether you've replied to the message."));
 	    break;
 
@@ -137,22 +137,22 @@ static void status_help(void)
 	case 'q':
 	case RETURN:
 	case LINE_FEED:
-	    error(catgets(elm_msg_cat, ElmSet, ElmStatusReturnHelp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmStatusReturnHelp,
 		    "q,<return> = Return from status menu."));
 	    break;
 
 	case 'u':
-	    error(catgets(elm_msg_cat, ElmSet, ElmStatusUndoHelp,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmStatusUndoHelp,
 		    "Undo changes made this time in the status editor."));
 	    break;
 
 	case 'x':
-	    error(catgets(elm_msg_cat, ElmSet, ElmHelpQuickExit,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmHelpQuickExit,
 		    "X = Exit leaving the folder untouched, unconditionally."));
 	    break;
 
 	default:
-	    error(catgets(elm_msg_cat, ElmSet, ElmKeyIsntUsed,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmKeyIsntUsed,
 		    "That key isn't used in this section."));
 	}
 	lower_prompt(prompt);
@@ -315,7 +315,7 @@ int ch_status(void)
 	    break;
 
 	default:
-	    error(catgets(elm_msg_cat, ElmSet, ElmCommandUnknown,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmCommandUnknown,
 		    "Command unknown!"));
 	    break;
 	}

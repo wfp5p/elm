@@ -48,7 +48,7 @@ long bytes(const char *name)
 	  return 0L;
 
 	ShutdownTerm();
-	error2(catgets(elm_msg_cat, ElmSet, ElmErrorFstat,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmErrorFstat,
 	    "Cannot fstat \"%s\"! [%s]"), name, strerror(errno));
 	leave(LEAVE_EMERGENCY);
 }
@@ -104,7 +104,7 @@ int copy(const char *fname_src, const char *fname_dest, int isspool)
 
     fflush(fp_dest);
     if (do_truncate && ftruncate(fileno(fp_dest), size_src) != 0) {
-      error1(catgets(elm_msg_cat, ElmSet, ElmTruncateFailedCopy,
+      show_error(catgets(elm_msg_cat, ElmSet, ElmTruncateFailedCopy,
 		"Error on ftruncate() of \"%s\"! [%s]"),
 		fname_dest, strerror(errno));
       goto done;

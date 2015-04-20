@@ -128,7 +128,7 @@ int delete_aliases(int newaliases, int prompt)
 	    }
 
 	    dprint(2, (debugfile, "Action: %s\n", buffer));
-	    error(buffer);
+	    show_error(buffer);
 
 	    delete_from_alias_text(list, to_delete);
 

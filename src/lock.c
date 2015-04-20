@@ -209,7 +209,7 @@ int elm_lock(int direction)
 /*	      close(create_fd); */
 	      if (unlink(lockfile) != 0) {
 		ShutdownTerm();
-		error2(catgets(elm_msg_cat, ElmSet,
+		show_error(catgets(elm_msg_cat, ElmSet,
 		  ElmLeaveCouldntRemoveCurLock,
 		  "Couldn't remove current lock file %s! [%s]"),
 		  lockfile, strerror(errno));
@@ -237,7 +237,7 @@ int elm_lock(int direction)
             /* If /var/mail nfs mounted on Solaris 2.3 at least you can */
 	    /* get EACCES.  Treat it like EEXIST. */
 	    ShutdownTerm();
-	    error2(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorCreatingLock,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorCreatingLock,
 		"Couldn't create lock file %s! [%s]"),
 		lockfile, strerror(errno));
 	    if (mailgroupid != groupid)
@@ -247,7 +247,7 @@ int elm_lock(int direction)
 	}
 	dprint(2, (debugfile,"File '%s' already exists!  Waiting...(lock)\n",
 	  lockfile));
-	error1(catgets(elm_msg_cat, ElmSet, ElmLeaveWaitingToRead,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveWaitingToRead,
 	  "Waiting to read mailbox while mail is being received: attempt #%d"),
 	  create_iteration);
 	sleep(2);
@@ -264,15 +264,15 @@ int elm_lock(int direction)
 	dprint(2, (debugfile,
 	   "Warning: I'm giving up waiting - removing lock file(lock)\n"));
 	if (direction == LOCK_INCOMING)
-	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveTimedOutRemoving,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveTimedOutRemoving,
 		"Timed out - removing current lock file..."));
 	else
-	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveThrowingAwayLock,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveThrowingAwayLock,
 		"Throwing away the current lock file!"));
 
 	if (unlink(lockfile) != 0) {
 	  ShutdownTerm();
-	  error2(stderr, catgets(elm_msg_cat, ElmSet,
+	  show_error(stderr, catgets(elm_msg_cat, ElmSet,
 	        ElmLeaveCouldntRemoveCurLock,
 	    "Couldn't remove current lock file %s! [%s]",
 	    lockfile, strerror(errno)));
@@ -286,7 +286,7 @@ int elm_lock(int direction)
 
 	  /* still can't lock it - just give up */
 	  ShutdownTerm();
-	  error2(stderr, catgets(elm_msg_cat, ElmSet,
+	  show_error(stderr, catgets(elm_msg_cat, ElmSet,
 	    ElmLeaveErrorCreatingLock,
 	    "Couldn't create lock file %s! [%s]",
 	    lockfile, strerror(errno)));
@@ -302,14 +302,14 @@ int elm_lock(int direction)
 	Raw(OFF);
 	if (direction == LOCK_INCOMING) {
 	  ShutdownTerm();
-	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveGivingUp,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveGivingUp,
 "Cannot lock folder - giving up.  Please try again in a few minutes."));
 	  if (mailgroupid != groupid)
 	    setegid(groupid);
 	  leave(LEAVE_ERROR|LEAVE_KEEP_LOCK);
 	} else {
 	  ShutdownTerm();
-	  error(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorTimedOutLock,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorTimedOutLock,
 		"Timed out on locking mailbox.  Leaving program."));
 	  if (mailgroupid != groupid)
 	    setegid(groupid);
@@ -368,7 +368,7 @@ int elm_lock(int direction)
 	     */
 
 	    ShutdownTerm();
-	    error2(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorFlockMailbox,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveErrorFlockMailbox,
 		 "Cannot flock folder \"%s\"! [%s]"),
 		  curr_folder.filename, strerror(errno));
 #ifdef	USE_DOTLOCK_LOCKING
@@ -382,7 +382,7 @@ int elm_lock(int direction)
 	default:
 	    dprint (2, (debugfile,
 	      "Mailbox '%s' already locked!  Waiting...(lock)\n", curr_folder.filename));
-	    error1 (catgets(elm_msg_cat, ElmSet, ElmLeaveWaitingToRead,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveWaitingToRead,
 			   "Waiting to read mailbox while mail is being received: attempt #%d"),
 		    flock_iteration);
 	    sleep(2);
@@ -396,7 +396,7 @@ EXIT_RETRY_LOOP:
 	/* We couldn't lock the file. We die and leave not updating
 	 * the mailfile mbox or any of those! */
 	ShutdownTerm();
-	error(catgets(elm_msg_cat, ElmSet, ElmLeaveGivingUp,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveGivingUp,
 "Cannot lock folder - giving up.  Please try again in a few minutes."));
 #ifdef	USE_DOTLOCK_LOCKING
 	(void)unlink(lockfile);
@@ -455,7 +455,7 @@ int elm_unlock(void)
 	      "Error %s\n\ttrying to force unlock file %s via close() (%s)\n",
 				strerror(errno),
 				curr_folder.filename, "unlock"));
-		    error1 (catgets (elm_msg_cat, ElmSet,
+		    show_error(catgets (elm_msg_cat, ElmSet,
 				     ElmLeaveCouldntUnlockOwnMailbox,
 				     "Couldn't unlock my own mailbox %s!"),
 				     curr_folder.filename);
@@ -476,7 +476,7 @@ int elm_unlock(void)
 	    dprint(1, (debugfile,
 	      "Error %s\n\ttrying to unlink file %s (%s)\n",
 	      strerror(errno), lockfile,"unlock"));
-	      error1(catgets(elm_msg_cat, ElmSet, ElmLeaveCouldntRemoveOwnLock,
+	      show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveCouldntRemoveOwnLock,
 		"Couldn't remove my own lock file %s!"), lockfile);
 	  }
 	  if (mailgroupid != groupid)

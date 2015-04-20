@@ -46,7 +46,7 @@ long   bytes();
 static void copy_failed_emergency_exit(char *cur_folder, char *edited_file)
 {
 	ShutdownTerm();
-	error3(catgets(elm_msg_cat, ElmSet, ElmCouldntCopyMailfile,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntCopyMailfile,
 		"Could not copy from \"%s\" to \"%s\"! [%s]"),
 		cur_folder, edited_file, strerror(errno));
 	leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
@@ -74,7 +74,7 @@ void edit_mailbox(void)
 
 	if (curr_folder.flags & FOLDER_IS_SPOOL) {
 	  if(save_file_stats(curr_folder.filename) != 0) {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmPermFolder,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmPermFolder,
 	      "Problems saving permissions of folder %s!"), curr_folder.filename);
 	    Raw(ON);
 	    if (sleepmsg > 0)
@@ -165,7 +165,7 @@ void edit_mailbox(void)
 	   /* restore file permissions before removing lock */
 
 	   if(restore_file_stats(curr_folder.filename) != 1) {
-	     error1(catgets(elm_msg_cat, ElmSet, ElmProblemsRestoringPerms,
+	     show_error(catgets(elm_msg_cat, ElmSet, ElmProblemsRestoringPerms,
 	       "Problems restoring permissions of folder %s!"), curr_folder.filename);
 	     Raw(ON);
 	     if (sleepmsg > 0)
@@ -178,11 +178,11 @@ void edit_mailbox(void)
 	   fflush (curr_folder.fp);
 	   elm_unlock();
 	   unlink(edited_file);	/* remove the edited curr_folder.fp */
-	   error(catgets(elm_msg_cat, ElmSet, ElmChangesIncorporated,
+	   show_error(catgets(elm_msg_cat, ElmSet, ElmChangesIncorporated,
 	     "Changes incorporated into new mail..."));
 
 	} else
-	  error(catgets(elm_msg_cat, ElmSet, ElmResyncingNewVersion,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmResyncingNewVersion,
 	    "Resynchronizing with new version of folder..."));
 
 	if (sleepmsg > 0)
@@ -220,7 +220,7 @@ int edit_a_file(char *editfile)
 	}
 
 	if (system_call(buffer, SY_COOKED|SY_ENAB_SIGHUP) == -1) {
-	  error1(catgets(elm_msg_cat, ElmSet, ElmProblemsInvokingEditor,
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmProblemsInvokingEditor,
 	    "Problems invoking editor %s!"), alternative_editor);
 	  if (sleepmsg > 0)
 		sleep(sleepmsg);

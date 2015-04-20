@@ -233,7 +233,7 @@ int enter_string(char *buf, int bufsiz, int line, int col, int mode)
 	ed = edfld_new(buf, bufsiz, line, col, 0);
 	break;
     default:
-	error1(catgets(elm_msg_cat, ElmSet, ElmEnterStringBadMode,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmEnterStringBadMode,
 		    "INTERNAL ERROR - bad mode \"%d\" for enter_string"), mode);
 	return -1;
     }

@@ -85,7 +85,7 @@ static void do_expand_env(char *descr, char *dest, char *src, unsigned destlen)
 {
     if (expand_env(dest, src, destlen) != 0) {
 	ShutdownTerm();
-	error2(catgets(elm_msg_cat, ElmSet, ElmCannotInitErrorExpanding,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmCannotInitErrorExpanding,
 	    "Cannot initialize \"%s\" - error expanding \"%s\"."),
 	    descr, src);
 	leave(LEAVE_ERROR);

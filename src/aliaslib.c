@@ -169,7 +169,7 @@ do_expand:
 	if ( depth > 12 ) {
 	  dprint(2, (debugfile,
 	      "alias expansion loop detected at \"%s\" - bailing out\n", name));
-	    error1(catgets(elm_msg_cat, ElmSet, ElmErrorExpanding,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmErrorExpanding,
 		"Error expanding \"%s\" - probable alias definition loop."),
 		name);
 	    return FALSE;
@@ -283,7 +283,7 @@ static int add_name_to_list(register char *name, register char **bufptr,
 	    *bufsizep = -1;
 	    dprint(2, (debugfile,
 		"Alias expansion is too long in add_name_to_list()\n"));
-	    error(catgets(elm_msg_cat, ElmSet, ElmAliasExpTooLong,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmAliasExpTooLong,
 		"Alias expansion is too long."));
 	    return FALSE;
 	}

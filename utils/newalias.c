@@ -48,7 +48,11 @@ or  alias1, alias2, ... = groupname= member, member, member, ...
 #include "elm_defs.h"
 #include "s_newalias.h"
 
+#include <stdarg.h>
+
 static void na_error(char *err_message);
+void show_error(const char *s, ...);
+
 
 int  is_system=0;		/* system file updating?     */
 int  sleepmsg=0;		/* not in elm, dont wait for messages */
@@ -107,4 +111,19 @@ static void na_error(char *err_message)
 	fflush(stdout);
 	fprintf(stderr, "\n%s\n", err_message);
 	return;
+}
+
+/*
+ * non curses version of show_error()
+ * show_error() is also defined in src/out_utils.c and is used by
+ * lib/mk_aliases.c  Since newmail is not a curses program, it can't use it
+ */
+void show_error(const char *s, ...)
+{
+	va_list args;
+
+	va_start(args, s);
+	fprintf(stderr, s, args);
+	va_end(args);
+
 }

@@ -364,7 +364,7 @@ int add_alias(int replace, int to_replace)
 	    if (enter_string(address1, sizeof(address1), -1, -1,
 			ESTR_REPLACE) < 0 || address1[0] == '\0') {
 		Raw(ON);
-	        error(catgets(elm_msg_cat, AliasesSet, AliasesNoAddressSpec,
+	        show_error(catgets(elm_msg_cat, AliasesSet, AliasesNoAddressSpec,
 	                "No address specified!"));
 	        return(0);
 	    }
@@ -422,7 +422,7 @@ int add_current_alias(void)
 	if (curr_folder.curr_mssg == 0) {
 	 dprint(4, (debugfile,
 		"Add current alias called without any current message!\n"));
-	 error(catgets(elm_msg_cat, AliasesSet, AliasesNoMessage,
+	 show_error(catgets(elm_msg_cat, AliasesSet, AliasesNoMessage,
 		"No message to alias to!"));
 	 return(0);
 	}
@@ -562,7 +562,7 @@ int add_to_alias_text(char *aliasname, char *firstname, char *lastname,
 		 "Failure attempting to add alias to file %s within %s",
 		   fname, "add_to_alias_text"));
 	  dprint(2, (debugfile, "** %s **\n", strerror(err)));
-	  error1(catgets(elm_msg_cat, AliasesSet, AliasesCouldntOpenAdd,
+	  show_error(catgets(elm_msg_cat, AliasesSet, AliasesCouldntOpenAdd,
 		 "Couldn't open %s to add new alias!"), fname);
 	  return(1);
 	}
@@ -583,7 +583,7 @@ int add_to_alias_text(char *aliasname, char *firstname, char *lastname,
 		       "Failure attempting to write alias to file within %s",
 		       fname, "add_to_alias_text"));
 	    dprint(2, (debugfile, "** %s **\n", strerror(err)));
-	    error1(catgets(elm_msg_cat, AliasesSet, AliasesCouldntWrite,
+	    show_error(catgets(elm_msg_cat, AliasesSet, AliasesCouldntWrite,
 		   "Couldn't write alias to file %s!"), fname);
 	    fclose(file);
 	    return(1);
@@ -632,7 +632,7 @@ int delete_from_alias_text(char **name, int num_to_delete)
 		 "Failure attempting to delete alias from file %s within %s",
 		   fname, "delete_from_alias_text"));
 	  dprint(2, (debugfile, "** %s **\n", strerror(err)));
-	  error1(catgets(elm_msg_cat, AliasesSet, AliasesCouldntOpenDelete,
+	  show_error(catgets(elm_msg_cat, AliasesSet, AliasesCouldntOpenDelete,
 		 "Couldn't open %s to delete alias!"), fname);
 	  return(1);
 	}
@@ -643,7 +643,7 @@ int delete_from_alias_text(char **name, int num_to_delete)
 		 "Failure attempting to open temp file %s within %s",
 		   tmpfname, "delete_from_alias_text"));
 	  dprint(2, (debugfile, "** %s **\n", strerror(err)));
-	  error1(catgets(elm_msg_cat, AliasesSet, AliasesCouldntOpenTemp,
+	  show_error(catgets(elm_msg_cat, AliasesSet, AliasesCouldntOpenTemp,
 	  	 "Couldn't open temp file %s to delete alias!"), tmpfname);
 	  return(1);
 	}
@@ -684,7 +684,7 @@ int delete_from_alias_text(char **name, int num_to_delete)
 		"Failure attempting to write to temp file %s within %s",
 		tmpfname, "delete_from_alias_text"));
 	      dprint(2, (debugfile, "** %s **\n", strerror(err)));
-	      error1(catgets(elm_msg_cat, AliasesSet, AliasesCouldntWriteTemp,
+	      show_error(catgets(elm_msg_cat, AliasesSet, AliasesCouldntWriteTemp,
 		"Couldn't write to temp file %s!"), tmpfname);
 	      fclose(file);
 	      fclose(tmp_file);
@@ -697,7 +697,7 @@ int delete_from_alias_text(char **name, int num_to_delete)
 	fclose(tmp_file);
 	if (rename(tmpfname, fname) != 0)
 	{
-		error1(catgets(elm_msg_cat, AliasesSet, AliasesCouldntRenameTemp,
+		show_error(catgets(elm_msg_cat, AliasesSet, AliasesCouldntRenameTemp,
 			"Couldn't rename temp file %s after deleting alias!"), tmpfname);
 		return(1);
 	}
@@ -793,7 +793,7 @@ void alias(void)
 		          }
 	              }
 	              else {
-		          error(catgets(elm_msg_cat,
+		          show_error(catgets(elm_msg_cat,
 	                          AliasesSet, AliasesNoneToReplace,
 				  "Warning: no aliases to replace!"));
 	              }
@@ -821,7 +821,7 @@ void alias(void)
 	                  redraw += a_sendmsg();
 	              }
 	              else {
-		          error(catgets(elm_msg_cat,
+		          show_error(catgets(elm_msg_cat,
 	                          AliasesSet, AliasesNoneToMail,
 				  "Warning: no aliases to send mail to!"));
 	              }
@@ -864,7 +864,7 @@ void alias(void)
 	    case ' ':
 	    case 'v':
 		      if (newaliases) {		/* Need this ?? */
-		          error(catgets(elm_msg_cat,
+		          show_error(catgets(elm_msg_cat,
 	                          AliasesSet, AliasesNotInstalled,
 				  "Warning: new aliases not installed yet!"));
 	              }
@@ -884,7 +884,7 @@ void alias(void)
 		          }
 		      }
 	              else {
-		          error(catgets(elm_msg_cat,
+		          show_error(catgets(elm_msg_cat,
 	                          AliasesSet, AliasesNoneToView,
 				  "Warning: no aliases to view!"));
 		      }
@@ -944,13 +944,13 @@ void alias(void)
 		              }
 		          }
 	                  else if (! too_long) {
-			      error(catgets(elm_msg_cat,
+			      show_error(catgets(elm_msg_cat,
 	                              AliasesSet, AliasesNotFound,
 				      "Not found."));
 		          }
 		      }
 	              else {
-		          error(catgets(elm_msg_cat,
+		          show_error(catgets(elm_msg_cat,
 	                          AliasesSet, AliasesNoneToView,
 				  "Warning: no aliases to view!"));
 		      }
@@ -1013,7 +1013,7 @@ void install_aliases(void)
 	int na;
 	char itextfile[SLEN], odatafile[SLEN];
 
-	error(catgets(elm_msg_cat, AliasesSet, AliasesUpdating,
+	show_error(catgets(elm_msg_cat, AliasesSet, AliasesUpdating,
 		"Updating aliases..."));
 	if (sleepmsg > 0)
 		sleep(sleepmsg);
@@ -1029,7 +1029,7 @@ void install_aliases(void)
 
 	na = do_newalias(itextfile, odatafile, TRUE, FALSE);
 	if (na >= 0) {
-	    error1(catgets(elm_msg_cat, AliasesSet, AliasesReReading,
+	    show_error(catgets(elm_msg_cat, AliasesSet, AliasesReReading,
 		  "Processed %d aliases.  Re-reading the database..."), na);
 	    if (sleepmsg > 0)
 		sleep(sleepmsg);
@@ -1074,99 +1074,99 @@ static int alias_help(void)
 		       redraw++;
 		       return(redraw);
 
-	    case '$': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpDollar,
+	    case '$': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpDollar,
 "$ = Force resynchronization of aliases, processing additions and deletions."));
 		      break;
 
-	    case '/': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpSlash,
+	    case '/': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpSlash,
 			"/ = Search for specified name or alias in list."));
 		      break;
 
 	    case RETURN:
 	    case LINE_FEED:
 	    case ' ':
-	    case 'v': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpv,
+	    case 'v': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpv,
 	    "v = View the address for the currently selected alias."));
 		      break;
 
-	    case 'a': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpa,
+	    case 'a': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpa,
 	    "a = Add (return) address of current message to alias database."));
 		      break;
 
-	    case 'c': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpc,
+	    case 'c': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpc,
 "c = Change current user alias, modifying alias database at next resync."));
 		      break;
 
-	    case 'd': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpd,
+	    case 'd': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpd,
 	    "d = Mark the current alias for deletion from alias database."));
 		      break;
 
-	    case ctrl('D'): error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlD,
+	    case ctrl('D'): show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlD,
 	    "^D = Mark for deletion user aliases matching specified pattern."));
 		      break;
 
-	    case 'e': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpe,
+	    case 'e': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpe,
 	    "e = Edit the alias text file directly (will run newalias)."));
 		      break;
 
-	    case 'f': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpf,
+	    case 'f': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpf,
 		"f = Display fully expanded address of current alias."));
 		      break;
 
-	    case 'l': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpl,
+	    case 'l': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpl,
 	    "l = Limit displayed aliases on the specified criteria."));
 		      break;
 
-	    case ctrl('L'): error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlL,
+	    case ctrl('L'): show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlL,
 		      "^L = Rewrite the screen."));
 	    	      break;
 
-	    case 'm': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpm,
+	    case 'm': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpm,
 	    "m = Send mail to the current or tagged aliases."));
 		      break;
 
-	    case 'n': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpn,
+	    case 'n': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpn,
 "n = Add a new user alias, adding to alias database at next resync."));
 		      break;
 
 	    case 'r':
 	    case 'q':
-	    case 'i': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpi,
+	    case 'i': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpi,
 		      "r,q,i = Return from alias menu (with prompting)."));
 	   	      break;
 
 	    case 'R':
 	    case 'Q':
-	    case 'I': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpQ,
+	    case 'I': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpQ,
 		      "R,Q,I = Return from alias menu (no prompting)."));
 	   	      break;
 
-	    case 't': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpt,
+	    case 't': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpt,
 		      "t = Tag current alias for further operations."));
 		      break;
 
-	    case 'T': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpT,
+	    case 'T': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpT,
 		      "T = Tag current alias and go to next alias."));
 		      break;
 
-	    case ctrl('T'): error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlT,
+	    case ctrl('T'): show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlT,
 	    "^T = Tag aliases matching specified pattern."));
 		      break;
 
-	    case 'u': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpu,
+	    case 'u': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpu,
 	    "u = Unmark the current alias for deletion from alias database."));
 		      break;
 
-	    case ctrl('U'): error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlU,
+	    case ctrl('U'): show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpCtrlU,
 "^U = Mark for undeletion user aliases matching specified pattern."));
 		      break;
 
 	    case 'x':
-	    case 'X': error(catgets(elm_msg_cat, AliasesSet, AliasesHelpX,
+	    case 'X': show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpX,
 	    "x = Exit from alias menu, abandoning any pending deletions."));
 	   	      break;
 
-	    default : error(catgets(elm_msg_cat, AliasesSet, AliasesHelpNoHelp,
+	    default : show_error(catgets(elm_msg_cat, AliasesSet, AliasesHelpNoHelp,
 			"That key isn't used in this section."));
 	   	      break;
 	  }

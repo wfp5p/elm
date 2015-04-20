@@ -109,7 +109,7 @@ static void do_showerror(const char *s)
   show_last_error();
 }
 
-void error(const char *s, ...)
+void show_error(const char *s, ...)
 {
 	va_list args;
 	char buffer[SLEN];

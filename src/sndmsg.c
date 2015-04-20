@@ -126,7 +126,7 @@ int send_message(const char *given_to, const char *given_cc,
 	generate_in_reply_to(shdr, curr_folder.curr_mssg-1);
 	break;
     default:
-	error1("INTERNAL ERROR - bad mssgtype code %d in send_message().",
+	show_error("INTERNAL ERROR - bad mssgtype code %d in send_message().",
 		    mssgtype);
 	return FALSE;
     }
@@ -356,7 +356,7 @@ message_is_prepared:
     /* create temp file in which to build entire message */
     if ((fname_fullmssg = tempnam(temp_dir, "xmt.")) == NULL) {
 	dprint(1, (debugfile, "couldn't make temp file nam! (mail)\n"));
-	error(catgets(elm_msg_cat, ElmSet, ElmCouldNotMakeTemp,
+	show_error(catgets(elm_msg_cat, ElmSet, ElmCouldNotMakeTemp,
 		"Sorry - couldn't make temp file name."));
 	goto done;
     }
@@ -388,19 +388,19 @@ message_is_prepared:
 	    (shdr->expanded_cc == NULL || *shdr->expanded_cc == '\0') &&
 	    (shdr->expanded_bcc == NULL || *shdr->expanded_bcc == '\0')) {
 	if (bytes(fname_mssgbody) > 0)
-	    error(catgets(elm_msg_cat, ElmSet, ElmNoRecipientsKeptMessage,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmNoRecipientsKeptMessage,
 		    "No recipients specified!  Message kept."));
 	else
-	    error(catgets(elm_msg_cat, ElmSet, ElmNoRecipients,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmNoRecipients,
 		    "No recipients specified!"));
 	goto done;
     } else {
 	/* mail off the message */
-	error(catgets(elm_msg_cat, ElmSet, ElmSendingMail, "Sending mail..."));
+	show_error(catgets(elm_msg_cat, ElmSet, ElmSendingMail, "Sending mail..."));
 	(void) build_mailer_command(bigbuf, fname_fullmssg,
 		shdr->expanded_to, shdr->expanded_cc, shdr->expanded_bcc);
 	if ((i = system_call(bigbuf, SY_ENV_SHELL)) != 0) {
-	    error1(catgets(elm_msg_cat, ElmSet, ElmMailerReturnedError,
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmMailerReturnedError,
 		    "Mail failed!  [mailer exit status %d]"), i);
 	    goto done;
 	}
@@ -627,7 +627,7 @@ static int get_subject(char *subject_field)
 	if (enter_string(subject_field, SLEN, -1, -1, ESTR_UPDATE) < 0) {
 	  MoveCursor(prompt_line,0);
 	  CleartoEOLN();
-	  error(catgets(elm_msg_cat, ElmSet, ElmMailNotSent, "Mail not sent."));
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmMailNotSent, "Mail not sent."));
 	  return FALSE;
 	}
 
@@ -637,7 +637,7 @@ static int get_subject(char *subject_field)
 
 	  if (!enter_yn(msg, FALSE, prompt_line, FALSE)) {
 	    ClearLine(prompt_line);
-	    error(catgets(elm_msg_cat, ElmSet, ElmMailNotSend, "Mail not sent."));
+	    show_error(catgets(elm_msg_cat, ElmSet, ElmMailNotSend, "Mail not sent."));
 	    return FALSE;
 	  }
 	  PutLine(prompt_line,0,"Subject: <none>");
@@ -668,7 +668,7 @@ static int get_copies(char *cc_field, char *address, char *addressII,
 	  ClearLine(prompt_line-1);
 	  ClearLine(prompt_line);
 
-	  error(catgets(elm_msg_cat, ElmSet, ElmMailNotSend, "Mail not sent."));
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmMailNotSend, "Mail not sent."));
 	  return FALSE;
 	}
 
@@ -693,7 +693,7 @@ static int get_copies(char *cc_field, char *address, char *addressII,
 	if (strlen(address) + strlen(addressII) > VERY_LONG_STRING) {
 	  dprint(2, (debugfile,
 		"String length of \"To:\" + \"Cc\" too long! (get_copies)\n"));
-	  error(catgets(elm_msg_cat, ElmSet, ElmTooManyPeople, "Too many people. Copies ignored."));
+	  show_error(catgets(elm_msg_cat, ElmSet, ElmTooManyPeople, "Too many people. Copies ignored."));
 	  if (sleepmsg > 0)
 		sleep(sleepmsg);
 	  cc_field[0] = '\0';
@@ -1054,7 +1054,7 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 	    } else {
 		if (*form_p == YES) {
 		    *form_p = MAYBE;
-		    error(catgets(elm_msg_cat, ElmSet, ElmVfyFormToPlaintext,
+		    show_error(catgets(elm_msg_cat, ElmSet, ElmVfyFormToPlaintext,
 "Converting form back to plaintext.  Do \"m)ake form\" to re-make form."));
 		    if (sleepmsg > 0)
 			sleep(sleepmsg);
@@ -1103,7 +1103,7 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 	    } else {
 		if (*form_p == YES) {
 		    *form_p = MAYBE;
-		    error(catgets(elm_msg_cat, ElmSet, ElmVfyFormToPlaintext,
+		    show_error(catgets(elm_msg_cat, ElmSet, ElmVfyFormToPlaintext,
 "Converting form back to plaintext.  Do \"m)ake form\" to re-make form."));
 		    if (sleepmsg > 0)
 			sleep(sleepmsg);
