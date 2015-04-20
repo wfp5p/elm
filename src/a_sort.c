@@ -34,6 +34,7 @@
 #include "s_aliases.h"
 
 static void alias_old_current(long iindex);
+static int compare_aliases(const void *a, const void *b);
 
 int sort_aliases(int entries, int visible, int are_in_aliases)
 {
@@ -41,7 +42,6 @@ int sort_aliases(int entries, int visible, int are_in_aliases)
 	    put the status lines etc **/
 
 	long last_index = -1;
-	int compare_aliases();	/* for sorting */
 
 	dprint(2, (debugfile, "\n** sorting aliases by %s **\n\n",
 		alias_sort_name(TRUE)));
@@ -68,7 +68,7 @@ int sort_aliases(int entries, int visible, int are_in_aliases)
 	}
 }
 
-int compare_aliases(struct alias_rec **p1, struct alias_rec **p2)
+static int compare_aliases(const void *a, const void *b)
 {
 	/** compare two aliases according to the sortby value.
 
@@ -79,6 +79,9 @@ int compare_aliases(struct alias_rec **p1, struct alias_rec **p2)
 	register struct alias_rec *first, *second;
 	register int ret;
 	register long diff;
+
+	struct alias_rec **p1 = (struct alias_rec **) a;
+	struct alias_rec **p2 = (struct alias_rec **) b;
 
 	first = *p1;
 	second = *p2;
