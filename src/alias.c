@@ -206,7 +206,7 @@ static int open_user_aliases(void)
 
 }
 
-int add_alias(int replace, int to_replace)
+static int add_alias(int replace, int to_replace)
 {
 /*
  *	Add an alias to the user alias text file.  If there
@@ -398,7 +398,7 @@ int add_alias(int replace, int to_replace)
 
 }
 
-int add_current_alias(void)
+static int add_current_alias(void)
 {
 /*
  *	Alias the current message to the specified name and
@@ -539,8 +539,8 @@ above:	    if ((chspace = strchr(bufptr, ' ')) != NULL) {
 
 }
 
-int add_to_alias_text(char *aliasname, char *firstname, char *lastname,
-		      char *comment, char *address)
+static int add_to_alias_text(char *aliasname, char *firstname, char *lastname,
+			     char *comment, char *address)
 {
 /*
  *	Add the data to the user alias text file.
@@ -1465,7 +1465,7 @@ static int get_aliasname(char *aliasname, char *buffer, int *duplicate)
 
 }
 
-int superceed_system(int this_alias, char *buffer)
+static int superceed_system(int this_alias, char *buffer)
 {
 
 	PutLine(LINES-2, 0, catgets(elm_msg_cat,
@@ -1479,7 +1479,8 @@ int superceed_system(int this_alias, char *buffer)
 	        "Superceed?"), FALSE, LINES-3, FALSE);
 }
 
-void get_realnames(char *aliasname, char *firstname, char *lastname, char *comment, char *buffer)
+static void get_realnames(char *aliasname, char *firstname, char *lastname,
+			  char *comment, char *buffer)
 {
 	/* FOO - this is not handling enter_string() aborts properly */
 
