@@ -467,6 +467,7 @@ typedef struct {
 int options(void);
 void init_opts_menu(void);
 opts_menu *find_cfg_opts(int c);
+char *level_name(int n);
 
 /* src/pattern.c */
 int meta_match(int function);
@@ -497,6 +498,10 @@ int get_return(char *buffer, int msgnum);
 int save(int *redraw_p, int silently, int delete);
 int expand_filename(char *filename);
 
+/* src/save_opts.c */
+char *str_opt_nam(const char *optname, int dispmode);
+void save_options(void);
+
 /* src/screen.c */
 int show_headers(void);
 int show_current(void);
@@ -515,6 +520,7 @@ void initialize_signals(void);
 
 /* src/sort.c */
 int sort_mailbox(int entries, int visible);
+char *sort_name(int longname);
 
 /* src/strings.c */
 char *strip_commas(char *string);
@@ -522,7 +528,6 @@ char *get_token(char *source, char *keys, int depth);
 char *format_long(const char *inbuff, int init_len);
 int split_word(char *buffer, char *first, char *rest);
 int copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
-
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);
 int occurances_of(int ch, char *string);

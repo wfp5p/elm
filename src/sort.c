@@ -35,7 +35,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-char *sort_name(), *skip_re();
+static char *skip_re(char *string);
 
 void find_old_current(int iindex)
 {
@@ -255,7 +255,7 @@ char *sort_name(int longname)
 		"*UNKNOWN-SORT-PARAMETER*");
 }
 
-char *skip_re(char *string)
+static char *skip_re(char *string)
 {
 	/** this routine returns the given string minus any sort of
 	    "re:" prefix.  specifically, it looks for, and will

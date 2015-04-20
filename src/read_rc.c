@@ -65,8 +65,6 @@
 #include "s_elm.h"
 #include <time.h>
 
-extern opts_menu *find_cfg_opts();
-
 #define metachar(c)	(c == '+' || c == '%' || c == '=')
 #define ok_rc_char(c)   (isalnum(c) || c == '-' || c == '_')
 

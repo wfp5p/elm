@@ -37,11 +37,7 @@
 
 extern char version_buff[];
 
-extern char *sort_name(), *level_name();
-
 /* local procedures */
-PUBLIC char *str_opt_nam P_((const char *, int));
-PUBLIC void save_options P_((void));
 static void err_pause P_((int));
 static void output_option P_((FILE *, int));
 static int find_opt P_((const char *));

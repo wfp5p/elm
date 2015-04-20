@@ -90,56 +90,58 @@
 
 #define CONFIG_OPTIONS "^_defsopv_am_un"
 
-extern char *sort_name();
+static int one_liner(char *string);
+static int info_enter(char *name, int ypos, int xpos);
+static int alias_sort_one_liner(int sorting_by);
+static int sort_one_liner(int sorting_by);
 
-char *level_name();
 static char *on_name = NULL;
 static char *off_name = NULL;
 static int resort = 0;
 
-static post_cal(int f)
+static void post_cal(int f)
 {
     (void) expand_env(calendar_file, raw_calendar_file, sizeof(calendar_file));
 }
 
-static post_editor(int f)
+static void post_editor(int f)
 {
     (void) expand_env(editor, raw_editor, sizeof(editor));
 }
 
-static post_pager(int f)
+static void post_pager(int f)
 {
     (void) expand_env(pager, raw_pager, sizeof(pager));
     clear_pages = (streq(pager, "builtin+") || streq(pager, "internal+"));
 }
 
-static post_folder(int f)
+static void post_folder(int f)
 {
     (void) expand_env(folders, raw_folders, sizeof(folders));
 }
 
-static post_sort(int f)
+static void post_sort(int f)
 {
     if (f)
 	resort++;
 }
 
-static post_sent(int f)
+static void post_sent(int f)
 {
     (void) expand_env(sent_mail, raw_sentmail, sizeof(sent_mail));
 }
 
-static post_print(int f)
+static void post_print(int f)
 {
     (void) expand_env(printout, raw_printout, sizeof(printout));
 }
 
-static post_menu(int f)
+static void post_menu(int f)
 {
     headers_per_page = LINES - (mini_menu ? 13 : 8);
 }
 
-opts_menu cfg_opts[] = {
+static opts_menu cfg_opts[] = {
 
 {'a', "A)rrow cursor",	ElmOptionArrowMenu,  "arrow",	NULL,
 "This defines whether the ELM cursor is an arrow or a highlight bar.", ElmOptionArrowHelp},
@@ -240,7 +242,7 @@ opts_menu *find_cfg_opts(int c)
     return(o->parm ? o : NULL);
 }
 
-char *one_liner_for(int c)
+static char *one_liner_for(int c)
 {
     opts_menu *o;
 
@@ -252,7 +254,7 @@ char *one_liner_for(int c)
 	return(NULL);
 }
 
-void display_options(void)
+static void display_options(void)
 {
 	/** Display all the available options.. **/
 
@@ -261,7 +263,6 @@ void display_options(void)
 	register opts_menu *o;
 	register char *s;
 	char buf[SLEN];
-	extern char *str_opt_nam();
 
 	ClearScreen();
 
@@ -287,7 +288,7 @@ void display_options(void)
 	}
 }
 
-void options_help(void)
+static void options_help(void)
 {
 	/** help menu for the options screen... **/
 
@@ -441,7 +442,7 @@ int options(void)
 }
 
 
-int on_or_off(int *var, int x, int y)
+static int on_or_off(int *var, int x, int y)
 {
 	/** 'var' field at x.y toggles between on and off... **/
 
@@ -464,7 +465,7 @@ int on_or_off(int *var, int x, int y)
 	MoveCursor(x,y+4); 	CleartoEOLN();	/* remove help prompt */
 }
 
-int switch_user_level(int *ulevel, int x, int y)
+static int switch_user_level(int *ulevel, int x, int y)
 {
 	/** step through possible user levels... **/
 
@@ -481,7 +482,7 @@ int switch_user_level(int *ulevel, int x, int y)
 	MoveCursor(x,y+20); 	CleartoEOLN();	/* remove help prompt */
 }
 
-int change_sort(int *var, int x, int y)
+static int change_sort(int *var, int x, int y)
 {
 	/** change the sorting scheme... **/
 	/** return !0 if new sort order, else 0 **/
@@ -536,7 +537,7 @@ int change_sort(int *var, int x, int y)
 	return(*var-sortby);
 }
 
-int one_liner(char *string)
+static int one_liner(char *string)
 {
 	/** A single-line description of the selected item... **/
 
@@ -545,7 +546,7 @@ int one_liner(char *string)
 		CenterLine(LINES-4, string);
 }
 
-int sort_one_liner(int sorting_by)
+static int sort_one_liner(int sorting_by)
 {
 	/** A one line summary of the particular sorting scheme... **/
 
@@ -613,7 +614,7 @@ int sort_one_liner(int sorting_by)
 }
 
 
-int change_alias_sort(int *var, int x, int y)
+static int change_alias_sort(int *var, int x, int y)
 {
 	/** change the sorting scheme... **/
 	/** return !0 if new sort order, else 0 **/
@@ -671,7 +672,7 @@ int change_alias_sort(int *var, int x, int y)
 	return(*var-alias_sortby);
 }
 
-int alias_sort_one_liner(int sorting_by)
+static int alias_sort_one_liner(int sorting_by)
 {
 	/** A one line summary of the particular sorting scheme... **/
 
@@ -713,7 +714,7 @@ int alias_sort_one_liner(int sorting_by)
  * we can use save_info structure and tag the param as being changed
  * locally (so we know to save it to the .elm/elmrc file).
  */
-int info_enter(char *name, int ypos, int xpos)
+static int info_enter(char *name, int ypos, int xpos)
 {
 	register int x,q;
 	char buffer[SLEN];
