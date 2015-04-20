@@ -195,7 +195,7 @@ void edit_mailbox(void)
 
 #endif
 
-int edit_a_file(char *editfile)
+static int edit_a_file(char *editfile)
 {
 	/** Edit a file.  This routine is used by edit_mailbox()
 	    and edit_aliases_text().  It gets all the editor info
