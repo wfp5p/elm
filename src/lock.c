@@ -67,8 +67,6 @@
 #define	FLOCKING_RETRY	1
 #define	FLOCKING_FAIL	-1
 
-extern char *mk_lockname();
-
 static int  lock_state = OFF;
 
 #ifdef	USE_DOTLOCK_LOCKING
