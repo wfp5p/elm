@@ -441,7 +441,8 @@ int elm_unlock(void)
 	if(lock_state == ON) {
 
 #ifdef SYSCALL_LOCKING
-	    if (retcode = Release_the_file (flock_fd)) {
+		retcode = Release_the_file (flock_fd);
+		if (retcode) {
 
 		dprint(1, (debugfile,
 			   "Error %s\n\ttrying to unlock file %s (%s)\n",
