@@ -454,8 +454,19 @@ int elm_unlock(void);
 int newmbox(const char *new_filename, int adds_only);
 
 /* src/options.c */
+typedef struct {
+    char letter;		/* menu letter on options screen */
+    char *menu;			/* menu prompt */
+    int  menu_msg;		/* NLS message number of menu prompt */
+    char *parm;			/* parameter to modify */
+    void (*post)(int);		/* post processing function */
+    char *one_liner;		/* one line help message */
+    int  one_liner_msg;		/* NLS message number of one line help mssg */
+} opts_menu;
+
 int options(void);
 void init_opts_menu(void);
+opts_menu *find_cfg_opts(int c);
 
 /* src/pattern.c */
 int meta_match(int function);

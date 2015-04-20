@@ -54,16 +54,6 @@
  *	Defines for the storage of options portion of the Elm system.
  */
 
-typedef struct {
-    char letter;		/* menu letter on options screen */
-    char *menu;			/* menu prompt */
-    int  menu_msg;		/* NLS message number of menu prompt */
-    char *parm;			/* parameter to modify */
-    int  (*post)();		/* post processing function */
-    char *one_liner;		/* one line help message */
-    int  one_liner_msg;		/* NLS message number of one line help mssg */
-} opts_menu;
-
 #define DT_SYN		0	/* synonym entry (old name) */
 #define DT_STR		1	/* string */
 #define DT_NUM		2	/* number */
