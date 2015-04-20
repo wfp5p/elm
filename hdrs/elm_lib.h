@@ -342,8 +342,8 @@ int fix_arpa_address(char *address);
 /* src/aliaslib.c */
 char *get_alias_address(char *name, int mailing, int *too_longp);
 
-
 /* src/alias.c */
+int get_is_system(void);
 int open_alias_files(int are_in_aliases);
 int find_alias(char *word, int alias_type);
 int sort_aliases(int entries, int visible, int are_in_aliases);

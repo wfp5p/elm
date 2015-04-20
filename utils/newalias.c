@@ -54,8 +54,14 @@ static void na_error(char *err_message);
 void show_error(const char *s, ...);
 
 
-int  is_system=0;		/* system file updating?     */
+static int  is_system=0;		/* system file updating?     */
 int  sleepmsg=0;		/* not in elm, dont wait for messages */
+
+/* used by mk_aliases.c */
+int get_is_system(void)
+{
+	return is_system;
+}
 
 main(argc, argv)
 int argc;

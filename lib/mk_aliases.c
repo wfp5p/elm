@@ -74,7 +74,7 @@ static char *buffer;		/* alias line buffer         */
 static long buffer_size;	/* size of alias buffer      */
 static long file_offset = 0;	/* offset into file so far   */
 
-extern int  is_system;		/* system file updating?     */
+extern int  get_is_system(void);		/* system file updating?     */
 
 static int get_alias P_((FILE *, int));
 static int get_line P_((FILE *, char *, int, int));
@@ -277,7 +277,7 @@ static void add_to_table(FILE *data, register char *aliases,
 	        alias.address = alias.comment + strlen(comment) + 1;
 	    else
 	        alias.address = alias.comment + 1;
-	    alias.type = is_system ? SYSTEM : USER;
+	    alias.type = get_is_system() ? SYSTEM : USER;
 	    alias.type |= group(addresses) ? GROUP : PERSON;
 	    alias.length = ((int) alias.address) + strlen(addresses) + 1;
 

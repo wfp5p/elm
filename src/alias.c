@@ -76,11 +76,15 @@ static int ask_accept(char *aliasname, char *firstname, char *lastname,
 static int parse_aliases(char *buffer, char *remainder);
 static int alias_help(void);
 
-int  is_system=0;		/* system file updating?     */
+static int  is_system=0;		/* system file updating?     */
 
 static int num_duplicates;
 static DBZ *system_hash = NULL, *user_hash = NULL;
 
+int get_is_system(void)
+{
+	return is_system;
+}
 
 int open_alias_files(int are_in_aliases)
 {
