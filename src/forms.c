@@ -57,7 +57,7 @@
 static int prompt_for_entries(char *buffer, FILE *fd, int entries);
 static int prompt_for_sized_entry(char *prompt, char *buffer, int field_size);
 
-int check_form_file(char *filename)
+int check_form_file(const char *filename)
 {
 	/** This routine returns the number of fields in the specified file,
 	    or -1 if an error is encountered. **/

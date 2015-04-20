@@ -425,7 +425,7 @@ int check_mailfile_size(char *mfile);
 int copy_file(const char *fname_src, const char *fname_dest, int isspool);
 
 /* src/forms.c */
-int check_form_file(char *filename);
+int check_form_file(const char *filename);
 int format_form(char *filename);
 int mail_filled_in_form(char *address, char *subject);
 
@@ -470,6 +470,7 @@ int change_file(char *p1);
 /* src/read_rc.c */
 int read_rc_file(void);
 int expand_env(register char *dst, const char *src, int len);
+int matchInList(char *list[], int count, const char *buffer, int ignoreCase);
 
 /* src/reply.c */
 void get_return_address(const char *address, char *single_address);

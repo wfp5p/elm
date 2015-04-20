@@ -679,7 +679,7 @@ int default_weedlist(void)
 	  weedlist[weedcount] = safe_strdup(default_list[weedcount]);
 }
 
-int matchInList(char *list[], int count, char *buffer, int ignoreCase)
+int matchInList(char *list[], int count, const char *buffer, int ignoreCase)
 {
    	/** returns true iff the first 'n' characters of 'buffer'
 	    match an entry of the list **/
