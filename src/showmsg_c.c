@@ -83,8 +83,8 @@ static int screen_mangled = 0;
 static char msg_line[SLEN];
 static char *put_help_prompt = NULL;
 #define store_msg(a)	(void)strcpy(msg_line,a)
-#define put_prompt()	PutLine0(LINES-3, 0, nls_Prompt)
-#define put_help()	PutLine0(LINES-3, 45, put_help_prompt)
+#define put_prompt()	PutLine(LINES-3, 0, nls_Prompt)
+#define put_help()	PutLine(LINES-3, 45, put_help_prompt)
 #define POST_PROMPT_COL	strlen(nls_Prompt)
 
 
@@ -286,7 +286,7 @@ next_msg:
 	    CleartoEOS();
 	    if (Term.status & TERM_CAN_SO)
 	      StartStandout();
-	    PutLine1(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmCommandLine,
+	    PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmCommandLine,
 		"%s Command ('i' to return to index): "), msg_line);
 	    if (Term.status & TERM_CAN_SO)
 	      EndStandout();
@@ -308,14 +308,14 @@ int put_cmd_name(char *command, int will_mangle)
 	  screen_mangled = TRUE;
 	}
 	if(screen_mangled) {
-	  PutLine0(LINES-3, POST_PROMPT_COL, command);
+	  PutLine(LINES-3, POST_PROMPT_COL, command);
 	  CleartoEOS();
 	}
 }
 
 int put_border(void)
 {
-	 PutLine0(LINES-4, 0,
+	 PutLine(LINES-4, 0,
 "--------------------------------------------------------------------------\n");
 }
 

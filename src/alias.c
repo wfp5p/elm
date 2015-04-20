@@ -248,7 +248,7 @@ int add_alias(int replace, int to_replace)
 	  * There is only on alias tagged.  Ask the question
 	  * but the default response is NO.
 	  */
-	    PutLine0(LINES-2,0, catgets(elm_msg_cat,
+	    PutLine(LINES-2,0, catgets(elm_msg_cat,
 	            AliasesSet, AliasesOneTagged,
 	            "There is 1 alias tagged..."));
 	    CleartoEOLN();
@@ -261,7 +261,7 @@ int add_alias(int replace, int to_replace)
 	  * wants to create a group alias.  The default response
 	  * is YES.
 	  */
-	    PutLine1(LINES-2,0, catgets(elm_msg_cat,
+	    PutLine(LINES-2,0, catgets(elm_msg_cat,
 	            AliasesSet, AliasesManyTagged,
 	            "There are %d aliases tagged..."), tagged);
 	    CleartoEOLN();
@@ -316,7 +316,7 @@ int add_alias(int replace, int to_replace)
 	else {
 	    strcpy(buffer, catgets(elm_msg_cat,
 	            AliasesSet, AliasesEnterAliasName, "Enter alias name: "));
-	    PutLine0(LINES-2,0, buffer);
+	    PutLine(LINES-2,0, buffer);
 	    CleartoEOLN();
 	    *aliasname = '\0';
 	    if ((replace = get_aliasname(aliasname, buffer, &to_replace)) < 0) {
@@ -355,7 +355,7 @@ int add_alias(int replace, int to_replace)
 	    sprintf(buffer, catgets(elm_msg_cat,
 	            AliasesSet, AliasesEnterAddress,
 	            "Enter address for %s: "), aliasname);
-	    PutLine0(LINES-2, 0, buffer);
+	    PutLine(LINES-2, 0, buffer);
 	    if (replace)
 	        strcpy(address1, aliases[to_replace]->address);
 	    else
@@ -430,7 +430,7 @@ int add_current_alias(void)
 
 	strcpy(buffer, catgets(elm_msg_cat, AliasesSet, AliasesCurrentMessage,
 		"Current message address aliased to: "));
-	PutLine0(LINES-2,0, buffer);
+	PutLine(LINES-2,0, buffer);
 	CleartoEOLN();
 	*aliasname = '\0';
 	if ((replace = get_aliasname(aliasname, buffer, &to_replace)) < 0) {
@@ -757,7 +757,7 @@ void alias(void)
 	      break;
 #endif /* ALLOW_SUBSHELL */
 
-	    case '$': PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case '$': PutLine(-1, -1, catgets(elm_msg_cat,
 					AliasesSet, AliasesResync,
 					"Resynchronize aliases..."));
 	           /*
@@ -771,7 +771,7 @@ void alias(void)
 		      }
 		      break;
 
-	    case 'a': PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'a': PutLine(-1, -1, catgets(elm_msg_cat,
 					AliasesSet, AliasesAddCurrent,
 					"Add address from current message..."));
 		      clear_error();
@@ -783,7 +783,7 @@ void alias(void)
 
 	    case 'c':
 	              if (curr_alias > 0) {
-			  PutLine0(-1, -1, catgets(elm_msg_cat,
+			  PutLine(-1, -1, catgets(elm_msg_cat,
 	                              AliasesSet, AliasesReplaceCurrent,
 	                              "Replace current alias in database..."));
 		          clear_error();
@@ -799,7 +799,7 @@ void alias(void)
 	              }
 		      break;
 
-	    case 'e': PutLine1(LINES-3, strlen(nls_Prompt),
+	    case 'e': PutLine(LINES-3, strlen(nls_Prompt),
 	                  catgets(elm_msg_cat, AliasesSet, AliasesEdit,
 	                      "Edit %s..."), ALIAS_TEXT);
 	           /*
@@ -816,7 +816,7 @@ void alias(void)
 
 	    case 'm':
 	              if (curr_alias > 0) {
-			  PutLine0(-1, -1, catgets(elm_msg_cat,
+			  PutLine(-1, -1, catgets(elm_msg_cat,
 					  AliasesSet, AliasesMail, "Mail..."));
 	                  redraw += a_sendmsg();
 	              }
@@ -827,7 +827,7 @@ void alias(void)
 	              }
 		      break;
 
-	    case 'n': PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'n': PutLine(-1, -1, catgets(elm_msg_cat,
 					AliasesSet, AliasesAddNew,
 					"Add a new alias to database..."));
 		      clear_error();
@@ -842,7 +842,7 @@ void alias(void)
 	    case 'i':
 	    case 'I':
 	    case 'r':
-	    case 'R': PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'R': PutLine(-1, -1, catgets(elm_msg_cat,
 	    				AliasesSet, AliasesAddReturn,
 					"Return to main menu..."));
 	           /*
@@ -871,13 +871,13 @@ void alias(void)
 
 	              if (curr_alias > 0) {
 	                  if (aliases[curr_alias-1]->type & GROUP) {
-	                      PutLine1(LINES-1, 0, catgets(elm_msg_cat,
+	                      PutLine(LINES-1, 0, catgets(elm_msg_cat,
 	                              AliasesSet, AliasesGroupAlias,
 				      "Group alias: %-60.60s"),
 	                          aliases[curr_alias-1]->address);
 		          }
 		          else {
-	                      PutLine1(LINES-1, 0, catgets(elm_msg_cat,
+	                      PutLine(LINES-1, 0, catgets(elm_msg_cat,
 	                              AliasesSet, AliasesAliasedAddress,
 				      "Aliased address: %-60.60s"),
 	                          aliases[curr_alias-1]->address);
@@ -891,7 +891,7 @@ void alias(void)
 		      break;
 
 	    case 'x':
-	    case 'X': PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'X': PutLine(-1, -1, catgets(elm_msg_cat,
 	    				AliasesSet, AliasesAddReturn,
 					"Return to main menu..."));
 	              exit_alias();
@@ -908,7 +908,7 @@ void alias(void)
 		              strcpy(buffer, catgets(elm_msg_cat,
 	                              AliasesSet, AliasesFullyExpanded,
 				      "Fully expand alias: "));
-		              PutLine0(LINES-2, 0, buffer);
+		              PutLine(LINES-2, 0, buffer);
 			      if (enter_string(name, sizeof(name), -1, -1,
 					  ESTR_REPLACE) < 0 || name[0] == '\0')
 				break;
@@ -918,7 +918,7 @@ void alias(void)
 		          if (address != NULL) {
 		              while (TRUE) {
 	                          ClearScreen();
-			          PutLine1(2,0, catgets(elm_msg_cat,
+			          PutLine(2,0, catgets(elm_msg_cat,
 	                                  AliasesSet, AliasesAliasedFull,
 					  "Aliased address for:\t%s\n\r"),
 	                              name);
@@ -926,14 +926,14 @@ void alias(void)
 		                  while (i < LINES-2) {
 		                      if ((commap = strchr(address, (int)','))
 	                                          == NULL) {
-		                          PutLine0(i, 4, address);
+		                          PutLine(i, 4, address);
 		                          break;
 		                      }
 		                      *commap = '\0';
-		                      PutLine0(i++, 4, address);
+		                      PutLine(i++, 4, address);
 		                      address = commap+2;
 		                  }
-	                          PutLine0(LINES-1, 0, catgets(elm_msg_cat,
+	                          PutLine(LINES-1, 0, catgets(elm_msg_cat,
 	                                  AliasesSet, AliasesPressReturn,
 					  "Press <return> to continue."));
 			          (void) ReadCh();
@@ -1426,11 +1426,11 @@ static int get_aliasname(char *aliasname, char *buffer, int *duplicate)
 	         "Attempt to add a duplicate alias [%s] in get_aliasname\n",
 	         aliases[loc]->alias));
 	    if (aliases[loc]->type & GROUP )
-	        PutLine1(LINES-2,0, catgets(elm_msg_cat,
+	        PutLine(LINES-2,0, catgets(elm_msg_cat,
 	                AliasesSet, AliasesAlreadyGroup,
 	                "Already a group with name %s."), aliases[loc]->alias);
 	    else
-	        PutLine1(LINES-2,0, catgets(elm_msg_cat,
+	        PutLine(LINES-2,0, catgets(elm_msg_cat,
 	                AliasesSet, AliasesAlreadyAlias,
 	                "Already an alias for %s."), aliases[loc]->alias);
 	    CleartoEOLN();
@@ -1468,7 +1468,7 @@ static int get_aliasname(char *aliasname, char *buffer, int *duplicate)
 int superceed_system(int this_alias, char *buffer)
 {
 
-	PutLine2(LINES-2, 0, catgets(elm_msg_cat,
+	PutLine(LINES-2, 0, catgets(elm_msg_cat,
 	        AliasesSet, AliasesSystemAlias, "System (%6s) alias for %s."),
 	    alias_type(aliases[this_alias]->type), aliases[this_alias]->alias);
 /*
@@ -1485,12 +1485,12 @@ void get_realnames(char *aliasname, char *firstname, char *lastname, char *comme
 
 	sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesEnterLastName,
 		"Enter last name for %s: "), aliasname);
-	PutLine0(LINES-2, 0, buffer);
+	PutLine(LINES-2, 0, buffer);
 	enter_string(lastname, SLEN, -1, -1, ESTR_REPLACE);
 
 	sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesEnterFirstName,
 		"Enter first name for %s: "), aliasname);
-	PutLine0(LINES-2, 0, buffer);
+	PutLine(LINES-2, 0, buffer);
 	enter_string(firstname, SLEN, -1, -1, ESTR_REPLACE);
 
 	if (strlen(lastname) == 0) {
@@ -1505,7 +1505,7 @@ void get_realnames(char *aliasname, char *firstname, char *lastname, char *comme
 
 	sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesEnterComment,
 		"Enter optional comment for %s: "), aliasname);
-	PutLine0(LINES-2, 0, buffer);
+	PutLine(LINES-2, 0, buffer);
 	enter_string(comment, SLEN, -1, -1, ESTR_REPLACE);
 
 }
@@ -1531,14 +1531,14 @@ static int ask_accept(char *aliasname, char *firstname, char *lastname,
 	else {
 	    sprintf(buffer, "%s %s", firstname, lastname);
 	}
-	PutLine2(LINES-1,0, catgets(elm_msg_cat, AliasesSet, AliasesAddressAs,
+	PutLine(LINES-1,0, catgets(elm_msg_cat, AliasesSet, AliasesAddressAs,
 	        "Messages addressed as: %s (%s)"), address, buffer);
 	if (strlen(comment) != 0) {
 	    strcat(buffer, ", ");
 	    strcat(buffer, comment);
 	}
 
-	PutLine2(LINES-2,0, catgets(elm_msg_cat, AliasesSet, AliasesAddressTo,
+	PutLine(LINES-2,0, catgets(elm_msg_cat, AliasesSet, AliasesAddressTo,
 	        "New alias: %s is '%s'."), aliasname, buffer);
 	CleartoEOLN();
 /*

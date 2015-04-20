@@ -17,7 +17,7 @@
 #define IS_DOTDOT(s)	((s)[0] == '.' && (s)[1] == '.' && (s)[2] == '\0')
 
 /* WARNING - side effects */
-#define PutRight(line, str) PutLine0((line), COLS-(strlen(str)+2), (str))
+#define PutRight(line, str) PutLine((line), COLS-(strlen(str)+2), (str))
 
 #define S_(sel, str)	catgets(elm_msg_cat, FbrowserSet, (sel), (str))
 
@@ -257,10 +257,10 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 		CenterLine(FBLINE_TITLE, prompt);
 		sprintf(tmp_buf, S_(FbrowserHeaderPageOf, "[page %d/%d]"),
 			    FB_pagenum(curr_sel)+1, FB_num_pages);
-		PutLine0(FBLINE_TITLE, COLS-(strlen(tmp_buf)+2), tmp_buf);
+		PutLine(FBLINE_TITLE, COLS-(strlen(tmp_buf)+2), tmp_buf);
 		if (do_redraw != FBDRAW_ALL)
 		    ClearLine(FBLINE_CURR);
-		PutLine1(FBLINE_CURR, 0,
+		PutLine(FBLINE_CURR, 0,
 			    S_(FbrowserHeaderDirectory, "Directory: %s"),
 			    curr_dir);
 		sprintf(tmp_buf, S_(FbrowserHeaderPattern, "Pattern: %s"),
@@ -292,7 +292,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 		if (prev_sel >= FB_first_sel_of_page
 			&& prev_sel <= FB_last_sel_of_page) {
 		    if (arrow_cursor) {
-			PutLine0(FBLINE_LTOP+FB_line(prev_sel), 0,
+			PutLine(FBLINE_LTOP+FB_line(prev_sel), 0,
 				    fb_acursor_off);
 		    } else {
 			fb_disp_entry(FBLINE_LTOP+FB_line(prev_sel),
@@ -300,7 +300,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 		    }
 		}
 		if (arrow_cursor) {
-		    PutLine0(FBLINE_LTOP+FB_line(curr_sel), 0,
+		    PutLine(FBLINE_LTOP+FB_line(curr_sel), 0,
 				fb_acursor_on);
 		} else {
 		    fb_disp_entry(FBLINE_LTOP+FB_line(curr_sel),
@@ -318,7 +318,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 			    S_(FbrowserInstrDummy2, /*(*/
 "Press ENTER to make selection, ? for help, or q)uit."),
 			    (do_redraw != FBDRAW_ALL));
-		PutLine0(FBLINE_INPUT, 0, S_(FbrowserMainPrompt, "Command: "));
+		PutLine(FBLINE_INPUT, 0, S_(FbrowserMainPrompt, "Command: "));
 		GetCursorPos(&inp_line, &inp_col);
 	    }
 
@@ -429,7 +429,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 			S_(FbrowserLimitInstrDummy2,
 "In patterns, \"?\" means any one char, and \"*\" means any number of chars."),
 			TRUE);
-	    PutLine0(FBLINE_INPUT, 0, S_(FbrowserLimitPrompt, "New Pattern: "));
+	    PutLine(FBLINE_INPUT, 0, S_(FbrowserLimitPrompt, "New Pattern: "));
 	    strcpy(tmp_buf, "*");
 	    if (enter_string(tmp_buf, sizeof(tmp_buf), -1, -1, ESTR_REPLACE) < 0
 			|| tmp_buf[0] == '\0'
@@ -457,7 +457,7 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
 			S_(FbrowserDirInstrDummy2,
 "You may say \"~\" for your home dir and \"=\" for your folders dir."),
 			TRUE);
-	    PutLine0(FBLINE_INPUT, 0, S_(FbrowserDirPrompt, "New Directory: "));
+	    PutLine(FBLINE_INPUT, 0, S_(FbrowserDirPrompt, "New Directory: "));
 	    if (enter_string(tmp_buf, sizeof(tmp_buf), -1, -1, ESTR_ENTER) < 0
 			|| tmp_buf[0] == '\0') {
 		error(S_(FbrowserNotChanged, "Not changed."));
@@ -512,7 +512,7 @@ enter_value:
 			S_(FbFOO,
 "Press CTRL/D to abort entry and stay in current directory."),
 			TRUE);
-	    PutLine0(FBLINE_INPUT, 0, S_(FbFOO, "Select: "));
+	    PutLine(FBLINE_INPUT, 0, S_(FbFOO, "Select: "));
 	    if (enter_string(tmp_buf, sizeof(tmp_buf), -1, -1, ESTR_UPDATE) < 0
 			|| tmp_buf[0] == '\0') {
 		error(S_(FbrowserNotChanged, "Not changed."));
@@ -639,12 +639,12 @@ static void fb_submenu_options(FB_DIR **dl_p, const char *curr_dir, const char *
 
 	/* fb_show_dotfiles setting */
 	if (do_redraw) {
-	    PutLine1(FBOLINE_OPT_DOTF, 0, title_fmt,
+	    PutLine(FBOLINE_OPT_DOTF, 0, title_fmt,
 			S_(FbrowserOptionsTitleDotf, /*(*/
 			"D)ot files displayed?"));
 	}
 	if (do_redraw || curr_sel == FBOSEL_DOTF) {
-	    PutLine1(FBOLINE_OPT_DOTF, FBOCOL_OPTVAL, value_fmt,
+	    PutLine(FBOLINE_OPT_DOTF, FBOCOL_OPTVAL, value_fmt,
 			(fb_show_dotfiles
 			? S_(FbrowserOptionsOn, "ON")
 			: S_(FbrowserOptionsOff, "OFF")));
@@ -660,12 +660,12 @@ static void fb_submenu_options(FB_DIR **dl_p, const char *curr_dir, const char *
 
 	/* fb_sortby setting */
 	if (do_redraw) {
-	    PutLine1(FBOLINE_OPT_SORT, 0, title_fmt,
+	    PutLine(FBOLINE_OPT_SORT, 0, title_fmt,
 			S_(FbrowserOptionsTitleSort, /*(*/
 			"S)orting criteria"));
 	}
 	if (do_redraw || curr_sel == FBOSEL_SORT) {
-	    PutLine1(FBOLINE_OPT_SORT, FBOCOL_OPTVAL, value_fmt,
+	    PutLine(FBOLINE_OPT_SORT, FBOCOL_OPTVAL, value_fmt,
 			fb_getsorttype());
 	}
 	if (curr_sel != FBOSEL_SORT && prev_sel == FBOSEL_SORT && !do_redraw) {
@@ -701,7 +701,7 @@ static void fb_submenu_options(FB_DIR **dl_p, const char *curr_dir, const char *
 	/* command prompt */
 	if (do_redraw || curr_sel != prev_sel) {
 	    if (curr_sel == FBOSEL_NONE) {
-		PutLine0(FBLINE_INPUT, 0, S_(FbrowserOptionsPromptCommand,
+		PutLine(FBLINE_INPUT, 0, S_(FbrowserOptionsPromptCommand,
 			    "Command: "));
 		GetCursorPos(&inp_line, &inp_col);
 		WriteChar('q');
@@ -831,19 +831,19 @@ static void fb_disp_enthdr(int line)
     ClearLine(line);
     MoveCursor(line, strlen(fb_acursor_off));
     if (!FB_DUMMYMODE) {
-	PutLine1(-1, -1, "%-10.10s",
+	PutLine(-1, -1, "%-10.10s",
 		    S_(FbrowserEnthdrPermission, "permission"));
     }
-    PutLine1(-1, -1, " %-4.4s", S_(FbrowserEnthdrType, "type"));
+    PutLine(-1, -1, " %-4.4s", S_(FbrowserEnthdrType, "type"));
     if (!FB_DUMMYMODE)
-	PutLine1(-1, -1, " %-8.8s", S_(FbrowserEnthdrOwner, "owner"));
-    PutLine1(-1, -1, " %8.8s", S_(FbrowserEnthdrSize, "size"));
+	PutLine(-1, -1, " %-8.8s", S_(FbrowserEnthdrOwner, "owner"));
+    PutLine(-1, -1, " %8.8s", S_(FbrowserEnthdrSize, "size"));
     time(&tval);
     strftime(buf, sizeof(buf), S_(FbrowserEntryDateFmt, "%y-%b-%d"),
 		localtime(&tval)); w = strlen(buf);
     sprintf(buf, "%-*.*s", w, w, S_(FbrowserEnthdrDate, "date"));
-    PutLine1(-1, -1, "  %s", buf);
-    PutLine1(-1, -1, "  %s", S_(FbrowserEnthdrFilename, "filename"));
+    PutLine(-1, -1, "  %s", buf);
+    PutLine(-1, -1, "  %s", S_(FbrowserEnthdrFilename, "filename"));
 }
 
 static void fb_disp_entry(int line, const FB_DIR *dl, int n, int selected)
@@ -941,7 +941,7 @@ static void fb_disp_entry(int line, const FB_DIR *dl, int n, int selected)
     MoveCursor(line, 0);
     if (selected && !arrow_cursor)
 	StartStandout();
-    PutLine0(-1, -1, out_buf);
+    PutLine(-1, -1, out_buf);
     if (selected && !arrow_cursor)
 	EndStandout();
 }

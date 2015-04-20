@@ -546,7 +546,7 @@ void display_to(char *address)
 	/* fixup column position to be right justified */
 	MoveCursor(to_line, COLS - (displen+1));
     }
-    PutLine0(-1, -1, dispbuf);
+    PutLine(-1, -1, dispbuf);
 }
 
 
@@ -564,7 +564,7 @@ int get_to(char *to_field, char *address, int mssgtype)
 	} else {
 	    prompt = catgets(elm_msg_cat, ElmSet, ElmTo, "To: ");
 	}
-	PutLine0(line, 0, prompt);
+	PutLine(line, 0, prompt);
 	if (enter_string(to_field, LONG_STRING, -1, -1, ESTR_REPLACE) < 0
 		    || *to_field == '\0') {
 	    ClearLine(line);
@@ -596,15 +596,15 @@ static void display_subject(const char *subject_field)
     prompt_line = (OPMODE_IS_READMODE(opmode) ? LINES-2 : 4);
 
     if (user_level == 0) {
-	PutLine0(prompt_line, 0,
+	PutLine(prompt_line, 0,
 		catgets(elm_msg_cat, ElmSet, ElmSubjectOfMessage,
 		"Subject of message: "));
     }
     else
-	PutLine0(prompt_line, 0,
+	PutLine(prompt_line, 0,
 		catgets(elm_msg_cat, ElmSet, ElmSubject, "Subject: "));
 
-    PutLine0(-1, -1, subject_field);
+    PutLine(-1, -1, subject_field);
 }
 
 static int get_subject(char *subject_field)
@@ -618,11 +618,11 @@ static int get_subject(char *subject_field)
 	prompt_line = (OPMODE_IS_READMODE(opmode) ? LINES-2 : 4);
 
 	if (user_level == 0) {
-	  PutLine0(prompt_line,0, catgets(elm_msg_cat, ElmSet, ElmSubjectOfMessage,
+	  PutLine(prompt_line,0, catgets(elm_msg_cat, ElmSet, ElmSubjectOfMessage,
 		"Subject of message: "));
 	}
 	else
-	  PutLine0(prompt_line,0, catgets(elm_msg_cat, ElmSet, ElmSubject, "Subject: "));
+	  PutLine(prompt_line,0, catgets(elm_msg_cat, ElmSet, ElmSubject, "Subject: "));
 
 	if (enter_string(subject_field, SLEN, -1, -1, ESTR_UPDATE) < 0) {
 	  MoveCursor(prompt_line,0);
@@ -640,7 +640,7 @@ static int get_subject(char *subject_field)
 	    error(catgets(elm_msg_cat, ElmSet, ElmMailNotSend, "Mail not sent."));
 	    return FALSE;
 	  }
-	  PutLine0(prompt_line,0,"Subject: <none>");
+	  PutLine(prompt_line,0,"Subject: <none>");
 	  CleartoEOLN();
 	}
 
@@ -661,7 +661,7 @@ static int get_copies(char *cc_field, char *address, char *addressII,
 
 	assert(OPMODE_IS_INTERACTIVE(opmode));
 	prompt_line = (OPMODE_IS_READMODE(opmode) ? LINES-1 : 5);
-	PutLine0(prompt_line,0,
+	PutLine(prompt_line,0,
 		catgets(elm_msg_cat, ElmSet, ElmCopiesTo, "Copies to: "));
 
 	if (enter_string(cc_field, VERY_LONG_STRING, -1, -1, ESTR_REPLACE) < 0) {
@@ -681,7 +681,7 @@ static int get_copies(char *cc_field, char *address, char *addressII,
 	**/
 
 	if (build_address(strip_commas(cc_field), addressII)) {
-	  PutLine1(prompt_line, 11, "%s", addressII);
+	  PutLine(prompt_line, 11, "%s", addressII);
 	  if ((strcmp(editor, "builtin") != 0 && strcmp(editor, "none") != 0)
 	      || copy_message)
 	    if (sleepmsg > 0) {
@@ -966,7 +966,7 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 
 	/* complain if last entry was bad */
 	if (bad_cmd) {
-	    PutLine0(-1, -1, "\07??");	/* beep! */
+	    PutLine(-1, -1, "\07??");	/* beep! */
 	    if (sleepmsg > 0) {
 		FlushOutput();
 		sleep((sleepmsg + 1) / 2);
@@ -999,7 +999,7 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 	do_redraw = VT_REDRAW_NONE;
 
 	/* prompt for command */
-	PutLine0(LINES-2, 0, prompt_mssg);
+	PutLine(LINES-2, 0, prompt_mssg);
 	GetCursorPos(&curr_line, &curr_col);
 	curr_col--; /* backspace over default answer */
 	CleartoEOLN();
@@ -1016,13 +1016,13 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 	case 'y':
 	case '\n':
 	case '\r':
-	    PutLine0(-1, -1, "Send");
+	    PutLine(-1, -1, "Send");
 	    return 0;
 	    /*NOTREACHED*/
 
 	case 'n':
 	case 'f':		/* old menu used "f)orget" */
-	    PutLine0(-1, -1, "Forget");
+	    PutLine(-1, -1, "Forget");
 	    if (bytes(filename) <= 0) {
 		; /* forget about empty files */
 	    } else if (!OPMODE_IS_READMODE(opmode)) {
@@ -1042,13 +1042,13 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 	    break;
 
 	case 'p':
-	    PutLine0(-1, -1, "Copy file");
+	    PutLine(-1, -1, "Copy file");
 	    do_redraw |= (name_copy_file(copy_file)
 			? VT_REDRAW_ALL : VT_REDRAW_FOOTER);
 	    break;
 
 	case 'e':
-	    PutLine0(-1, -1, "Edit");
+	    PutLine(-1, -1, "Edit");
 	    if (*form_p == PREFORMATTED) {
 		bad_cmd = TRUE;
 	    } else {
@@ -1066,7 +1066,7 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 	    break;
 
 	case 'h':
-	    PutLine0(-1, -1, "Headers");
+	    PutLine(-1, -1, "Headers");
 	    edit_headers(shdr);
 	    do_redraw |= (VT_REDRAW_HEADER|VT_REDRAW_FOOTER);
 	    break;
@@ -1080,7 +1080,7 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 		    /* couldn't open file??? */
 		    return -1;
 		case 0:
-		    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet,
+		    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet,
 			ElmVfyNoFieldsInForm, "No fields in form!\007"));
 		    if (sleepmsg > 0) {
 			FlushOutput();
@@ -1097,7 +1097,7 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 
 #ifdef ISPELL
 	case 'i':
-	    PutLine0(-1, -1, "Ispell");
+	    PutLine(-1, -1, "Ispell");
 	    if (*form_p == PREFORMATTED) {
 		bad_cmd = TRUE;
 	    } else {

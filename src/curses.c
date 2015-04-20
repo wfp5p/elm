@@ -935,7 +935,7 @@ void debug_terminal(void)
 
 static void debug_termtitle(int line, int col, const char *title)
 {
-    PutLine0(line, col*40, title);
+    PutLine(line, col*40, title);
     MoveCursor(line, col*40+16);
     return;
 }
@@ -945,11 +945,11 @@ static void debug_termstr(int line, int col, const char *title,
 {
     debug_termtitle(line, col, title);
     if (value == NULL) {
-	PutLine0(-1, -1, "(null)");
+	PutLine(-1, -1, "(null)");
 	return;
     }
     if (*value == '\0') {
-	PutLine0(-1, -1, "(empty)");
+	PutLine(-1, -1, "(empty)");
 	return;
     }
     for ( ; *value ; ++value) {
@@ -959,7 +959,7 @@ static void debug_termstr(int line, int col, const char *title,
 	    WriteChar('^');
 	    WriteChar(*value | 0100);
 	} else {
-	    PutLine1(-1, -1, "\\%03o", *value);
+	    PutLine(-1, -1, "\\%03o", *value);
 	}
     }
 }
@@ -967,13 +967,13 @@ static void debug_termstr(int line, int col, const char *title,
 static void debug_termnum(int line, int col, const char *title, int value)
 {
     debug_termtitle(line, col, title);
-    PutLine1(-1, -1, "%d", value);
+    PutLine(-1, -1, "%d", value);
 }
 
 
 static void debug_termflag(int line, int col, const char *title, int value)
 {
     debug_termtitle(line, col, title);
-    PutLine0(-1, -1, (value ? "Yes" : "No"));
+    PutLine(-1, -1, (value ? "Yes" : "No"));
 }
 

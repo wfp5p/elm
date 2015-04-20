@@ -172,7 +172,7 @@ int main(int argc, char *argv[])
 			     nufoot++;
 			   break;
 
-	    case '$'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case '$'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 			     ElmSet, ElmResyncFolder,
 			     "Resynchronize folder"));
 			   redraw += resync();
@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
 	    case '%'    :  if (curr_folder.curr_mssg > 0) {
 			     get_return(address, curr_folder.curr_mssg-1);
 			     clear_error();
-			     PutLine1(LINES,(COLS-strlen(address))/2,
+			     PutLine(LINES,(COLS-strlen(address))/2,
 				      "%.78s", address);
 			   } else {
 			     error(catgets(elm_msg_cat, ElmSet, ElmNoMailReturnAddress,
@@ -224,7 +224,7 @@ int main(int argc, char *argv[])
 			   redraw++;
 			   break;
 
-	    case 'b'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'b'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 					ElmSet, ElmBounceMessage,
 					"Bounce message"));
 			   if (curr_folder.num_mssgs < 1) {
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
 			   break;
 
 #ifdef ALLOW_MAILBOX_EDITING
-	    case 'e'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'e'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmEditFolder,
 				"Edit folder"));
 			   if (curr_folder.curr_mssg > 0) {
@@ -262,7 +262,7 @@ int main(int argc, char *argv[])
 			  break;
 #endif
 
-	    case 'f'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'f'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmForward,
 				"Forward"));
 			   if (curr_folder.curr_mssg > 0) {
@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
 			   }
 			   break;
 
-	    case 'g'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'g'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmGroupReply,
 				"Group reply"));
 			   if (curr_folder.curr_mssg > 0) {
@@ -298,11 +298,11 @@ int main(int argc, char *argv[])
 			   break;
 
 	    case 'h'    :  if (filter)
-			     PutLine0(-1, -1, catgets(elm_msg_cat,
+			     PutLine(-1, -1, catgets(elm_msg_cat,
 			       ElmSet, ElmMessageWithHeaders,
 			       "Message with headers..."));
 			   else
-			     PutLine0(-1, -1, catgets(elm_msg_cat,
+			     PutLine(-1, -1, catgets(elm_msg_cat,
 			       ElmSet, ElmDisplayMessage,
 			       "Display message"));
 			   if(curr_folder.curr_mssg > 0) {
@@ -328,7 +328,7 @@ int main(int argc, char *argv[])
 						    ElmMlistOff,
 						    "[Mlists Off]"));
 
-			     PutLine0(LINES,(COLS-10)/2,buffer);
+			     PutLine(LINES,(COLS-10)/2,buffer);
 			     show_mlists = 0;
 			   }
 	                   else
@@ -339,7 +339,7 @@ int main(int argc, char *argv[])
 						    ElmMlistOn,
 						    "[Mlists On]"));
 
-			     PutLine0(LINES,(COLS-10)/2,buffer);
+			     PutLine(LINES,(COLS-10)/2,buffer);
 
 			     show_mlists = 1;
 			   }
@@ -347,7 +347,7 @@ int main(int argc, char *argv[])
 			   show_headers();
 			   break;
 
-	    case 'm'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'm'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmMail,
 				"Mail"));
 			   redraw += send_message((char *)NULL,
@@ -356,7 +356,7 @@ int main(int argc, char *argv[])
 
 	    case ' '    :
 	    case ctrl('J'):
-	    case ctrl('M'): PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case ctrl('M'): PutLine(-1, -1, catgets(elm_msg_cat,
 			      ElmSet, ElmDisplayMessage,
 			      "Display message"));
 			   if(curr_folder.curr_mssg > 0 ) {
@@ -373,7 +373,7 @@ int main(int argc, char *argv[])
 			       "No mail to read!"));
 			   break;
 
-	    case 'n'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'n'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmNextMessage,
 				"Next Message"));
 			   if(curr_folder.curr_mssg > 0 ) {
@@ -392,7 +392,7 @@ int main(int argc, char *argv[])
 			       "No mail to read!"));
 			   break;
 
-	    case 'o'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'o'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmOptions,
 				"Options"));
 			   if((i=options()) > 0)
@@ -400,7 +400,7 @@ int main(int argc, char *argv[])
 			   redraw++;	/* always fix da screen... */
 			   break;
 
-	    case 'p'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'p'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmPrintMail,
 				"Print mail"));
 			   if (curr_folder.num_mssgs < 1) {
@@ -410,19 +410,19 @@ int main(int argc, char *argv[])
 			     redraw++;
 			   break;
 
-	    case 'q'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'q'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmQuit,
 				"Quit"));
 			   quit(TRUE);
 			   break;
 
-	    case 'Q'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'Q'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmQuickQuit,
 				"Quick quit"));
 			   quit(FALSE);
 			   break;
 
-	    case 'r'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'r'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 			     ElmSet, ElmReplyToMessage,
 			     "Reply to message"));
 			   if (curr_folder.curr_mssg > 0)
@@ -459,7 +459,7 @@ int main(int argc, char *argv[])
 			   break;
 
 #ifdef ALLOW_STATUS_CHANGING
-	    case 'S'    :  PutLine0(-1, -1, "Status");
+	    case 'S'    :  PutLine(-1, -1, "Status");
 			   /*  catgets(elm_msg_cat, ElmSet, ElmOptions, */
 			   if((i=ch_status()) > 0)
 			     get_page(curr_folder.curr_mssg);
@@ -471,13 +471,13 @@ int main(int argc, char *argv[])
 			  break;
 #endif
 
-	    case 'X'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'X'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmQuickExit,
 				"Quick Exit"));
 			   quit_abandon(FALSE);
 
 	    case ctrl('Q') :
-	    case 'x'    :  PutLine0(-1, -1, catgets(elm_msg_cat,
+	    case 'x'    :  PutLine(-1, -1, catgets(elm_msg_cat,
 				ElmSet, ElmExit,
 				"Exit"));
 			   quit_abandon(TRUE);
@@ -548,15 +548,15 @@ static int debug_page(void)
 	last = curr_folder.num_mssgs-1;
 
     ClearScreen();
-    PutLine1(0, 0, "Current mail file = %s",
+    PutLine(0, 0, "Current mail file = %s",
 		curr_folder.filename);
-    PutLine2(1, 0, "Current message number = %-8d  %d message(s) total",
+    PutLine(1, 0, "Current message number = %-8d  %d message(s) total",
 		curr_folder.curr_mssg, curr_folder.num_mssgs);
-    PutLine2(2, 0, "Header_page = %-8d             %d page(s) total",
+    PutLine(2, 0, "Header_page = %-8d             %d page(s) total",
 		header_page+1, (int) (curr_folder.num_mssgs / headers_per_page) + 1);
     sprintf(buffer, "%3s %-16s %-34s %5s %8s %8s",
 		"Num", "From", "Subject", "Lines", "Offset", "ContLen");
-    PutLine0(4, 0, buffer);
+    PutLine(4, 0, buffer);
 
     line = 5;
     for (i = first ; i <= last ; ++i) {
@@ -568,7 +568,7 @@ static int debug_page(void)
 		    curr_folder.headers[i]->lines,
 		    curr_folder.headers[i]->offset,
 		    curr_folder.headers[i]->content_length);
-	PutLine0(++line, 0, buffer);
+	PutLine(++line, 0, buffer);
     }
 
 }
@@ -583,21 +583,21 @@ static void debug_message(void)
 	time_t tval;
 	int row, i;
 
-#define ShowStr(row, name, str) PutLine2((row), 0, \
+#define ShowStr(row, name, str) PutLine((row), 0, \
 	    (strlen(str) > 62 ? "%-16s|%.60s..." : "%-16s|%s|"), (name), (str))
-#define ShowNum(row, name, num) PutLine2((row), 0, \
+#define ShowNum(row, name, num) PutLine((row), 0, \
 	    "%-16s%ld", (name), (long)(num))
 
 	ClearScreen();
-	PutLine1(0, 24,
+	PutLine(0, 24,
 		    "--- Debug Display - Message %d Header_Rec ---",
 		    curr_folder.curr_mssg);
 
-	PutLine0(2, 24, "status:");
-	PutLine0(2, 32, "A  C  D  E  F  M  D  N  N  O  P  T  U  V");
-	PutLine0(3, 32, "c  o  e  x  o  i  e  p  e  l  r  a  r  i");
-	PutLine0(4, 32, "t  n  l  p  r  m  c  l  w  d  i  g  g  s");
-	PutLine0(5, 32, "n  f  d  d  m  e  o  a        v  d  n  i");
+	PutLine(2, 24, "status:");
+	PutLine(2, 32, "A  C  D  E  F  M  D  N  N  O  P  T  U  V");
+	PutLine(3, 32, "c  o  e  x  o  i  e  p  e  l  r  a  r  i");
+	PutLine(4, 32, "t  n  l  p  r  m  c  l  w  d  i  g  g  s");
+	PutLine(5, 32, "n  f  d  d  m  e  o  a        v  d  n  i");
 
 	if (curr_folder.num_mssgs == 0) {
 	    CenterLine(8, catgets(elm_msg_cat, ElmSet, ElmNoMailToCheck,
@@ -629,7 +629,7 @@ static void debug_message(void)
 		    SHOW_STATUS(hdr, TAGGED),
 		    SHOW_STATUS(hdr, URGENT),
 		    SHOW_STATUS(hdr, VISIBLE));
-	PutLine0(7, 32, buffer);
+	PutLine(7, 32, buffer);
 	row = 8;
 
 	trim_trailing_spaces(strcpy(buffer, ctime(&hdr->received_time)));
@@ -651,8 +651,8 @@ static void debug_message(void)
 	WriteChar('\b');	/* erase closing "|" added above */
 	for (i = 0; i < hdr->ml_to.len; i++) {
 	    if (i > 0)
-		PutLine0(-1, -1, ", ");
-	    PutLine0(-1, -1, hdr->ml_to.str[i]);
+		PutLine(-1, -1, ", ");
+	    PutLine(-1, -1, hdr->ml_to.str[i]);
 	}
 	WriteChar('|');
 }
@@ -926,7 +926,7 @@ next_undel_msg:
 			    break;
 			  }
 
-	    case 'l'    :  PutLine1(LINES-3, strlen(nls_Prompt),
+	    case 'l'    :  PutLine(LINES-3, strlen(nls_Prompt),
 				   catgets(elm_msg_cat, ElmSet, ElmLimitDisplayBy,
 				   "Limit displayed %s by..."), nls_items);
 			   clear_error();
@@ -1003,7 +1003,7 @@ next_undel_msg:
 	    case ctrl('L') : redraw++;	break;
 
 	    default	: if (ch > '0' && ch <= '9') {
-			    PutLine1(LINES-3, strlen(nls_Prompt),
+			    PutLine(LINES-3, strlen(nls_Prompt),
 				    catgets(elm_msg_cat, ElmSet, ElmNewCurrentItem,
 				    "New Current %s"), nls_Item);
 			    UnreadCh(ch);

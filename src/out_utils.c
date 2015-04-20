@@ -35,6 +35,7 @@
 #include "elm_globals.h"
 #include <stdarg.h>
 
+
 static void do_PutLine(int x, int y, const char *line)
 {
     if (x >= 0 && y >= 0)
@@ -45,14 +46,14 @@ static void do_PutLine(int x, int y, const char *line)
 
 void PutLine(int x, int y, const char *line, ...)
 {
-	va_list args;
-	char buffer[VERY_LONG_STRING];
+    char buffer[VERY_LONG_STRING];
+    va_list args;
 
-	va_start(args, line);
-	sprintf(buffer, line, args);
-	va_end(args);
+    va_start(args, line);
+    vsprintf(buffer, line, args);
+    va_end(args);
 
-	do_PutLine(x, y, line);
+    do_PutLine(x, y, buffer);
 }
 
 void CenterLine(int line, const char *str)
@@ -63,7 +64,7 @@ void CenterLine(int line, const char *str)
     col = (COLS - (int)strlen(str)) / 2;
     if (col < 0)
 	col = 0;
-    PutLine0(line, col, str);
+    PutLine(line, col, str);
 }
 
 
@@ -77,7 +78,7 @@ void show_last_error(void)
 	lines_of_msg = (strlen(err_buffer) + COLS - 1) / COLS;
 	ClearLine(LINES);
 	if (lines_of_msg > 1)
-	    PutLine0(LINES + 1 - lines_of_msg, 0, err_buffer);
+	    PutLine(LINES + 1 - lines_of_msg, 0, err_buffer);
 	else
 	    CenterLine(LINES, err_buffer);
     } else {
@@ -136,7 +137,7 @@ void lower_prompt(const char *s)
 {
 	/** prompt user for input on LINES-1 line, left justified **/
 
-	PutLine0(LINES-1,0,s);
+	PutLine(LINES-1,0,s);
 	CleartoEOLN();
 }
 
@@ -144,7 +145,7 @@ void prompt(const char *s)
 {
 	/** prompt user for input on LINES-3 line, left justified **/
 
-	PutLine0(LINES-3,0,s);
+	PutLine(LINES-3,0,s);
 	CleartoEOLN();
 }
 

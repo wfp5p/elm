@@ -186,7 +186,7 @@ int display_line(char *input_line, int input_size)
 	     			 * need more lines for screen */
 		return(FALSE);
 	    } else
-	      PutLine0(-1, -1, display_buffer);
+	      PutLine(-1, -1, display_buffer);
 
 	    /* if formfeed, clear remainder of screen */
 	    if(formfeed) {
@@ -240,7 +240,7 @@ int display_line(char *input_line, int input_size)
 	  MoveCursor(LINES, 0);
 	  if (Term.status & TERM_CAN_SO)
 	      StartStandout();
-	  PutLine0(-1, -1, footer);
+	  PutLine(-1, -1, footer);
 	  if (Term.status & TERM_CAN_SO)
 	      EndStandout();
 
@@ -270,7 +270,7 @@ int display_line(char *input_line, int input_size)
 			 * screenful unless we had a formfeed */
 			if(!formfeed) {
 			  if(clear_pages)
-			    PutLine0(-1, -1, display_buffer);
+			    PutLine(-1, -1, display_buffer);
 			  unfilled_lines--;
 			}
 			break;
@@ -322,6 +322,6 @@ static int title_for_page(int page)
 	    t2_len+padding, title2, title3);
 	    /* extra newline is to give a blank line after title */
 
-	PutLine0(-1, -1, titlebuf);
+	PutLine(-1, -1, titlebuf);
 	form_title = 0;
 }

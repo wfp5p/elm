@@ -79,17 +79,17 @@ static void display_status(void)
 
     sprintf(buf, "%*s%s%*s%s", SCOL_CUR, "", scurrent,
 	    SCOL_ORG - (SCOL_CUR + strlen(scurrent)), "", soriginal);
-    PutLine0(SLINE_HDR, 0, buf);
+    PutLine(SLINE_HDR, 0, buf);
 
     /*  not a catalog entry because it determines the command character */
     sprintf(buf,"%-20.20s%*s%%-5s%*s%%-5s", "N)ew/Old/Read", SCOL_CUR - 20, "",
 	    SCOL_ORG - (SCOL_CUR + 5), "");
-    PutLine2(SLINE_NEW, 0, buf, cycle_str[new], cycle_str[org_new]);
+    PutLine(SLINE_NEW, 0, buf, cycle_str[new], cycle_str[org_new]);
 
     /*  not a catalog entry because it determines the command character */
     sprintf(buf,"%-20.20s%*s%%-5s%*s%%-5s", "R)eplied-to", SCOL_CUR - 20, "",
 	    SCOL_ORG - (SCOL_CUR + 5), "");
-    PutLine2(SLINE_REPLIED, 0, buf, yesno(replied), yesno(org_replied));
+    PutLine(SLINE_REPLIED, 0, buf, yesno(replied), yesno(org_replied));
 }
 
 
@@ -235,7 +235,7 @@ int ch_status(void)
 	CenterLine(LINES-4, catgets(elm_msg_cat, ElmSet, ElmStatusMenuLine2,
 		"'u' to undo changes, or 'i' to return to index."));
 
-	PutLine0(LINES-2, 0, prompt);
+	PutLine(LINES-2, 0, prompt);
 
 	ch = ReadCh();
 
@@ -248,13 +248,13 @@ int ch_status(void)
 	case 'n':
 	    /*  don't put up one-liner 'cause it'll just disappear anyway */
 	    new = (new >= CYCLE_STRS-1 ? 0 : new + 1);
-	    PutLine1(SLINE_NEW,SCOL_CUR, "%s", cycle_str[new]);
+	    PutLine(SLINE_NEW,SCOL_CUR, "%s", cycle_str[new]);
 	    break;
 
 	case 'r':
 	    /*  don't put up one-liner 'cause it'll just disappear anyway */
 	    replied = ! replied;
-	    PutLine0(SLINE_REPLIED, SCOL_CUR, yesno(replied));
+	    PutLine(SLINE_REPLIED, SCOL_CUR, yesno(replied));
 	    break;
 
 	case 'u':
@@ -271,7 +271,7 @@ int ch_status(void)
 
 	case '?':
 	    status_help();
-	    PutLine0(LINES-2,0, prompt);
+	    PutLine(LINES-2,0, prompt);
 	    break;
 
 	case 'X':

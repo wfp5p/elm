@@ -8,7 +8,7 @@
 #define AT_MAX_ATTACH	64
 
 /* WARNING - side effects */
-#define PutRight(line, str) PutLine0((line), COLS-(strlen(str)+2), (str))
+#define PutRight(line, str) PutLine((line), COLS-(strlen(str)+2), (str))
 
 #define S_(sel, str)	catgets(elm_msg_cat, AttachSet, (sel), (str))
 
@@ -190,7 +190,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 			    "Message Attachments Screen"));
 		sprintf(tmp_buf, S_(AttachScreenPage, "[page %d/%d]"),
 			    AT_pagenum(curr_sel)+1, AT_num_pages);
-		PutLine0(ATLINE_TITLE, COLS-(strlen(tmp_buf)+2), tmp_buf);
+		PutLine(ATLINE_TITLE, COLS-(strlen(tmp_buf)+2), tmp_buf);
 	    }
 
 	    /* redraw the entire list of entries */
@@ -211,7 +211,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 		if (prev_sel >= AT_first_sel_of_page
 			&& prev_sel <= AT_last_sel_of_page) {
 		    if (arrow_cursor) {
-			PutLine0(ATLINE_LTOP+AT_line(prev_sel), 0,
+			PutLine(ATLINE_LTOP+AT_line(prev_sel), 0,
 				    at_acursor_off);
 		    } else {
 			at_disp_entry(ATLINE_LTOP+AT_line(prev_sel),
@@ -219,7 +219,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 		    }
 		}
 		if (arrow_cursor) {
-		    PutLine0(ATLINE_LTOP+AT_line(curr_sel), 0, at_acursor_on);
+		    PutLine(ATLINE_LTOP+AT_line(curr_sel), 0, at_acursor_on);
 		} else {
 		    at_disp_entry(ATLINE_LTOP+AT_line(curr_sel),
 				curr_sel, TRUE);
@@ -270,7 +270,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 	    }
 
 	    if (do_redraw & ATDRAW_PROMPT) {
-		PutLine0(ATLINE_PROMPT, 0, S_(AttachMainPrompt, "Command: "));
+		PutLine(ATLINE_PROMPT, 0, S_(AttachMainPrompt, "Command: "));
 		GetCursorPos(&inp_line, &inp_col);
 		if (do_redraw != ATDRAW_ALL) {
 		    /* erase down to (but EXCLUDING) the error line */
@@ -294,7 +294,7 @@ int attachment_menu(SEND_MULTIPART **user_attachments_p)
 	} else {
 	    MoveCursor(inp_line, inp_col);
 	    CleartoEOLN();
-	    PutLine0(-1, -1, "q\b");
+	    PutLine(-1, -1, "q\b");
 	    if ((cmd = GetKey(0)) == KEY_REDRAW) {
 		do_redraw = ATDRAW_ALL;
 		continue;
@@ -635,7 +635,7 @@ static void at_disp_entry(int line, int n, int selected)
     MoveCursor(line, 0);
     if (selected && !arrow_cursor)
 	StartStandout();
-    PutLine0(-1, -1, out_buf);
+    PutLine(-1, -1, out_buf);
     if (selected && !arrow_cursor) {
 	for (i = (COLS-2) - strlen(out_buf) ; i > 0 ; --i)
 	    WriteChar(' ');
@@ -654,11 +654,11 @@ static void at_disp_currline(int line, const char *title, const char *value,
     if (do_erase)
 	ClearLine(line);
 
-    PutLine0(line, ATCOL_CURR_COLON-(strlen(title)+1), title);
+    PutLine(line, ATCOL_CURR_COLON-(strlen(title)+1), title);
     MoveCursor(line, ATCOL_CURR_COLON);
     WriteChar(':');
     (void) strfcpy(trunc_buf, value, sizeof(trunc_buf));
-    PutLine0(line, ATCOL_CURR_DATA,
+    PutLine(line, ATCOL_CURR_DATA,
 		    strtruncate(trunc_buf, COLS-(ATCOL_CURR_DATA+2)));
 }
 
@@ -928,7 +928,7 @@ static int at_do_change_disposition(SEND_BODYPART *att, int *do_redraw_p)
     (void) strcpy(new_fname, orig_fname);
 
     for (;;) {
-	PutLine0(ATLINE_CURR_DISP, ATCOL_CURR_DATA, "attachment; filename=");
+	PutLine(ATLINE_CURR_DISP, ATCOL_CURR_DATA, "attachment; filename=");
 	if (enter_string(new_fname, sizeof(new_fname), -1, -1, ESTR_UPDATE) < 0)
 	    return FALSE;
 	if (streq(new_fname, orig_fname))

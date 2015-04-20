@@ -146,7 +146,7 @@ int save_copy(const char *fname_dest, const char *fname_mssg,
 		    /* FOO - does this really need to be "clear-and-center" ? */
 		    if (!enter_yn(msg_buffer, FALSE, LINES-2, TRUE)) {
 			strcpy(savename, sent_mail);
-			PutLine1 (LINES-2, 0, catgets(elm_msg_cat, ElmSet,
+			PutLine(LINES-2, 0, catgets(elm_msg_cat, ElmSet,
 				  ElmSavingToInstead,
 				  "Alright - saving to `%s' instead"),
 				  savename);
@@ -181,7 +181,7 @@ int save_copy(const char *fname_dest, const char *fname_mssg,
 		    /* FOO - does this really need to be "clear-and-center" ? */
 		    if (!enter_yn(msg_buffer, FALSE, LINES-2, TRUE)) {
 			strcpy(savename, sent_mail);
-			PutLine1 (LINES-2, 0, catgets(elm_msg_cat, ElmSet,
+			PutLine(LINES-2, 0, catgets(elm_msg_cat, ElmSet,
 				  ElmSavingToInstead,
 				  "Alright - saving to `%s' instead"),
 				  savename);
@@ -346,7 +346,7 @@ int name_copy_file(char *fn)
 	/* prompt for save file name */
 	MoveCursor(LINES-2, 0);
 	CleartoEOS();
-	PutLine0(LINES-2, 0, ncf_prompt);
+	PutLine(LINES-2, 0, ncf_prompt);
 	if (enter_string(buffer, sizeof(buffer), -1, -1, ESTR_REPLACE) < 0) {
 	    /* aborted - restore value */
 	    (void) strcpy(buffer, origbuffer);
@@ -386,7 +386,7 @@ int name_copy_file(char *fn)
 	strcpy(fn, buffer);
 
     /* display English expansion of new user input a while */
-    PutLine0(LINES-2, strlen(ncf_prompt), cf_english(fn));
+    PutLine(LINES-2, strlen(ncf_prompt), cf_english(fn));
     MoveCursor(LINES-1, 0);
     FlushOutput();
     if (sleepmsg > 0)

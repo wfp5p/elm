@@ -79,7 +79,7 @@ int help(int pager_help)
 	}
 	info_line = prompt_line + 1;
 
-	PutLine0(prompt_line, 0, help_prompt);
+	PutLine(prompt_line, 0, help_prompt);
 
 	do {
 	  MoveCursor(prompt_line, strlen(help_prompt));
@@ -381,18 +381,18 @@ int display_helpfile(char *topic)
 	while (fgets(buffer, SLEN, fileptr) != NULL) {
 	  GetCursorPos(&line, &col);
 	  if (line > LINES-3) {
-	    PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet,
+	    PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet,
 		ElmHelpPressSpaceToContinue,
 		"Press <space> to continue, 'q' to return."));
 	    if (ReadCh() == 'q')
 	      goto done;
 	    ClearScreen();
 	  }
-	  PutLine0(-1, -1, buffer);
+	  PutLine(-1, -1, buffer);
 	  CarriageReturn();
 	}
 
-        PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet,
+        PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet,
 		ElmHelpPressAnyKeyToReturn,
 		"Press any key to return."));
 	(void) ReadCh();

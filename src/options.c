@@ -278,7 +278,7 @@ void display_options(void)
             o = find_cfg_opts(*s);
             if (o != NULL && y<LINES-5) {
 		sprintf(buf,"%-20.20s : %%s", o->menu);
-		PutLine1(y, 0, buf, str_opt_nam(o->parm, TRUE));
+		PutLine(y, 0, buf, str_opt_nam(o->parm, TRUE));
 	    }
 	}
 	if (!printed_title) {
@@ -383,7 +383,7 @@ int options(void)
  "Select letter of option line, '>' to save, or 'i' to return to index."));
 
 	  ClearLine(LINES-2);
-	  PutLine0(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmPrompt,
+	  PutLine(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmPrompt,
 		"Command: "));
 	  ch = ReadCh();
 	  ch = tolower(ch);
@@ -412,7 +412,7 @@ int options(void)
 	    break;
 
 	  case '>':
-	    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmSaveOptions,
+	    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmSaveOptions,
 		  "Save options in .elm/elmrc..."));
 	    FlushOutput();
 	    save_options();
@@ -447,7 +447,7 @@ int on_or_off(int *var, int x, int y)
 
 	int ch;
 
-     	PutLine0(x, y+6, catgets(elm_msg_cat, ElmSet, ElmUseSpaceToToggle,
+     	PutLine(x, y+6, catgets(elm_msg_cat, ElmSet, ElmUseSpaceToToggle,
 		"(use <space> to toggle, any other key to leave)"));
 
 	MoveCursor(x,y+3);	/* at end of value... */
@@ -457,7 +457,7 @@ int on_or_off(int *var, int x, int y)
 
 	  if (ch == ' ') {
 	    *var = ! *var;
-	    PutLine0(x,y, onoff(*var));
+	    PutLine(x,y, onoff(*var));
 	  }
 	} while (ch == ' ');
 
@@ -468,14 +468,14 @@ int switch_user_level(int *ulevel, int x, int y)
 {
 	/** step through possible user levels... **/
 
-     	PutLine0(x, y+20, catgets(elm_msg_cat, ElmSet, ElmSpaceToChange,
+     	PutLine(x, y+20, catgets(elm_msg_cat, ElmSet, ElmSpaceToChange,
 		"<space> to change"));
 
 	MoveCursor(x,y);	/* at end of value... */
 
 	while (ReadCh() == ' ') {
 	  *ulevel = (*ulevel >= 2? 0 : *ulevel + 1);
-	  PutLine1(x,y, "%s", level_name(*ulevel));
+	  PutLine(x,y, "%s", level_name(*ulevel));
 	}
 
 	MoveCursor(x,y+20); 	CleartoEOLN();	/* remove help prompt */
@@ -493,7 +493,7 @@ int change_sort(int *var, int x, int y)
 /*	*var = sortby; 	or...	*var == sortby; 	*/
 	last_sortby = sortby;	/* remember current ordering   */
 
-	PutLine0(x, COLS-29, catgets(elm_msg_cat, ElmSet, ElmSpaceForNext,
+	PutLine(x, COLS-29, catgets(elm_msg_cat, ElmSet, ElmSpaceForNext,
 		"(SPACE for next, or R)everse)"));
 	sort_one_liner(sortby);
 	MoveCursor(x, y);
@@ -509,13 +509,13 @@ int change_sort(int *var, int x, int y)
 			 else sign = 1;		/* insurance! */
 	  		 sortby = sign * ((sortby + 1) % (STATUS+2));
 			 if (sortby == 0) sortby = sign;  /* snicker */
-	  		 PutLine1(x, y, "%-24s", sort_name(TRUE));
+	  		 PutLine(x, y, "%-24s", sort_name(TRUE));
 			 sort_one_liner(sortby);
 	  		 MoveCursor(x, y);
 			 break;
 
 	    case 'r'   : sortby = - sortby;
-	  		 PutLine1(x, y, "%-24s", sort_name(TRUE));
+	  		 PutLine(x, y, "%-24s", sort_name(TRUE));
 			 sort_one_liner(sortby);
 	  		 MoveCursor(x, y);
 	 }
@@ -625,7 +625,7 @@ int change_alias_sort(int *var, int x, int y)
 /*	*var = alias_sortby; 	or...	*var == alias_sortby; 	*/
 	last_sortby = alias_sortby;	/* remember current ordering   */
 
-	PutLine0(x, COLS-29, catgets(elm_msg_cat, ElmSet, ElmSpaceForNext,
+	PutLine(x, COLS-29, catgets(elm_msg_cat, ElmSet, ElmSpaceForNext,
 		"(SPACE for next, or R)everse)"));
 	alias_sort_one_liner(alias_sortby);
 	MoveCursor(x, y);
@@ -642,13 +642,13 @@ int change_alias_sort(int *var, int x, int y)
 	  		 alias_sortby = sign * ((alias_sortby + 1)
 	                                % (LAST_ALIAS_SORT+1));
 			 if (alias_sortby == 0) alias_sortby = sign;
-	  		 PutLine1(x, y, "%-24s", alias_sort_name(TRUE));
+	  		 PutLine(x, y, "%-24s", alias_sort_name(TRUE));
 			 alias_sort_one_liner(alias_sortby);
 	  		 MoveCursor(x, y);
 			 break;
 
 	    case 'r'   : alias_sortby = - alias_sortby;
-	  		 PutLine1(x, y, "%-24s", alias_sort_name(TRUE));
+	  		 PutLine(x, y, "%-24s", alias_sort_name(TRUE));
 			 alias_sort_one_liner(alias_sortby);
 	  		 MoveCursor(x, y);
 	 }

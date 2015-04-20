@@ -123,7 +123,7 @@ int save(int *redraw_p, int silently, int delete)
 
     /* confirm save of tagged message if selection is elsewhere */
     if (num_tagged > 0 && !current_is_tagged && confirm_tag_save) {
-	PutLine2(LINES-3, 0, S_(ElmSavecmdPrompt0, "%s%s message"),
+	PutLine(LINES-3, 0, S_(ElmSavecmdPrompt0, "%s%s message"),
 		    nls_Prompt, word_Save);
 	CleartoEOLN();
 	if (!enter_yn(S_(ElmSavecmdSaveMarked, "Save marked messages?"),
@@ -290,14 +290,14 @@ int select_folder(char *filename, int filesiz, int acc_mode,
 	/* display prompt */
 	MoveCursor(LINES-3, 0);
 	CleartoEOS();
-	PutLine1(LINES-3, 0, prompt1);
+	PutLine(LINES-3, 0, prompt1);
 	s = S_(ElmSelfolderHelp, "(Use \"?\" for help)");
 	help_col = COLS - (strlen(s)+1);
-	PutLine0(LINES-3, help_col, s);
-	PutLine0(LINES-2, 0, prompt2);
-	PutLine0(-1, -1, ": ");
+	PutLine(LINES-3, help_col, s);
+	PutLine(LINES-2, 0, prompt2);
+	PutLine(-1, -1, ": ");
 	GetCursorPos(&prompt_line, &prompt_col);
-	PutLine0(-1, -1, filename);
+	PutLine(-1, -1, filename);
 	show_last_error();
 
 	/* get first keystroke of input and look for help request */

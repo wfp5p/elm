@@ -70,7 +70,7 @@ int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
 
 	if(!(x >=0 && y >= 0))
 	  GetCursorPos(&x, &y);
-	PutLine1(x, y, "%s", string);
+	PutLine(x, y, "%s", string);
 
 	CleartoEOLN();
 
@@ -172,7 +172,7 @@ int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
 		/** rewrite line on screen and continue working **/
 		GetCursorPos(&x, &y);
 		if (x > 0) x--;
-		PutLine1(x, y, "%s", string);
+		PutLine(x, y, "%s", string);
 		CleartoEOLN();
 		iindex = strlen(string);
 
@@ -217,7 +217,7 @@ int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
 
 	  case ctrl('R'):
 	    string[iindex] = '\0';
-	    PutLine1(x,y, "%s", string);
+	    PutLine(x,y, "%s", string);
 	    CleartoEOLN();
 	    break;
 

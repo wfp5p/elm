@@ -192,7 +192,7 @@ int show_new_status(int msg)
 	MoveCursor(msg_line(msg), 2);
 	if (do_standout)
 	    StartStandout();
-	PutLine0(-1, -1, show_status(status));
+	PutLine(-1, -1, show_status(status));
 	WriteChar(ison(status, TAGGED) ? '+' : ' ');
 	if (do_standout)
 	    EndStandout();

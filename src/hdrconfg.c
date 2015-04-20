@@ -206,7 +206,7 @@ void edit_headers(SEND_HEADER *shdr)
 #endif
 
 	/* prompt for command */
-	PutLine0(INPUT_LINE, 0, catgets(elm_msg_cat, ElmSet,
+	PutLine(INPUT_LINE, 0, catgets(elm_msg_cat, ElmSet,
 	    ElmHdrmenuPrompt, "Choice: "));
 	if ((c = GetKey(0)) == KEY_REDRAW) {
 	    do_redraw = TRUE;
@@ -362,7 +362,7 @@ static void hdrmenu_put(struct hdr_menu_item *h, int already_clear)
     /* display the header name */
     MoveCursor(start_row, start_col);
     if (h->hdrname != NULL) {
-	PutLine0(-1, -1, h->hdrname);
+	PutLine(-1, -1, h->hdrname);
 	WriteChar(':');
 	WriteChar(' ');
     }
@@ -513,7 +513,7 @@ static void domainize_submenu(void)
     CenterLine(INSTRUCT_LINE, catgets(elm_msg_cat, ElmSet,
 	ElmHdrmenuDomInstruct,
 	"Select header to domainize:  T)o, C)c, B)cc, or <return>."));
-    PutLine0(INPUT_LINE, 0, catgets(elm_msg_cat, ElmSet,
+    PutLine(INPUT_LINE, 0, catgets(elm_msg_cat, ElmSet,
 	ElmHdrmenuDomPrompt, "Domainize choice: "));
 
     for (;;) {

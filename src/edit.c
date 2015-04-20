@@ -99,7 +99,7 @@ void edit_mailbox(void)
 		on the folder.  We'll have to do some strange stuff to
 	        remedy the problem... */
 
-	     PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmWarnNewMailRecv,
+	     PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmWarnNewMailRecv,
 	       "Warning: new mail received..."));
 	     CleartoEOLN();
 
@@ -204,7 +204,7 @@ int edit_a_file(char *editfile)
 
 	char     buffer[SLEN];
 
-	PutLine0(LINES-1,0, catgets(elm_msg_cat, ElmSet, ElmInvokeEditor,
+	PutLine(LINES-1,0, catgets(elm_msg_cat, ElmSet, ElmInvokeEditor,
 	  "Invoking editor..."));
 
 	if (strcmp(editor, "builtin") == 0 || strcmp(editor, "none") == 0) {

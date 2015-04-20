@@ -108,8 +108,8 @@ int enter_yn(char *question, int dflt, int line, int clear_and_center)
 	col = COLS - len - 1;
     }
 
-    PutLine1(line, col, question);
-    PutLine2(-1, -1, " (%c/%c) ", *def_ans_yes, *def_ans_no);
+    PutLine(line, col, question);
+    PutLine(-1, -1, " (%c/%c) ", *def_ans_yes, *def_ans_no);
     if (!clear_and_center)
 	CleartoEOLN();
     switch (dflt) {
@@ -142,7 +142,7 @@ int enter_yn(char *question, int dflt, int line, int clear_and_center)
     }
 
     if (sleepmsg > 0) {
-	PutLine0(-1, -1, (ans ? yes_display : no_display));
+	PutLine(-1, -1, (ans ? yes_display : no_display));
 	FlushOutput();
 	sleep((sleepmsg + 1) / 2);
     }
@@ -170,7 +170,7 @@ int enter_number(int line, int dfltval, char *thing)
 	    "Set current %s to : ");
     len = ((int)strlen(prompt)-(sizeof("%s")-1)) + (int)strlen(thing) + MAXDIG;
 
-    PutLine1(line, COLS-(len+1), prompt, thing);
+    PutLine(line, COLS-(len+1), prompt, thing);
     if (enter_string(buf, sizeof(buf), -1, -1, ESTR_NUMBER) < 0
 		|| buf[0] == '\0')
 	return dfltval;

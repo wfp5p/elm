@@ -67,22 +67,22 @@ int limit(void)
 	  MCsprintf(msg, catgets(elm_msg_cat, ElmSet, ElmLimitAlreadyHave,
 		"Already have selection criteria - add more? (%c/%c) %c%c"),
 		*def_ans_yes, *def_ans_no, *def_ans_no, BACKSPACE);
-	  PutLine0(LINES-2, 0, msg);
+	  PutLine(LINES-2, 0, msg);
 	  criteria[0] = ReadCh();
 	  if (tolower(criteria[0]) == *def_ans_yes) {
-	    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmYesWord, "Yes."));
-	    PutLine0(LINES-3, COLS-30, catgets(elm_msg_cat, ElmSet, ElmLimitAdding,
+	    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmYesWord, "Yes."));
+	    PutLine(LINES-3, COLS-30, catgets(elm_msg_cat, ElmSet, ElmLimitAdding,
 		"Adding criteria..."));
 	  } else {
-	    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmNoWord, "No."));
+	    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmNoWord, "No."));
 	    selected = 0;
-	    PutLine0(LINES-3, COLS-30, catgets(elm_msg_cat, ElmSet, ElmLimitChanging,
+	    PutLine(LINES-3, COLS-30, catgets(elm_msg_cat, ElmSet, ElmLimitChanging,
 		"Change criteria..."));
 	  }
 	}
 
 	while(1) {
-	  PutLine0(LINES-2, 0, prompt);
+	  PutLine(LINES-2, 0, prompt);
 	  if (enter_string(criteria, sizeof(criteria), -1, -1, ESTR_ENTER) < 0
 			|| criteria[0] == '\0') {
 	    /* no change */

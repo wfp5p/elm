@@ -66,9 +66,9 @@ int subshell(void)
 	helpful = (user_level == 0);
 
 	if (helpful)
-	  PutLine0(LINES-3, COLS-40, catgets(elm_msg_cat, ElmSet, ElmUseShellName,
+	  PutLine(LINES-3, COLS-40, catgets(elm_msg_cat, ElmSet, ElmUseShellName,
 		"(Use the shell name for a shell.)"));
-	PutLine0(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmShellCommand,
+	PutLine(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmShellCommand,
 		"Shell command: "));
 	if (enter_string(command, sizeof(command), -1, -1, ESTR_ENTER) < 0
 		    || command[0] == '\0') {
@@ -93,7 +93,7 @@ int subshell(void)
 	ret = system_call(command, SY_USER_SHELL|SY_ENAB_SIGINT|SY_DUMPSTATE);
 	umask(077);		/* now put it back to private for mail files */
 
-	PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmPressAnyKeyToReturn,
+	PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmPressAnyKeyToReturn,
 		"\n\nPress any key to return to ELM: "));
 	fflush(stdout);
 	Raw(ON | NO_TITE);
@@ -364,7 +364,7 @@ int do_pipe(void)
 	register int  ret;
 	int	old_raw;
 
-        PutLine0(LINES-2, 0,
+        PutLine(LINES-2, 0,
 		    catgets(elm_msg_cat, ElmSet, ElmPipeTo, "Pipe to: "));
 	if (enter_string(command, sizeof(command), -1, -1, ESTR_ENTER) < 0
 		    || command[0] == '\0') {
@@ -385,7 +385,7 @@ int do_pipe(void)
 	sprintf(buffer, "%s -Ih|%s", readmsg, command);
 	ret = system_call(buffer, SY_USER_SHELL|SY_ENAB_SIGINT|SY_DUMPSTATE);
 
-	PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmPressAnyKeyToReturn,
+	PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmPressAnyKeyToReturn,
 		"\n\nPress any key to return to ELM: "));
 
 	fflush(stdout);

@@ -98,7 +98,7 @@ int meta_match(int function)
 	return FALSE;
     }
 
-    PutLine2(LINES-3, strlen(nls_Prompt), catgets(elm_msg_cat, ElmSet,
+    PutLine(LINES-3, strlen(nls_Prompt), catgets(elm_msg_cat, ElmSet,
 	    ElmMessagesMatchPattern, "%s %s that match pattern..."),
 	    word_Action, nls_items);
 
@@ -106,7 +106,7 @@ int meta_match(int function)
     if (function == MATCH_TAG)
 	ask_clear_existing_tags();
 
-    PutLine0(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmEnterPattern,
+    PutLine(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmEnterPattern,
 	    "Enter pattern: "));
     if (enter_string(pat, sizeof(pat), -1, -1, ESTR_REPLACE) < 0
 		|| pat[0] == '\0') {
@@ -271,12 +271,12 @@ int pattern_match(void)
     static char hdr_pattern[SLEN];
     static char body_pattern[SLEN];
 
-    PutLine1(LINES-3, 40, catgets(elm_msg_cat, ElmSet, ElmMatchAnywhere,
+    PutLine(LINES-3, 40, catgets(elm_msg_cat, ElmSet, ElmMatchAnywhere,
 		"/ = Match anywhere in %s."), nls_items);
-    PutLine0(LINES-1, 0, catgets(elm_msg_cat, ElmSet, ElmMatchPattern,
+    PutLine(LINES-1, 0, catgets(elm_msg_cat, ElmSet, ElmMatchPattern,
 		"Match pattern: "));
     GetCursorPos(&inp_line, &inp_col);
-    PutLine0(-1, -1, hdr_pattern);
+    PutLine(-1, -1, hdr_pattern);
     CleartoEOLN();
 
     ch = ReadCh();
@@ -299,7 +299,7 @@ int pattern_match(void)
     case '/':		/* switch patterns and match against entire message */
 	MoveCursor(LINES-3, 40);
 	CleartoEOLN();
-	PutLine1(LINES-1, 0, catgets(elm_msg_cat, ElmSet,
+	PutLine(LINES-1, 0, catgets(elm_msg_cat, ElmSet,
 		    ElmMatchPatternInEntire, "Match pattern (in entire %s): "),
 		    nls_item);
 	(void) strcpy(inpbuf, body_pattern);

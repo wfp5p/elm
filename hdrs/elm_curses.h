@@ -141,11 +141,6 @@ int GetKey P_((int));
 
 /* out_utils.c */
 void PutLine(int x, int y, const char *line, ...);
-#define PutLine0(...) PutLine(__VA_ARGS__)
-#define PutLine1(...) PutLine(__VA_ARGS__)
-#define PutLine2(...) PutLine(__VA_ARGS__)
-#define PutLine3(...) PutLine(__VA_ARGS__)
-
 void CenterLine P_((int, const char *));
 void show_last_error P_((void));
 int clear_error P_((void));

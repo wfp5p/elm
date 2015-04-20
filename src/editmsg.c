@@ -84,7 +84,7 @@ int edit_message(const char *filename, SEND_HEADER *shdr,
 	return builtin_editor(filename, shdr);
 
     /* we will be running an external editor */
-    PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmInvokeEditor,
+    PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmInvokeEditor,
 	    "Invoking editor..."));
 
     if (strstr(sel_editor, "%s") != NULL)
@@ -121,56 +121,56 @@ static void tilde_help(void)
 {
 	/* a simple routine to print out what is available at this level */
 
-	PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAvailOpts,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAvailOpts,
 	  "\n\r(Available options at this point are:\n\r\n\r"));
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgHelpMenu,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgHelpMenu,
 	  "\t%c?\tPrint this help menu.\n\r"), escape_char);
 	if (escape_char == '~') /* doesn't make sense otherwise... */
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAddLine,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAddLine,
 	      "\t~~\tAdd line prefixed by a single '~' character.\n\r"));
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgBCC,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgBCC,
 	  "\t%cb\tChange the addresses in the Blind-carbon-copy list.\n\r"),
 	  escape_char);
 
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgCC,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgCC,
 		"\t%cc\tChange the addresses in the Carbon-copy list.\n\r"),
 		escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgEmacs,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgEmacs,
 	      "\t%ce\tInvoke the Emacs editor on the message, if possible.\n\r"),
 		escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAddMessage,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAddMessage,
 		"\t%cf\tAdd the specified message or current.\n\r"),
 		escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgToCCBCC,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgToCCBCC,
 	      "\t%ch\tChange all available headers (to, cc, bcc, subject).\n\r"),
 		escape_char);
-	PutLine2(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgSameCurrentPrefix,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgSameCurrentPrefix,
 		"\t%cm\tSame as '%cf', but with the current 'prefix'.\n\r"),
 		escape_char, escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgUserEditor,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgUserEditor,
 		"\t%co\tInvoke a user specified editor on the message.\n\r"),
 		escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgPrintMsg,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgPrintMsg,
 	      "\t%cp\tPrint out message as typed in so far.\n\r"), escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgReadFile,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgReadFile,
 		"\t%cr\tRead in the specified file.\n\r"), escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgSubject,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgSubject,
 		"\t%cs\tChange the subject of the message.\n\r"), escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgTo,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgTo,
 		"\t%ct\tChange the addresses in the To list.\n\r"),
 		escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgVi,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgVi,
 		"\t%cv\tInvoke the Vi visual editor on the message.\n\r"),
 		escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgUnixCmd,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgUnixCmd,
 	  "\t%c!\tExecute a UNIX command (or give a shell if no command).\n\r"),
 	  escape_char);
-	PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAddUnixCmd,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgAddUnixCmd,
       "\t%c<\tExecute a UNIX command adding the output to the message.\n\r"),
 	  escape_char);
-	PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgEndMsg,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgEndMsg,
       "\t.  \tby itself on a line (or a control-D) ends the message.\n\r"));
-	PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgContinue,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgContinue,
 	  "Continue.)\n\r"));
 }
 
@@ -192,13 +192,13 @@ static void read_in_file(FILE *fd, const char *filename, int show_user_filename)
 	(void) expand_env(exp_fname, filename, sizeof(exp_fname));
 
 	if (exp_fname[0] == '\0') {
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmNoFilenameSpecified,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmNoFilenameSpecified,
 	      "\n\r(No filename specified for file read! Continue.)\n\r"));
 	  return;
 	}
 
 	if ((myfd = fopen(exp_fname,"r")) == NULL) {
-	  PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmCouldntReadFile,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmCouldntReadFile,
 	    "\n\r(Couldn't read file '%s'! Continue.)\n\r"), exp_fname);
 	  return;
 	}
@@ -213,24 +213,24 @@ static void read_in_file(FILE *fd, const char *filename, int show_user_filename)
 	fclose(myfd);
 
 	if (lines == 1)
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLine,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLine,
 	    "\n\r(Added 1 line ["));
 	else
-	  PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLinePlural,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLinePlural,
 	    "\n\r(Added %d lines ["), lines);
 
 	if (nchars == 1)
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedChar,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedChar,
 	    "1 char] "));
 	else
-	  PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedCharPlural,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedCharPlural,
 	    "%d chars] "), nchars);
 
 	if (show_user_filename)
-	  PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedFromFile,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedFromFile,
 		"from file %s. Continue.)\n\r"), exp_fname);
 	else
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedToMessage,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedToMessage,
 		"to message. Continue.)\n\r"));
 
 	return;
@@ -253,18 +253,18 @@ static void print_message_so_far(FILE *edit_fd, const SEND_HEADER *shdr, const c
 	fseek(edit_fd, 0L, 0);
 
 	NewLine();
-	PutLine1(-1, -1, "To: %s\r\n",		format_long(shdr->to, 4));
-	PutLine1(-1, -1, "Cc: %s\r\n",		format_long(shdr->cc, 4));
-	PutLine1(-1, -1, "Bcc: %s\r\n",		format_long(shdr->bcc, 5));
-	PutLine1(-1, -1, "Subject: %s\r\n",	shdr->subject);
+	PutLine(-1, -1, "To: %s\r\n",		format_long(shdr->to, 4));
+	PutLine(-1, -1, "Cc: %s\r\n",		format_long(shdr->cc, 4));
+	PutLine(-1, -1, "Bcc: %s\r\n",		format_long(shdr->bcc, 5));
+	PutLine(-1, -1, "Subject: %s\r\n",	shdr->subject);
 	NewLine();
 
 	while (fgets(buffer, SLEN, edit_fd) != NULL) {
-	  PutLine0(-1, -1, buffer);
+	  PutLine(-1, -1, buffer);
 	  NewLine();
 	}
 
-	PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgPrintContinue,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgPrintContinue,
 	    "\n\r(Continue entering message.)\n\r"));
 }
 
@@ -291,7 +291,7 @@ static void read_in_messages(FILE *fd, char *buffer)
 
 	/* a couple of quick checks */
 	if(curr_folder.num_mssgs < 1) {
-	  PutLine0(-1, -1, catgets(elm_msg_cat,
+	  PutLine(-1, -1, catgets(elm_msg_cat,
 	    ElmSet, ElmNoMessageReadContinue,
 	    "(No messages to read in! Continue.)\n\r"));
 	  return;
@@ -301,7 +301,7 @@ static void read_in_messages(FILE *fd, char *buffer)
 	    sprintf(local_buffer, catgets(elm_msg_cat, ElmSet, ElmValidNumbersBetween,
 	      "(Valid message numbers are between 1 and %d. Continue.)\n\r"),
 	      curr_folder.num_mssgs);
-	    PutLine0(-1, -1, local_buffer);
+	    PutLine(-1, -1, local_buffer);
 	    return;
 	  }
 	}
@@ -313,7 +313,7 @@ static void read_in_messages(FILE *fd, char *buffer)
 	/* go run readmsg and get output */
 	sprintf(local_buffer, "%s -- %s", readmsg, arg);
 	if ((myfd = popen(local_buffer, "r")) == NULL) {
-	   PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmCantFindReadmsg,
+	   PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmCantFindReadmsg,
 	       "(Can't find 'readmsg' command! Continue.)\n\r"));
 	   (void) remove_folder_state_file();
 	   return;
@@ -333,26 +333,26 @@ static void read_in_messages(FILE *fd, char *buffer)
         (void) remove_folder_state_file();
 
 	if (lines == 0) {
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgCouldntAdd,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgCouldntAdd,
 	 	 "(Couldn't add the requested message. Continue.)\n\r"));
 	  return;
 	}
 
 	if (lines == 1)
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLine,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLine,
 	    "\n\r(Added 1 line ["));
 	else
-	  PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLinePlural,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedLinePlural,
 	    "\n\r(Added %d lines ["), lines);
 
 	if (nchars == 1)
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedChar,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedChar,
 	    "1 char] "));
 	else
-	  PutLine1(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedCharPlural,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedCharPlural,
 	    "%d chars] "), nchars);
 
-	PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedToMessage,
+	PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmAddedToMessage,
 		"to message. Continue.)\n\r"));
 
 	return;
@@ -368,7 +368,7 @@ static void get_with_expansion(const char *prompt, char *buffer,
 	    this puppy out!  (sourcebuf could be an initial addition)
 	**/
 
-	PutLine0(-1, -1, prompt);
+	PutLine(-1, -1, prompt);
 
 	if (sourcebuf != NULL) {
 	  while (!whitespace(*sourcebuf) && *sourcebuf != '\0')
@@ -387,8 +387,8 @@ static void get_with_expansion(const char *prompt, char *buffer,
 	if (enter_string(buffer, SLEN, -1, -1, ESTR_UPDATE) < 0) {
 	    /* undo */
 	    (void) strcpy(buffer, savecopy);
-	    PutLine0(-1, -1, prompt);
-	    PutLine0(-1, -1, buffer);
+	    PutLine(-1, -1, prompt);
+	    PutLine(-1, -1, buffer);
 	    NewLine();
 	    return;
 	}
@@ -398,8 +398,8 @@ static void get_with_expansion(const char *prompt, char *buffer,
 	  if(*expanded_buffer != '\0') {
 	    if (*prompt != '\n')
 	      NewLine();
-	    PutLine0(-1, -1, prompt);
-	    PutLine0(-1, -1, expanded_buffer);
+	    PutLine(-1, -1, prompt);
+	    PutLine(-1, -1, expanded_buffer);
 	  }
 	}
 	NewLine();
@@ -458,7 +458,7 @@ static int builtin_editor(const char *filename, SEND_HEADER *shdr)
 	sprintf(tmpbuf, catgets(elm_msg_cat, ElmSet, ElmCouldntOpenAppend,
 	    "Couldn't open %s for update [%s]."),
 	    filename, strerror(err));
-	PutLine0(-1, -1, tmpbuf);
+	PutLine(-1, -1, tmpbuf);
 	dprint(1, (debugfile,
 	    "Error encountered trying to open file %s;\n", filename));
 	dprint(1, (debugfile, "** %s **\n", strerror(err)));
@@ -482,7 +482,7 @@ static int builtin_editor(const char *filename, SEND_HEADER *shdr)
 	"Commands include:  ^D or '.' to end, %cp to list, %c? for help.\n\r\n\r"),
 	escape_char, escape_char);
     CleartoEOS();
-    PutLine0(-1, -1, tmpbuf);
+    PutLine(-1, -1, tmpbuf);
 
     builtin_active = TRUE;
     builtin_interrupt_count = 0;
@@ -493,11 +493,11 @@ static int builtin_editor(const char *filename, SEND_HEADER *shdr)
     /* return location for interrupts */
     while (SETJMP(builtin_jmpbuf) != 0) {
 	if (builtin_interrupt_count == 1) {
-	    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet,
+	    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet,
 		ElmEditmsgOneMoreCancel,
 		"(Interrupt. One more to cancel this letter.)\n\r"));
 	} else {
-	    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgCancelled,
+	    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEditmsgCancelled,
 		"(Interrupt. Letter canceled.)\n\r"));
 	    goto done;
 	}
@@ -513,13 +513,13 @@ static int builtin_editor(const char *filename, SEND_HEADER *shdr)
 		    ElmCouldntOpenAppend,
 		    "Couldn't open %s for update [%s]."),
 		    filename, strerror(err));
-		PutLine0(-1, -1, tmpbuf);
+		PutLine(-1, -1, tmpbuf);
 		dprint(1, (debugfile,
 		    "Error encountered trying to open file %s;\n", filename));
 		dprint(1, (debugfile, "** %s **\n", strerror(err)));
 		goto done;
 	    }
-	    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmPostEdContinue,
+	    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmPostEdContinue,
 		"(Continue entering message.  Type ^D or '.' on a line by itself to end.)\n\r"));
 	}
 
@@ -602,7 +602,7 @@ more_wrap:
 
 	case 'e':
 	    if (e_editor[0] == '\0') {
-		PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmDontKnowEmacs,
+		PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmDontKnowEmacs,
 		    "\n\r(Don't know where Emacs would be. Continue.)\n\r"));
 		break;
 	    }
@@ -620,11 +620,11 @@ more_wrap:
 	    break;
 
 	case 'o':
-	    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEnterNameEditor,
+	    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEnterNameEditor,
 		"\n\rPlease enter the name of the editor: "));
 	    if (enter_string(tmpbuf, sizeof(tmpbuf), -1, -1, ESTR_ENTER) < 0
 			|| tmpbuf[0] == '\0') {
-		PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmSimpleContinue,
+		PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmSimpleContinue,
 		    "(Continue.)\n\r"));
 		break;
 	    }
@@ -637,7 +637,7 @@ more_wrap:
 	case '<':
 	    NewLine();
 	    if (strlen(linebuf) < 3) {
-		PutLine0(-1, -1, catgets(elm_msg_cat,
+		PutLine(-1, -1, catgets(elm_msg_cat,
 		    ElmSet, ElmUseSpecificCommand,
 		   "(You need to use a specific command here. Continue.)\n\r"));
 		break;
@@ -654,7 +654,7 @@ more_wrap:
 	    (void) system_call(
 		(strlen(linebuf) < 3 ? (char *)NULL : linebuf+2),
 		SY_COOKED|SY_USER_SHELL|SY_ENAB_SIGINT|SY_DUMPSTATE);
-	    PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmSimpleContinue,
+	    PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmSimpleContinue,
 		"(Continue.)\n\r"));
 	    break;
 
@@ -673,14 +673,14 @@ more_wrap:
 	    MCsprintf(tmpbuf, catgets(elm_msg_cat, ElmSet, ElmDontKnowChar,
 		"\n\r(Don't know what %c%c is. Try %c? for help.)\n\r"),
 		 escape_char, linebuf[1], escape_char);
-	    PutLine0(-1, -1, tmpbuf);
+	    PutLine(-1, -1, tmpbuf);
 	    break;
 
 	}
 
     }
 
-    PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEndOfMessage,
+    PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmEndOfMessage,
 	"\n\r<end-of-message>\n\r\n\r\n\r\n\r"));
     rc = 0;
 

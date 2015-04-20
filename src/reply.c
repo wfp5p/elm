@@ -590,7 +590,7 @@ int remail(void)
 
     build_mailer_command(buffer, filename,
 	expanded, (char *)NULL, (char *)NULL);
-    PutLine0(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmResendingMail,
+    PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmResendingMail,
 	    "Resending mail..."));
     (void) system_call(buffer, 0);
     set_error(catgets(elm_msg_cat, ElmSet, ElmMailResent, "Mail resent."));

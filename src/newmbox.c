@@ -342,18 +342,18 @@ static int read_headers(int add_new_only)
 	  ClearLine(LINES-1);
 	  ClearLine(LINES);
 	  if (add_new_only)
-	    PutLine2(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmReadingInMessage,
+	    PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmReadingInMessage,
 		     "Reading in %s, message: %d"),
 		     curr_folder.filename, curr_folder.num_mssgs);
 	  else
-	    PutLine1(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmReadingInMessage0,
+	    PutLine(LINES, 0, catgets(elm_msg_cat, ElmSet, ElmReadingInMessage0,
 		     "Reading in %s, message: 0"), curr_folder.filename);
 	  count_x = LINES;
           count_y = 22 + strlen(curr_folder.filename);
 	}
 	else {
 	  count_x = LINES-2;
-	  PutLine0(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmReadingMessage0,
+	  PutLine(LINES-2, 0, catgets(elm_msg_cat, ElmSet, ElmReadingMessage0,
 		"Reading message: 0"));
 	}
 
@@ -522,7 +522,7 @@ static int read_headers(int add_new_only)
 		line = 0;
 		in_header = TRUE;
 		if (count % readmsginc == 0) {
-		  PutLine1(count_x, count_y, "%d", count);
+		  PutLine(count_x, count_y, "%d", count);
 		  FlushOutput();
 		}
 	      }

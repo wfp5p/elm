@@ -155,7 +155,7 @@ int show_msg(int number)
 		    Raw(ON | NO_TITE);	/* Raw on but don't switch screen */
 		    (void) unlink (fname);
 		    if (code == 0) {
-		      PutLine0(LINES,0, catgets(elm_msg_cat, ElmSet, ElmPressAnyKeyIndex,
+		      PutLine(LINES,0, catgets(elm_msg_cat, ElmSet, ElmPressAnyKeyIndex,
 			     "Press any key to return to index."));
 		      (void) GetKey(0);
 		      NewLine();
@@ -510,7 +510,7 @@ int show_msg(int number)
 	  MoveCursor(LINES,0);
 	  if (Term.status & TERM_CAN_SO)
 	      StartStandout();
-	  PutLine0(-1, -1, catgets(elm_msg_cat, ElmSet, ElmCommandIToReturn,
+	  PutLine(-1, -1, catgets(elm_msg_cat, ElmSet, ElmCommandIToReturn,
 		" Command ('i' to return to index): "));
 	  if (Term.status & TERM_CAN_SO)
 	      EndStandout();

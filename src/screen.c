@@ -209,7 +209,7 @@ int show_headers(void)
 
 	  if (do_standout)
 	      StartStandout();
-	  PutLine0(-1, -1, buffer);
+	  PutLine(-1, -1, buffer);
 	  if (do_standout)
 	      EndStandout();
 	  NewLine();
@@ -328,20 +328,20 @@ int show_current(void)
 	    }
 
 	    ClearLine(last_line);
-	    PutLine0(last_line, 0, old_buffer);
+	    PutLine(last_line, 0, old_buffer);
 	  }
 	  MoveCursor(new_line, 0);
 	  if (Term.status & TERM_CAN_SO)
 	      StartStandout();
-	  PutLine0(-1, -1, new_buffer);
+	  PutLine(-1, -1, new_buffer);
 	  if (Term.status & TERM_CAN_SO)
 	      EndStandout();
 	}
 	else {
 	  if (on_page(last_current-1))
-	    PutLine0(last_line,0,"  ");	/* remove old pointer... */
+	    PutLine(last_line,0,"  ");	/* remove old pointer... */
 	  if (on_page(curr-1))
-	    PutLine0(new_line, 0,"->");
+	    PutLine(new_line, 0,"->");
 	}
 
 	last_current = curr;

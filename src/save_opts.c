@@ -261,7 +261,7 @@ static void err_pause(int err_flag)
     if (error_displayed) {
 	MoveCursor(LINES-1 , 0);
 	CleartoEOLN();
-	PutLine0(LINES-1, (COLS-(sizeof(pause_mssg)-1))/2, pause_mssg);
+	PutLine(LINES-1, (COLS-(sizeof(pause_mssg)-1))/2, pause_mssg);
 	while ((i = ReadCh()) != '\r' && i != '\n')
 	    putchar('\007');
 	ClearLine(LINES-1);
