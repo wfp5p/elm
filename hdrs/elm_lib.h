@@ -507,6 +507,7 @@ int print_msg(int pause_on_scroll);
 int get_page(int msg_pointer);
 void leave(int mode);
 void malloc_failed_exit(const char *proc, unsigned int len);
+char *nameof(const char *filename);
 
 /* src/wordwrap.c */
 int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,

@@ -170,7 +170,7 @@ int get_page(int msg_pointer)
 	  return(SAME_PAGE);
 }
 
-char *nameof(char *filename)
+char *nameof(const char *filename)
 {
 	/** checks to see if 'filename' has any common prefixes, if
 	    so it returns a string that is the same filename, but
