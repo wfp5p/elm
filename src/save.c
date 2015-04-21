@@ -87,7 +87,8 @@ int save(int *redraw_p, int silently, int delete)
     int i;
     char filename[SLEN];	/* pathname to target folder		*/
     char *canon_filename;	/* result of nameof(filename)		*/
-    char *word_save, *word_Save, *word_saved;
+/*    char *word_save; */
+    char *word_Save, *word_saved;
     char prompt1[SLEN], prompt2[SLEN];
     char lbuf[LONG_STRING];
     FILE *fp;
@@ -100,11 +101,11 @@ int save(int *redraw_p, int silently, int delete)
     current_is_tagged = ison(curr_folder.headers[curr_folder.curr_mssg-1]->status, TAGGED);
 
     if (delete) {
-	word_save = S_(ElmSave, "save");
+/*	word_save = S_(ElmSave, "save"); */
 	word_Save = S_(ElmCapSave, "Save");
 	word_saved = S_(ElmSaved, "saved");
     } else {
-	word_save = S_(ElmCopy, "copy");
+/*	word_save = S_(ElmCopy, "copy"); */
 	word_Save = S_(ElmCapCopy, "Copy");
 	word_saved = S_(ElmCopied, "copied");
     }
