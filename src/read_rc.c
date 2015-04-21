@@ -857,7 +857,7 @@ int expand_env(register char *dst, const char *src, int len)
 		    src++;
 	        n = read_env_var(var, src);
 		src += n;
-	        if((env = getenv(var)) == 0)
+	        if((env = getenv(var)) == NULL)
 	        {
 	            free(var);
 	            return -1;
@@ -950,7 +950,7 @@ int expand_env(register char *dst, const char *src, int len)
 	    ** Home directory expansion
 	    */
 	    case '~':
-	        if((env = getenv("HOME")) == 0)
+	        if((env = getenv("HOME")) == NULL)
 	        {
 	            free(var);
 	            return -1;
