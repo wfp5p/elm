@@ -41,8 +41,6 @@
 #include "s_elm.h"
 #include <assert.h>
 
-extern char *strip_commas();
-
 static void display_subject P_((const char *));
 static int get_subject P_((char *));
 static int get_copies P_((char *, char *, char *, int));
