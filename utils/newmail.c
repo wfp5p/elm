@@ -176,7 +176,7 @@ static long newmail_bytes(char *name);
 static void newmail_expand_filename(char *name, char *store_space);
 static int usage(char *name);
 static int add_folder(char *name);
-static int read_headers(register struct folder_struct *cur_folder);
+static int read_headers(struct folder_struct *cur_folder);
 static void add_default_folder(void);
 static void pad_prefixes(void);
 static int show_header(struct header_rec *hdr,
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
 	int c, i, done;
 	long lastsize,
 	     newsize;			/* file size for comparison..      */
-	register struct folder_struct *cur_folder;
+	struct folder_struct *cur_folder;
 
 	initialize_common();
 
@@ -366,7 +366,7 @@ int main(int argc, char *argv[])
 	}
 }
 
-static int read_headers(register struct folder_struct *cur_folder)
+static int read_headers(struct folder_struct *cur_folder)
 {
 	/** read the headers, output as found given current_folder,
 	    the prefix of that folder, and whether we're in a window
@@ -376,7 +376,7 @@ static int read_headers(register struct folder_struct *cur_folder)
 	struct header_rec hdr;		/* holds header info on curr mssg */
 	char buffer[SLEN];		/* message line buffer		  */
 	char *fld_name, *fld_val;	/* field name and value pointers  */
-	register int in_header;		/* TRUE when processing a hdr	  */
+	int in_header;		/* TRUE when processing a hdr	  */
 	int count;			/* count of messages done	  */
 	int init_header;		/* TRUE to reset hdr for new mssg */
 	count = 0;
@@ -741,7 +741,7 @@ static void pad_prefixes(void)
 	    length, then space pads the other prefixes to match.
 	**/
 
-	register int i, j, len = 0;
+	int i, j, len = 0;
 
 	for (i=0; i < total_folders; i++)
 	  if (len < (j=strlen(folders[i].prefix)))

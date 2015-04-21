@@ -50,7 +50,7 @@ void quit_abandon(int do_prompt)
 	**/
 
 	char *msg;
-	register int i, changes;
+	int i, changes;
 
 	dprint(1, (debugfile, "\n\n-- exiting --\n\n"));
 

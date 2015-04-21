@@ -36,14 +36,14 @@
 #include "elm_defs.h"
 #include "elm_globals.h"
 
-int uucp_hops(register char *to)
+int uucp_hops(char *to)
 {
 	/** Given the entire "To:" list, return the number of hops in the
 	    first address (a hop = a '!') or ZERO iff the address is to a
   	    non uucp address.
 	**/
 
-	register int hopcount = 0, len;
+	int hopcount = 0, len;
 
 	while (*to) {
 	  len = len_next_part(to);
@@ -62,7 +62,7 @@ int uucp_hops(register char *to)
 	return(hopcount);
 }
 
-char *bounce_off_remote(register char *to)
+char *bounce_off_remote(char *to)
 {
 	/** Return an address suitable for framing (no, that's not it...)
 	    Er, suitable for including in a 'cc' line so that it ends up
@@ -79,7 +79,7 @@ char *bounce_off_remote(register char *to)
 	static char address[LONG_STRING];	/* BEEG address buffer! */
 
 	char   host[MAX_HOPS][NLEN];	/* for breaking up addr */
-	register int hostcount = 0, hindex = 0, iindex, len;
+	int hostcount = 0, hindex = 0, iindex, len;
 
 	while (*to) {
 	  len = len_next_part(to);

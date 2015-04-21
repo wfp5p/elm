@@ -31,7 +31,7 @@ void reverse(char *string)
 {
 	/** reverse string... pretty trivial routine, actually! **/
 
-	register char *head, *tail, c;
+	char *head, *tail, c;
 
 	for (head = string, tail = string + strlen(string) - 1; head < tail; head++, tail--)
 		{

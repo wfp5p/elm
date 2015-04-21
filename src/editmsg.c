@@ -182,8 +182,8 @@ static void read_in_file(FILE *fd, const char *filename, int show_user_filename)
 
 	FILE *myfd;
 	char exp_fname[SLEN], buffer[SLEN];
-	register int n;
-	register int lines = 0, nchars = 0;
+	int n;
+	int lines = 0, nchars = 0;
 
 	while (whitespace(*filename))
 		++filename;
@@ -279,8 +279,8 @@ static void read_in_messages(FILE *fd, char *buffer)
 
 	FILE *myfd;
 	char  local_buffer[SLEN], *arg;
-	register int add_prefix=0, mindex;
-	register int n;
+	int add_prefix=0, mindex;
+	int n;
 	int lines = 0, nchars = 0;
 
 	add_prefix = tolower(buffer[0]) == 'm';

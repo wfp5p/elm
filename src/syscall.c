@@ -357,7 +357,7 @@ int do_pipe(void)
 	    the specified sequence.. **/
 
 	char command[SLEN], buffer[SLEN];
-	register int  ret;
+	int  ret;
 	int	old_raw;
 
         PutLine(LINES-2, 0,

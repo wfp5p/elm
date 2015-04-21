@@ -38,8 +38,8 @@ int get_word(const char *buffer, int start, char *word, int wordlen)
      * are found in the buffer then -1 is returned.
      */
 
-    register int len;
-    register const char *p;
+    int len;
+    const char *p;
 
     for (p = buffer+start ; isspace(*p) ; ++p)
 	;

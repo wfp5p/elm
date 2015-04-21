@@ -615,7 +615,7 @@ int delete_from_alias_text(char **name, int num_to_delete)
 	char rest_of_line[LONG_STRING];
 	char *s, *rest;
 
-	register int i;
+	int i;
 	int num_aliases;
 	int delete_continues;
 	int err;
@@ -1266,7 +1266,7 @@ static int get_one_alias(DBZ *db, int current)
  */
 
 	int new_max;
-	register struct alias_rec *a;
+	struct alias_rec *a;
 
 	if ((a = fetch_alias(db, (char *)NULL)) == NULL)
 	    return 0;
@@ -1614,7 +1614,7 @@ char *address_to_alias(const char *address)
 int find_alias(char *word, int alias_type)
 {
 	/** find word and return loc, or -1 **/
-	register int loc = -1;
+	int loc = -1;
 
 	/** cannot be an alias if its longer than NLEN chars **/
 	if (strlen(word) > NLEN)

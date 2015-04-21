@@ -282,7 +282,7 @@ int cvt_numtz_to_mins(const char *str)
      * string is exactly 4 characters long, and contains all digits.
      * Return -1 if it is not a valid string.
      */
-    register int tz;
+    int tz;
 
     /* Process the first 2 characters, ie. the HH part */
     if (!isdigit(str[0]))

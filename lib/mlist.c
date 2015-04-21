@@ -233,7 +233,7 @@ int addrmatch(struct addrs *addr, struct addrs *pattern)
 	    continue;
 	pattlen = strlen(pattern->str[i]);
 	for(j=0; j < addr->len; j++) {
-	    register char *s1, *s2;
+	    char *s1, *s2;
 	    char *addrsearch = addr->str[j];
 	    while (addrsearch != NULL) {
 		s1 = pattern->str[i];

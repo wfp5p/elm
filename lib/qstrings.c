@@ -35,8 +35,8 @@ char *qstrpbrk(const char *source, const char *keys)
 	    in the source string.
 	**/
 
-	register const char *s, *k;
-	register int len;
+	const char *s, *k;
+	int len;
 
 	s = source;
 	while (*s != '\0') {
@@ -60,7 +60,7 @@ int qstrspn(const char *source, const char *keys)
 	    defined set of characters with parsing, usually.
 	**/
 
-	register int loc = 0, key_index = 0, len;
+	int loc = 0, key_index = 0, len;
 
 	while (source[loc] != '\0') {
 	  key_index = 0;
@@ -86,7 +86,7 @@ int qstrcspn(const char *source, const char *keys)
 	    NOTE that this is the opposite of strspn() above
 	**/
 
-	register int loc = 0, key_index = 0, len;
+	int loc = 0, key_index = 0, len;
 
 	while (source[loc] != '\0') {
 	  key_index = 0;

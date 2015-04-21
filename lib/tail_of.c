@@ -51,7 +51,7 @@ int tail_of(char *from, char *buffer, char *to)
 	   	  so many metacharacters, as I think we're probably using
 		  them all!!) **/
 
-	register int loc, i = 0, cnt = 0, using_to = 0;
+	int loc, i = 0, cnt = 0, using_to = 0;
 
 	/**
 	    Produce a simplified version of the from into buffer.  If the

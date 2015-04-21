@@ -73,7 +73,7 @@
 static char inbuf[1024];		/* space to hold an input record	*/
 static char outbuf[4096];		/* space to accumulate output record	*/
 
-static int calc_col(register int col, register char *s);
+static int calc_col(int col, char *s);
 
 static void usage_error(char *prog)
 {
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     exit(0);
 }
 
-static int calc_col(register int col, register char *s)
+static int calc_col(int col, char *s)
 {
     while (*s != '\0') {
 	switch (*s) {

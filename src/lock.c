@@ -179,7 +179,7 @@ int elm_lock(int direction)
 	  we DID create it, not another process.
       **/
 
-      register int create_iteration = 0,
+      int create_iteration = 0,
 		   flock_iteration = 0;
       int kill_status;
       char pid_buffer[TLEN];

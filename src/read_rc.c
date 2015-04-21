@@ -198,8 +198,8 @@ int read_rc_file(void)
 /* validate/correct config_options string */
 
 	if (config_options[0]) {
-	    register char *s, *t;
-	    register opts_menu *o;
+	    char *s, *t;
+	    opts_menu *o;
 	    s = shift_lower(config_options);
 	    for (t = config_options; *s; ++s) {
 		if (*s == '_' || *s == '^') {
@@ -374,7 +374,7 @@ static void do_rc(FILE *file, int lcl)
  */
 static int do_set(FILE *file, char *word1, char *word2, int lcl)
 {
-	register int x, y;
+	int x, y;
 
 	for (x=0; x < NUMBER_OF_SAVEABLE_OPTIONS; ++x) {
 	    y = strcmp(word1, save_info[x].name);
@@ -402,7 +402,7 @@ static int do_set(FILE *file, char *word1, char *word2, int lcl)
 	    case DT_MLT:
 		y=0;
 		{
-		    register char **s;
+		    char **s;
 		    for (s = SAVE_INFO_MLT(x); *s; ++s)
 			if (**s == '!')		/* negated multiple */
 			    y |= do_set(file, *s + 1,
@@ -416,7 +416,7 @@ static int do_set(FILE *file, char *word1, char *word2, int lcl)
 	    case DT_STR:
 		strcpy(SAVE_INFO_STR(x), word2);
 		if (save_info[x].flags & FL_NOSPC) {
-		    register char *s;
+		    char *s;
 		    for (s = SAVE_INFO_STR(x); *s; ++s)
 			if (*s == '_') *s=' ';
 		    }
@@ -694,7 +694,7 @@ int matchInList(char *list[], int count, const char *buffer, int ignoreCase)
    	/** returns true iff the first 'n' characters of 'buffer'
 	    match an entry of the list **/
 
-	register int i;
+	int i;
 
 	for (i=0;i < count; i++)
         {
@@ -724,7 +724,7 @@ static int breakup(char *buffer, char *word1, char *word2)
 	    Return -1 if word 2 is of zero length, else 0.
 	**/
 
-	register int i;
+	int i;
 
 	for (i=0;buffer[i] != '\0' && ok_rc_char(buffer[i]); i++)
 	  if (buffer[i] == '_')
@@ -777,9 +777,9 @@ static char *daynames[7] = {
 ** Returns:  number of characters read from source
 **
 */
-static int read_env_var(register char *dst, const char *src)
+static int read_env_var(char *dst, const char *src)
 {
-    register int	nread = 0;
+    int	nread = 0;
 
     while(*src && !(*src == '/' || *src == '}' || *src == '%'))
     {
@@ -837,10 +837,10 @@ static int read_env_var(register char *dst, const char *src)
 **
 **
 */
-int expand_env(register char *dst, const char *src, int len)
+int expand_env(char *dst, const char *src, int len)
 {
     int			n;
-    register char	*var, *env;
+    char	*var, *env;
     time_t		now;
     struct tm		*tm;
 
@@ -989,7 +989,7 @@ int expand_env(register char *dst, const char *src, int len)
 #define on_off(s)	(s == 1? "ON " : "OFF")
 static int dump_rc_results(void)
 {
-	register int i, j, len = 0;
+	int i, j, len = 0;
 	char buf[SLEN], *s;
 
 	for (i = 0; i < NUMBER_OF_SAVEABLE_OPTIONS; i++) {
@@ -1063,7 +1063,7 @@ static int is_it_on(const char *word)
 	**/
 
 	static char mybuffer[NLEN];
-	register int i, j;
+	int i, j;
 
 	for (i=0, j=0; word[i] != '\0'; i++)
 	  mybuffer[j++] = tolower(word[i]);

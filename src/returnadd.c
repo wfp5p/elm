@@ -58,7 +58,7 @@ static void get_existing_address(char *buffer, int msgnum)
 	**/
 
 	char mybuf[LONG_STRING];
-	register char ok = 1, in_to = 0;
+	char ok = 1, in_to = 0;
 	int  err;
 
 	buffer[0] = '\0';

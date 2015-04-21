@@ -43,7 +43,7 @@ int copy_sans_escape(unsigned char *dest, unsigned char *source, int len)
 	    format (e.g. ^(char value + 32))
 	**/
 
-	register int i = 0, j = 0, n = 0;
+	int i = 0, j = 0, n = 0;
 
 	while (i < len && j < len && source[i] != '\0') {
 	  if (source[i] == '\t') {
@@ -78,7 +78,7 @@ char *format_long(const char *inbuff, int init_len)
 	**/
 
 	static char ret_buffer[VERY_LONG_STRING];
-	register int iindex = 0, current_length = 0, depth=15, i, len;
+	int iindex = 0, current_length = 0, depth=15, i, len;
 	char     buffer[VERY_LONG_STRING];
 	char     *word, *bufptr;
 
@@ -130,8 +130,8 @@ char *strip_commas(char *string)
 {
 	/* DESTRUCTIVELY elide commas and collapse whitespace from string */
 
-	register char *src, *dest;
-	register int len;
+	char *src, *dest;
+	int len;
 	int is_whitespace;
 
 	is_whitespace = FALSE;
@@ -205,7 +205,7 @@ char *get_token(char *source, char *keys, int depth)
 	    but allows nesting of calls via pointers...
 	**/
 
-	register int  last_ch;
+	int  last_ch;
 	static   char *buffers[MAX_RECURSION];
 	char     *return_value, *sourceptr;
 
@@ -249,7 +249,7 @@ char *get_token(char *source, char *keys, int depth)
 }
 
 
-int quote_args(register char *out_string, register char *in_string)
+int quote_args(char *out_string, char *in_string)
 {
 	/** Copy from "in_string" to "out_string", collapsing multiple
 	    white space and quoting each word.  Returns a pointer to

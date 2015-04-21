@@ -58,8 +58,8 @@ int translate_return(char *addr, char *ret_addr)
 	    Fixed to make "%xx" "%%xx" (dumb 'C' system!)
 	**/
 
-	register int loc, loc2, iindex = 0;
-	register char *remaining_addr;
+	int loc, loc2, iindex = 0;
+	char *remaining_addr;
 
 /*
  *	check for RFC-822 source route: format @site:usr@site
@@ -134,7 +134,7 @@ int build_address(char *to, char *full_to)
 	    if it changed the information as it copied it across...
 	**/
 
-	register int	i, j, k, l,
+	int	i, j, k, l,
 			in_parens = 0, a_in_parens,
 			expanded_information = 0,
 			eliminated = 0;
@@ -374,7 +374,7 @@ int fix_arpa_address(char *address)
             it a@b.  If you have something like a%b%c%b@x make it a%b@x...
 	**/
 
-	register int host_count = 0, i;
+	int host_count = 0, i;
 	char     hosts[MAX_HOPS][LONG_STRING];	/* array of machine names */
 	char     *host, *addrptr;
 

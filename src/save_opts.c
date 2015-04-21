@@ -435,10 +435,10 @@ static int find_opt(const char *optname)
  * long version here, we actually return the short name.  (When we
  * are asked for the short version here, we return a number.)
  */
-static char *str_opt(register int optnum, int longname)
+static char *str_opt(int optnum, int longname)
 {
     static char buf[SLEN];
-    register char *retval, *t;
+    char *retval, *t;
 
     /* initialize to failure */
     retval = strcpy(buf, "*ERROR*");

@@ -36,8 +36,8 @@ static char paren_buffer[VERY_LONG_STRING];
 
 char *strip_parens(const char *src)
 {
-	register int len;
-	register char *dest = paren_buffer;
+	int len;
+	char *dest = paren_buffer;
 
 	while (*src != '\0') {
 		len = rfc822_toklen(src);
@@ -53,8 +53,8 @@ char *strip_parens(const char *src)
 
 char *get_parens(const char *src)
 {
-	register int len;
-	register char *dest = paren_buffer;
+	int len;
+	char *dest = paren_buffer;
 
 	while (*src != '\0') {
 		len = rfc822_toklen(src);

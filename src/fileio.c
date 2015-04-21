@@ -90,8 +90,8 @@ void copy_message(FILE *dest_file, int msgnum, int cm_options)
     char *buffer;
     char *prefix;
     char attrbuf[SLEN];
-    register struct header_rec *msg_header;
-    register int  lines, front_line, next_front,
+    struct header_rec *msg_header;
+    int  lines, front_line, next_front,
 		  in_header = 1, first_line = TRUE, ignoring = FALSE;
     int forwarding	= !!(cm_options & CM_FORWARDING);
     int remove_header	= !!(cm_options & CM_REMOVE_HEADER);

@@ -342,7 +342,7 @@ static int read_headers(int user_mailbox, int *total_msgs, int *selected)
 	char who[SLEN];
 	char outbuf[SLEN], *bp;
 	char all_to[LONG_STRING];
-	register int in_header = FALSE, count = 0, selected_msgs = 0;
+	int in_header = FALSE, count = 0, selected_msgs = 0;
 	int in_to_list = FALSE;
 	int expect_header = 0;
 	long content_length, last_offset;

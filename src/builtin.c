@@ -77,7 +77,7 @@ int start_builtin(int lines_in_message)
 }
 
 static int next_line(char **inputptr, int *inputlenptr, char *output,
-		     int *outputlenptr, register unsigned width)
+		     int *outputlenptr, unsigned width)
 {
 	/* Copy characters from input to output and copy
 	 * remainder of output to output. In copying use ^X notation for
@@ -91,8 +91,8 @@ static int next_line(char **inputptr, int *inputlenptr, char *output,
 	 * is removed from input and 1 is returned. Otherwise 0 is returned.
 	 */
 
-	register char *optr, *iptr;
-	register unsigned chars_output, nt;
+	char *optr, *iptr;
+	unsigned chars_output, nt;
 	int ret_val;
 	int ilen = *inputlenptr;
 
@@ -303,7 +303,7 @@ static int title_for_page(int page)
 	static char title1[SLEN], title2[SLEN];
 	char titlebuf[SLEN], title3[SLEN], who[SLEN];
 	static int t1_len, t2_len;
-	register int padding, showing_to;
+	int padding, showing_to;
 	struct header_rec *hdr;
 
 	hdr = curr_folder.headers[curr_folder.curr_mssg-1];

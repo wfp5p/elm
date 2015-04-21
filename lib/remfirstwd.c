@@ -30,7 +30,7 @@ void remove_first_word(char *string)
 {	/** removes first word of string, ie up to first non-white space
 	    following a white space! **/
 
-	register int loc;
+	int loc;
 
 	for (loc = 0; string[loc] != ' ' && string[loc] != '\0'; loc++)
 	    ;
@@ -46,7 +46,7 @@ void remove_header_keyword(char *string)
 	    i.e. removes up to (and including) the first colon,
 	    plus any white-space immediately following it.  **/
 
-	register int loc;
+	int loc;
 
 	for (loc = 0; string[loc] != ':' && string[loc] != '\0'; loc++)
 	    ;

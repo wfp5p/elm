@@ -27,10 +27,10 @@
 
 #include "elm_defs.h"
 
-int chloc(const char *string, register int ch)
+int chloc(const char *string, int ch)
 {
 	/** returns the index of ch in string, or -1 if not in string **/
-	register const char *s;
+	const char *s;
 
 	for (s = string; *s; s++)
 		if (*s == ch)
@@ -38,13 +38,13 @@ int chloc(const char *string, register int ch)
 	return(-1);
 }
 
-int qchloc(const char *string, register int ch)
+int qchloc(const char *string, int ch)
 {
 	/* returns the index of ch in string, or -1 if not in string
          * skips over quoted portions of the string
 	 */
-	register const char *s;
-	register int l;
+	const char *s;
+	int l;
 
 	for (s = string; *s; s++) {
 		l = len_next_part(s);

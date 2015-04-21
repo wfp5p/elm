@@ -57,7 +57,7 @@ char *source, *keys;
 	    string, make a copy before using this routine!!
 	 **/
 
-	register int  last_ch;
+	int  last_ch;
 	static   char *sourceptr;
 		 char *return_value;
 
@@ -99,7 +99,7 @@ char *source, *keys;
 	    in the source string. 
 	**/
 
-	register char *s, *k;
+	char *s, *k;
 
 	for (s = source; *s != '\0'; s++) {
 	  for (k = keys; *k; k++)
@@ -123,7 +123,7 @@ char *source, *keys;
 	    defined set of characters with parsing, usually. 
 	**/
 
-	register int loc = 0, key_index = 0;
+	int loc = 0, key_index = 0;
 
 	while (source[loc] != '\0') {
 	  key_index = 0;
@@ -150,7 +150,7 @@ char *source, *keys;
 	    NOTE that this is the opposite of strspn() above
 	**/
 
-	register int loc = 0, key_index = 0;
+	int loc = 0, key_index = 0;
 
 	while (source[loc] != '\0') {
 	  key_index = 0;

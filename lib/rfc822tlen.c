@@ -70,7 +70,7 @@ static int first_time = 1;
 
 #define chtype(c)	(chtab[(c) & 0177])
 
-int rfc822_toklen(register const char *str)
+int rfc822_toklen(const char *str)
 {
 	const char *str0;
 	int depth;

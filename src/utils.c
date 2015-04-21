@@ -143,7 +143,7 @@ int get_page(int msg_pointer)
 	/** Ensure that 'current' is on the displayed page,
 	    returning NEW_PAGE iff the page changed! **/
 
-	register int first_on_page, last_on_page;
+	int first_on_page, last_on_page;
 
 	if (headers_per_page == 0)
 	  return(SAME_PAGE); /* What else can I do ? */
@@ -179,7 +179,7 @@ char *nameof(const char *filename)
 	**/
 
 	static char buffer[STRING];
-	register int i = 0, iindex = 0, len;
+	int i = 0, iindex = 0, len;
 
 	len = strlen(folders);
 	if (strncmp(filename, folders, len) == 0 &&

@@ -215,8 +215,8 @@ static opts_menu cfg_opts[] = {
 
 void init_opts_menu(void)
 {
-	register char *c;
-	register opts_menu *o;
+	char *c;
+	opts_menu *o;
 
 	/* FOO - this is breaking my catgets scanner */
 	for (o = cfg_opts; o->parm; o++) {
@@ -232,7 +232,7 @@ void init_opts_menu(void)
 
 opts_menu *find_cfg_opts(int c)
 {
-	register opts_menu *o;
+	opts_menu *o;
 
 	for (o = cfg_opts; o->parm; o++) {
 	if (c == o->letter)
@@ -259,9 +259,9 @@ static void display_options(void)
 	/** Display all the available options.. **/
 
 	int printed_title = FALSE;
-	register int y;
-	register opts_menu *o;
-	register char *s;
+	int y;
+	opts_menu *o;
+	char *s;
 	char buf[SLEN];
 
 	ClearScreen();
@@ -716,7 +716,7 @@ static int alias_sort_one_liner(int sorting_by)
  */
 static int info_enter(char *name, int ypos, int xpos)
 {
-	register int x,q;
+	int x,q;
 	char buffer[SLEN];
 	int number;
 
@@ -734,7 +734,7 @@ static int info_enter(char *name, int ypos, int xpos)
 	case DT_STR:
 	    strcpy(buffer, SAVE_INFO_STR(x));
 	    if (save_info[x].flags & FL_NOSPC) {
-		register char *s;
+		char *s;
 		for (s = buffer; *s; ++s)
 		    if (*s==' ')
 			*s='_';
@@ -744,7 +744,7 @@ static int info_enter(char *name, int ypos, int xpos)
 	    enter_string(buffer, sizeof(buffer), ypos, xpos, ESTR_REPLACE);
 
 	    if (save_info[x].flags & FL_NOSPC) {
-		register char *s;
+		char *s;
 		for (s=buffer; *s; ++s)
 		    if (*s=='_')
 			*s=' ';

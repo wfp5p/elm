@@ -93,10 +93,10 @@
 
 
 static int fullname_is_quoted(const char *fn_str, int fn_len);
-static int parse_bare_addrspec(register const char *buf, char *ret_addr,
+static int parse_bare_addrspec(const char *buf, char *ret_addr,
 			       int len_addr, char *ret_name,
 			       int len_name, char **next_field);
-static int parse_angle_addrspec(register const char *buf, char *ret_addr,
+static int parse_angle_addrspec(const char *buf, char *ret_addr,
 				int len_addr, char *ret_name, int len_name,
 				char **next_field);
 
@@ -104,7 +104,7 @@ static int parse_angle_addrspec(register const char *buf, char *ret_addr,
 int parse_arpa_mailbox(const char *buf, char *ret_addr, int len_addr,
 		       char *ret_name, int len_name, char **next_field)
 {
-    register const char *s;
+    const char *s;
     int rc;
 
     /*
@@ -164,15 +164,15 @@ static int fullname_is_quoted(const char *fn_str, int fn_len)
 /*
  * Parse a mailbox spec in the format:  addr-spec
  */
-static int parse_bare_addrspec(register const char *buf, char *ret_addr,
+static int parse_bare_addrspec(const char *buf, char *ret_addr,
 			       int len_addr, char *ret_name,
 			       int len_name, char **next_field)
 {
     const char *n_ptr;		/* pointer to (user name) into "buf"	*/
     int n_len;			/* length of text pointed to by "n_ptr"	*/
-    register char *a_ptr;	/* pointer into "ret_addr"		*/
+    char *a_ptr;	/* pointer into "ret_addr"		*/
     int a_size;			/* space remaining in "ret_addr"	*/
-    register int tlen;		/* length of current token		*/
+    int tlen;		/* length of current token		*/
     int got_addr;		/* indicates an address was found	*/
 
     /*
@@ -282,12 +282,12 @@ static int parse_bare_addrspec(register const char *buf, char *ret_addr,
 /*
  * Parse a mailbox spec in the format:  [phrase] "<" [route] addr-spec ">"
  */
-static int parse_angle_addrspec(register const char *buf, char *ret_addr,
+static int parse_angle_addrspec(const char *buf, char *ret_addr,
 				int len_addr, char *ret_name, int len_name,
 				char **next_field)
 {
     const char *beg_field, *end_field;
-    register int tlen;
+    int tlen;
     int w;
 
     /*

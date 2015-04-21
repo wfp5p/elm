@@ -138,7 +138,7 @@ int show_headers(void)
 	    person using ze program, eh?
 	**/
 
-	register int this_msg = 0, line = 4, last = 0, last_line,
+	int this_msg = 0, line = 4, last = 0, last_line,
 		     displayed = 0, using_to;
 	int max, do_standout;
 	char newfrom[SLEN], buffer[SLEN];
@@ -257,7 +257,7 @@ void show_current(void)
 {
 	/** Show the new header, with all the usual checks **/
 
-	register int first = 0, last = 0, last_line, new_line, using_to;
+	int first = 0, last = 0, last_line, new_line, using_to;
 	int curr, max;
 	char     newfrom[SLEN], old_buffer[SLEN], new_buffer[SLEN];
 

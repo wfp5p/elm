@@ -199,7 +199,7 @@ static int get_line(FILE *file, char *buffer, int first_line, int fromelm)
 
 static void de_escape(char *the_string)
 {
-	register char *s, *out;
+	char *s, *out;
 
 	for (s = the_string, out = the_string; *s; s++) {
 	    if (*s != '\\')
@@ -249,12 +249,12 @@ static int add_to_hash_table(char *word, int32 offset)
 
 }
 
-static void add_to_table(FILE *data, register char *aliases,
-			 register char *lastn, register char *firstn,
-			 register char *comment, register char *addresses)
+static void add_to_table(FILE *data, char *aliases,
+			 char *lastn, char *firstn,
+			 char *comment, char *addresses)
 {
 	struct alias_disk_rec	alias;
-	register char	*s;
+	char	*s;
 /*
  *	crack the information into an alias_rec structure, then add the entry
  *	each alias at a time to the dbz file.
@@ -322,7 +322,7 @@ int check_alias(char *aliases)
 /*
  *	Check and make sure this is a legal alias.
  */
-	register char *s, *out;
+	char *s, *out;
 	int badws_flg = 0;
 /*
  *	First, strip out any whitespace (and make sure it was
@@ -373,7 +373,7 @@ int check_alias(char *aliases)
 static int check_address(char *addresses)
 {
 
-	register char *s, *out;
+	char *s, *out;
 	int in_quote = FALSE;
 	int badws_flg = 0;
 /*
@@ -415,7 +415,7 @@ static int check_address(char *addresses)
 
 void despace_address(char *addresses)
 {
-	register char *s, *out;
+	char *s, *out;
 	int in_quote = FALSE;
 /*
  *	Strip whitespace from just-typed alias address list.  Since it's
@@ -448,7 +448,7 @@ static void put_alias(FILE *data)
  *	parse the buffer into aliases, names, comments and addresses
  *	and then add the alias
  */
-	register char *s, *aliases, *lastn, *firstn, *comment, *addresses;
+	char *s, *aliases, *lastn, *firstn, *comment, *addresses;
 	int	in_quote = FALSE;
 
 /*

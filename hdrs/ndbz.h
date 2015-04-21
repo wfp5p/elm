@@ -137,9 +137,9 @@ extern int dbz_close(DBZ *db);
 /* new stuff for dbz */
 extern DBZ *dbz_fresh(char *name, long size, int fs, int32_t tagmask);
 extern DBZ *dbz_again(char *name, char *oldname);
-extern int dbz_sync(register DBZ *db);
+extern int dbz_sync(DBZ *db);
 extern int dbz_incore(int value);
-extern int dbz_cancel(register DBZ *db);
+extern int dbz_cancel(DBZ *db);
 
 /*
  * In principle we could handle unlimited-length keys by operating a chunk

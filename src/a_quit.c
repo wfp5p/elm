@@ -59,7 +59,7 @@ int delete_aliases(int newaliases, int prompt)
 	char buffer[SLEN];
 	char **list;
 
-	register int to_delete = 0, to_keep = 0, i,
+	int to_delete = 0, to_keep = 0, i,
 		     marked_deleted = 0,
 		     ask_questions;
 	char answer;
@@ -152,7 +152,7 @@ int delete_aliases(int newaliases, int prompt)
 int exit_alias(void)
 {
 
-	register int i;
+	int i;
 
 	/* Clear the deletes from all aliases.  */
 

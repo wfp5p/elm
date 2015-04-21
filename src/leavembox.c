@@ -125,7 +125,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 #else
 	struct utimbuf utime_buffer;	/* utime command */
 #endif
-	register int to_delete = 0, to_store = 0, to_keep = 0, i,
+	int to_delete = 0, to_store = 0, to_keep = 0, i,
 		     marked_deleted, marked_read, marked_unread,
 		     last_sortby, l_ask_delete, l_ask_keep, l_ask_store,
 		     asked_storage_q,

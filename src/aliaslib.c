@@ -39,8 +39,8 @@ static int do_get_alias(char *name, char **bufptr, int *bufsizep, int mailing,
 			int sysalias, int depth, int *too_longp);
 static int do_expand_group(char *group, char **bufptr, int *bufsizep,
 			   int sysalias, int depth, int *too_longp);
-static int add_name_to_list(register char *name, register char **bufptr,
-			    register int *bufsizep);
+static int add_name_to_list(char *name, char **bufptr,
+			    int *bufsizep);
 
 
 /*
@@ -268,12 +268,12 @@ static int do_expand_group(char *group, char **bufptr, int *bufsizep,
  * reflect the stuff added to the buffer.  If a buffer overflow would occur,
  * an error message is printed and FALSE is returned, else TRUE is returned.
  */
-/* register char *name;	/\* name to append to buffer			*\/ */
-/* register char **bufptr;	/\* pointer to pointer to end of buffer		*\/ */
-/* register int *bufsizep;	/\* pointer to space remaining in buffer		*\/ */
+/* char *name;	/\* name to append to buffer			*\/ */
+/* char **bufptr;	/\* pointer to pointer to end of buffer		*\/ */
+/* int *bufsizep;	/\* pointer to space remaining in buffer		*\/ */
 
-static int add_name_to_list(register char *name, register char **bufptr,
-			    register int *bufsizep)
+static int add_name_to_list(char *name, char **bufptr,
+			    int *bufsizep)
 {
 	if ( *bufsizep < 0 )
 	    return FALSE;

@@ -30,7 +30,7 @@
 
 char *strtokq(char *source, const char *keys, int flag)
 {
-	register int  last_ch;
+	int  last_ch;
 	static   char *sourceptr = NULL;
 		 char *return_value;
 
@@ -47,7 +47,7 @@ char *strtokq(char *source, const char *keys, int flag)
 
 	if (flag)
 	  if (*sourceptr == '"' || *sourceptr == '\'') {   /* quoted string */
-	    register char *sp;
+	    char *sp;
 	    char quote = *sourceptr++;
 
 	    for (sp = sourceptr; *sp != '\0' && *sp != quote; sp++)

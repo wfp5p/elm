@@ -30,7 +30,7 @@ void move_left(char *string, int chars)
 {
 	/** moves string chars characters to the left DESTRUCTIVELY **/
 
-	register char *source, *destination;
+	char *source, *destination;
 
 	source = string + chars;
 	destination = string;

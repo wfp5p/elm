@@ -268,8 +268,8 @@ static int read_headers(int add_new_only)
 	char tbuffer[VERY_LONG_STRING];
 	long fbytes = 0L, line_bytes = 0L, last_line_bytes = 1L, content_start = 0L,
 	  content_remaining = -1L, lines_start = 0L;
-	register long line = 0;
-	register int count = 0, another_count,
+	long line = 0;
+	int count = 0, another_count,
 	  subj = 0, copyit = 0, in_header = FALSE;
 	int count_x, count_y = 17;
 	int in_to_list = FALSE, in_cc_list = FALSE, forwarding_mail = FALSE,

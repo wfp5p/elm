@@ -171,7 +171,7 @@
 
 #define whitespace(c)	((c) == ' ' || (c) == '\t')
 
-#define no_ret(s)	{ register int xyz; /* varname is for lint */	      \
+#define no_ret(s)	{ int xyz; /* varname is for lint */	      \
 		          for (xyz=strlen(s)-1; xyz >= 0 &&		      \
 				(s[xyz] == '\r' || s[xyz] == '\n'); )	      \
 			     s[xyz--] = '\0';                                 \

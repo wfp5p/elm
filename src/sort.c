@@ -44,7 +44,7 @@ static void find_old_current(int iindex)
 	    index number.  This is to track the current message
 	    when we resync... **/
 
-	register int i;
+	int i;
 
 	dprint(4, (debugfile, "find-old-current(%d)\n", iindex));
 
@@ -271,7 +271,7 @@ static char *skip_re(char *string)
 	**/
 
 	static char buffer[SLEN];
-	register int i=0;
+	int i=0;
 
 	while (whitespace(string[i])) i++;
 

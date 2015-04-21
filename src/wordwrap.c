@@ -66,7 +66,7 @@ int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
 	int addon = 0;	/* Space added by tabs. iindex+addon == column */
 	int tindex = 0;	/* Index to the tabs array. */
 	int tabs[10];	/* Spaces each tab adds. size <= wrapcolumn/8+1 */
-	register int ch_count = 0, escaped = FALSE;
+	int ch_count = 0, escaped = FALSE;
 	long newpos, pos;
 	char line[SLEN];
 

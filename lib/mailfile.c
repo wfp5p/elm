@@ -109,8 +109,8 @@ static int refill(struct mailFile *mailfile)
 
 int mailFile_gets(char **buffer, struct mailFile *mailfile)
 {
-	register char *c;
-	register int n, loops, m;
+	char *c;
+	int n, loops, m;
 	char *p;
 	int size;
 /*	static char vlongstring[VERY_LONG_STRING];*/

@@ -382,8 +382,8 @@ int a_sendmsg(void);
 char *alias_sort_name(int longname);
 
 /* src/bouncebk.c */
-char *bounce_off_remote(register char *to);
-int uucp_hops(register char *to);
+char *bounce_off_remote(char *to);
+int uucp_hops(char *to);
 
 /* src/builtin.c */
 int get_lines_displayed(void);
@@ -442,8 +442,8 @@ int leave_mbox(int resyncing, int quitting, int prompt);
 /* src/limit.c */
 int limit(void);
 int compute_visible(int message);
-int next_message(register int iindex, register int skipdel);
-int prev_message(register int iindex, register int skipdel);
+int next_message(int iindex, int skipdel);
+int prev_message(int iindex, int skipdel);
 int visible_to_index(int message);
 
 /* src/lock.c */
@@ -481,7 +481,7 @@ int change_file(char *p1);
 
 /* src/read_rc.c */
 int read_rc_file(void);
-int expand_env(register char *dst, const char *src, int len);
+int expand_env(char *dst, const char *src, int len);
 int matchInList(char *list[], int count, const char *buffer, int ignoreCase);
 
 /* src/reply.c */
@@ -532,7 +532,7 @@ char *get_token(char *source, char *keys, int depth);
 char *format_long(const char *inbuff, int init_len);
 void split_word(char *buffer, char *first, char *rest);
 int copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
-int quote_args(register char *out_string, register char *in_string);
+int quote_args(char *out_string, char *in_string);
 
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);

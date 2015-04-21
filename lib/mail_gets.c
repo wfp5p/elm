@@ -30,8 +30,8 @@
 
 int mail_gets(char *buffer, int size, FILE *mailfile)
 {
-	register int line_bytes = 0, ch;
-	register char *c = buffer;
+	int line_bytes = 0, ch;
+	char *c = buffer;
 
 	size--; /* allow room for zero terminator on end, just in case */
 

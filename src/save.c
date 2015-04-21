@@ -412,7 +412,7 @@ int expand_filename(char *filename)
 
 	char temp_filename[SLEN], varname[SLEN], env_value[SLEN],
 	     logname[SLEN], *ptr, *address, buffer[LONG_STRING];
-	register int iindex;
+	int iindex;
 	int too_long = FALSE;
 	struct passwd *pass;
 

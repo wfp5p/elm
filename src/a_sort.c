@@ -76,9 +76,9 @@ static int compare_aliases(const void *a, const void *b)
 	    components of the alias.
 	 **/
 
-	register struct alias_rec *first, *second;
-	register int ret;
-	register long diff;
+	struct alias_rec *first, *second;
+	int ret;
+	long diff;
 
 	struct alias_rec **p1 = (struct alias_rec **) a;
 	struct alias_rec **p2 = (struct alias_rec **) b;
@@ -183,7 +183,7 @@ static void alias_old_current(long iindex)
 	    index number.  This is to track the current message
 	    when we resync... **/
 
-	register int i;
+	int i;
 
 	dprint(4, (debugfile, "alias-old-current(%d)\n", iindex));
 

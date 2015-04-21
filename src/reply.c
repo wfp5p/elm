@@ -74,7 +74,7 @@ static int optimize_and_add(char *new_address, char *full_address)
 	    of the form ...a!b...!a... and hops of the form a@b@b etc
 	**/
 
-	register int len, host_count = 0, i;
+	int len, host_count = 0, i;
 	char     hosts[MAX_HOPS][SLEN];	/* array of machine names */
 	char     *host, *addrptr;
 
@@ -411,9 +411,9 @@ int get_return_name(const char *address, char *name, int trans_to_lowercase)
 	 **/
 
 	char single_address[SLEN];
-	register int	i, loc, iindex = 0,
+	int	i, loc, iindex = 0,
 			end, first = 0;
-	register char	*c;
+	char	*c;
 
 	dprint(6, (debugfile,"get_return_name called with (%s, <>, shift=%s)\n",
 		   address, onoff(trans_to_lowercase)));

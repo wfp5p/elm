@@ -168,9 +168,9 @@ static int dbzversion = 3;	/* for validating .dir file format */
 #define	TAGSHIFT	0
 #endif
 
-static int getconf(register FILE *df, register FILE *pf, register struct dbzconfig *cp);
+static int getconf(FILE *df, FILE *pf, struct dbzconfig *cp);
 static int32_t getno(FILE *f, int *ep);
-static int putconf(register FILE *f, register struct dbzconfig *cp);
+static int putconf(FILE *f, struct dbzconfig *cp);
 static void mybytemap(int map[]);
 static int32_t bytemap(int32_t ino, int *map1, int *map2);
 
@@ -221,10 +221,10 @@ static int set(DBZ *db, int32_t value);
 #define	MAPOUT(o)	((db->dbz_bytesame) ? (o) : bytemap((o), db->dbz_mybmap, db->dbz_conf.bytemap))
 
 /* misc. forwards */
-static long hash(register char *name, register int size);
+static long hash(char *name, int size);
 static void crcinit(void);
-static int isprime(register long x);
-static FILE *latebase(register DBZ *db);
+static int isprime(long x);
+static FILE *latebase(DBZ *db);
 static char *enstring(char *s1, char *s2);
 
 /* file-naming stuff */
@@ -233,18 +233,18 @@ static char pag[] = ".pag";
 
 
 /* central data structures */
-static int32_t *getcore(register DBZ *db);
-static int putcore(register DBZ *db);
+static int32_t *getcore(DBZ *db);
+static int putcore(DBZ *db);
 
 /*
  - dbz_fresh - set up a new database, no historical info
  */
 DBZ *dbz_fresh(char *name, long size, int fs, int32_t tagmask)
 {
-	register char *fn;
+	char *fn;
 	struct dbzconfig c;
-	register of_t m;
-	register FILE *f;
+	of_t m;
+	FILE *f;
 
 	if (size != 0 && size < 2) {
 		dprint(5, (debugfile, "dbz_fresh: preposterous size (%ld)\n", size));
@@ -319,7 +319,7 @@ DBZ *dbz_fresh(char *name, long size, int fs, int32_t tagmask)
  */
 static long dbzsize(long contents)
 {
-	register long n;
+	long n;
 
 	if (contents <= 0) {	/* foulup or default inquiry */
 		dprint(5, (debugfile, "dbzsize: preposterous input (%ld)\n", contents));
@@ -341,12 +341,12 @@ static long dbzsize(long contents)
  *
  * This is not a terribly efficient approach.
  */
-static int isprime(register long x)
+static int isprime(long x)
 {
 	static int quick[] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 0 };
-	register int *ip;
-	register long div;
-	register long stop;
+	int *ip;
+	long div;
+	long stop;
 
 	/* hit the first few primes quickly to eliminate easy ones */
 	/* this incidentally prevents ridiculously small tables */
@@ -374,13 +374,13 @@ static int isprime(register long x)
  */
 DBZ *dbz_again(char *name, char *oldname)
 {
-	register char *fn;
+	char *fn;
 	struct dbzconfig c;
-	register int i;
-	register long top;
-	register FILE *f;
-	register int newtable;
-	register of_t newsize;
+	int i;
+	long top;
+	FILE *f;
+	int newtable;
+	of_t newsize;
 
 	/* pick up the old configuration */
 	fn = enstring(oldname, dir);
@@ -460,11 +460,11 @@ DBZ *dbz_again(char *name, char *oldname)
  */
 DBZ *dbz_open(char *name, int mode, int flags)
 {
-	register int i;
-	register size_t s;
-	register DBZ  *db;
-	register char *dirfname;
-	register char *pagfname;
+	int i;
+	size_t s;
+	DBZ  *db;
+	char *dirfname;
+	char *pagfname;
 
 	if ((db = (DBZ *) calloc(sizeof(DBZ), 1)) == NULL) {
 		dprint(5, (debugfile, "dbz_open: no room for DBZ structure\n"));
@@ -592,7 +592,7 @@ DBZ *dbz_open(char *name, int mode, int flags)
  */
 static char *enstring(char *s1, char *s2)
 {
-	register char *p;
+	char *p;
 
 	p = malloc((size_t)strlen(s1) + (size_t)strlen(s2) + 1);
 	if (p != NULL) {
@@ -607,9 +607,9 @@ static char *enstring(char *s1, char *s2)
 /*
  - dbz_close - close a database
  */
-int dbz_close(register DBZ *db)
+int dbz_close(DBZ *db)
 {
-	register int ret = 0;
+	int ret = 0;
 
 	if (db->dbz_pagf == NULL) {
 		dprint(5, (debugfile, "dbz_close: not opened!\n"));
@@ -651,9 +651,9 @@ int dbz_close(register DBZ *db)
 /*
  - dbz_sync - push all in-core data out to disk
  */
-int dbz_sync(register DBZ *db)
+int dbz_sync(DBZ *db)
 {
-	register int ret = 0;
+	int ret = 0;
 
 	if (db->dbz_pagf == NULL) {
 		dprint(5, (debugfile, "dbzsync: not opened!\n"));
@@ -682,7 +682,7 @@ int dbz_sync(register DBZ *db)
  * Note that we don't need to futz around with stdio buffers, because we
  * always fflush them immediately anyway and so they never have stale data.
  */
-int dbz_cancel(register DBZ *db)
+int dbz_cancel(DBZ *db)
 {
 	if (db->dbz_pagf == NULL) {
 		dprint(5, (debugfile, "dbz_cancel: not opened!\n"));
@@ -701,14 +701,14 @@ int dbz_cancel(register DBZ *db)
  * part of the comparison against the stored keys.
  */
 /* dptr NULL, dsize 0 means failure */
-datum dbz_fetch(register DBZ *db, datum key)
+datum dbz_fetch(DBZ *db, datum key)
 {
 	char buffer[DBZMAXKEY + 1];
 	static of_t key_ptr;		/* return value points here */
 	datum output;
-	register size_t keysize;
-	register size_t cmplen;
-	register char *sepp;
+	size_t keysize;
+	size_t cmplen;
+	char *sepp;
 
 	dprint(5, (debugfile, "dbz_fetch: (%s)\n", key.dptr));
 	output.dptr = NULL;
@@ -774,9 +774,9 @@ datum dbz_fetch(register DBZ *db, datum key)
 /*
  - latebase - try to open a base file that wasn't there at the start
  */
-static FILE *latebase(register DBZ *db)
+static FILE *latebase(DBZ *db)
 {
-	register FILE *it;
+	FILE *it;
 
 	if (db->dbz_basefname == NULL) {
 		dprint(5, (debugfile, "latebase: name foulup\n"));
@@ -800,7 +800,7 @@ static FILE *latebase(register DBZ *db)
  - dbz_store - add an entry to the database
  */
 /* 0 success, -1 failure */
-int dbz_store(register DBZ *db, datum key, datum data)
+int dbz_store(DBZ *db, datum key, datum data)
 {
 	of_t value;
 
@@ -850,7 +850,7 @@ int dbz_store(register DBZ *db, datum key, datum data)
  */
 int dbz_incore(int value)
 {
-	register int old = default_incore;
+	int old = default_incore;
 
 	default_incore = value;
 	return(old);
@@ -862,11 +862,11 @@ int dbz_incore(int value)
   NULL df means default
   NULL pf means I don't care about .pag
  */
-static int getconf(register FILE *df, register FILE *pf,
-		   register struct dbzconfig *cp)
+static int getconf(FILE *df, FILE *pf,
+		   struct dbzconfig *cp)
 {
-	register int c;
-	register int i;
+	int c;
+	int i;
 	int err = 0;
 
 	c = (df != NULL) ? getc(df) : EOF;
@@ -938,10 +938,10 @@ static int getconf(register FILE *df, register FILE *pf,
  */
 static int32_t getno(FILE *f, int *ep)
 {
-	register char *p;
+	char *p;
 #	define	MAXN	50
 	char getbuf[MAXN];
-	register int c;
+	int c;
 
 	while ((c = getc(f)) == ' ')
 		continue;
@@ -973,11 +973,11 @@ static int32_t getno(FILE *f, int *ep)
 /*
  - putconf - write configuration to .dir file
  */
-static int putconf(register FILE *f, register struct dbzconfig *cp)
+static int putconf(FILE *f, struct dbzconfig *cp)
 /* 0 success, -1 failure */
 {
-	register int i;
-	register int ret = 0;
+	int i;
+	int ret = 0;
 
 	if (fseek(f, (of_t)0, SEEK_SET) != 0) {
 		dprint(5, (debugfile, "fseek failure in putconf\n"));
@@ -1003,12 +1003,12 @@ static int putconf(register FILE *f, register struct dbzconfig *cp)
 /*
  - getcore - try to set up an in-core copy of .pag file
  */
-static int32_t *getcore(register DBZ *db)
+static int32_t *getcore(DBZ *db)
 {
-	register of_t *p;
-	register size_t i;
-	register size_t nread;
-	register char *it;
+	of_t *p;
+	size_t i;
+	size_t nread;
+	char *it;
 
 	it = malloc((size_t)db->dbz_conf.tsize * SOF);
 	if (it == NULL) {
@@ -1033,7 +1033,7 @@ static int32_t *getcore(register DBZ *db)
 /*
  - putcore - try to rewrite an in-core table
  */
-static int putcore(register DBZ *db)
+static int putcore(DBZ *db)
 {
 	if (fseek(db->dbz_bufpagf, (of_t)0, SEEK_SET) != 0) {
 		dprint(5, (debugfile, "fseek failure in putcore\n"));
@@ -1047,10 +1047,10 @@ static int putcore(register DBZ *db)
 /*
  - start - set up to start or restart a search
  */
-static void start(register DBZ *db, register datum *kp, register struct searcher *osp)
+static void start(DBZ *db, datum *kp, struct searcher *osp)
 {
-	register struct searcher *sp = &db->dbz_srch;
-	register long h;
+	struct searcher *sp = &db->dbz_srch;
+	long h;
 
 	h = hash(kp->dptr, kp->dsize);
 	if (osp != FRESH && osp->hash == h) {
@@ -1073,13 +1073,13 @@ static void start(register DBZ *db, register datum *kp, register struct searcher
  - search - conduct part of a search
    return NOTFOUND if we hit VACANT or error
  */
-static int32_t search(register DBZ *db)
+static int32_t search(DBZ *db)
 {
-	register struct searcher *sp = &db->dbz_srch;
-	register of_t dest;
-	register of_t value;
+	struct searcher *sp = &db->dbz_srch;
+	of_t dest;
+	of_t value;
 	of_t val;		/* buffer for value (can't fread register) */
-	register of_t place;
+	of_t place;
 
 	if (sp->aborted)
 		return(NOTFOUND);
@@ -1156,7 +1156,7 @@ static int32_t search(register DBZ *db)
 /*
  - okayvalue - check that a value can be stored
  */
-static int okayvalue(register DBZ *db, int32_t value)
+static int okayvalue(DBZ *db, int32_t value)
 {
 	if (HASTAG(value))
 		return(0);
@@ -1170,11 +1170,11 @@ static int okayvalue(register DBZ *db, int32_t value)
 /*
  - set - store a value into a location previously found by search
  */
-static int set(register DBZ *db, int32_t value)
+static int set(DBZ *db, int32_t value)
 {
-	register struct searcher *sp  = &db->dbz_srch;
-	register of_t place = sp->place;
-	register of_t v = value;
+	struct searcher *sp  = &db->dbz_srch;
+	of_t place = sp->place;
+	of_t v = value;
 
 	if (sp->aborted)
 		return(-1);
@@ -1235,9 +1235,9 @@ static void mybytemap(int map[])
 		of_t o;
 		char c[SOF];
 	} u;
-	register int *mp = &map[SOF];
-	register int ntodo;
-	register int i;
+	int *mp = &map[SOF];
+	int ntodo;
+	int i;
 
 	u.o = 1;
 	for (ntodo = (int)SOF; ntodo > 0; ntodo--) {
@@ -1269,7 +1269,7 @@ static int32_t bytemap(int32_t ino, int *map1, int *map2)
 	};
 	union oc in;
 	union oc out;
-	register int i;
+	int i;
 
 	in.o = ino;
 	for (i = 0; i < SOF; i++)
@@ -1310,8 +1310,8 @@ static long CrcTable[128];
  */
 static void crcinit(void)
 {
-	register int i, j;
-	register long sum;
+	int i, j;
+	long sum;
 
 	for (i = 0; i < 128; ++i) {
 		sum = 0L;
@@ -1326,9 +1326,9 @@ static void crcinit(void)
 /*
  - hash - Honeyman's nice hashing function
  */
-static long hash(register char *name, register int size)
+static long hash(char *name, int size)
 {
-	register long sum = 0L;
+	long sum = 0L;
 
 	while (size--) {
 		sum = (sum >> 7) ^ CrcTable[(sum ^ (*name++)) & 0x7f];
@@ -1343,7 +1343,7 @@ static long hash(register char *name, register int size)
 static int dbzdebug(int value)
 {
 #ifdef DBZDEBUG
-	register int old = debug;
+	int old = debug;
 
 	debug = value;
 	return(old);

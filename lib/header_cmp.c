@@ -37,8 +37,8 @@
 
 #include "elm_defs.h"
 
-char *header_cmp(register const char *header, register const char *prefix,
-		 register const char *suffix)
+char *header_cmp(const char *header, const char *prefix,
+		 const char *suffix)
 {
 	int len;
 
@@ -77,7 +77,7 @@ char *header_cmp(register const char *header, register const char *prefix,
  * constant is, we save a ton of strlen() calls by specifying the
  * lengths here.
  */
-int header_ncmp(register const char *header, register const char *prefix, int preflen, register const char *suffix, int sufflen)
+int header_ncmp(const char *header, const char *prefix, int preflen, const char *suffix, int sufflen)
 {
 	if (strncasecmp(header, prefix, preflen))
 		return 0;

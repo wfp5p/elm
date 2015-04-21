@@ -53,7 +53,7 @@ static int32_t bytemap(int32_t ino, int *map1, int *map2)
 	};
 	union oc in;
 	union oc out;
-	register int i;
+	int i;
 
 	in.o = ino;
 	for (i = 0; i < SOF; i++)
@@ -108,8 +108,8 @@ struct alias_rec *fetch_alias(DBZ *db, char *alias)
 	datum key, val;
 	struct alias_disk_rec adrec;
 	long pos;
-	register struct alias_rec *ar;
-	register char *buf, *s;
+	struct alias_rec *ar;
+	char *buf, *s;
 
 	/*
 	 * If an alias is specifed then locate it.
@@ -212,7 +212,7 @@ struct alias_rec *fetch_alias(DBZ *db, char *alias)
  */
 char *next_addr_in_list(char **aptr)
 {
-	register char *front, *back;
+	char *front, *back;
 
 	/*
 	 * Locate the first letter of the address.

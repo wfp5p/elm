@@ -212,8 +212,8 @@ static int limit_selection(int based_on, char *pattern, int additional_criteria)
 	    don't mark as visible something that isn't currently!
 	**/
 
-	register int iindex;
-	register char *hdr_value;
+	int iindex;
+	char *hdr_value;
 	int count = 0;
 
 	dprint(2, (debugfile, "\n\n\n**limit on %d - '%s' - (%s) **\n\n",
@@ -260,7 +260,7 @@ static int limit_alias_selection(int based_on, char *pattern,
 	    don't mark as visible something that isn't currently!
 	**/
 
-	register int iindex, count = 0;
+	int iindex, count = 0;
 
 	dprint(2, (debugfile, "\n\n\n**limit on %d - '%s' - (%s) **\n\n",
 		   based_on, pattern, additional_criteria?"add'tl":"base"));
@@ -319,7 +319,7 @@ static int limit_alias_selection(int based_on, char *pattern,
 	return(count);
 }
 
-int next_message(register int iindex, register int skipdel)
+int next_message(int iindex, int skipdel)
 {
 	/** Given 'iindex', this routine will return the actual iindex into the
 	    array of the NEXT message, or '-1' iindex is the last.
@@ -327,7 +327,7 @@ int next_message(register int iindex, register int skipdel)
 	    If selected, return the iindex for the NEXT message marked VISIBLE.
 	**/
 
-	register int remember_for_debug, stat;
+	int remember_for_debug, stat;
 	int item_count;
 
 	if (iindex < 0) return(-1);	/* invalid argument value! */
@@ -350,11 +350,11 @@ int next_message(register int iindex, register int skipdel)
 	return(-1);
 }
 
-int prev_message(register int iindex, register int skipdel)
+int prev_message(int iindex, int skipdel)
 {
 	/** Like next_message, but the PREVIOUS message. **/
 
-	register int remember_for_debug, stat;
+	int remember_for_debug, stat;
 	int item_count;
 
 	item_count = (inalias ? num_aliases : curr_folder.num_mssgs);
@@ -383,7 +383,7 @@ int compute_visible(int message)
 	    this routine, given 25, will return 2.
 	**/
 
-	register int iindex, count = 0;
+	int iindex, count = 0;
 
 	if (! selected) return(message);
 
@@ -413,7 +413,7 @@ int visible_to_index(int message)
 	    if it cannot map the virtual iindex requested (too big)
 	**/
 
-	register int iindex = 0, count = 0;
+	int iindex = 0, count = 0;
 	int item_count;
 
 	item_count = (inalias ? num_aliases : curr_folder.num_mssgs);

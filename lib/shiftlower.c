@@ -36,10 +36,10 @@ char *shift_lower(char *string)
 
 	static int first_time = TRUE;
 	static char lower[1<<(8*sizeof(char))];
-	register int d;
+	int d;
 
 	static char buffer[VERY_LONG_STRING];
-	register char *bufptr = buffer;
+	char *bufptr = buffer;
 
 	if (first_time) {
 	  for (d=1<<(8*sizeof(char)); d >= 0; d--)

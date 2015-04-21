@@ -36,7 +36,7 @@ int occurances_of(int ch, char *string)
 {
 	/** returns the number of occurances of 'ch' in string 'string' **/
 
-	register int count = 0;
+	int count = 0;
 
 	for (; *string; string++)
 	  if (*string == ch) count++;
@@ -50,7 +50,7 @@ int remove_possible_trailing_spaces(char *string)
 	    a string and remove all trailing whitespace.
 	**/
 
-	register int i, j;
+	int i, j;
 
 	for ( j = i = strlen(string); --i >= 0 && whitespace(string[i]); )
 		/** spin backwards, semicolon intented **/ ;

@@ -64,7 +64,7 @@ int check_form_file(const char *filename)
 
 	FILE *form;
 	char buffer[SLEN];
-	register int field_count = 0;
+	int field_count = 0;
 
 	if ((form = fopen(filename, "r")) == NULL) {
 	  show_error(catgets(elm_msg_cat, ElmSet, ElmErrorOpeningCheckFields,
@@ -92,7 +92,7 @@ int format_form(char *filename)
 
 	FILE *form, *newform;
 	char  newfname[SLEN], buffer[SLEN];
-	register int form_count = 0;
+	int form_count = 0;
 	int  len_buf, err;
 
 	dprint(4, (debugfile, "Formatting form file '%s'\n", filename));
@@ -172,7 +172,7 @@ int mail_filled_in_form(char *address, char *subject)
 	**/
 
 	FILE  	     *fd;
-	register int lines = 0, count, len_buf, max_lines;
+	int lines = 0, count, len_buf, max_lines;
 	char         buffer[SLEN];
 
 	dprint(4, (debugfile,
@@ -313,7 +313,7 @@ static int prompt_for_entries(char *buffer, FILE *fd, int entries)
 	**/
 
 	char mybuffer[SLEN], prompt[SLEN], spaces[SLEN];
-	register int  field_size, i, j, offset = 0, extra_tabs = 0;
+	int  field_size, i, j, offset = 0, extra_tabs = 0;
 
 	dprint(7, (debugfile,
 		"prompt-for-multiple [%d] -entries \"%s\"\n", entries,
@@ -368,7 +368,7 @@ static int prompt_for_sized_entry(char *prompt, char *buffer, int field_size)
 {
 	/* This routine prompts for an entry of the size specified. */
 
-	register int i;
+	int i;
 
 	dprint(7, (debugfile, "prompt-for-sized-entry \"%s\" %d chars\n",
 		prompt, field_size));
