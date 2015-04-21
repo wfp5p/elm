@@ -498,6 +498,9 @@ int get_return(char *buffer, int msgnum);
 /* src/save.c */
 int save(int *redraw_p, int silently, int delete);
 int expand_filename(char *filename);
+int select_folder(char *filename, int filesiz, int acc_mode,
+		  int allowSameFolder, const char *prompt1,
+		  const char *prompt2, int *screen_changed_p);
 
 /* src/save_opts.c */
 char *str_opt_nam(const char *optname, int dispmode);
