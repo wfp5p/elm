@@ -103,18 +103,10 @@ void copy_message(FILE *dest_file, int msgnum, int cm_options)
     int strip_from = remail;
     int	end_header = 0;
     int sender_added = 0;
-    static int start_encode_len = 0, end_encode_len = 0;
     int bytes_seen = 0;
     int buf_len, err;
     struct mailFile mailFile;
     FAST_COMP_DECLARE;
-
-    /** set up lengths of encode/decode strings so we don't have to strlen()
-     ** every time */
-    if (start_encode_len == 0) {
-      start_encode_len = strlen(MSSG_START_ENCODE);
-      end_encode_len = strlen(MSSG_END_ENCODE);
-    }
 
     msg_header = curr_folder.headers[msgnum-1];
     prefix = ((cm_options & CM_PREFIX) ? prefixchars : "");

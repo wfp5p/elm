@@ -81,7 +81,6 @@ int show_msg(int number)
 	char who[LONG_STRING], buffer[VERY_LONG_STRING];
 	waitstatus_t wait_stat;
 
-	static int start_encode_len = 0, end_encode_len = 0;
 	int weed_header, weeding_out = 0;	/* weeding    */
 	int using_to,				/* misc use   */
 	    pipe_fd[2],				/* pipe file descriptors */
@@ -103,13 +102,6 @@ int show_msg(int number)
 #ifdef	SIGWINCH
 	SIGHAND_TYPE	(*oldwinch)();
 #endif
-
-	/** set up lengths of encode/decode strings so we don't have to
-	 ** strlen() every time */
-	if (start_encode_len == 0) {
-	    start_encode_len = strlen(MSSG_START_ENCODE);
-	    end_encode_len = strlen(MSSG_END_ENCODE);
-	}
 
 	lines = current_header->lines;
 
