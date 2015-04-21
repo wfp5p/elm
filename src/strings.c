@@ -197,51 +197,6 @@ void split_word(char *buffer, char *first, char *rest)
 	return;
 }
 
-char *tail_of_string(char *string, int maxchars)
-{
-	/** Return a string that is the last 'maxchars' characters of the
-	    given string.  This is only used if the first word of the string
-	    is longer than maxchars, else it will return what is given to
-	    it...
-	**/
-
-	static char buffer[SLEN];
-	register char *s;
-	register int iindex, i, len;
-
-	iindex=0;
-	len = strlen(string);
-	s = string;
-
-	while (iindex < len) {
-	  i = len_next_part(s);
-	  if (i == 1 && isspace(*s))
-	    break;
-	  iindex += i;
-	  s += i;
-	}
-
-	if (iindex < maxchars) {
-	  strncpy(buffer, string, maxchars-2);	/* word too short */
-	  buffer[maxchars-2] = '.';
-	  buffer[maxchars-1] = '.';
-	  buffer[maxchars]   = '.';
-	  buffer[maxchars+1] = '\0';
-	}
-	else {
-	  i = maxchars;
-	  buffer[i--] = '\0';
-	  while (i > 1)
-	    buffer[i--] = string[iindex--];
-	  buffer[2] = '.';
-	  buffer[1] = '.';
-	  buffer[0] = '.';
-	}
-
-	return( (char *) buffer);
-}
-
-
 #define MAX_RECURSION		20		/* up to 20 deep recursion */
 
 char *get_token(char *source, char *keys, int depth)
