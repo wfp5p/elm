@@ -13,12 +13,6 @@
  */
 #define RFC821_MAXLEN	998
 
-/* generate maximally random/minimally ugly multipart separator */
-#define MIME_MAKE_BOUNDARY(buf, type, seq) \
-	    sprintf(buf, "%%--%s-boundary-%d.%d.%lu--%%", \
-			(type), (seq), getpid(), \
-			(unsigned long)time((time_t *)NULL));
-
 /* commands that handle various content encodings */
 # define MIME_ENCODE_CMD_QUOTED(buf, infile, outfile) \
 	    sprintf((buf), "mmencode -q %s >%s", (infile), (outfile))

@@ -28,6 +28,7 @@
 #include "sndparts.h"
 #include "s_elm.h"
 #include <assert.h>
+#include <time.h>
 
 static int multipart_seqnum;
 
@@ -542,6 +543,11 @@ done:
 }
 
 
+/* generate maximally random/minimally ugly multipart separator */
+#define MIME_MAKE_BOUNDARY(buf, type, seq) \
+	sprintf(buf, "%%--%s-boundary-%d.%d.%lu--%%",	\
+		(type), (seq), getpid(),			\
+		(unsigned long)time((time_t *)NULL));
 
 static int do_emit_multipart_header(FILE *fp, SEND_BODYPART *part)
 {
