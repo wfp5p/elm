@@ -23,13 +23,13 @@
  *
  ******************************************************************************/
 
-/** 
+/**
 
 **/
 
 #include "elm_defs.h"
 
-char *shift_lower(char *string)
+char *shift_lower(const char *string)
 {
 	/** return 'string' shifted to lower case.  Do NOT touch the
 	    actual string handed to us! **/
@@ -53,8 +53,8 @@ char *shift_lower(char *string)
 	}
 	for (; *string; string++, bufptr++)
 	  *bufptr = lower[*string];
-	
+
 	*bufptr = 0;
-	
+
 	return( (char *) buffer);
 }

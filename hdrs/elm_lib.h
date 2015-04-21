@@ -293,7 +293,7 @@ char *safe_strdup P_((const char *));
 
 /* shiftlower.c */
 
-char *shift_lower P_((char *));
+char *shift_lower(const char *string);
 
 
 /* strfcpy.c */
