@@ -54,6 +54,6 @@ int mail_gets(char *buffer, int size, FILE *mailfile)
 	  if (ch == '\n')
 	    break;
 	}
-	*c = 0;	/* Actually this should NOT be needed.. */
+	*c = '\0';	/* Actually this should NOT be needed.. */
 	return line_bytes;
 }
