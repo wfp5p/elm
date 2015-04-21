@@ -48,11 +48,9 @@
     be altered while in the editor composing the reply message!
 **/
 
-char *get_token();
-
 
 /* Determine the subject to use for a reply.  */
-void get_reply_subj(char *out_subj, char *in_subj, char *dflt_subj)
+static void get_reply_subj(char *out_subj, char *in_subj, char *dflt_subj)
 {
 	if ( *in_subj == '\0' ) {
 	  strcpy(out_subj,dflt_subj);
@@ -68,7 +66,7 @@ void get_reply_subj(char *out_subj, char *in_subj, char *dflt_subj)
 	strcat( strcpy( out_subj, "Re: " ), in_subj);
 }
 
-int optimize_and_add(char *new_address, char *full_address)
+static int optimize_and_add(char *new_address, char *full_address)
 {
 	/** This routine will add the new address to the list of addresses
 	    in the full address buffer IFF it doesn't already occur.  It
@@ -137,7 +135,7 @@ int optimize_and_add(char *new_address, char *full_address)
 	return(0);
 }
 
-void get_and_expand_everyone(char *return_address, char *full_address)
+static void get_and_expand_everyone(char *return_address, char *full_address)
 {
 	/** Read the current message, extracting addresses from the 'To:'
 	    and 'Cc:' lines.   As each address is taken, ensure that it
