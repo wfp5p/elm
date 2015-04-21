@@ -177,9 +177,10 @@ static char	*no_subj,	/* Pointer to No subject text	*/
 		*to_text,	/* pointer to to text		*/
 		*from_text;	/* pointer to from text		*/
 
-main(argc, argv)
-int argc;
-char *argv[];
+void add_default_folder(void);
+void pad_prefixes(void);
+
+int main(int argc, char *argv[])
 {
 	extern char *optarg;
 	extern int   optind;
@@ -363,9 +364,7 @@ char *argv[];
 	}
 }
 
-int
-read_headers(cur_folder)
-register struct folder_struct *cur_folder;
+int read_headers(register struct folder_struct *cur_folder)
 {
 	/** read the headers, output as found given current_folder,
 	    the prefix of that folder, and whether we're in a window
@@ -480,8 +479,7 @@ register struct folder_struct *cur_folder;
 	return(count);
 }
 
-add_folder(name)
-char *name;
+int add_folder(char *name)
 {
 	/* add the specified folder to the list of folders...ignore any
 	   problems we may having finding it (user could be monitoring
@@ -572,7 +570,7 @@ char *name;
 	total_folders++;
 }
 
-add_default_folder()
+void add_default_folder(void)
 {
 
 	/* this routine will add the users home mailbox as the folder
@@ -594,7 +592,6 @@ add_default_folder()
 	if (fd != NULL) /* Close it only if we succeeded in opening it */
 	  fclose(fd);
 }
-
 
 static int newmail_forwarded(char *buffer, char *who)
 {
@@ -624,9 +621,7 @@ static int newmail_forwarded(char *buffer, char *who)
 	strncpy(who, buff, SLEN);
 }
 
-show_header(hdr, cur_folder)
-struct header_rec *hdr;
-struct folder_struct *cur_folder;
+int show_header(struct header_rec *hdr, struct folder_struct *cur_folder)
 {
 	char from_line[SLEN];
 	char prefix[SLEN];
@@ -705,9 +700,7 @@ static long newmail_bytes(char *name)
 	return(ok ? buffer.st_size : 0);
 }
 
-
-usage(name)
-char *name;
+int usage(char *name)
 {
 	/* print a nice friendly usage message */
 
@@ -739,7 +732,7 @@ static void newmail_expand_filename(char *name, char *store_space)
 	}
 }
 
-pad_prefixes()
+void pad_prefixes(void)
 {
 	/** This simple routine is to ensure that we have a nice
 	    output format.  What it does is whip through the different

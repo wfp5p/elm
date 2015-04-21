@@ -27,7 +27,7 @@
 /** This program is specifically written for group mailing lists and
     such batch type mail processing.  It does NOT use aliases at all,
     it does NOT read the /etc/password file to find the From: name
-    of the user and does NOT expand any addresses.  It is meant 
+    of the user and does NOT expand any addresses.  It is meant
     purely as a front-end for either /bin/mail or /usr/lib/sendmail
     (according to what is available on the current system).
 
@@ -37,7 +37,7 @@
 
 /** The calling sequence for this program is:
 
-	fastmail {args}  [ filename | - ] full-email-address 
+	fastmail {args}  [ filename | - ] full-email-address
 
    where args could be any (or all) of;
 
@@ -63,9 +63,7 @@ int addword P_((char *, int, const char *, int *));
 extern char *get_arpa_date();
 
 
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     extern char *optarg;
     extern int optind;
@@ -101,7 +99,7 @@ char *argv[];
 	case 'c' : cc_list = optarg;				break;
 	case 'C' : comments = optarg;				break;
 #ifdef DEBUG
-	case 'd' : debug++;					break;	
+	case 'd' : debug++;					break;
 #else
 	case 'd' :
 	    fprintf(stderr, catgets(elm_msg_cat, FastmailSet, FastmailNoDebug,
@@ -191,8 +189,8 @@ usage_error:
 	exit(1);
     }
 
-    
-    
+
+
     if ( ((fp_handle = open(temp_fname, O_RDWR|O_CREAT|O_EXCL,0600)) != -1) &&
 	 ((ofp = fdopen(fp_handle, "w")) == NULL) ) {
 	fprintf(stderr, catgets(elm_msg_cat, FastmailSet,
@@ -211,7 +209,7 @@ usage_error:
 	/** Subject must appear even if "null" and must be first
 	    at top of headers for mail because the
 	    pure System V.3 mailer, in its infinite wisdom, now
-	    assumes that anything the user sends is part of the 
+	    assumes that anything the user sends is part of the
 	    message body unless either:
 		1. the "-s" flag is used (although it doesn't seem
 		   to be supported on all implementations?)
@@ -278,7 +276,7 @@ usage_error:
     fclose(ofp);
 
     dprint(1, (debugfile, "executing: %s\n", cmdbuf));
-   
+
     i = system(cmdbuf);
     (void) unlink(temp_fname);
 
@@ -291,12 +289,7 @@ usage_error:
     exit(i);
 }
 
-
-int addword(dest, destsiz, word, len_p)
-char *dest;
-int destsiz;
-const char *word;
-int *len_p;
+int addword(char *dest, int destsiz, const char *word, int *len_p)
 {
     int dlen, wlen;
 
@@ -312,7 +305,7 @@ int *len_p;
     }
 
     for ( ; *word != '\0' ; ++word) {
-	if (*word != ',') 
+	if (*word != ',')
         {
 	    *dest++ = *word;
 	    ++dlen;
@@ -322,11 +315,10 @@ int *len_p;
 	  *dest++ = ' ';
  	  ++dlen;
        }
-       
+
     }
     *dest = '\0';
 
     *len_p = dlen;
     return 0;
 }
-

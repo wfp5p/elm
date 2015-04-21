@@ -27,9 +27,7 @@ void fromqp P_((FILE *, FILE *, char **, int *));
 void output64chunk P_((int, int, int, int, FILE *));	/* used in to64() */
 
 
-int main(argc, argv)
-int argc;
-char **argv;
+int main(int argc, char **argv)
 {
     int do_encode, encoding_type, i;
     extern int optind;
@@ -110,8 +108,7 @@ static char index_64[128] = {
 
 #define char64(c)  (((c) & 0x7F) ? -1 : index_64[(c)])
 
-void to64(infile, outfile)
-FILE *infile, *outfile;
+void to64(FILE *infile, FILE *outfile)
 {
     int c1, c2, c3, ct=0;
     while ((c1 = getc(infile)) != EOF) {
@@ -136,9 +133,7 @@ FILE *infile, *outfile;
     fflush(outfile);
 }
 
-void output64chunk(c1, c2, c3, pads, outfile)
-int c1, c2, c3, pads;
-FILE *outfile;
+void output64chunk(int c1, int c2, int c3, int pads, FILE *outfile)
 {
     putc(basis_64[c1>>2], outfile);
     putc(basis_64[((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4)], outfile);
@@ -154,10 +149,7 @@ FILE *outfile;
     }
 }
 
-int PendingBoundary(s, Boundaries, BoundaryCt)
-char *s;
-char **Boundaries;
-int *BoundaryCt;
+int PendingBoundary(char *s, char **Boundaries, int *BoundaryCt)
 {
     int i, len;
 
@@ -174,10 +166,7 @@ int *BoundaryCt;
     return(0);
 }
 
-void from64(infile, outfile, boundaries, boundaryct)
-FILE *infile, *outfile;
-char **boundaries;
-int *boundaryct;
+void from64(FILE *infile, FILE *outfile, char **boundaries, int *boundaryct)
 {
     int c1, c2, c3, c4;
     int newline = 1, DataDone = 0;
@@ -256,8 +245,7 @@ static char index_hex[128] = {
 
 #define hexchar(c)  (((c) & 0x80) ? -1 : index_hex[(c)])
 
-void toqp(infile, outfile) 
-FILE *infile, *outfile;
+void toqp(FILE *infile, FILE *outfile)
 {
     int c, ct=0, prevc=255;
     while ((c = getc(infile)) != EOF) {
@@ -331,10 +319,7 @@ FILE *infile, *outfile;
     }
 }
 
-void fromqp(infile, outfile, boundaries, boundaryct) 
-FILE *infile, *outfile;
-char **boundaries;
-int *boundaryct;
+void fromqp(FILE *infile, FILE *outfile, char **boundaries, int *boundaryct)
 {
     unsigned int c1, c2;
     int sawnewline = 1, neednewline = 0;

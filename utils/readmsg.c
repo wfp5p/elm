@@ -174,8 +174,7 @@ int get_mssg_info P_((struct mssg_info *, int));
 extern char *optarg;			/* for parsing the ...		*/
 extern int   optind;			/*  .. starting arguments	*/
 
-
-void usage_error()
+void usage_error(void)
 {
     fprintf(stderr, catgets(elm_msg_cat, ReadmsgSet, ReadmsgUsage,
 	"Usage: %s [-anhp] [-f Folder] [-w weedlist] {MessageNum ... | pattern | *}\n"),
@@ -183,10 +182,7 @@ void usage_error()
     exit(1);
 }
 
-
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     struct folder_state fstate;	/* information from external state file	*/
     char folder_name[SLEN];	/* pathname to the mail folder		*/
@@ -374,8 +370,7 @@ char *argv[];
 /*
  * Scan through the entire folder and build an index of seek offsets.
  */
-void load_folder_index(fp)
-FILE *fp;
+void load_folder_index(FILE *fp)
 {
     long offset;
     int alloc_size;
@@ -416,12 +411,7 @@ FILE *fp;
 /*
  * Scan through a folder and print message(s) which match the pattern.
  */
-int print_patmatch_mssg(fp, pat, do_all_matches, hdr_disp_level, do_page_breaks)
-FILE *fp;
-const char *pat;
-int do_all_matches;
-int hdr_disp_level;
-int do_page_breaks;
+int print_patmatch_mssg(FILE *fp, const char *pat, int do_all_matches, int hdr_disp_level, int do_page_breaks)
 {
     long offset, mssg_idx;
     struct mssg_info minfo;
@@ -470,11 +460,8 @@ int do_page_breaks;
 /*
  * Print the message at the indicated location.
  */
-int print_mssg(fp, minfo, hdr_disp_level, do_page_breaks)
-FILE *fp;
-const struct mssg_info *minfo;
-int hdr_disp_level;
-int do_page_breaks;
+int print_mssg(FILE *fp, const struct mssg_info *minfo, int hdr_disp_level,
+	       int do_page_breaks)
 {
     char buf[SLEN];
     int first_line, is_seperator, in_header, buf_len, last_buf_len, newlines, was_empty_line;
@@ -583,10 +570,7 @@ int do_page_breaks;
 /*
  * Weed out and display selected headers.
  */
-void weed_headers(buf, buflen, fp)
-const char *buf;
-int buflen;
-FILE *fp;
+void weed_headers(const char *buf, int buflen, FILE *fp)
 {
     struct weed_header_info *w;
     static int accept_header = FALSE;
@@ -613,8 +597,7 @@ FILE *fp;
  *
  * The header weeding info is a linked list of (struct weed_header_info).
  */
-void setup_weed_info(sel_weed_str)
-const char *sel_weed_str;
+void setup_weed_info(const char *sel_weed_str)
 {
     struct weed_header_info *w;
     char *weed_str, *fld, *s;
@@ -666,9 +649,7 @@ const char *sel_weed_str;
 /*
  * Retrieve mailbox location information on a specific message.
  */
-int get_mssg_info(minfo_p, mssgno)
-struct mssg_info *minfo_p;
-int mssgno;
+int get_mssg_info(struct mssg_info *minfo_p, int mssgno)
 {
     if (mssgno < 1 || mssgno > folder_size) {
 	fprintf(stderr, catgets(elm_msg_cat, ReadmsgSet,

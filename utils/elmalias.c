@@ -108,7 +108,7 @@ void exp_print_alias(), print_alias();
 char *sel_alias_mem();
 
 
-void usage_error()
+void usage_error(void)
 {
     fprintf(stderr, catgets(elm_msg_cat, ElmaliasSet, ElmaliasUsage,
 	"usage: %s [-adenrsuvV] [-f format] [alias ...]\n"), Progname);
@@ -116,10 +116,7 @@ void usage_error()
     /*NOTREACHED*/
 }
 
-
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     char *out_fmt;		/* output printing format		*/
     int do_user_alias;		/* TRUE to examine user alias file	*/
@@ -272,13 +269,13 @@ Alias:\t\t%a\n\
 }
 
 
-DBZ *open_system_aliases()
+DBZ *open_system_aliases(void)
 {
     return dbz_open(system_data_file, O_RDONLY, 0);
 }
 
 
-DBZ *open_user_aliases()
+DBZ *open_user_aliases(void)
 {
     char fname[SLEN];
     sprintf(fname, "%s/%s", user_home, ALIAS_DATA);
@@ -289,8 +286,7 @@ DBZ *open_user_aliases()
 /*
  * Cobble up an alias record structure to hold some address info.
  */
-struct alias_rec *make_dummy_rec(val)
-char *val;
+struct alias_rec *make_dummy_rec(char *val)
 {
     struct alias_rec *ar;
     ar = (struct alias_rec *) safe_malloc(sizeof(struct alias_rec));
@@ -309,10 +305,7 @@ char *val;
 /*
  * Recursively expand out a list of addresses and print the expansions.
  */
-void exp_print_alias(dblist, fmt, ar)
-DBZ *dblist[];
-char *fmt;
-struct alias_rec *ar;
+void exp_print_alias(DBZ *dblist[], char *fmt, struct alias_rec *ar)
 {
     char *abuf;		/* list of addresses we can scribble upon	*/
     char *acurr;	/* pointer to current address within "abuf"	*/
@@ -352,9 +345,7 @@ struct alias_rec *ar;
 /*
  * Print out alias information according to a format specification.
  */
-void print_alias(fmt, ar)
-char *fmt;
-struct alias_rec *ar;
+void print_alias(char *fmt, struct alias_rec *ar)
 {
     char pfmt[64];		/* buffer to hold "%m.ns" formats	*/
     int in_conditional;		/* TRUE if in middle of cond expression	*/
@@ -454,9 +445,7 @@ struct alias_rec *ar;
 /*
  * Select a member of the alias record structure.
  */
-char *sel_alias_mem(ar, sel)
-struct alias_rec *ar;
-int sel;
+char *sel_alias_mem(struct alias_rec *ar, int sel)
 {
     switch (sel) {
     case 'a':

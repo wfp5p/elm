@@ -75,19 +75,14 @@ char outbuf[4096];		/* space to accumulate output record	*/
 
 int calc_col();			/* calculate output column position	*/
 
-
-void usage_error(prog)
-char *prog;
+void usage_error(char *prog)
 {
     fprintf(stderr,
 	"usage: %s [-w wid] [-1 first_leader] [-l leader] [-f sep]\n", prog);
     exit(1);
 }
 
-
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     char *one_ldr;		/* output leader to use on first line	*/
     char *dflt_ldr;		/* output leader for subsequent lines	*/
@@ -183,10 +178,7 @@ char *argv[];
     exit(0);
 }
 
-
-int calc_col(col, s)
-register int col;
-register char *s;
+int calc_col(register int col, register char *s)
 {
     while (*s != '\0') {
 	switch (*s) {

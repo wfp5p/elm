@@ -63,9 +63,7 @@ int get_is_system(void)
 	return is_system;
 }
 
-main(argc, argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
 	char inputname[SLEN], dataname[SLEN];
 	int  a;
