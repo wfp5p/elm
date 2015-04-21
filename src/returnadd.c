@@ -152,7 +152,9 @@ int get_return(char *buffer, int msgnum)
 
 	buffer[0] = '\0';
 
-	if (len_buf2 = mail_gets(buf2, SLEN, curr_folder.fp)) {
+	len_buf2 = mail_gets(buf2, SLEN, curr_folder.fp);
+
+	if (len_buf2 > 0) {
 	  if(buf2[len_buf2-1] == '\n')
 	    lines--; /* got a full line */
 	}
@@ -161,7 +163,9 @@ int get_return(char *buffer, int msgnum)
 	  buf[0] = '\0';
 	  strncat(buf, buf2, SLEN);
 	  len_buf = strlen(buf);
-	  if (len_buf2 = mail_gets(buf2, SLEN, curr_folder.fp)) {
+
+	  len_buf2 = mail_gets(buf2, SLEN, curr_folder.fp);
+	  if (len_buf2 > 0) {
 	    if(buf2[len_buf2-1] == '\n')
 	      lines--; /* got a full line */
 	  }
@@ -172,7 +176,9 @@ int get_return(char *buffer, int msgnum)
 	    }
 	    strncat(buf, buf2, (SLEN-len_buf-1));
 	    len_buf = strlen(buf);
-	    if (len_buf2 = mail_gets(buf2, SLEN, curr_folder.fp)) {
+
+	    len_buf2 = mail_gets(buf2, SLEN, curr_folder.fp);
+	    if (len_buf2 > 0) {
 	      if(buf2[len_buf2-1] == '\n')
 		lines--; /* got a full line */
 	    }
