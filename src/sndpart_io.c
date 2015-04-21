@@ -345,7 +345,6 @@ static int do_emit_mssgtext_body(FILE *fp_dest, SEND_BODYPART *part)
     char buf[SLEN];
     SEND_MULTIPART *mp;
     int rc, part_active, len;
-    int have_encode_key, curr_encode_running, new_encode_running;
     long fpos;
     FILE *fp_src;
 
@@ -353,9 +352,6 @@ static int do_emit_mssgtext_body(FILE *fp_dest, SEND_BODYPART *part)
     assert(part->part_type == BP_IS_MSSGTEXT);
 
     rc = -1;
-    have_encode_key = FALSE;
-    curr_encode_running = new_encode_running = FALSE;
-
     /*
      * This clever hack initializes properly on multipart/mixed
      * and suppresses multipart boundaries on text/plain.
@@ -409,11 +405,6 @@ static int do_emit_mssgtext_body(FILE *fp_dest, SEND_BODYPART *part)
 	    putc('\n', fp_dest);
 	    part_active = TRUE;
 	}
-
-	/* urer vf bhe fhcre frperg qrpbqre evat */
-	if (curr_encode_running)
-	    encode(buf);
-	curr_encode_running = new_encode_running;
 
 #ifdef NEED_LONE_PERIOD_ESCAPE
 	/* some transports (e.g. smail2.5) take lone dot as end of message */
