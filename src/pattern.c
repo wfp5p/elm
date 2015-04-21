@@ -47,14 +47,14 @@
 #include <assert.h>
 
 /* local procedures */
-static void ask_clear_existing_tags P_((void));
-static int from_matches();
-static int subject_matches();
-static int name_matches();
-static int alias_matches();
-static int comment_matches();
-static int address_matches();
-static int match_in_message();
+static void ask_clear_existing_tags(void);
+static int from_matches(int message_number, char *pat);
+static int subject_matches(int message_number, char *pat);
+static int name_matches(int message_number, char *pat);
+static int alias_matches(int message_number, char *pat);
+static int comment_matches(int message_number, char *pat);
+static int address_matches(int message_number, char *pat);
+static int match_in_message(char *pat);
 
 int meta_match(int function)
 {
