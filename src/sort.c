@@ -36,8 +36,9 @@
 #include "s_elm.h"
 
 static char *skip_re(char *string);
+static int compare_headers(const void *a, const void *b);
 
-void find_old_current(int iindex)
+static void find_old_current(int iindex)
 {
 	/** Set current to the message that has "index" as it's
 	    index number.  This is to track the current message
@@ -66,7 +67,6 @@ int sort_mailbox(int entries, int visible)
 	    put the status lines etc **/
 
 	int last_index = -1;
-	int compare_headers();	/* for sorting */
 
 	dprint(2, (debugfile, "\n** sorting folder by %s **\n\n",
 		sort_name(TRUE)));
@@ -90,7 +90,7 @@ int sort_mailbox(int entries, int visible)
 	clear_error();
 }
 
-int compare_headers(struct header_rec **p1, struct header_rec **p2)
+static int compare_headers(const void *a, const void *b)
 {
 	/** compare two headers according to the sortby value.
 
@@ -108,6 +108,9 @@ int compare_headers(struct header_rec **p1, struct header_rec **p2)
 	struct header_rec *first, *second;
 	int ret;
 	long diff;
+
+	struct header_rec **p1 = (struct header_rec **) a;
+	struct header_rec **p2 = (struct header_rec **) b;
 
 	first = *p1;
 	second = *p2;
