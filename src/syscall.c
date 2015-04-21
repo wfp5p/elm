@@ -46,11 +46,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 #include "port_wait.h"
-
-#ifndef I_UNISTD
-void _exit();
-#endif
-
+#include <sys/stat.h>
 
 #ifdef ALLOW_SUBSHELL
 
