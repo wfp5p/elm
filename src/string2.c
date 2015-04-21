@@ -44,21 +44,6 @@ int occurances_of(int ch, char *string)
 	return(count);
 }
 
-int qoccurances_of(int ch, char *string)
-{
-	/** returns the number of occurances of 'ch' in string 'string' **/
-
-	register int count = 0, len;
-
-	while(*string) {
-	  len = len_next_part(string);
-	  if (len == 1 && *string == ch) count++;
-	  string += len;
-	}
-
-	return(count);
-}
-
 int remove_possible_trailing_spaces(char *string)
 {
 	/** an incredibly simple routine that will read backwards through
