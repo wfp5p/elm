@@ -48,13 +48,9 @@
 #include "s_elm.h"
 #include "port_wait.h"
 
-#ifndef I_UNISTD
-void _exit();
-#endif
-
 int    pipe_abort  = FALSE;	/* did we receive a SIGNAL(SIGPIPE)? */
 
-FILE *pipe_wr_fp;		/* file pointer to write to external pager */
+static FILE *pipe_wr_fp;		/* file pointer to write to external pager */
 
 /*
  * FOO - I believe the SIGWINCH handling is botched.  By ignoring it,
@@ -66,6 +62,8 @@ FILE *pipe_wr_fp;		/* file pointer to write to external pager */
 #ifdef SIGWINCH
 # undef SIGWINCH
 #endif
+
+static int show_line(char *buffer, int buf_len, int builtin);
 
 int show_msg(int number)
 {
@@ -299,7 +297,9 @@ int show_msg(int number)
 
 	pipe_abort = FALSE;
 
-	if (form_letter = (current_header->status&FORM_LETTER)) {
+	form_letter = (current_header->status & FORM_LETTER);
+
+	if (form_letter) {
 	  if (filter)
 	    form_letter_section = 1;	/* initialize to section 1 */
 	}
@@ -521,7 +521,7 @@ int show_msg(int number)
 	return(val == 'i' || val == 'q' ? 0 : val);
 }
 
-int show_line(char *buffer, int buf_len, int builtin)
+static int show_line(char *buffer, int buf_len, int builtin)
 {
 	/** Hands the given line to the output pipe.  'builtin' is true if
 	    we're using the builtin pager.
