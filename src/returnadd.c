@@ -46,7 +46,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-void get_existing_address(char *buffer, int msgnum)
+static void get_existing_address(char *buffer, int msgnum)
 {
 	/** This routine is called when the message being responded to has
 	    "To:xyz" as the return address, signifying that this message is
