@@ -258,8 +258,8 @@ SEND_BODYPART *newpart_mssgtext P_((const char *));
 SEND_BODYPART *newpart_mimepart P_((const char *));
 
 int emitpart P_((FILE *, SEND_BODYPART *));
-int emitpart_mssghdr P_((FILE *, SEND_BODYPART *));
-int emitpart_mssgbody P_((FILE *, SEND_BODYPART *));
+int emitpart_hdr(FILE *fp, SEND_BODYPART *part);
+int emitpart_body(FILE *fp, SEND_BODYPART *part);
 
 /* src/sndattach.c */
 int attachment_menu(SEND_MULTIPART **user_attachments_p);
