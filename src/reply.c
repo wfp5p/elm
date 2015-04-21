@@ -389,7 +389,7 @@ void get_return_address(const char *address, char *single_address)
 	*sa = '\0';
 }
 
-int get_return_name(char *address, char *name, int trans_to_lowercase)
+int get_return_name(const char *address, char *name, int trans_to_lowercase)
 {
 	/** Given the address (either a single address or a combined list
 	    of addresses) extract the login name of the first person on

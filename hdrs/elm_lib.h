@@ -486,6 +486,7 @@ int matchInList(char *list[], int count, const char *buffer, int ignoreCase);
 
 /* src/reply.c */
 void get_return_address(const char *address, char *single_address);
+int get_return_name(const char *address, char *name, int trans_to_lowercase);
 int remail(void);
 int forward(void);
 int reply_to_everyone(void);
