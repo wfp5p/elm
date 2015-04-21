@@ -45,11 +45,12 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-#define  minimum(a,b)	((a) < (b) ? (a) : (b))
-
-char *nameof(), *show_status();
-
 extern char version_buff[];
+
+static int fix_header_page(void);
+static int build_header_line(char *buffer, struct header_rec *entry,
+			     int message_number, int highlight, char *from,
+			     int really_to);
 
 int showscreen(void)
 {
@@ -347,9 +348,9 @@ void show_current(void)
 	last_current = curr;
 }
 
-int build_header_line(char *buffer, struct header_rec *entry,
-		      int message_number, int highlight, char *from,
-		      int really_to)
+static int build_header_line(char *buffer, struct header_rec *entry,
+			     int message_number, int highlight, char *from,
+			     int really_to)
 {
 	/** Build in buffer the message header ... entry is the current
 	    message entry, 'from' is a modified (displayable) from line,
@@ -528,7 +529,7 @@ int build_header_line(char *buffer, struct header_rec *entry,
 		subj_width, subj_width, entry->subject);
 }
 
-int fix_header_page(void)
+static int fix_header_page(void)
 {
 	/** this routine will check and ensure that the current header
 	    page being displayed contains messages!  It will silently
