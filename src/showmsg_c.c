@@ -87,6 +87,8 @@ static char *put_help_prompt = NULL;
 #define put_help()	PutLine(LINES-3, 45, put_help_prompt)
 #define POST_PROMPT_COL	strlen(nls_Prompt)
 
+static int build_bottom(void);
+static int put_cmd_name(char *command, int will_mangle);
 
 int process_showmsg_cmd(int command)
 {
@@ -296,7 +298,7 @@ next_msg:
 	}
 }
 
-int put_cmd_name(char *command, int will_mangle)
+static int put_cmd_name(char *command, int will_mangle)
 {
 
 	/* If screen is or will be mangled display the command name
@@ -319,7 +321,7 @@ int put_border(void)
 "--------------------------------------------------------------------------\n");
 }
 
-int build_bottom(void)
+static int build_bottom(void)
 {
 	 MoveCursor(LINES-4, 0);
 	 CleartoEOS();
