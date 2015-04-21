@@ -626,9 +626,7 @@ static int add_incoming(char *string)
 
   char *strptr,*f;
   char filename[SLEN];
-  int finished;
 
-  finished = FALSE;
   strptr = string;
 
   while ((f = strtokq(strptr, "\t ,", TRUE)) != NULL)

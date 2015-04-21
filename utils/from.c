@@ -347,7 +347,7 @@ static int read_headers(int user_mailbox, int *total_msgs, int *selected)
 	int expect_header = 0;
 	long content_length, last_offset;
 	int status, i;
-	int indent, width;
+	int indent;
 	int summary[ALL_MSGS];
 	int line_bytes;
 	struct mailFile mailFile;
@@ -393,7 +393,6 @@ static int read_headers(int user_mailbox, int *total_msgs, int *selected)
 	indent = 22;	/* who field width plus blanks */
 	if (number) indent += 5;
 	if (useMlists) indent += 15;
-	width = columns - indent;
 
 	for (i=0; i<ALL_MSGS; i++)
 	  summary[i] = 0;

@@ -125,7 +125,7 @@ int sndhdr_output(FILE *fp, const SEND_HEADER *shdr, int is_form, int is_copy)
 
 void generate_in_reply_to(SEND_HEADER *shdr, int msg)
 {
-    char from_buf[SLEN], *q;
+    char from_buf[SLEN];
     struct header_rec *hdr = curr_folder.headers[msg];
 
     assert(msg >= 0 && msg < curr_folder.num_mssgs);
@@ -134,9 +134,6 @@ void generate_in_reply_to(SEND_HEADER *shdr, int msg)
 	tail_of(hdr->from, from_buf, (char *)NULL);
     else
 	strcpy(from_buf, hdr->from);
-
-    /* don't quote already-quoted name */
-    q = (from_buf[0] == '"' ? "" : "\"");
 
    sprintf(shdr->in_reply_to, "%s",
 	    (*hdr->messageid ? hdr->messageid : "<no.id>"));

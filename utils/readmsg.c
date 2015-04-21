@@ -413,7 +413,7 @@ void load_folder_index(FILE *fp)
  */
 int print_patmatch_mssg(FILE *fp, const char *pat, int do_all_matches, int hdr_disp_level, int do_page_breaks)
 {
-    long offset, mssg_idx;
+    long offset;
     struct mssg_info minfo;
     char buf[VERY_LONG_STRING];
     int look_for_pat;
@@ -436,7 +436,6 @@ int print_patmatch_mssg(FILE *fp, const char *pat, int do_all_matches, int hdr_d
 	if (was_empty_line && strbegConst(buf, "From ") &&
 	    real_from(buf, (struct header_rec *)NULL))
 	{
-	    mssg_idx = offset;
 	    look_for_pat = TRUE;
 	}
 
