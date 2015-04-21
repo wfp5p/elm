@@ -105,7 +105,7 @@
 #define ALLOC_INCR	256
 
 /* program name for diagnostics */
-char *prog;
+static char *prog;
 
 /*
  * The "folder_idx_list" is a list of seek offsets into the folder,
@@ -125,9 +125,9 @@ char *prog;
  * due to embedded "From" lines.  If content length information is not
  * available, this list will be left NULL.
  */
-int folder_size;
-long *folder_idx_list;
-long *folder_clen_list;
+static int folder_size;
+static long *folder_idx_list;
+static long *folder_clen_list;
 
 /*
  * Information on a folder message.
@@ -152,10 +152,10 @@ struct weed_header_info {
 };
 
 /* head of linked list of weeded headers */
-struct weed_header_info Weedlist;
+static struct weed_header_info Weedlist;
 
 /* is default to accept headers NOT in weed list? */
-int weed_dflt_accept = FALSE;
+static int weed_dflt_accept = FALSE;
 
 
 /*

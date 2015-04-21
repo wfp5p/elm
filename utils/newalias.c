@@ -55,7 +55,7 @@ void show_error(const char *s, ...);
 
 
 static int  is_system=0;		/* system file updating?     */
-int  sleepmsg=0;		/* not in elm, dont wait for messages */
+static int  sleepmsg=0;		/* not in elm, dont wait for messages */
 
 /* used by mk_aliases.c */
 int get_is_system(void)

@@ -149,7 +149,7 @@ void output64chunk(int c1, int c2, int c3, int pads, FILE *outfile)
     }
 }
 
-int PendingBoundary(char *s, char **Boundaries, int *BoundaryCt)
+static int PendingBoundary(char *s, char **Boundaries, int *BoundaryCt)
 {
     int i, len;
 

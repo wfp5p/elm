@@ -138,34 +138,27 @@ struct utimbuf {
 
 #define metachar(c)	(c == '+' || c == '=' || c == '%')
 
-static int newmail_forwarded(char *buffer, char *who);
-static long newmail_bytes(char *name);
-static void newmail_expand_filename(char *name, char *store_space);
-
-
-struct folder_struct {
+static struct folder_struct {
 	  char		foldername[SLEN];
 	  char		prefix[NLEN];
 	  long		filesize;
 	  int		access_error;
        } folders[MAX_FOLDERS] = {0};
 
-int  interval_time,		/* how long to sleep between checks */
-     debug = 0,			/* include verbose debug output?    */
+static int  interval_time,		/* how long to sleep between checks */
      in_window = 0,		/* are we running as 'wnewmail'?    */
      total_folders = 0,		/* # of folders we're monitoring    */
      print_prefix = 0,		/* force printing of prefix	    */
      current_folder = 0;	/* struct pointer for looping       */
-FILE	*fd = NULL;		/* fd to use to read folders	    */
+static FILE	*fd = NULL;		/* fd to use to read folders	    */
+int debug = 0;
 
-int  parent_pid;		/* See if sucide should be attempt  */
-
-extern int errno;
+static int  parent_pid;		/* See if sucide should be attempt  */
 
 #if defined(BSD) && !defined(UTIMBUF)
-        time_t utime_buffer[2];         /* utime command */
+static         time_t utime_buffer[2];         /* utime command */
 #else
-        struct utimbuf utime_buffer;    /* utime command */
+static         struct utimbuf utime_buffer;    /* utime command */
 #endif
 
 static char	*no_subj,	/* Pointer to No subject text	*/
@@ -177,8 +170,17 @@ static char	*no_subj,	/* Pointer to No subject text	*/
 		*to_text,	/* pointer to to text		*/
 		*from_text;	/* pointer to from text		*/
 
-void add_default_folder(void);
-void pad_prefixes(void);
+
+static int newmail_forwarded(char *buffer, char *who);
+static long newmail_bytes(char *name);
+static void newmail_expand_filename(char *name, char *store_space);
+static int usage(char *name);
+static int add_folder(char *name);
+static int read_headers(register struct folder_struct *cur_folder);
+static void add_default_folder(void);
+static void pad_prefixes(void);
+static int show_header(struct header_rec *hdr,
+		       struct folder_struct *cur_folder);
 
 int main(int argc, char *argv[])
 {
@@ -364,7 +366,7 @@ int main(int argc, char *argv[])
 	}
 }
 
-int read_headers(register struct folder_struct *cur_folder)
+static int read_headers(register struct folder_struct *cur_folder)
 {
 	/** read the headers, output as found given current_folder,
 	    the prefix of that folder, and whether we're in a window
@@ -479,7 +481,7 @@ int read_headers(register struct folder_struct *cur_folder)
 	return(count);
 }
 
-int add_folder(char *name)
+static int add_folder(char *name)
 {
 	/* add the specified folder to the list of folders...ignore any
 	   problems we may having finding it (user could be monitoring
@@ -570,7 +572,7 @@ int add_folder(char *name)
 	total_folders++;
 }
 
-void add_default_folder(void)
+static void add_default_folder(void)
 {
 
 	/* this routine will add the users home mailbox as the folder
@@ -621,7 +623,7 @@ static int newmail_forwarded(char *buffer, char *who)
 	strncpy(who, buff, SLEN);
 }
 
-int show_header(struct header_rec *hdr, struct folder_struct *cur_folder)
+static int show_header(struct header_rec *hdr, struct folder_struct *cur_folder)
 {
 	char from_line[SLEN];
 	char prefix[SLEN];
@@ -675,7 +677,6 @@ static long newmail_bytes(char *name)
 	    is to check to see if new mail has arrived....  **/
 
 	int ok = 1;
-	extern int errno;	/* system error number! */
 	struct stat buffer;
 
 	if (stat(name, &buffer) != 0)
@@ -700,7 +701,7 @@ static long newmail_bytes(char *name)
 	return(ok ? buffer.st_size : 0);
 }
 
-int usage(char *name)
+static int usage(char *name)
 {
 	/* print a nice friendly usage message */
 
@@ -732,7 +733,7 @@ static void newmail_expand_filename(char *name, char *store_space)
 	}
 }
 
-void pad_prefixes(void)
+static void pad_prefixes(void)
 {
 	/** This simple routine is to ensure that we have a nice
 	    output format.  What it does is whip through the different

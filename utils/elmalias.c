@@ -91,24 +91,26 @@
  */
 #define MAXDB		2	/* user and system alias files		*/
 
-char *Progname;
+static char *Progname;
 
 /*
  * "aliasdb" library routines.
  */
-extern struct alias_rec *fetch_alias();
-extern char *next_addr_in_list();
+extern struct alias_rec *fetch_alias(DBZ *db, char *alias);
+extern char *next_addr_in_list(char **aptr);
 
 /*
  * Local procedures.
  */
-DBZ *open_user_aliases(), *open_system_aliases();
-struct alias_rec *make_dummy_rec();
-void exp_print_alias(), print_alias();
-char *sel_alias_mem();
+static DBZ *open_system_aliases(void);
+static DBZ *open_user_aliases(void);
+static struct alias_rec *make_dummy_rec(char *val);
+static void exp_print_alias(DBZ *dblist[], char *fmt, struct alias_rec *ar);
+static void print_alias(char *fmt, struct alias_rec *ar);
+static char *sel_alias_mem(struct alias_rec *ar, int sel);
 
 
-void usage_error(void)
+static void usage_error(void)
 {
     fprintf(stderr, catgets(elm_msg_cat, ElmaliasSet, ElmaliasUsage,
 	"usage: %s [-adenrsuvV] [-f format] [alias ...]\n"), Progname);
@@ -269,13 +271,13 @@ Alias:\t\t%a\n\
 }
 
 
-DBZ *open_system_aliases(void)
+static DBZ *open_system_aliases(void)
 {
     return dbz_open(system_data_file, O_RDONLY, 0);
 }
 
 
-DBZ *open_user_aliases(void)
+static DBZ *open_user_aliases(void)
 {
     char fname[SLEN];
     sprintf(fname, "%s/%s", user_home, ALIAS_DATA);
@@ -286,7 +288,7 @@ DBZ *open_user_aliases(void)
 /*
  * Cobble up an alias record structure to hold some address info.
  */
-struct alias_rec *make_dummy_rec(char *val)
+static struct alias_rec *make_dummy_rec(char *val)
 {
     struct alias_rec *ar;
     ar = (struct alias_rec *) safe_malloc(sizeof(struct alias_rec));
@@ -305,7 +307,7 @@ struct alias_rec *make_dummy_rec(char *val)
 /*
  * Recursively expand out a list of addresses and print the expansions.
  */
-void exp_print_alias(DBZ *dblist[], char *fmt, struct alias_rec *ar)
+static void exp_print_alias(DBZ *dblist[], char *fmt, struct alias_rec *ar)
 {
     char *abuf;		/* list of addresses we can scribble upon	*/
     char *acurr;	/* pointer to current address within "abuf"	*/
@@ -345,7 +347,7 @@ void exp_print_alias(DBZ *dblist[], char *fmt, struct alias_rec *ar)
 /*
  * Print out alias information according to a format specification.
  */
-void print_alias(char *fmt, struct alias_rec *ar)
+static void print_alias(char *fmt, struct alias_rec *ar)
 {
     char pfmt[64];		/* buffer to hold "%m.ns" formats	*/
     int in_conditional;		/* TRUE if in middle of cond expression	*/
@@ -445,7 +447,7 @@ void print_alias(char *fmt, struct alias_rec *ar)
 /*
  * Select a member of the alias record structure.
  */
-char *sel_alias_mem(struct alias_rec *ar, int sel)
+static char *sel_alias_mem(struct alias_rec *ar, int sel)
 {
     switch (sel) {
     case 'a':

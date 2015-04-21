@@ -70,12 +70,12 @@
 #define DFLT_LDR	"\t"	/* default leader for other lines	*/
 #define FLDSEP		" "	/* default field seperator		*/
 
-char inbuf[1024];		/* space to hold an input record	*/
-char outbuf[4096];		/* space to accumulate output record	*/
+static char inbuf[1024];		/* space to hold an input record	*/
+static char outbuf[4096];		/* space to accumulate output record	*/
 
-int calc_col();			/* calculate output column position	*/
+static int calc_col(register int col, register char *s);
 
-void usage_error(char *prog)
+static void usage_error(char *prog)
 {
     fprintf(stderr,
 	"usage: %s [-w wid] [-1 first_leader] [-l leader] [-f sep]\n", prog);
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
     exit(0);
 }
 
-int calc_col(register int col, register char *s)
+static int calc_col(register int col, register char *s)
 {
     while (*s != '\0') {
 	switch (*s) {

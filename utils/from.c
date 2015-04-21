@@ -89,8 +89,13 @@ int columns = 0;	/* columns on the screen */
 
 char infile[SLEN];	/* current file name */
 
-extern char *whos_mail(), *explain();
 static int from_forwarded(char *buffer, char *who);
+static int usage(char *prog);
+static char *whos_mail(char *filename);
+static int print_help(void);
+static int read_headers(int user_mailbox, int *total_msgs, int *selected);
+static char *explain(int selection, int how_to_say);
+
 
 int main(int argc, char *argv[])
 {
@@ -325,7 +330,7 @@ int main(int argc, char *argv[])
 	  exit(EXIT_NO_MAIL);
 }
 
-int read_headers(int user_mailbox, int *total_msgs, int *selected)
+static int read_headers(int user_mailbox, int *total_msgs, int *selected)
 {
 	/** Read the headers, output as found.  User-Mailbox is to guarantee
 	    that we get a reasonably sensible message from the '-v' option
@@ -667,7 +672,7 @@ static int from_forwarded(char *buffer, char *who)
 /*
  * Return an appropriate string as to whom this mailbox belongs.
  */
-char *whos_mail(char *filename)
+static char *whos_mail(char *filename)
 {
 	static char whos_who[SLEN];
 	char *mailname;
@@ -692,14 +697,14 @@ char *whos_mail(char *filename)
 	return whos_who;
 }
 
-int usage(char *prog)
+static int usage(char *prog)
 {
      printf(catgets(elm_msg_cat,FromSet,FromUsage,
 	"Usage: %s [-l] [-n] [-v] [-t] [-s {new|old|read}] [filename | username] ...\n"),
 	    prog);
 }
 
-int print_help(void)
+static int print_help(void)
 {
 
      printf(catgets(elm_msg_cat,FromSet,FromHelpTitle,
@@ -726,7 +731,7 @@ int print_help(void)
 /* explanation of messages visible after selection */
 /* usage: "... has the following%s messages ...", explain(selct,POS) */
 
-char *explain(int selection, int how_to_say)
+static char *explain(int selection, int how_to_say)
 {
 	switch (selection) {
 	  case NEW_MSG:
