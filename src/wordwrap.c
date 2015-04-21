@@ -41,6 +41,8 @@ unsigned alarm();
 	/* WARNING: this macro destroys nr */
 #define erase_tab(nr)		do WriteChar(BACKSPACE); while (--(nr) > 0)
 
+static int line_wrap(char *string, char *tail, int *count, int *tabs);
+
 int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
 		  int *append_current)
 {
@@ -247,7 +249,7 @@ int wrapped_enter(char *string, char *tail, int x, int y, FILE *edit_fd,
 	return(0);
 }
 
-int line_wrap(char *string, char *tail, int *count, int *tabs)
+static int line_wrap(char *string, char *tail, int *count, int *tabs)
 {
 	/** This will check for line wrap.  If the line was wrapped,
 	    it will back up to white space (if possible), write the
