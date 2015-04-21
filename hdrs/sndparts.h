@@ -261,3 +261,5 @@ int emitpart P_((FILE *, SEND_BODYPART *));
 int emitpart_mssghdr P_((FILE *, SEND_BODYPART *));
 int emitpart_mssgbody P_((FILE *, SEND_BODYPART *));
 
+/* src/sndattach.c */
+int attachment_menu(SEND_MULTIPART **user_attachments_p);
