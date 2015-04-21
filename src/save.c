@@ -414,8 +414,7 @@ int expand_filename(char *filename)
 	     logname[SLEN], *ptr, *address, buffer[LONG_STRING];
 	register int iindex;
 	int too_long = FALSE;
-	struct passwd *pass, *getpwnam();
-	char *getenv();
+	struct passwd *pass;
 
 	ptr = filename;
 	while (*ptr == ' ') ptr++;	/* leading spaces GONE! */
