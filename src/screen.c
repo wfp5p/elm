@@ -252,7 +252,7 @@ int show_headers(void)
 	return(TRUE);
 }
 
-int show_current(void)
+void show_current(void)
 {
 	/** Show the new header, with all the usual checks **/
 

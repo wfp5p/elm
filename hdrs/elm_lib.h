@@ -505,7 +505,7 @@ void save_options(void);
 
 /* src/screen.c */
 int show_headers(void);
-int show_current(void);
+void show_current(void);
 char *show_status(int status);
 int showscreen(void);
 int update_title(void);
@@ -529,6 +529,7 @@ char *get_token(char *source, char *keys, int depth);
 char *format_long(const char *inbuff, int init_len);
 int split_word(char *buffer, char *first, char *rest);
 int copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
+
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);
 int occurances_of(int ch, char *string);
