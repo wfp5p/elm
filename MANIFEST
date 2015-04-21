@@ -124,7 +124,7 @@ lib/putenv.c
 lib/qstrings.c
 lib/realfrom.c
 lib/remfirstwd.c
-lib/reverse.c
+lib/strrev.c
 lib/rfc822tlen.c
 lib/safemalloc.c
 lib/shiftlower.c

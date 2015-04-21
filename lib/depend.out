@@ -140,7 +140,7 @@ qstrings.o : qstrings.c $(INCLDIR)/elm_defs.h ../config.h \
 remfirstwd.o : remfirstwd.c $(INCLDIR)/elm_defs.h ../config.h \
 	$(INCLDIR)/elm_lib.h $(INCLDIR)/mcprt.h $(INCLDIR)/nl_types.h \
 	$(INCLDIR)/parseaddrs.h ../sysdefs.h
-reverse.o : reverse.c $(INCLDIR)/elm_defs.h ../config.h $(INCLDIR)/elm_lib.h \
+strrev.o : strrev.c $(INCLDIR)/elm_defs.h ../config.h $(INCLDIR)/elm_lib.h \
 	$(INCLDIR)/mcprt.h $(INCLDIR)/nl_types.h $(INCLDIR)/parseaddrs.h \
 	../sysdefs.h
 rfc822tlen.o : rfc822tlen.c $(INCLDIR)/elm_defs.h ../config.h \

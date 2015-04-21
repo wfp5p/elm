@@ -65,7 +65,7 @@ int tail_of(char *from, char *buffer, char *to)
 	  if (cnt < 2) buffer[i++] = from[loc];
 	}
 	buffer[i] = '\0';
-	reverse(buffer);
+	elm_strrev(buffer);
 
 	if ( strcmp(buffer, user_fullname) == 0 ||
 	  addr_matches_user(buffer, user_name) ) {

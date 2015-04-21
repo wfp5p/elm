@@ -264,9 +264,9 @@ void remove_first_word P_((char *));
 void remove_header_keyword P_((char *));
 
 
-/* reverse.c */
+/* strrev.c */
 
-void reverse P_((char *));
+void elm_strrev(char *string);
 
 
 /* rfc822tlen.c */

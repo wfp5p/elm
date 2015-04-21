@@ -539,7 +539,7 @@ int get_return_name(const char *address, char *name, int trans_to_lowercase)
 		    name[iindex++] = single_address[i];
 	    }
 	    name[iindex] = '\0';
-	    reverse(name);
+	    elm_strrev(name);
 	}
 	return 0;
 }
