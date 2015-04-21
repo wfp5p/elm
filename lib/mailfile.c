@@ -230,7 +230,7 @@ int mailFile_seek(struct mailFile *mailfile, long offset)
 
 void mailFile_detach(struct mailFile *mailfile)
 {
-	if (mailfile->filedes);
+	if (mailfile->filedes)
 	  fflush(mailfile->filedes);
 	if (mailfile->copy)
 	  fflush(mailfile->copy);
