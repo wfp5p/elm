@@ -8,12 +8,6 @@
 #  include <pwd.h>
 #endif
 
-#ifndef ANSI_C
-extern struct passwd *getpwnam(), *getpwuid();
-extern char *getenv();
-#endif
-
-
 /*
  * Initialize global data commonly used throughout the Elm package.
  * Basically ... this means set the user and host information.
