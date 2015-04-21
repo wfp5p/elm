@@ -527,7 +527,7 @@ char *sort_name(int longname);
 char *strip_commas(char *string);
 char *get_token(char *source, char *keys, int depth);
 char *format_long(const char *inbuff, int init_len);
-int split_word(char *buffer, char *first, char *rest);
+void split_word(char *buffer, char *first, char *rest);
 int copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
 int quote_args(register char *out_string, register char *in_string);
 

@@ -155,7 +155,7 @@ char *strip_commas(char *string)
 	return string;
 }
 
-int split_word(char *buffer, char *first, char *rest)
+void split_word(char *buffer, char *first, char *rest)
 {
 	int len;
 	/** Rip the buffer into first word and rest of word, translating it
