@@ -551,7 +551,7 @@ void display_to(char *address)
 int get_to(char *to_field, char *address, int mssgtype)
 {
     char *prompt;
-    int line;
+    int line = 0;
 
     if (*to_field == '\0') {
 	line = (OPMODE_IS_READMODE(opmode)) ? LINES - 2 : 3;
@@ -886,14 +886,14 @@ static int verify_transmission(const char *filename, SEND_HEADER *shdr,
 			       SEND_MULTIPART **attachments_p, int *form_p,
 			       char *copy_file)
 {
-    char *prompt_mssg;		/* message to display prompting for cmd	*/
+    char *prompt_mssg = NULL;	/* message to display prompting for cmd	*/
     char prompt_menu1[SLEN];	/* menu of available commands		*/
     char prompt_menu2[SLEN];	/* menu of available commands		*/
     int bad_cmd;		/* set TRUE to bitch about user's entry	*/
     int prev_form;		/* "*form_p" value last time thru loop	*/
     int do_redraw;		/* portions of display to update	*/
     int cmd;			/* command to perform			*/
-    int max_hdrline;		/* bottommost line used in hdr display	*/
+    int max_hdrline = 0;	/* bottommost line used in hdr display	*/
     char lbuf[VERY_LONG_STRING];
     int curr_line, curr_col;
 

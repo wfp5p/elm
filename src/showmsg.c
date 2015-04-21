@@ -86,7 +86,7 @@ int show_msg(int number)
 	    pipe_fd[2],				/* pipe file descriptors */
 	    new_pipe_fd,			/* dup'ed pipe fil des */
 	    lines,				/* num lines in msg */
-	    fork_ret,				/* fork return value */
+	    fork_ret = 0,			/* fork return value */
 	    wait_ret,				/* wait return value */
 	    form_letter = FALSE,		/* Form ltr?  */
 	    form_letter_section = 0,		/* section    */
@@ -198,7 +198,8 @@ int show_msg(int number)
 	    return(val);
 	  }
 
-	  if((fork_ret = fork()) == -1) {
+	  fork_ret = fork();
+  	  if (fork_ret == -1) {
 
 	    err = errno;
 	    dprint(1, (debugfile, "Error: fork failed, errno %s (show_msg)\n",

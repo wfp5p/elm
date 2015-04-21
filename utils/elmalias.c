@@ -312,7 +312,7 @@ static void exp_print_alias(DBZ *dblist[], char *fmt, struct alias_rec *ar)
     char *abuf;		/* list of addresses we can scribble upon	*/
     char *acurr;	/* pointer to current address within "abuf"	*/
     char *anext;	/* pointer to next address within "abuf"	*/
-    struct alias_rec *ar0;
+    struct alias_rec *ar0 = NULL;
     int d;		/* dblist index					*/
 
     /*

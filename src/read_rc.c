@@ -374,7 +374,8 @@ static void do_rc(FILE *file, int lcl)
  */
 static int do_set(FILE *file, char *word1, char *word2, int lcl)
 {
-	int x, y;
+	int x;
+	int y = 0;
 
 	for (x=0; x < NUMBER_OF_SAVEABLE_OPTIONS; ++x) {
 	    y = strcmp(word1, save_info[x].name);
@@ -988,7 +989,8 @@ int expand_env(char *dst, const char *src, int len)
 static int dump_rc_results(void)
 {
 	int i, j, len = 0;
-	char buf[SLEN], *s;
+	char buf[SLEN];
+	char *s = NULL;
 
 	for (i = 0; i < NUMBER_OF_SAVEABLE_OPTIONS; i++) {
 

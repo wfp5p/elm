@@ -67,7 +67,8 @@ int main(int argc, char *argv[])
 {
     extern char *optarg;
     extern int optind;
-    FILE *ifp, *ofp;
+    FILE *ifp;
+    FILE *ofp = NULL;
     int fp_handle;
     char *progname, temp_fname[SLEN], cmdbuf[LONG_STRING], buf[LONG_STRING];
     char *subject, *cc_list, *bcc_list, to_list[LONG_STRING];

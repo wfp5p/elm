@@ -176,7 +176,8 @@ int display_line(char *input_line, int input_size)
 	**/
 
 	char *pending, footer[SLEN], display_buffer[SLEN];
-	int ch, formfeed, lines_more;
+	int ch, lines_more;
+	int formfeed = 0;
 	int pending_len = input_size, display_len = 0;
 
 	pending = input_line;

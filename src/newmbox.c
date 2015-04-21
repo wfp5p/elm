@@ -262,7 +262,7 @@ static int read_headers(int add_new_only)
 	    one if possible and only read in newly added messages.
 	**/
 
-	FILE *temp;
+	FILE *temp = NULL;
 	struct header_rec *current_header = NULL;
 	char *buffer, *c;
 	char tbuffer[VERY_LONG_STRING];
@@ -291,7 +291,9 @@ static int read_headers(int add_new_only)
 		curr_folder.tempname);
 	      leave(LEAVE_ERROR|LEAVE_KEEP_TEMPFOLDER);
 	    }
-	    if ((temp = file_open(curr_folder.tempname,"w")) == NULL) {
+
+	    temp = file_open(curr_folder.tempname,"w");
+	    if (temp == NULL) {
 	      ShutdownTerm();
 	      show_error(catgets(elm_msg_cat, ElmSet, ElmCouldntOpenForTemp,
 		     "Cannot open \"%s\"! [%s]"),

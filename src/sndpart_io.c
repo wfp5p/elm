@@ -205,7 +205,11 @@ SEND_BODYPART *newpart_mssgtext(const char *fname)
  */
 static SEND_BODYPART *process_attach_line(char *cmdline)
 {
-    char *fld, *cmd, *fname, *cont_type, *cont_encoding;
+    char *fld;
+    char *cmd = NULL;
+    char *fname = NULL;
+    char *cont_type = NULL;
+    char *cont_encoding = NULL;
     char buf[SLEN];
     const char *actual_type;
     SEND_BODYPART *part;

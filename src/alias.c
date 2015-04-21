@@ -230,8 +230,9 @@ static int add_alias(int replace, int to_replace)
  *	a replacement.
  */
 
-	int i, leftoff, ans, tagged = 0;
-
+	int i, ans;
+	int tagged = 0;
+	int leftoff = 0;
 	char aliasname[SLEN], firstname[SLEN], lastname[SLEN];
 	char address1[LONG_STRING], buffer[SLEN];
 	char comment[LONG_STRING];

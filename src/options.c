@@ -716,7 +716,8 @@ static int alias_sort_one_liner(int sorting_by)
  */
 static int info_enter(char *name, int ypos, int xpos)
 {
-	int x,q;
+	int x;
+	int q = 0;
 	char buffer[SLEN];
 	int number;
 

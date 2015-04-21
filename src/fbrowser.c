@@ -179,11 +179,11 @@ int fbrowser(char *ret_buf, int ret_bufsiz, const char *start_dir,
     FB_DIR *curr_dlist;		/* entries in the current directory	*/
     FB_DIR *new_dlist;		/* set non-NULL to switch directories	*/
     int inp_line, inp_col;	/* cursor position for user input	*/
-    int do_redraw;		/* what parts of screen need redrawing	*/
+    int do_redraw = 0;		/* what parts of screen need redrawing	*/
     int bad_cmd;		/* TRUE if last command was bad		*/
     int cmd;			/* command from user			*/
-    int curr_sel;		/* currently selected entry		*/
-    int prev_sel;		/* selection at previous iteration	*/
+    int curr_sel = 0;		/* currently selected entry		*/
+    int prev_sel = 0;		/* selection at previous iteration	*/
     int rc;			/* final return status			*/
     char tmp_buf[SLEN], *np, *s;
     int n, i;

@@ -104,7 +104,8 @@ void copy_message(FILE *dest_file, int msgnum, int cm_options)
     int	end_header = 0;
     int sender_added = 0;
     int bytes_seen = 0;
-    int buf_len, err;
+    int buf_len = 0;
+    int err;
     struct mailFile mailFile;
     FAST_COMP_DECLARE;
 
@@ -366,10 +367,10 @@ static char *makeAttString(char *retbuf, int retbuflen, const char *attribution,
 {
     const char *aptr = attribution; /* cursor into the attribution spec	*/
     char *rptr = retbuf;	/* cursor into the result buffer	*/
-    const char *expval;		/* next item to add to result buffer	*/
+    const char *expval = NULL;		/* next item to add to result buffer	*/
     int explen;			/* length of expansion value		*/
     int in_selection;		/* currently doing %[...] list?		*/
-    int curr_field;		/* field number of current %[...] list	*/
+    int curr_field = 0;		/* field number of current %[...] list	*/
     char fromfield[STRING];	/* room for parsed from address         */
 
     --retbuflen;		/* reserve space for '\0' */
@@ -464,7 +465,7 @@ static char *makeAttString(char *retbuf, int retbuflen, const char *attribution,
 		    explen = 3;
 		}
 		else {
-		    int ret;
+		    int ret = 0;
 		    if (*(aptr-1) == ')')		/* from name */
 			ret = parse_arpa_mailbox(messageHeader->allfrom, NULL, 0,
 			    fromfield, sizeof(fromfield), NULL);
