@@ -90,8 +90,7 @@ SUBDIR		= utils
 INSTALL_MMENCODE = $(DESTBIN)/mmencode
 REMOTE_MMENCODE = $(REMOTE)/$(DESTBIN)/mmencode
 
-ALL	=	$(BINDIR)/answer	\
-		$(BINDIR)/checkalias	\
+ALL	=	$(BINDIR)/checkalias	\
 		$(BINDIR)/elmalias	\
 		$(BINDIR)/fastmail	\
 		$(BINDIR)/frm		\
@@ -104,8 +103,7 @@ ALL	=	$(BINDIR)/answer	\
 		$(BINDIR)/prlong	\
 		$(BINDIR)/readmsg
 
-INSTS	=	$(DESTBIN)/answer	\
-		$(DESTBIN)/checkalias	\
+INSTS	=	$(DESTBIN)/checkalias	\
 		$(DESTBIN)/elmalias	\
 		$(DESTBIN)/fastmail	\
 		$(DESTBIN)/frm		\
@@ -120,8 +118,7 @@ INSTS	=	$(DESTBIN)/answer	\
 		$(DESTBIN)/readmsg	\
 		$(DESTBIN)/wnewmail
 
-SRCS	=	answer.c		\
-		elmalias.c		\
+SRCS	=	elmalias.c		\
 		fastmail.c		\
 		from.c			\
 		mmencode.c		\
@@ -130,8 +127,7 @@ SRCS	=	answer.c		\
 		readmsg.c		\
 		prlong.c
 
-OBJS	=	answer.o		\
-		elmalias.o		\
+OBJS	=	elmalias.o		\
 		fastmail.o		\
 		from.o			\
 		mmencode.o		\
@@ -140,8 +136,7 @@ OBJS	=	answer.o		\
 		readmsg.o		\
 		prlong.o
 
-REMOTE_LIST	=	$(REMOTE)$(DESTBIN)/answer	\
-			$(REMOTE)$(DESTBIN)/checkalias	\
+REMOTE_LIST	=	$(REMOTE)$(DESTBIN)/checkalias	\
 			$(REMOTE)$(DESTBIN)/elmalias	\
 			$(REMOTE)$(DESTBIN)/fastmail	\
 			$(REMOTE)$(DESTBIN)/frm		\
@@ -154,8 +149,7 @@ REMOTE_LIST	=	$(REMOTE)$(DESTBIN)/answer	\
 			$(REMOTE)$(DESTBIN)/prlong	\
 			$(REMOTE)$(DESTBIN)/readmsg
 
-LINT_LIST	=	answer_lint	\
-			elmalias_lint	\
+LINT_LIST	=	elmalias_lint	\
 			fastmail_lint	\
 			frm_lint	\
 			mmencode_lint	\
@@ -171,8 +165,6 @@ cat ../Make.defs >>Makefile
 cat >>Makefile <<'!NO!SUBS!'
 
 #	Lists of source and object files for each C program
-ANSWER_SRC	=	answer.c
-ANSWER_OBJ	=	answer.o
 ELMALIAS_SRC	=	elmalias.c
 ELMALIAS_OBJ	=	elmalias.o
 FASTMAIL_SRC	=	fastmail.c
@@ -204,9 +196,6 @@ printmail:            ../config.sh $(SRCDIR)/$(SUBDIR)/printmail.SH
 	sh $(SRCDIR)/$(SUBDIR)/printmail.SH
 
 
-$(BINDIR)/answer:	$(ANSWER_OBJ) ../lib/libutil.a
-	$(CC) $(LFLAGS) -o $@ $(ANSWER_OBJ) ../lib/libutil.a $(LIBS)
-
 $(BINDIR)/elmalias:	$(ELMALIAS_OBJ) ../lib/libutil.a
 	$(CC) $(LFLAGS) -o $@ $(ELMALIAS_OBJ) ../lib/libutil.a $(LIBS)
 
@@ -236,7 +225,6 @@ $(BINDIR)/listalias:	listalias	; $(CP) $? $@ ; $(CHMOD) u+w,a+rx $@
 $(BINDIR)/messages:	messages	; $(CP) $? $@ ; $(CHMOD) u+w,a+rx $@
 $(BINDIR)/printmail:	printmail	; $(CP) $? $@ ; $(CHMOD) u+w,a+rx $@
 
-$(DESTBIN)/answer:	$(BINDIR)/answer	; $(INSTALL_EXE)
 $(DESTBIN)/checkalias:	$(BINDIR)/checkalias	; $(INSTALL_EXE)
 $(DESTBIN)/elmalias:	$(BINDIR)/elmalias	; $(INSTALL_EXE)
 $(DESTBIN)/fastmail:	$(BINDIR)/fastmail	; $(INSTALL_EXE)
@@ -255,7 +243,6 @@ $(DESTBIN)/prlong:	$(BINDIR)/prlong	; $(INSTALL_EXE)
 #	This is the only target that gets installed even if not out-of-date
 #	with respect the files from which it is installed.
 rmt-install:		rmt-defined
-			-$(MV) $(DESTBIN)/answer $(DESTBIN)/answer.old
 			-$(MV) $(DESTBIN)/checkalias $(DESTBIN)/checkalias.old
 			-$(MV) $(DESTBIN)/elmalias $(DESTBIN)/elmalias.old
 			-$(MV) $(DESTBIN)/fastmail $(DESTBIN)/fastmail.old
@@ -271,7 +258,6 @@ rmt-install:		rmt-defined
 			-$(MV) $(DESTBIN)/prlong $(DESTBIN)/prlong.old
 			-$(MV) $(DESTBIN)/readmsg $(DESTBIN)/readmsg.old
 			-$(MV) $(DESTBIN)/wnewmail $(DESTBIN)/wnewmail.old
-			-$(RM) $(DESTBIN)/answer.old
 			-$(RM) $(DESTBIN)/checkalias.old
 			-$(RM) $(DESTBIN)/elmalias.old
 			-$(RM) $(DESTBIN)/fastmail.old
@@ -294,7 +280,6 @@ rmt-install:		rmt-defined
 
 LINT.OUT :
 	@( set -x ; \
-		$(LINT) $(LINTFLAGS) $(ANSWER_SRC)	; \
 		$(LINT) $(LINTFLAGS) $(ELMALIAS_SRC)	; \
 		$(LINT) $(LINTFLAGS) $(FASTMAIL_SRC)	; \
 		$(LINT) $(LINTFLAGS) $(FRM_SRC)		; \

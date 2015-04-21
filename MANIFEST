@@ -15,7 +15,6 @@ doc/Form.guide
 doc/Makefile.SH
 doc/Ref.guide
 doc/Users.guide
-doc/answer.1
 doc/chkalias.1
 doc/elm.1
 doc/elmalias.1
@@ -181,7 +180,6 @@ src/delete.c
 src/edit.c
 src/editmsg.c
 src/elm.c
-src/encode.c
 src/fbrowser.c
 src/file_ops.c
 src/file_util.c
@@ -226,7 +224,6 @@ test/test.empty
 test/test.mail
 utils/Makefile.SH
 utils/depend.out
-utils/answer.c
 utils/checkalias.SH
 utils/elmalias.c
 utils/fastmail.c
