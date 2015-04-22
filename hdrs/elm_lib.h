@@ -154,17 +154,6 @@ int mail_gets P_((char *, int, FILE *));
 
 	/* ##### defined in mailfile.h  ##### */
 
-
-/* mcprt.c */
-
-	/* ##### defined in mcprt.h ##### */
-
-
-/* mcprtlib.c */
-
-	/* ##### defined in mcprtlib.c ###### */
-
-
 /* mk_aliases.c */
 
 int check_alias P_((char *));

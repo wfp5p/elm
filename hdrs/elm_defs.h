@@ -297,13 +297,10 @@ extern long ulimit P_((int, ...));
 #else
 # include "nl_types.h"
 #endif
-#ifndef	USENLS
-# define MCprintf printf
-# define MCfprintf fprintf
-# define MCsprintf sprintf
-#else
-# include "mcprt.h"
-#endif
+
+#define MCprintf printf
+#define MCfprintf fprintf
+#define MCsprintf sprintf
 
 /* FOO - I wonder if we should be including <time.h> in this header */
 char *ctime P_((const time_t *));

@@ -83,14 +83,9 @@ sed <<!GROK!THIS! >config.h -e 's!^#undef!/\*#undef!'
  *	This symbol, if defined, indicates that the MSGCAT NLS libraries
  *	are available.
  */
-/* USENLS:
- *	This symbol, if defined, indicates that the Elm NLS libraries
- *	are being used instead of the system NLS libraries.
- */
 #$d_locale	I_LOCALE	/**/
 #$d_nl_types	I_NL_TYPES	/**/
 #$d_msgcat	MSGCAT		/**/
-#$d_usenls	USENLS		/**/
 
 /* ALLOW_MAILBOX_EDITING:
  *	This symbol, if defined, indicates that the E)dit mailbox

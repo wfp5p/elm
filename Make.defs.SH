@@ -22,15 +22,6 @@ else
 fi
 
 
-case "$d_usenls" in
-define)	mcsrc="mcprt.c mcprtlib.c msgcat.c"
-	mcobj="mcprt.o mcprtlib.o msgcat.o"
-	;;
-*)	mcsrc=
-	mcobj=
-	;;
-esac
-
 VERSION=$(sed -e 's/^ELM_VERSION = //' < ELM-VERSION-FILE)
 
 
