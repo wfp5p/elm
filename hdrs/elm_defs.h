@@ -298,10 +298,6 @@ extern long ulimit P_((int, ...));
 # include "nl_types.h"
 #endif
 
-/* FOO - I wonder if we should be including <time.h> in this header */
-char *ctime P_((const time_t *));
-
-
 /*****************************************************************************
  *
  * data structures

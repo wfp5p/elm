@@ -51,6 +51,8 @@
 #include "s_elm.h"
 #include "mailfile.h"
 #include "port_stat.h"
+#include <time.h>
+
 
 static char *makeAttString
     P_((char *, int, const char *, int, const struct header_rec *));
