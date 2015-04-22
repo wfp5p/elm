@@ -681,7 +681,7 @@ static long newmail_bytes(char *name)
 
 	if (stat(name, &buffer) != 0)
 	  if (errno != 2) {
-	    MCfprintf(stderr, catgets(elm_msg_cat, NewmailSet, NewmailErrFstat,
+	    fprintf(stderr, catgets(elm_msg_cat, NewmailSet, NewmailErrFstat,
 	      "Error %d attempting fstat on %s"), errno, name);
 	    exit(1);
 	  }

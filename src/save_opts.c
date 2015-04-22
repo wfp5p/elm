@@ -140,7 +140,7 @@ void save_options(void)
     fprintf(fp_elmrc, catgets(elm_msg_cat, ElmrcSet, ElmrcOptionsFile,
 	    "#\n# %s - options file for the ELM mail system\n#\n"),
 	    elmrcfile);
-    MCfprintf(fp_elmrc, catgets(elm_msg_cat, ElmrcSet, ElmrcSavedAutoFor,
+    fprintf(fp_elmrc, catgets(elm_msg_cat, ElmrcSet, ElmrcSavedAutoFor,
 	    "# Saved automatically by ELM %s for %s\n#\n\n"),
 	    version_buff, user_fullname);
 
