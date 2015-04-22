@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
 	else {
 	    printf(catgets(elm_msg_cat, NewaliasSet, NewaliasUpdatePersonal,
 		"Updating your personal alias file..."));
-	    MCsprintf(inputname, "%s/%s", user_home, ALIAS_TEXT);
-	    MCsprintf(dataname,  "%s/%s", user_home, ALIAS_DATA); 
+	    sprintf(inputname, "%s/%s", user_home, ALIAS_TEXT);
+	    sprintf(dataname,  "%s/%s", user_home, ALIAS_DATA); 
 	}
 
 	if ((a = do_newalias(inputname, dataname, FALSE, TRUE)) < 0) {

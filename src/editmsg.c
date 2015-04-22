@@ -670,7 +670,7 @@ more_wrap:
 	    break;
 
 	default:
-	    MCsprintf(tmpbuf, catgets(elm_msg_cat, ElmSet, ElmDontKnowChar,
+	    sprintf(tmpbuf, catgets(elm_msg_cat, ElmSet, ElmDontKnowChar,
 		"\n\r(Don't know what %c%c is. Try %c? for help.)\n\r"),
 		 escape_char, linebuf[1], escape_char);
 	    PutLine(-1, -1, tmpbuf);

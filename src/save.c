@@ -229,7 +229,7 @@ int save(int *redraw_p, int silently, int delete)
 
     /* show result - unless message already displayed is meaningful */
     if (num_saved > 1 && i == 0) {
-	MCsprintf(lbuf, S_(ElmSavecmdMessagesSaved,
+	sprintf(lbuf, S_(ElmSavecmdMessagesSaved,
 		    "%d messages %s to \"%s\"."),
 		    num_saved, word_saved, canon_filename);
 	if (*redraw_p)

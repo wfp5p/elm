@@ -365,11 +365,11 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 	  if (to_store > 0) {
 	    if (to_delete > 0) {
 	      if (to_keep == 1)
-	        MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStoreDelete,
+	        sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStoreDelete,
 		      "[Keeping 1 message, storing %d, and deleting %d.]"),
 		    to_store, to_delete);
 	      else
-	        MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStoreDeletePlural,
+	        sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStoreDeletePlural,
 		      "[Keeping %d messages, storing %d, and deleting %d.]"),
 		    to_keep, to_store, to_delete);
 	    } else {
@@ -378,7 +378,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 			"[Keeping 1 message and storing %d.]"),
 		      to_store);
 	      else
-		MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStorePlural,
+		sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepStorePlural,
 			"[Keeping %d messages and storing %d.]"),
 		      to_keep, to_store);
 	    }
@@ -389,7 +389,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 			"[Keeping 1 message and deleting %d.]"),
 		      to_delete);
 	      else
-		MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepDeletePlural,
+		sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveKeepDeletePlural,
 			"[Keeping %d messages and deleting %d.]"),
 		      to_keep, to_delete);
 	    } else {
@@ -408,7 +408,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
 		      "[Storing 1 message and deleting %d.]"),
 		    to_delete);
 	    else
-	      MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveStoreDeletePlural,
+	      sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmLeaveStoreDeletePlural,
 		      "[Storing %d messages and deleting %d.]"),
 		    to_store, to_delete);
 	  } else {

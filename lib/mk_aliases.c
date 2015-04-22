@@ -360,7 +360,7 @@ int check_alias(char *aliases)
  */
 	for (s = aliases; *s != '\0' && (ok_alias_char(*s)||*s==','); ++s ) ;
 	if ( *s != '\0' ) {
-	    MCsprintf(msg_buff, catgets(elm_msg_cat,
+	    sprintf(msg_buff, catgets(elm_msg_cat,
 	            NewaliasSet, NewaliasCharNotSupported,
 		    "Error - character '%c' in alias '%s' is not supported."),
 	        *s, aliases);
@@ -647,7 +647,7 @@ int do_newalias(char *inputname, char *dataname, int fromelm, int textwarn)
 	}
 
 	if ((aliases_hash = dbz_fresh(dataname, 4999, 0, 0)) == NULL) {
-	    MCsprintf(msg_buff, catgets(elm_msg_cat,
+	    sprintf(msg_buff, catgets(elm_msg_cat,
 	            NewaliasSet, NewaliasNoOpendbz,
 		    "Couldn't open %s.pag or %s.dir for output!"),
 	        dataname, dataname);

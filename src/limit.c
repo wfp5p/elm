@@ -68,7 +68,7 @@ int limit(void)
 	}
 
 	if (selected) {
-	  MCsprintf(msg, catgets(elm_msg_cat, ElmSet, ElmLimitAlreadyHave,
+	  sprintf(msg, catgets(elm_msg_cat, ElmSet, ElmLimitAlreadyHave,
 		"Already have selection criteria - add more? (%c/%c) %c%c"),
 		*def_ans_yes, *def_ans_no, *def_ans_no, BACKSPACE);
 	  PutLine(LINES-2, 0, msg);

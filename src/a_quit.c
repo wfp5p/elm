@@ -118,7 +118,7 @@ int delete_aliases(int newaliases, int prompt)
 		sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesKeepDelete,
 			  "[Keeping 1 alias and deleting %d.]"), to_delete);
 	      else
-		MCsprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesKeepDeletePlural,
+		sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesKeepDeletePlural,
 			  "[Keeping %d aliases and deleting %d.]"), to_keep, to_delete);
 	    }
 	    else {

@@ -221,29 +221,29 @@ int display_line(char *input_line, int input_size)
 	  percent_done = (int)((100L * lines_displayed) / total_lines_to_display);
 	  if (user_level == 0) {
 	    if (lines_more == 1)
-	      MCsprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser0,
+	      sprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser0,
 " There is 1 line left (%d%%). Press <space> for more, or 'i' to return. "),
 		 percent_done);
 	    else
-	      MCsprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser0Plural,
+	      sprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser0Plural,
 " There are %d lines left (%d%%). Press <space> for more, or 'i' to return. "),
 		 lines_more, percent_done);
 	  } else if (user_level == 1) {
 	    if (lines_more == 1)
-	      MCsprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser1,
+	      sprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser1,
 " 1 line more (%d%%). Press <space> for more, 'i' to return. "),
 		 percent_done);
 	    else
-	      MCsprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser1Plural,
+	      sprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser1Plural,
 " %d lines more (%d%%). Press <space> for more, 'i' to return. "),
 		 lines_more, percent_done);
 	  } else {
 	    if (lines_more == 1)
-	      MCsprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser2,
+	      sprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser2,
 " 1 line more (you've seen %d%%) "),
 		 percent_done);
 	    else
-	      MCsprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser2Plural,
+	      sprintf(footer, catgets(elm_msg_cat, ElmSet, ElmMoreUser2Plural,
 " %d lines more (you've seen %d%%) "),
 		 lines_more, percent_done);
 	  }

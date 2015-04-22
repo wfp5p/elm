@@ -300,7 +300,6 @@ extern long ulimit P_((int, ...));
 
 #define MCprintf printf
 #define MCfprintf fprintf
-#define MCsprintf sprintf
 
 /* FOO - I wonder if we should be including <time.h> in this header */
 char *ctime P_((const time_t *));

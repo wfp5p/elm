@@ -221,14 +221,14 @@ static void ask_clear_existing_tags(void)
 	return;
 
     if (tagged > 1) {
-	MCsprintf(tagmsg, catgets(elm_msg_cat, ElmSet, ElmSomeMessagesATagged,
+	sprintf(tagmsg, catgets(elm_msg_cat, ElmSet, ElmSomeMessagesATagged,
 		    "Some %s are already tagged."), nls_items);
-	MCsprintf(msg, catgets(elm_msg_cat, ElmSet, ElmRemoveTags,
+	sprintf(msg, catgets(elm_msg_cat, ElmSet, ElmRemoveTags,
 		    "%s Remove Tags?"), tagmsg);
     } else {
-	MCsprintf(tagmsg, catgets(elm_msg_cat, ElmSet, ElmAMessageATagged,
+	sprintf(tagmsg, catgets(elm_msg_cat, ElmSet, ElmAMessageATagged,
 		    "One %s is already tagged."), nls_item);
-	MCsprintf(msg, catgets(elm_msg_cat, ElmSet, ElmRemoveTag,
+	sprintf(msg, catgets(elm_msg_cat, ElmSet, ElmRemoveTag,
 		    "%s Remove Tag?"), tagmsg);
     }
 

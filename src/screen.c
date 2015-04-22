@@ -89,17 +89,17 @@ int update_title(void)
 
 
 	if (selected)
-	  MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmShownWithSelect,
+	  sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmShownWithSelect,
 	      "%s is '%s' with %d shown out of %d [ELM %s]"),
 	      ((curr_folder.flags & FOLDER_IS_SPOOL) ? mailbox : folder),
 	      folder_string, selected, curr_folder.num_mssgs, version_buff);
 	else if (curr_folder.num_mssgs == 1)
-	  MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmShownNoSelect,
+	  sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmShownNoSelect,
 	      "%s is '%s' with 1 message [ELM %s]"),
 	      ((curr_folder.flags & FOLDER_IS_SPOOL) ? mailbox : folder),
 	      folder_string, version_buff);
 	else
-	  MCsprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmShownNoSelectPlural,
+	  sprintf(buffer, catgets(elm_msg_cat, ElmSet, ElmShownNoSelectPlural,
 	      "%s is '%s' with %d messages [ELM %s]"),
 	      ((curr_folder.flags & FOLDER_IS_SPOOL) ? mailbox : folder),
 	      folder_string, curr_folder.num_mssgs, version_buff);

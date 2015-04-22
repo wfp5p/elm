@@ -67,14 +67,14 @@ int alias_title(int modified)
 	}
 
 	if (selected)
-	  MCsprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesSelect,
+	  sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesSelect,
 	      "Alias mode: %d shown out of %d %s[ELM %s]"),
 	      selected, num_aliases, modmsg, version_buff);
 	else if (num_aliases == 1)
 	  sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesSingle,
 	      "Alias mode: 1 alias %s[ELM %s]"), modmsg, version_buff);
 	else
-	  MCsprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesPlural,
+	  sprintf(buffer, catgets(elm_msg_cat, AliasesSet, AliasesPlural,
 	      "Alias mode: %d aliases %s[ELM %s]"),
 	      num_aliases, modmsg, version_buff);
 
@@ -139,7 +139,7 @@ int build_alias_line(char *buffer, struct alias_rec *entry,
 
 	/* Put the name and associated comment in local buffer */
 	if (strlen(entry->comment))
-	  MCsprintf(mybuffer, "%s, %s", entry->name, entry->comment);
+	  sprintf(mybuffer, "%s, %s", entry->name, entry->comment);
 	else
 	  sprintf(mybuffer, "%s", entry->name);
 
