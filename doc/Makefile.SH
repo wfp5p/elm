@@ -110,8 +110,7 @@ cat >>Makefile <<'!NO!SUBS!'
 SHELL		=	/bin/sh
 
 # List of installed man pages (except for wnemail.1 - handled differently)
-MAN_LIST	=	$(MAN)/answer$(MANEXT)		\
-			$(MAN)/checkalias$(MANEXT)	\
+MAN_LIST	=	$(MAN)/checkalias$(MANEXT)	\
 			$(MAN)/elm$(MANEXT)		\
 			$(MAN)/elmalias$(MANEXT)	\
 			$(MAN)/fastmail$(MANEXT)	\
@@ -125,8 +124,7 @@ MAN_LIST	=	$(MAN)/answer$(MANEXT)		\
 			$(MAN)/readmsg$(MANEXT)
 
 # List of installed catman pages (except for wnemail.1 - handled differently)
-CATMAN_LIST	=	$(CATMAN)/answer$(CATMANEXT)$(SUFFIX)	\
-			$(CATMAN)/checkalias$(CATMANEXT)$(SUFFIX)\
+CATMAN_LIST	=	$(CATMAN)/checkalias$(CATMANEXT)$(SUFFIX)\
 			$(CATMAN)/elm$(CATMANEXT)$(SUFFIX)	\
 			$(CATMAN)/elmalias$(CATMANEXT)$(SUFFIX)\
 			$(CATMAN)/fastmail$(CATMANEXT)$(SUFFIX)	\
@@ -140,8 +138,7 @@ CATMAN_LIST	=	$(CATMAN)/answer$(CATMANEXT)$(SUFFIX)	\
 			$(CATMAN)/readmsg$(CATMANEXT)$(SUFFIX)
 
 # List of formatted pages for catman
-FORMATTED_PAGES_LIST =	catman/answer$(CATMANEXT)$(SUFFIX)	\
-			catman/checkalias$(CATMANEXT)$(SUFFIX)	\
+FORMATTED_PAGES_LIST =	catman/checkalias$(CATMANEXT)$(SUFFIX)	\
 			catman/elm$(CATMANEXT)$(SUFFIX)		\
 			catman/elmalias$(CATMANEXT)$(SUFFIX)	\
 			catman/fastmail$(CATMANEXT)$(SUFFIX)	\
@@ -156,8 +153,7 @@ FORMATTED_PAGES_LIST =	catman/answer$(CATMANEXT)$(SUFFIX)	\
 
 # List of remotely installed man pages (except for wnemail.1 - handled
 # differently)
-REMOTE_MAN_LIST	=	$(REMOTE)$(MAN)/answer$(MANEXT)		\
-			$(REMOTE)$(MAN)/checkalias$(MANEXT)	\
+REMOTE_MAN_LIST	=	$(REMOTE)$(MAN)/checkalias$(MANEXT)	\
 			$(REMOTE)$(MAN)/elm$(MANEXT)		\
 			$(REMOTE)$(MAN)/elmalias$(MANEXT)	\
 			$(REMOTE)$(MAN)/fastmail$(MANEXT)	\
@@ -283,7 +279,6 @@ INST_LINK = $(I_DELETE) ; $(LN) $? $@
 
 #	Dependencies and rules for installing man pages and lib files
 
-$(MAN)/answer$(MANEXT):		answer.1		; $(INST_444)
 $(MAN)/checkalias$(MANEXT):	chkalias.1		; $(INST_444)
 $(MAN)/elm$(MANEXT):		elm.1			; $(INST_444)
 $(MAN)/elmalias$(MANEXT):	elmalias.1		; $(INST_444)
@@ -318,7 +313,6 @@ $(LIB)/mime-types:		mime-types
 #	Dependencies and rules for installing catman
 
 CES = $(CATMANEXT)$(SUFFIX)
-$(CATMAN)/answer$(CES):		catman/answer$(CES)	; $(INST_644)
 $(CATMAN)/checkalias$(CES):	catman/checkalias$(CES)	; $(INST_644)
 $(CATMAN)/elm$(CES):		catman/elm$(CES)	; $(INST_644)
 $(CATMAN)/elmalias$(CES):	catman/elmalias$(CES)	; $(INST_644)
@@ -340,10 +334,6 @@ DO_ROFF = $(MANROFF) $(MANROFF_OPTS) -man $? \
 		> catman/`basename $@ $(SUFFIX)`
 DO_PACK = if $(TEST) "X$(PACKED)" != "Xy" ; then : ; else \
 		$(RM) $@ ; $(PACKER) catman/`basename $@ $(SUFFIX)` ; fi
-
-catman/answer$(CATMANEXT)$(SUFFIX):		answer.1
-	$(DO_ROFF)
-	@ $(DO_PACK)
 
 catman/checkalias$(CATMANEXT)$(SUFFIX):		chkalias.1
 	$(DO_ROFF)
