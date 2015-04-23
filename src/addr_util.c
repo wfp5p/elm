@@ -50,7 +50,7 @@
 #include "s_elm.h"
 
 
-int translate_return(char *addr, char *ret_addr)
+void translate_return(char *addr, char *ret_addr)
 {
 	/** Return ret_addr to be the same as addr, but with the login
             of the person sending the message replaced by '%s' for
@@ -317,7 +317,7 @@ int build_address(char *to, char *full_to)
 	return( expanded_information > 0 ? 1 : 0 );
 }
 
-int forwarded(char *buffer, struct header_rec *entry)
+void forwarded(char *buffer, struct header_rec *entry)
 {
 	/** Change 'from' and date fields to reflect the ORIGINATOR of
 	    the message by iteratively parsing the >From fields...

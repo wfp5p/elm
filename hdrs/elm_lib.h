@@ -323,9 +323,9 @@ char *trim_trailing_spaces P_((char *));
 int valid_name P_((const char *));
 
 /* src/addr_util.c */
-int translate_return(char *addr, char *ret_addr);
+void translate_return(char *addr, char *ret_addr);
 int build_address(char *to, char *full_to);
-int forwarded(char *buffer, struct header_rec *entry);
+void forwarded(char *buffer, struct header_rec *entry);
 int fix_arpa_address(char *address);
 
 /* src/aliaslib.c */
