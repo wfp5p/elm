@@ -86,13 +86,16 @@ int get_is_system(void)
 	return is_system;
 }
 
+/* return 1 on failure, 0 on success */
 int open_alias_files(int are_in_aliases)
 {
 	if(open_system_aliases() || open_user_aliases()) {
 	    dprint(5, (debugfile,
 		      "Reading alias data files...\n"));
 	    get_aliases(are_in_aliases);
+	    return 0;
 	}
+	return 1;
 }
 
 static int open_system_aliases(void)
