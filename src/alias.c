@@ -61,7 +61,7 @@
 
 #define resync_aliases(newaliases)	delete_aliases(newaliases,TRUE)
 
-static int get_aliases(int are_in_aliases);
+static void get_aliases(int are_in_aliases);
 static void get_realnames(char *aliasname, char *firstname, char *lastname,
 			  char *comment, char *buffer);
 void install_aliases(void);
@@ -1184,7 +1184,7 @@ static int alias_help(void)
 	return(redraw);
 }
 
-static int get_aliases(int are_in_aliases)
+static void get_aliases(int are_in_aliases)
 {
 /*
  *	Get all the system and user alias info
