@@ -355,13 +355,13 @@ int delete_aliases(int newaliases, int prompt);
 int exit_alias(void);
 
 /* src/a_screen.c */
-int alias_screen(int modified);
-int alias_title(int modified);
-int show_alias_menu(void);
+void alias_screen(int modified);
+void alias_title(int modified);
+void show_alias_menu(void);
 char *alias_type(int type);
 int on_page(int message);
-int build_alias_line(char *buffer, struct alias_rec *entry,
-		     int message_number, int highlight);
+void build_alias_line(char *buffer, struct alias_rec *entry,
+		      int message_number, int highlight);
 
 
 /* src/a_sendmsg.c */

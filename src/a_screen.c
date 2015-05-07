@@ -32,7 +32,7 @@
 #include "elm_globals.h"
 #include "s_aliases.h"
 
-int alias_screen(int modified)
+void alias_screen(int modified)
 {
 	/* Stolen from showscreen() */
 
@@ -50,7 +50,7 @@ int alias_screen(int modified)
 
 }
 
-int alias_title(int modified)
+void alias_title(int modified)
 {
 	/** display a new title line, due to re-sync'ing the aliases **/
 	/* Stolen from update_title() */
@@ -82,7 +82,7 @@ int alias_title(int modified)
 	CenterLine(1, buffer);
 }
 
-int show_alias_menu(void)
+void show_alias_menu(void)
 {
 	/** write alias menu... **/
 	/* Moved from alias.c */
@@ -108,8 +108,8 @@ int show_alias_menu(void)
 
 }
 
-int build_alias_line(char *buffer, struct alias_rec *entry,
-		     int message_number, int highlight)
+void build_alias_line(char *buffer, struct alias_rec *entry,
+		      int message_number, int highlight)
 {
 	/** Build in buffer the alias header ... entry is the current
 	    message entry, 'highlight' is either TRUE or FALSE,
