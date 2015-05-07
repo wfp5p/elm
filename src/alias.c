@@ -87,6 +87,7 @@ int get_is_system(void)
 }
 
 /* return 1 on failure, 0 on success */
+/* FIXME nothing actually pay attention to these return values */
 int open_alias_files(int are_in_aliases)
 {
 	if(open_system_aliases() || open_user_aliases()) {
@@ -735,7 +736,7 @@ void alias(void)
  *	main menu routines, but I will "borrow" from them. RLH
  */
 
-	main_state();		/* Save globals for return to main menu */
+	alias_main_state();		/* Save globals for return to main menu */
 
 	open_alias_files(FALSE);	/* First, read the alias files. RLH */
 
@@ -760,9 +761,9 @@ void alias(void)
 
 #ifdef ALLOW_SUBSHELL
 	    case '!' : WriteChar('!');
-	      main_state(); /** reload index screen vars **/
+	      alias_main_state(); /** reload index screen vars **/
 	      redraw += subshell();
-	      main_state(); /** reload alias screen vars **/
+	      alias_main_state(); /** reload alias screen vars **/
 	      break;
 #endif /* ALLOW_SUBSHELL */
 
@@ -865,7 +866,7 @@ void alias(void)
 	                newaliases = 0;
 	              }
 		      clear_error();
-		      main_state();		/* Done with aliases. */
+		      alias_main_state();		/* Done with aliases. */
 		      return;
 
 	    case RETURN:
@@ -905,7 +906,7 @@ void alias(void)
 					"Return to main menu..."));
 	              exit_alias();
 		      clear_error();
-		      main_state();		/* Done with aliases. */
+		      alias_main_state();		/* Done with aliases. */
 		      return;
 
 	    case 'f':
@@ -1295,7 +1296,7 @@ static int get_one_alias(DBZ *db, int current)
 }
 
 
-int main_state(void)
+void alias_main_state(void)
 {
 /*	Save the globals that are shared for both menus
  *	so that we can return to the main menu without

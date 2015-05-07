@@ -40,9 +40,9 @@ int a_sendmsg(void)
 	dprint(4, (debugfile, "%d aliases tagged for mailing (a_sndmsg)\n",
 	        num_tagged));
 
-	main_state();
+	alias_main_state();
 	rc = send_message(given_to, (char *)NULL, (char *)NULL, SM_ORIGINAL);
-	main_state();
+	alias_main_state();
 
 /*
  *	Since we got this far, it must be okay to clear the tags.

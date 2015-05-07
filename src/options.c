@@ -662,9 +662,9 @@ static int change_alias_sort(int *var, int x, int y)
 			"Resorting aliases..."));
 	  if (sleepmsg > 0)
 		sleep((sleepmsg + 1) / 2);
-	  main_state();
+	  alias_main_state();
 	  sort_aliases(num_aliases, FALSE, FALSE);
-	  main_state();
+	  alias_main_state();
 	}
 	ClearLine(LINES-2);		/* clear alias_sort_one_liner()! */
 	*var=alias_sortby;

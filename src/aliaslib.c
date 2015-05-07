@@ -54,7 +54,7 @@ char *get_alias_address(char *name, int mailing, int *too_longp)
 	int bufsize, are_in_aliases = TRUE;
 
 	if (!inalias) {
-	    main_state();
+	    alias_main_state();
 	    are_in_aliases = FALSE;
 	}
 /*
@@ -83,7 +83,7 @@ char *get_alias_address(char *name, int mailing, int *too_longp)
 	}
 
 	if (! are_in_aliases)
-	    main_state();
+	    alias_main_state();
 
 	return(bufptr);
 }
