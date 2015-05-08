@@ -91,8 +91,8 @@ struct utimbuf {
 # endif /* UTIMBUF */
 #endif /* BSD */
 
-static int unblock_signals(void);
-static int block_signals(void);
+static void unblock_signals(void);
+static void block_signals(void);
 
 int leave_mbox(int resyncing, int quitting, int prompt)
 {
@@ -812,7 +812,7 @@ int leave_mbox(int resyncing, int quitting, int prompt)
  * particular, a SIGHUP (from logging out under /bin/sh), can
  * corrupt a spool mailbox during an elm autosync.
  */
-static int block_signals(void)
+static void block_signals(void)
 {
 	dprint(1,(debugfile, "block_signals\n"));
 #ifdef HASSIGPROCMASK
@@ -861,7 +861,7 @@ static int block_signals(void)
  * Inverse of the previous function.  Restore keyboard generated
  * signals.
  */
-static int unblock_signals(void)
+static void unblock_signals(void)
 {
 	dprint(1,(debugfile, "unblock_signals\n"));
 #ifdef HASSIGPROCMASK
