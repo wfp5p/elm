@@ -89,11 +89,11 @@ int columns = 0;	/* columns on the screen */
 
 char infile[SLEN];	/* current file name */
 
-static int from_forwarded(char *buffer, char *who);
-static int usage(char *prog);
+static void from_forwarded(char *buffer, char *who);
+static void usage(char *prog);
 static char *whos_mail(char *filename);
-static int print_help(void);
-static int read_headers(int user_mailbox, int *total_msgs, int *selected);
+static void print_help(void);
+static void read_headers(int user_mailbox, int *total_msgs, int *selected);
 static char *explain(int selection, int how_to_say);
 
 
@@ -330,7 +330,7 @@ int main(int argc, char *argv[])
 	  exit(EXIT_NO_MAIL);
 }
 
-static int read_headers(int user_mailbox, int *total_msgs, int *selected)
+static void read_headers(int user_mailbox, int *total_msgs, int *selected)
 {
 	/** Read the headers, output as found.  User-Mailbox is to guarantee
 	    that we get a reasonably sensible message from the '-v' option
@@ -641,7 +641,7 @@ static int read_headers(int user_mailbox, int *total_msgs, int *selected)
 }
 
 
-static int from_forwarded(char *buffer, char *who)
+static void from_forwarded(char *buffer, char *who)
 {
 	/** change 'from' and date fields to reflect the ORIGINATOR of
 	    the message by iteratively parsing the >From fields... **/
@@ -698,14 +698,14 @@ static char *whos_mail(char *filename)
 	return whos_who;
 }
 
-static int usage(char *prog)
+static void usage(char *prog)
 {
      printf(catgets(elm_msg_cat,FromSet,FromUsage,
 	"Usage: %s [-l] [-n] [-v] [-t] [-s {new|old|read}] [filename | username] ...\n"),
 	    prog);
 }
 
-static int print_help(void)
+static void print_help(void)
 {
 
      printf(catgets(elm_msg_cat,FromSet,FromHelpTitle,

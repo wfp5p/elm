@@ -171,16 +171,16 @@ static char	*no_subj,	/* Pointer to No subject text	*/
 		*from_text;	/* pointer to from text		*/
 
 
-static int newmail_forwarded(char *buffer, char *who);
+static void newmail_forwarded(char *buffer, char *who);
 static long newmail_bytes(char *name);
 static void newmail_expand_filename(char *name, char *store_space);
-static int usage(char *name);
-static int add_folder(char *name);
+static void usage(char *name);
+static void add_folder(char *name);
 static int read_headers(struct folder_struct *cur_folder);
 static void add_default_folder(void);
 static void pad_prefixes(void);
-static int show_header(struct header_rec *hdr,
-		       struct folder_struct *cur_folder);
+static void show_header(struct header_rec *hdr,
+			struct folder_struct *cur_folder);
 
 int main(int argc, char *argv[])
 {
@@ -481,7 +481,7 @@ static int read_headers(struct folder_struct *cur_folder)
 	return(count);
 }
 
-static int add_folder(char *name)
+static void add_folder(char *name)
 {
 	/* add the specified folder to the list of folders...ignore any
 	   problems we may having finding it (user could be monitoring
@@ -595,7 +595,7 @@ static void add_default_folder(void)
 	  fclose(fd);
 }
 
-static int newmail_forwarded(char *buffer, char *who)
+static void newmail_forwarded(char *buffer, char *who)
 {
 	/** change 'from' and date fields to reflect the ORIGINATOR of
 	    the message by iteratively parsing the >From fields...
@@ -623,7 +623,7 @@ static int newmail_forwarded(char *buffer, char *who)
 	strncpy(who, buff, SLEN);
 }
 
-static int show_header(struct header_rec *hdr, struct folder_struct *cur_folder)
+static void show_header(struct header_rec *hdr, struct folder_struct *cur_folder)
 {
 	char from_line[SLEN];
 	char prefix[SLEN];
@@ -701,7 +701,7 @@ static long newmail_bytes(char *name)
 	return(ok ? buffer.st_size : 0);
 }
 
-static int usage(char *name)
+static void usage(char *name)
 {
 	/* print a nice friendly usage message */
 
