@@ -48,11 +48,11 @@
 extern char version_buff[];
 
 static int fix_header_page(void);
-static int build_header_line(char *buffer, struct header_rec *entry,
-			     int message_number, int highlight, char *from,
-			     int really_to);
+static void build_header_line(char *buffer, struct header_rec *entry,
+			      int message_number, int highlight, char *from,
+			      int really_to);
 
-int showscreen(void)
+void showscreen(void)
 {
 
 	ClearScreen();
@@ -68,7 +68,7 @@ int showscreen(void)
 	show_last_error();
 }
 
-int update_title(void)
+void update_title(void)
 {
 	/** display a new title line, probably due to new mail arriving **/
 
@@ -108,7 +108,7 @@ int update_title(void)
 	CenterLine(1, buffer);
 }
 
-int show_menu(void)
+void show_menu(void)
 {
 	/** write main system menu... **/
 
@@ -348,7 +348,7 @@ void show_current(void)
 	last_current = curr;
 }
 
-static int build_header_line(char *buffer, struct header_rec *entry,
+static void build_header_line(char *buffer, struct header_rec *entry,
 			     int message_number, int highlight, char *from,
 			     int really_to)
 {

@@ -499,9 +499,9 @@ void save_options(void);
 int show_headers(void);
 void show_current(void);
 char *show_status(int status);
-int showscreen(void);
-int update_title(void);
-int show_menu(void);
+void showscreen(void);
+void update_title(void);
+void show_menu(void);
 
 /* src/showmsg.c */
 int show_msg(int number);
