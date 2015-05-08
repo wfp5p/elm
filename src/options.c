@@ -90,10 +90,10 @@
 
 #define CONFIG_OPTIONS "^_defsopv_am_un"
 
-static int one_liner(char *string);
+static void one_liner(char *string);
 static int info_enter(char *name, int ypos, int xpos);
-static int alias_sort_one_liner(int sorting_by);
-static int sort_one_liner(int sorting_by);
+static void alias_sort_one_liner(int sorting_by);
+static void sort_one_liner(int sorting_by);
 
 static char *on_name = NULL;
 static char *off_name = NULL;
@@ -442,7 +442,7 @@ int options(void)
 }
 
 
-static int on_or_off(int *var, int x, int y)
+static void on_or_off(int *var, int x, int y)
 {
 	/** 'var' field at x.y toggles between on and off... **/
 
@@ -465,7 +465,7 @@ static int on_or_off(int *var, int x, int y)
 	MoveCursor(x,y+4); 	CleartoEOLN();	/* remove help prompt */
 }
 
-static int switch_user_level(int *ulevel, int x, int y)
+static void switch_user_level(int *ulevel, int x, int y)
 {
 	/** step through possible user levels... **/
 
@@ -537,7 +537,7 @@ static int change_sort(int *var, int x, int y)
 	return(*var-sortby);
 }
 
-static int one_liner(char *string)
+static void one_liner(char *string)
 {
 	/** A single-line description of the selected item... **/
 
@@ -546,7 +546,7 @@ static int one_liner(char *string)
 		CenterLine(LINES-4, string);
 }
 
-static int sort_one_liner(int sorting_by)
+static void sort_one_liner(int sorting_by)
 {
 	/** A one line summary of the particular sorting scheme... **/
 
@@ -672,7 +672,7 @@ static int change_alias_sort(int *var, int x, int y)
 	return(*var-alias_sortby);
 }
 
-static int alias_sort_one_liner(int sorting_by)
+static void alias_sort_one_liner(int sorting_by)
 {
 	/** A one line summary of the particular sorting scheme... **/
 
