@@ -399,8 +399,8 @@ int show_new_status(int msg);
 int edit_aliases_text(void);
 
 /* src/elm.c */
-int motion(int ch);
-int check_range(void);
+void motion(int ch);
+void check_range(void);
 
 /* src/fileio.c */
 int save_file_stats(const char *fname);

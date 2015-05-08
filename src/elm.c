@@ -62,7 +62,7 @@
 #  include <sys/timeb.h>
 #endif
 
-static int debug_page(void);
+static void debug_page(void);
 static void debug_message(void);
 
 int main(int argc, char *argv[])
@@ -538,7 +538,7 @@ int main(int argc, char *argv[])
 	} /* the BIG while loop! */
 }
 
-static int debug_page(void)
+static void debug_page(void)
 {
     int i, first, last, line;
     char buffer[SLEN];
@@ -657,7 +657,7 @@ static void debug_message(void)
 	WriteChar('|');
 }
 
-int check_range(void)
+void check_range(void)
 {
 	int count, curr, i;
 
@@ -707,7 +707,7 @@ static char *no_aliases = NULL;
 
 #define ifmain(a,b)     (inalias ? (b) : (a))
 
-int motion(int ch)
+void motion(int ch)
 {
 	/* Consolidated the standard menu navigation and delete/tag
 	 * commands to a function.                                   */
