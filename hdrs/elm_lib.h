@@ -383,9 +383,9 @@ int display_line(char *input_line, int input_size);
 /* src/chstatus.c */
 int ch_status(void);
 
-/* src/data.c */
+/* src/date.c */
 char *elm_date_str(char *buf, struct header_rec *entry);
-int make_menu_date(struct header_rec *entry);
+void make_menu_date(struct header_rec *entry);
 
 /* src/delete.c */
 int show_msg_tag(int msg);

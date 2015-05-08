@@ -53,7 +53,7 @@ extern time_t	  time();
 static int  days_in_month[] = { 31,    28,    31,    30,    31,     30,
 		  31,     31,    30,   31,    30,     31,  -1};
 
-static int days_ahead(int days, char *buffer)
+static void days_ahead(int days, char *buffer)
 {
 	/** return in buffer the date (Day, Mon Day, Year) of the date
 	    'days' days after today.
@@ -118,7 +118,7 @@ char *elm_date_str(char *buf, struct header_rec *entry)
 	return buf;
 }
 
-int make_menu_date(struct header_rec *entry)
+void make_menu_date(struct header_rec *entry)
 {
 	time_t secs = (entry->time_sent + entry->tz_offset);
 	strftime(entry->time_menu, SLEN, "%b %d", gmtime(&secs));
