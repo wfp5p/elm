@@ -388,12 +388,12 @@ char *elm_date_str(char *buf, struct header_rec *entry);
 void make_menu_date(struct header_rec *entry);
 
 /* src/delete.c */
-int show_msg_tag(int msg);
-int show_msg_status(int msg);
-int delete_msg(int real_del, int update_screen);
-int undelete_msg(int update_screen);
+void show_msg_tag(int msg);
+void show_msg_status(int msg);
+void delete_msg(int real_del, int update_screen);
+void undelete_msg(int update_screen);
 int tag_message(int update_screen);
-int show_new_status(int msg);
+void show_new_status(int msg);
 
 /* src/edit.c */
 int edit_aliases_text(void);

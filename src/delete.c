@@ -35,7 +35,7 @@
 
 #define msg_line(msg) (((compute_visible((msg)+1)-1) % headers_per_page) + 4)
 
-int delete_msg(int real_del, int update_screen)
+void delete_msg(int real_del, int update_screen)
 {
 	/** Delete current message.  If real-del is false, then we're
 	    actually requested to toggle the state of the current
@@ -76,7 +76,7 @@ int delete_msg(int real_del, int update_screen)
 	    show_msg_status(curr_folder.curr_mssg-1);
 }
 
-int undelete_msg(int update_screen)
+void undelete_msg(int update_screen)
 {
     /** clear the deleted message flag **/
 
@@ -92,7 +92,7 @@ int undelete_msg(int update_screen)
 
 }
 
-int show_msg_status(int msg)
+void show_msg_status(int msg)
 {
     /** show the status of the current message only.  **/
 
@@ -149,7 +149,7 @@ int tag_message(int update_screen)
     return istagged;
 }
 
-int show_msg_tag(int msg)
+void show_msg_tag(int msg)
 {
     /** show the tag status of the current message only.  **/
 
@@ -172,7 +172,7 @@ int show_msg_tag(int msg)
     }
 }
 
-int show_new_status(int msg)
+void show_new_status(int msg)
 {
     /** If the specified message is on this screen, show
 	the new status (could be marked for deletion now,
