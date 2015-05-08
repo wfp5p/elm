@@ -352,7 +352,7 @@ char *parse_arguments(int argc, char *argv[], char *to_whom);
 
 /* src/a_quit.c */
 int delete_aliases(int newaliases, int prompt);
-int exit_alias(void);
+void exit_alias(void);
 
 /* src/a_screen.c */
 void alias_screen(int modified);

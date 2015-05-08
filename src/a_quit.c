@@ -149,7 +149,7 @@ int delete_aliases(int newaliases, int prompt)
 	return(1);
 }
 
-int exit_alias(void)
+void exit_alias(void)
 {
 
 	int i;
