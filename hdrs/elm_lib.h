@@ -469,7 +469,7 @@ int resync(void);
 int change_file(char *p1);
 
 /* src/read_rc.c */
-int read_rc_file(void);
+void read_rc_file(void);
 int expand_env(char *dst, const char *src, int len);
 int matchInList(char *list[], int count, const char *buffer, int ignoreCase);
 

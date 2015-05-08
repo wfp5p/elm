@@ -79,15 +79,15 @@
 static int lineno = 0;
 static int errors = 0;
 
-static int default_weedlist(void);
+static void default_weedlist(void);
 static void do_rc(FILE *file, int lcl);
-static int expandFilenamesInMagicList(void);
-static int dump_rc_results(void);
+static void expandFilenamesInMagicList(void);
+static void dump_rc_results(void);
 static int breakup(char *buffer, char *word1, char *word2);
 static int do_set(FILE *file, char *word1, char *word2, int lcl);
-static int alternatives(char *string);
-static int weedout(char *string);
-static int add_incoming(char *string);
+static void alternatives(char *string);
+static void weedout(char *string);
+static void add_incoming(char *string);
 static int is_it_on(const char *word);
 
 
@@ -102,7 +102,7 @@ static void do_expand_env(char *descr, char *dest, char *src, unsigned destlen)
     }
 }
 
-int read_rc_file(void)
+void read_rc_file(void)
 {
 	/** this routine does all the actual work of reading in the
 	    .rc file... **/
@@ -538,7 +538,7 @@ static int do_set(FILE *file, char *word1, char *word2, int lcl)
 	return(save_info[x].flags & DT_MASK);
 }
 
-static int weedout(char *string)
+static void weedout(char *string)
 {
 	/** This routine is called with a list of headers to weed out.   **/
 
@@ -582,7 +582,7 @@ static int weedout(char *string)
 	}
 }
 
-static int alternatives(char *string)
+static void alternatives(char *string)
 {
 	/** This routine is called with a list of alternative addresses
 	    that you may receive mail from (forwarded) **/
@@ -621,7 +621,7 @@ static int alternatives(char *string)
 	}
 }
 
-static int add_incoming(char *string)
+static void add_incoming(char *string)
 {
   /** This routine is called with a list of folder names **/
 
@@ -653,7 +653,7 @@ static int add_incoming(char *string)
 
 }
 
-static int expandFilenamesInMagicList(void)
+static void expandFilenamesInMagicList(void)
 {
 
    int i;
@@ -668,7 +668,7 @@ static int expandFilenamesInMagicList(void)
    }
 }
 
-static int default_weedlist(void)
+static void default_weedlist(void)
 {
 	/** Install the default headers to weed out!  Many gracious
 	    thanks to John Lebovitz for this dynamic method of
@@ -986,7 +986,7 @@ int expand_env(char *dst, const char *src, int len)
 
 
 #define on_off(s)	(s == 1? "ON " : "OFF")
-static int dump_rc_results(void)
+static void dump_rc_results(void)
 {
 	int i, j, len = 0;
 	char buf[SLEN];
