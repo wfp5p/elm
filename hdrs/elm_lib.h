@@ -335,7 +335,7 @@ char *get_alias_address(char *name, int mailing, int *too_longp);
 int get_is_system(void);
 int open_alias_files(int are_in_aliases);
 int find_alias(char *word, int alias_type);
-int sort_aliases(int entries, int visible, int are_in_aliases);
+void sort_aliases(int entries, int visible, int are_in_aliases);
 void alias_main_state(void);
 void alias(void);
 void install_aliases(void);

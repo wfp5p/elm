@@ -36,7 +36,7 @@
 static void alias_old_current(long iindex);
 static int compare_aliases(const void *a, const void *b);
 
-int sort_aliases(int entries, int visible, int are_in_aliases)
+void sort_aliases(int entries, int visible, int are_in_aliases)
 {
 	/** Sort the header_table definitions... If 'visible', then
 	    put the status lines etc **/
