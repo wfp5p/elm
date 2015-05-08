@@ -522,8 +522,8 @@ char *strip_commas(char *string);
 char *get_token(char *source, char *keys, int depth);
 char *format_long(const char *inbuff, int init_len);
 void split_word(char *buffer, char *first, char *rest);
-int copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
-int quote_args(char *out_string, char *in_string);
+void copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
+void quote_args(char *out_string, char *in_string);
 
 /* src/string2.c */
 int remove_possible_trailing_spaces(char *string);

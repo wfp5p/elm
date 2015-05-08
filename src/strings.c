@@ -36,7 +36,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-int copy_sans_escape(unsigned char *dest, unsigned char *source, int len)
+void copy_sans_escape(unsigned char *dest, unsigned char *source, int len)
 {
 	/** this performs the same function that strncpy() does, but
 	    also will translate any escape character to a printable
@@ -249,7 +249,7 @@ char *get_token(char *source, char *keys, int depth)
 }
 
 
-int quote_args(char *out_string, char *in_string)
+void quote_args(char *out_string, char *in_string)
 {
 	/** Copy from "in_string" to "out_string", collapsing multiple
 	    white space and quoting each word.  Returns a pointer to
