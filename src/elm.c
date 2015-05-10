@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 		  fflush (curr_folder.fp);
 
 	  if ((num = bytes(curr_folder.filename)) != curr_folder.size) {
-	    dprint(2, (debugfile, "Just received %d bytes more mail (elm)\n",
+	    dprint(2, (debugfile, "Just received %ld bytes more mail (elm)\n",
 		    num - curr_folder.size));
 	    show_error(catgets(elm_msg_cat, ElmSet, ElmNewMailHangOn,
 	      "New mail has arrived! Hang on..."));

@@ -185,7 +185,7 @@ static void alias_old_current(long iindex)
 
 	int i;
 
-	dprint(4, (debugfile, "alias-old-current(%d)\n", iindex));
+	dprint(4, (debugfile, "alias-old-current(%ld)\n", iindex));
 
 	for (i = 0; i < num_aliases; i++)
 	  if (aliases[i]->length == iindex) {

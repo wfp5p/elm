@@ -589,8 +589,8 @@ static int add_to_alias_text(char *aliasname, char *firstname, char *lastname,
 	if (fprintf(file,"%s = %s = %s\n", aliasname, buffer, address) == EOF) {
 	    err = errno;
 	    dprint(2, (debugfile,
-		       "Failure attempting to write alias to file within %s",
-		       fname, "add_to_alias_text"));
+		       "Failure attempting to write alias to file within %s add_to_alias_text",
+		       fname));
 	    dprint(2, (debugfile, "** %s **\n", strerror(err)));
 	    show_error(catgets(elm_msg_cat, AliasesSet, AliasesCouldntWrite,
 		   "Couldn't write alias to file %s!"), fname);
@@ -1208,8 +1208,8 @@ static void get_aliases(int are_in_aliases)
  */
 	if (user_hash != NULL) {
 	    dprint(6, (debugfile,
-		      "About to read user data file = %d.\n",
-	              user_hash->dbz_basef));
+		      "About to read user data file = %s.\n",
+	              user_hash->dbz_basefname));
 	    fseek(user_hash->dbz_basef, 0L, 0);
 	    while (get_one_alias(user_hash, curr_alias)) {
 		dprint(8, (debugfile, "%d\t%s\t%s\n", curr_alias+1,
@@ -1226,8 +1226,8 @@ static void get_aliases(int are_in_aliases)
  */
 	if (system_hash != NULL) {
 	    dprint(6, (debugfile,
-		      "About to read system data file = %d.\n",
-	              system_hash->dbz_basef));
+		      "About to read system data file = %s.\n",
+	              system_hash->dbz_basefname));
 	    fseek(system_hash->dbz_basef, 0L, 0);
 	    while (get_one_alias(system_hash, curr_alias)) {
 	    /*

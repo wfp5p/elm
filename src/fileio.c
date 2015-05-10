@@ -118,7 +118,7 @@ void copy_message(FILE *dest_file, int msgnum, int cm_options)
 
     if (fseek(curr_folder.fp, msg_header->offset, 0) == -1) {
        dprint(1, (debugfile,
-		"ERROR: Attempt to seek %d bytes into file failed (%s)",
+		"ERROR: Attempt to seek %ld bytes into file failed (%s)",
 		msg_header->offset, "copy_message"));
        show_error(catgets(elm_msg_cat, ElmSet, ElmSeekFailed,
 	     "ELM [seek] failed trying to read %d bytes into file."),

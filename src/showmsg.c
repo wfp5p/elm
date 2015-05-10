@@ -162,7 +162,7 @@ int show_msg(int number)
 	if (fseek(curr_folder.fp, current_header->offset, 0) == -1) {
 	  err = errno;
 	  dprint(1, (debugfile,
-		  "Error: seek %d bytes into file, errno %s (show_message)\n",
+		  "Error: seek %ld bytes into file, errno %s (show_message)\n",
 		  current_header->offset, strerror(err)));
 	  show_error(catgets(elm_msg_cat, ElmSet, ElmSeekFailedFile,
 		  "ELM [seek] couldn't read %d bytes into file (%s)."),
@@ -426,7 +426,7 @@ int show_msg(int number)
 	    if ((buf_len = mail_gets(buffer, VERY_LONG_STRING, curr_folder.fp)) == 0) {
 
 	      dprint(1, (debugfile,
-		"Premature end of file! Lines left = %d msg = %s (show_msg)\n",
+		"Premature end of file! Lines left = %d msg = %d (show_msg)\n",
 		lines, number));
 
 	      show_error(catgets(elm_msg_cat, ElmSet, ElmPrematureEndOfFile,

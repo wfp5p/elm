@@ -719,7 +719,7 @@ datum dbz_fetch(DBZ *db, datum key)
 	keysize = key.dsize;
 	if (keysize >= DBZMAXKEY) {
 		keysize = DBZMAXKEY;
-		dprint(5, (debugfile, "keysize is %d - truncated to %d\n", key.dsize, DBZMAXKEY));
+		dprint(5, (debugfile, "keysize is %ld - truncated to %d\n", key.dsize, DBZMAXKEY));
 	}
 
 	if (db->dbz_pagf == NULL) {
@@ -739,7 +739,7 @@ datum dbz_fetch(DBZ *db, datum key)
 	}
 	start(db, &key, FRESH);
 	while ((key_ptr = search(db)) != NOTFOUND) {
-		dprint(5, (debugfile, "got 0x%lx\n", key_ptr));
+		dprint(5, (debugfile, "got 0x%x\n", key_ptr));
 
 		/* fetch the key */
 		if (fseek(db->dbz_basef, key_ptr, SEEK_SET) != 0) {
@@ -753,7 +753,7 @@ datum dbz_fetch(DBZ *db, datum key)
 
 		/* try it */
 		buffer[keysize] = '\0';		/* terminated for DEBUG */
-		dprint(5, (debugfile, "dbz_fetch: buffer (%s) looking for (%s) size = %d\n", 
+		dprint(5, (debugfile, "dbz_fetch: buffer (%s) looking for (%s) size = %ld\n",
 						buffer, key.dptr, keysize));
 		if (bcmp(key.dptr, buffer, cmplen) == 0 &&
 				(*sepp == db->dbz_conf.fieldsep || *sepp == '\0')) {
@@ -817,11 +817,11 @@ int dbz_store(DBZ *db, datum key, datum data)
 		return(-1);
 	}
 	if (data.dsize != SOF) {
-		dprint(5, (debugfile, "dbz_store: value size wrong (%d)\n", data.dsize));
+		dprint(5, (debugfile, "dbz_store: value size wrong (%ld)\n", data.dsize));
 		return(-1);
 	}
 	if (key.dsize >= DBZMAXKEY) {
-		dprint(5, (debugfile, "dbz_store: key size too big (%d)\n", key.dsize));
+		dprint(5, (debugfile, "dbz_store: key size too big (%ld)\n", key.dsize));
 		return(-1);
 	}
 
@@ -829,7 +829,7 @@ int dbz_store(DBZ *db, datum key, datum data)
 	(void) bcopy(data.dptr, (char *)&value, SOF);
 	dprint(5, (debugfile, "dbz_store: (%s, %ld)\n", key.dptr, (long)value));
 	if (!okayvalue(db, value)) {
-		dprint(5, (debugfile, "dbz_store: reserved bit or overflow in 0x%lx\n", value));
+		dprint(5, (debugfile, "dbz_store: reserved bit or overflow in 0x%x\n", value));
 		return(-1);
 	}
 
@@ -840,7 +840,7 @@ int dbz_store(DBZ *db, datum key, datum data)
 
 	db->dbz_prevp = FRESH;
 	db->dbz_conf.used[0]++;
-	dprint(5, (debugfile, "dbz_store: used count %ld\n", db->dbz_conf.used[0]));
+	dprint(5, (debugfile, "dbz_store: used count %d\n", db->dbz_conf.used[0]));
 	db->dbz_written = 1;
 	return(set(db, value));
 }
@@ -883,7 +883,7 @@ static int getconf(FILE *df, FILE *pf,
 		cp->tagenb = TAGENB;
 		cp->tagmask = TAGMASK;
 		cp->tagshift = TAGSHIFT;
-		dprint(5, (debugfile, "getconf: defaults (%ld, (0x%lx/0x%lx<<%d))\n",
+		dprint(5, (debugfile, "getconf: defaults (%d, (0x%x/0x%x<<%d))\n",
 			cp->tsize, cp->tagenb, cp->tagmask, cp->tagshift));
 		return(0);
 	}
@@ -911,7 +911,7 @@ static int getconf(FILE *df, FILE *pf,
 		cp->bytemap[i] = getno(df, &err);
 	if (getc(df) != '\n')
 		err = -1;
-	dprint(5, (debugfile, "size %ld, sep %d, tags 0x%lx/0x%lx<<%d, ", cp->tsize,
+	dprint(5, (debugfile, "size %d, sep %d, tags 0x%x/0x%x<<%d, ", cp->tsize,
 			cp->fieldsep, cp->tagenb, cp->tagmask, cp->tagshift));
 	dprint(5, (debugfile, "bytemap (%d)", cp->valuesize));
 	for (i = 0; i < cp->valuesize; i++) {
@@ -924,7 +924,7 @@ static int getconf(FILE *df, FILE *pf,
 		cp->used[i] = getno(df, &err);
 	if (getc(df) != '\n')
 		err = -1;
-	dprint(5, (debugfile, "used %ld %ld %ld...\n", cp->used[0], cp->used[1], cp->used[2]));
+	dprint(5, (debugfile, "used %d %d %d...\n", cp->used[0], cp->used[1], cp->used[2]));
 
 	if (err < 0) {
 		dprint(5, (debugfile, "getconf error\n"));
@@ -1060,7 +1060,7 @@ static void start(DBZ *db, datum *kp, struct searcher *osp)
 	} else {
 		sp->hash = h;
 		sp->tag = MKTAG(h / db->dbz_conf.tsize);
-		dprint(5, (debugfile, "tag 0x%lx\n", sp->tag));
+		dprint(5, (debugfile, "tag 0x%x\n", sp->tag));
 		sp->place = h % db->dbz_conf.tsize;
 		sp->tabno = 0;
 		sp->run = (db->dbz_conf.olddbz) ? db->dbz_conf.tsize : MAXRUN;
@@ -1097,7 +1097,7 @@ static int32_t search(DBZ *db)
 			sp->place = place;
 		} else
 			sp->seen = 1;	/* now looking at current location */
-		dprint(5, (debugfile, "search @ %ld\n", place));
+		dprint(5, (debugfile, "search @ %d\n", place));
 
 		/* get the tagged value */
 		if (db->dbz_corepag != NULL && place < db->dbz_conf.tsize) {
@@ -1139,7 +1139,7 @@ static int32_t search(DBZ *db)
 
 		/* check the tag */
 		value = UNBIAS(value);
-		dprint(5, (debugfile, "got 0x%lx\n", value));
+		dprint(5, (debugfile, "got 0x%x\n", value));
 		if (!HASTAG(value)) {
 			dprint(5, (debugfile, "tagless\n"));
 			return(value);
@@ -1147,7 +1147,7 @@ static int32_t search(DBZ *db)
 			dprint(5, (debugfile, "match\n"));
 			return(NOTAG(value));
 		} else {
-			dprint(5, (debugfile, "mismatch 0x%lx\n", TAG(value)));
+			dprint(5, (debugfile, "mismatch 0x%x\n", TAG(value)));
 		}
 	}
 	/* NOTREACHED */
@@ -1187,7 +1187,7 @@ static int set(DBZ *db, int32_t value)
 #endif
 			value = v;
 	}
-	dprint(5, (debugfile, "tagged value is 0x%lx\n", value));
+	dprint(5, (debugfile, "tagged value is 0x%x\n", value));
 	value = BIAS(value);
 	value = MAPOUT(value);
 
