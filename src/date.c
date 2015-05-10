@@ -38,21 +38,6 @@
 #  include <sys/timeb.h>
 #endif
 
-#ifndef	_POSIX_SOURCE
-extern struct tm *localtime();
-extern struct tm *gmtime();
-extern time_t	  time();
-#endif
-
-#define MONTHS_IN_YEAR	11	/* 0-11 equals 12 months! */
-#define FEB		 1	/* 0 = January 		  */
-#define DAYS_IN_LEAP_FEB 29	/* leap year only 	  */
-
-#define leapyear(year)  (((year) % 4 == 0) && (((year) % 100 != 0) || ((year) % 400 == 0)) )
-
-static int  days_in_month[] = { 31,    28,    31,    30,    31,     30,
-		  31,     31,    30,   31,    30,     31,  -1};
-
 char *elm_date_str(char *buf, struct header_rec *entry)
 {
 	time_t secs = (entry->time_sent + entry->tz_offset);
