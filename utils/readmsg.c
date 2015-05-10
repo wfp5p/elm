@@ -618,8 +618,11 @@ void setup_weed_info(const char *sel_weed_str)
 	w->next = (struct weed_header_info *)
 	    safe_malloc(sizeof(struct weed_header_info));
 	w = w->next;
-	if (w->hdrskip = (*fld == '!'))
+
+	w->hdrskip = (*fld == '!');
+	if (w->hdrskip)
 	    ++fld;
+
 	w->hdrname = fld;
 	w->hdrlen = strlen(fld);
 	w->next = NULL;

@@ -327,7 +327,7 @@ static void do_rc(FILE *file, int lcl)
 	if (!file) return;
 	lineno=0;
 
-	while (x = mail_gets(buffer, SLEN, file)) {
+	while ((x = mail_gets(buffer, SLEN, file))) {
 	    lineno++;
 	    no_ret(buffer);	 	/* remove return */
 	    if (buffer[0] == '#'        /* comment       */

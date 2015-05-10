@@ -98,8 +98,12 @@ void save_options(void)
    strcpy(buf, ".old");
 
     if (elm_access(rcfname, ACCESS_EXISTS) != -1) {
-	if (rename(rcfname, buf) < 0)
+
+      /* FIXME shouldn't this do more than write a debug */
+        if (rename(rcfname, buf) < 0) {
 	    dprint(2, (debugfile, "Unable to rename %s to %s\n", rcfname, buf));
+	}
+
 	chown(buf, userid, groupid);
     }
 

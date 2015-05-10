@@ -203,8 +203,9 @@ static void read_in_file(FILE *fd, const char *filename, int show_user_filename)
 	  return;
 	}
 
-	while (n = mail_gets(buffer, SLEN, myfd)) {
-	  if(buffer[n-1] == '\n') lines++;
+	while ((n = mail_gets(buffer, SLEN, myfd))) {
+	  if (buffer[n-1] == '\n')
+		  lines++;
 	  nchars += n;
   	  fwrite(buffer, 1, n, fd);
 	}
@@ -321,7 +322,7 @@ static void read_in_messages(FILE *fd, char *buffer)
 
 	dprint(5, (debugfile, "** readmsg call: \"%s\" **\n", local_buffer));
 
-	while (n = mail_gets(local_buffer, SLEN, myfd)) {
+	while ((n = mail_gets(local_buffer, SLEN, myfd))) {
 	  nchars += n;
 	  if (local_buffer[n-1] == '\n') lines++;
 	  if (add_prefix)

@@ -493,10 +493,8 @@ int get_return_name(const char *address, char *name, int trans_to_lowercase)
 	     *	Is it an embedded DecNet address?
 	     */
 
-	    while (c = strstr (&single_address[first], "::")) {
+	    while ((c = strstr(&single_address[first], "::")))
 		first = c - single_address + 2;
-	    }
-
 
 	    /*
 	     *	At this point the algorithm is to keep shifting our

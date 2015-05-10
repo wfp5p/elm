@@ -69,11 +69,12 @@ void delete_msg(int real_del, int update_screen)
 	    setit(hdr->status, DELETED);
     }
 
-    if (update_screen)
+    if (update_screen) {
 	if (inalias)
 	    show_msg_status(curr_alias-1);
 	else
 	    show_msg_status(curr_folder.curr_mssg-1);
+    }
 }
 
 void undelete_msg(int update_screen)

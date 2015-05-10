@@ -129,7 +129,7 @@ int format_form(char *filename)
 
 	/** and let's have some fun transfering the stuff across... **/
 
-	while (len_buf = mail_gets(buffer, SLEN, form)) {
+	while ((len_buf = mail_gets(buffer, SLEN, form))) {
 	  fwrite(buffer, 1, len_buf, newform);
 	  form_count += occurances_of(':', buffer);
 	}
@@ -193,7 +193,7 @@ int mail_filled_in_form(char *address, char *subject)
 	/* now we can fly along and get to the message body... */
 
 	max_lines = curr_folder.headers[curr_folder.curr_mssg-1]->lines;
-	while (len_buf = mail_gets(buffer, SLEN, curr_folder.fp)) {
+	while ((len_buf = mail_gets(buffer, SLEN, curr_folder.fp))) {
 	  if (len_buf == 1)	/* <return> only */
 	    break;
 	  else if (lines >= max_lines) {
@@ -219,7 +219,7 @@ int mail_filled_in_form(char *address, char *subject)
 	/* now we can skip to the FORM-IMAGE section by reading through a
 	   line with a triple asterisk... */
 
-	while (len_buf = mail_gets(buffer, SLEN, curr_folder.fp)) {
+	while ((len_buf = mail_gets(buffer, SLEN, curr_folder.fp))) {
 	  if (strcmp(buffer, "***\n") == 0)
 	    break;	/* we GOT it!  It's a miracle! */
 
@@ -262,7 +262,7 @@ int mail_filled_in_form(char *address, char *subject)
 	Raw(OFF);
 	ClearScreen();
 
-	while (len_buf = mail_gets(buffer, SLEN, curr_folder.fp)) {
+	while ((len_buf = mail_gets(buffer, SLEN, curr_folder.fp))) {
 	  dprint(9, (debugfile, "- read %s", buffer));
 	  if (strcmp(buffer, "***\n") == 0) /* end of form! */
 	    break;

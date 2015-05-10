@@ -529,8 +529,11 @@ static int show_line(char *buffer, int buf_len, int builtin)
 	}
 	errno = 0;
 	fprintf(pipe_wr_fp, "%s", buffer);
-	if (errno != 0)
-	  dprint(1, (debugfile, "\terror %s hit!\n", strerror(errno)));
+
+	if (errno != 0) {
+		dprint(1, (debugfile, "\terror %s hit!\n", strerror(errno)));
+	}
+
 	return(0);
 }
 

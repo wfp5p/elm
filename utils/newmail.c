@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
 	 }
 	}
 
-	if (interval_time < 10)
+	if (interval_time < 10) {
 	  if (interval_time == 1)
 	    fprintf(stderr, catgets(elm_msg_cat, NewmailSet, NewmailShort,
 "Warning: interval set to 1 second.  I hope you know what you're doing!\n"));
@@ -247,6 +247,8 @@ int main(int argc, char *argv[])
 	    fprintf(stderr, catgets(elm_msg_cat, NewmailSet, NewmailShortPlur,
 "Warning: interval set to %d seconds.  I hope you know what you're doing!\n"),
 		interval_time);
+
+	}
 
 	/* now let's parse the foldernames, if any are given */
 
@@ -679,7 +681,7 @@ static long newmail_bytes(char *name)
 	int ok = 1;
 	struct stat buffer;
 
-	if (stat(name, &buffer) != 0)
+	if (stat(name, &buffer) != 0) {
 	  if (errno != 2) {
 	    fprintf(stderr, catgets(elm_msg_cat, NewmailSet, NewmailErrFstat,
 	      "Error %d attempting fstat on %s"), errno, name);
@@ -687,6 +689,7 @@ static long newmail_bytes(char *name)
 	  }
 	  else
 	    ok = 0;
+	}
 
 	/* retain the access times for later use */
 
