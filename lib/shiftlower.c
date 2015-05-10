@@ -52,7 +52,7 @@ char *shift_lower(const char *string)
 		return( (char *) buffer);
 	}
 	for (; *string; string++, bufptr++)
-	  *bufptr = lower[*string];
+		*bufptr = lower[(unsigned int) *string];
 
 	*bufptr = 0;
 
