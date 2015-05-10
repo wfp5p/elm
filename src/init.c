@@ -44,9 +44,6 @@
 
 #include <sys/stat.h>
 
-static void check_elm_dir(void);
-static void check_folder_dir(void);
-static int get_ynq(int);
 static void create_private_dir(const char *);
 
 
