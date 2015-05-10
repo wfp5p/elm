@@ -514,7 +514,7 @@ void put_border(void);
 void initialize_signals(void);
 
 /* src/sort.c */
-int sort_mailbox(int entries, int visible);
+void sort_mailbox(int entries, int visible);
 char *sort_name(int longname);
 
 /* src/strings.c */

@@ -61,7 +61,7 @@ static void find_old_current(int iindex)
 	return;		/* can't be found.  Leave it alone, then */
 }
 
-int sort_mailbox(int entries, int visible)
+void sort_mailbox(int entries, int visible)
 {
 	/** Sort the header_table definitions... If 'visible', then
 	    put the status lines etc **/
