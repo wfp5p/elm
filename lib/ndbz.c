@@ -983,14 +983,14 @@ static int putconf(FILE *f, struct dbzconfig *cp)
 		dprint(5, (debugfile, "fseek failure in putconf\n"));
 		ret = -1;
 	}
-	fprintf(f, "dbz %d %ld %d %ld %ld %d %d", dbzversion, cp->tsize,
+	fprintf(f, "dbz %d %d %d %d %d %d %d", dbzversion, cp->tsize,
 				cp->fieldsep, cp->tagenb,
 				cp->tagmask, cp->tagshift, cp->valuesize);
 	for (i = 0; i < cp->valuesize; i++)
 		fprintf(f, " %d", cp->bytemap[i]);
 	fprintf(f, "\n");
 	for (i = 0; i < NUSEDS; i++)
-		fprintf(f, "%ld%c", cp->used[i], (i < NUSEDS-1) ? ' ' : '\n');
+		fprintf(f, "%d%c", cp->used[i], (i < NUSEDS-1) ? ' ' : '\n');
 
 	(void) fflush(f);
 	if (ferror(f))
