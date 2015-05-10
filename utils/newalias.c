@@ -50,7 +50,6 @@ or  alias1, alias2, ... = groupname= member, member, member, ...
 
 #include <stdarg.h>
 
-static void na_error(char *err_message);
 void show_error(const char *s, ...);
 
 
@@ -108,13 +107,6 @@ int main(int argc, char *argv[])
 	}
 
 	/*NOTREACHED*/
-}
-
-static void na_error(char *err_message)
-{
-	fflush(stdout);
-	fprintf(stderr, "\n%s\n", err_message);
-	return;
 }
 
 /*
