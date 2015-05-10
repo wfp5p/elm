@@ -122,7 +122,7 @@ typedef struct dbz {
 	struct searcher *dbz_prevp;	/* &srch or FRESH */
 	int dbz_mybmap[SOF];		/* my byte order (see mybytemap()) */
 	int dbz_bytesame;		/* is database order same as mine? */
-	int dbz_debug;			/* controlled by dbzdebug() */
+	int dbz_debug;			/* NOT USED controlled by dbzdebug() */
 	int dbz_written;		/* has a store() been done? */
 	} DBZ;
 

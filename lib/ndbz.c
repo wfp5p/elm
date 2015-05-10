@@ -1337,17 +1337,3 @@ static long hash(char *name, int size)
 	return(sum);
 }
 
-/*
- - dbzdebug - control dbz debugging at run time
- */
-static int dbzdebug(int value)
-{
-#ifdef DBZDEBUG
-	int old = debug;
-
-	debug = value;
-	return(old);
-#else
-	return(-1);
-#endif
-}
