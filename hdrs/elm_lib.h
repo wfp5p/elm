@@ -506,7 +506,9 @@ int show_menu(void);
 /* src/showmsg.c */
 int show_msg(int number);
 int process_showmsg_cmd(int command);
-int put_border(void);
+
+/* src/showmsg_c.c */
+void put_border(void);
 
 /* src/signals.c */
 void initialize_signals(void);
