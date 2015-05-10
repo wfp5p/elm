@@ -48,13 +48,13 @@ char *shift_lower(const char *string)
 	}
 
 	if (string == NULL) {
-		buffer[0] = 0;
+		buffer[0] = '\0';
 		return( (char *) buffer);
 	}
 	for (; *string; string++, bufptr++)
 		*bufptr = lower[(unsigned int) *string];
 
-	*bufptr = 0;
+	*bufptr = '\0';
 
 	return( (char *) buffer);
 }
