@@ -330,12 +330,13 @@ int next_message(int iindex, int skipdel)
 	int remember_for_debug, stat;
 	int item_count;
 
-	if (iindex < 0) return(-1);	/* invalid argument value! */
+	if (iindex < 0)
+		return -1;	/* invalid argument value! */
 
 	remember_for_debug = iindex;
 	item_count = (inalias ? num_aliases : curr_folder.num_mssgs);
 
-	for(iindex++;iindex < item_count; iindex++) {
+	for (iindex++;iindex < item_count; iindex++) {
 	  stat = (inalias ?  aliases[iindex]->status : curr_folder.headers[iindex]->status);
 	  if (((stat & VISIBLE) || (!selected))
 	    && (!(stat & DELETED) || (!skipdel))) {
@@ -343,11 +344,11 @@ int next_message(int iindex, int skipdel)
 		  (skipdel ? " undeleted" : ""),
 		  (selected ? " visible" : ""),
 		  remember_for_debug+1, iindex+1));
-	      return(iindex);
+	      return iindex;
 	  }
 	}
 
-	return(-1);
+	return -1;
 }
 
 int prev_message(int iindex, int skipdel)
@@ -358,9 +359,11 @@ int prev_message(int iindex, int skipdel)
 	int item_count;
 
 	item_count = (inalias ? num_aliases : curr_folder.num_mssgs);
-	if (iindex >= item_count) return(-1);	/* invalid argument value! */
+	if (iindex >= item_count)
+		return -1;	/* invalid argument value! */
 
 	remember_for_debug = iindex;
+
 	for(iindex--; iindex >= 0; iindex--) {
 	  stat = (inalias ? aliases[iindex]->status : curr_folder.headers[iindex]->status);
 	  if (((stat & VISIBLE) || (!selected))
@@ -369,10 +372,10 @@ int prev_message(int iindex, int skipdel)
 		  (skipdel ? " undeleted" : ""),
 		  (selected ? " visible" : ""),
 		  remember_for_debug+1, iindex+1));
-	      return(iindex);
+	      return iindex;
 	  }
 	}
-	return(-1);
+	return -1;
 }
 
 int compute_visible(int message)
