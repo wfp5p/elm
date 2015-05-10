@@ -561,7 +561,7 @@ static void debug_page(void)
     line = 5;
     for (i = first ; i <= last ; ++i) {
 	sprintf(buffer,
-		    "%3d %-16.16s %-35.35s %4d %8d %8d",
+		    "%3d %-16.16s %-35.35s %4d %8ld %8ld",
 		    i+1,
 		    curr_folder.headers[i]->from,
 		    curr_folder.headers[i]->subject,

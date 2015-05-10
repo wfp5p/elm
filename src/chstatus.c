@@ -78,7 +78,7 @@ static void display_status(void)
 	    "-- ELM Status Editor --"));
 
     sprintf(buf, "%*s%s%*s%s", SCOL_CUR, "", scurrent,
-	    SCOL_ORG - (SCOL_CUR + strlen(scurrent)), "", soriginal);
+	    (int) (SCOL_ORG - (SCOL_CUR + strlen(scurrent))), "", soriginal);
     PutLine(SLINE_HDR, 0, buf);
 
     /*  not a catalog entry because it determines the command character */

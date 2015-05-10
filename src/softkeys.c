@@ -41,7 +41,7 @@
 
 static void define_key(int key, char *display, char *send)
 {
-	fprintf(stderr, "%c&f%dk%dd%dL%s%s", ESCAPE, key,
+	fprintf(stderr, "%c&f%dk%ldd%ldL%s%s", ESCAPE, key,
 		strlen(display), strlen(send), display, send);
 }
 

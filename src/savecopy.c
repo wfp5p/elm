@@ -293,7 +293,7 @@ int save_mssg(const char *fname_dest, const char *fname_mssg,
     /* go fixup the content length header */
     if (file_seek(fp_copy, clen_pos, SEEK_SET, fname_dest) < 0)
 	goto done;
-    fprintf(fp_copy, "%d", clen_enddata - clen_begdata);
+    fprintf(fp_copy, "%ld", clen_enddata - clen_begdata);
 
     /* copy complete */
     if (file_close(fp_copy, fname_dest) < 0)
