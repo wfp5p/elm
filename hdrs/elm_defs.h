@@ -102,11 +102,6 @@
 # define FALSE		0
 #endif
 
-#ifndef _SIZE_T  /* not the greatest, but should work until I make Configure figure it out */
-#define _SIZE_T
-typedef unsigned long size_t;
-#endif
-
 #define KLICK		32	/* increment for alias and mssg lists	    */
 
 #define TLEN		10	/* super short (tiny) strings		    */
