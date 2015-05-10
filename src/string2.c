@@ -44,7 +44,7 @@ int occurances_of(int ch, char *string)
 	return(count);
 }
 
-int remove_possible_trailing_spaces(char *string)
+void remove_possible_trailing_spaces(char *string)
 {
 	/** an incredibly simple routine that will read backwards through
 	    a string and remove all trailing whitespace.

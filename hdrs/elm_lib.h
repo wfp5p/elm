@@ -526,7 +526,7 @@ void copy_sans_escape(unsigned char *dest, unsigned char *source, int len);
 void quote_args(char *out_string, char *in_string);
 
 /* src/string2.c */
-int remove_possible_trailing_spaces(char *string);
+void remove_possible_trailing_spaces(char *string);
 int occurances_of(int ch, char *string);
 
 /* src/syscall.c */
