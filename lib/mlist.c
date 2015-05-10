@@ -236,7 +236,7 @@ int addrmatch(struct addrs *addr, struct addrs *pattern)
 	    while (addrsearch != NULL) {
 		s1 = pattern->str[i];
 		s2 = addrsearch;
-		while (*s1 && lower[*s1] == lower[*s2])
+		while (*s1 && lower[(unsigned int) *s1] == lower[(unsigned int) *s2])
 		    s1++, s2++;
 		if (*s1 == '\0' &&
 		      (*s2 == '\0' || *s2 == '@' || *s2 == '%' || *s2 == '!'))
