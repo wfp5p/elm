@@ -419,12 +419,8 @@ struct addr_rec {
 #endif
 
 
-#ifdef DEBUG
-#   define dprint(LVL, PRINTF_ARGS) \
-	if (debug < (LVL)) ; else (fprintf PRINTF_ARGS, fflush(debugfile))
-#else
-#   define dprint(n,x)
-#endif
+#define dprint(LVL, ...) \
+	if (debug < (LVL)) ; else (fprintf __VA_ARGS__, fflush(debugfile))
 
 
 /*
