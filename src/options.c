@@ -100,23 +100,23 @@ static char *on_name = NULL;
 static char *off_name = NULL;
 static int resort = 0;
 
-static void post_cal(int f)
+static void post_cal(int __attribute__((unused)) f)
 {
     (void) expand_env(calendar_file, raw_calendar_file, sizeof(calendar_file));
 }
 
-static void post_editor(int f)
+static void post_editor(int __attribute__((unused)) f)
 {
     (void) expand_env(editor, raw_editor, sizeof(editor));
 }
 
-static void post_pager(int f)
+static void post_pager(int __attribute__((unused)) f)
 {
     (void) expand_env(pager, raw_pager, sizeof(pager));
     clear_pages = (streq(pager, "builtin+") || streq(pager, "internal+"));
 }
 
-static void post_folder(int f)
+static void post_folder(int __attribute__((unused)) f)
 {
     (void) expand_env(folders, raw_folders, sizeof(folders));
 }
@@ -127,17 +127,17 @@ static void post_sort(int f)
 	resort++;
 }
 
-static void post_sent(int f)
+static void post_sent(int __attribute__((unused)) f)
 {
     (void) expand_env(sent_mail, raw_sentmail, sizeof(sent_mail));
 }
 
-static void post_print(int f)
+static void post_print(int __attribute__((unused)) f)
 {
     (void) expand_env(printout, raw_printout, sizeof(printout));
 }
 
-static void post_menu(int f)
+static void post_menu(int __attribute__((unused)) f)
 {
     headers_per_page = LINES - (mini_menu ? 13 : 8);
 }
