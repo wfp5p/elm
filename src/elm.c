@@ -85,13 +85,13 @@ int main(int argc, char *argv[])
 	    CenterLine(1, address);
 	  }
 
-	  if (to_whom && *to_whom)
+	  if (*to_whom)
 	      dprint(3, (debugfile, "Mail-only: mailing to\n-> \"%s\"\n",
 		      format_long(to_whom, 3)));
 	  else
 	      dprint(3, (debugfile, "Mail-only; no recipient specified\n"));
 
-	  (void) send_message(to_whom, (char *)NULL, batch_subject,
+	  send_message(to_whom, (char *)NULL, batch_subject,
 		SM_ORIGINAL);
 	  leave(LEAVE_NORMAL);
 	}
