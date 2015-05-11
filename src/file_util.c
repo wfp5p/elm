@@ -51,8 +51,6 @@ long bytes(const char *name)
 	show_error(catgets(elm_msg_cat, ElmSet, ElmErrorFstat,
 	    "Cannot fstat \"%s\"! [%s]"), name, strerror(errno));
 	leave(LEAVE_EMERGENCY);
-
-	return 0L; /* this should never be reached */
 }
 
 long fsize(FILE *fd)
