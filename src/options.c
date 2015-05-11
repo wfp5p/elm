@@ -90,6 +90,7 @@
 
 #define CONFIG_OPTIONS "^_defsopv_am_un"
 
+static void post_cal(int f) __attribute__((unused));
 static void one_liner(char *string);
 static int info_enter(char *name, int ypos, int xpos);
 static void alias_sort_one_liner(int sorting_by);
