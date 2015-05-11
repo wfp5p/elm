@@ -149,8 +149,8 @@ int rfc822_toklen(const char *str)
 		}
 		if (*str == ')')
 			++str;
-		else
-			; /* ERROR - unterminated paren */
+		/* else ERROR - unterminated paren */
+
 		return (str-str0);
 
 	case CH_QSTR:
@@ -159,8 +159,8 @@ int rfc822_toklen(const char *str)
 			str += charlen(str);
 		if (*str == '"')
 			++str;
-		else
-			; /* ERROR - unterminated quote */
+		/* else ERROR - unterminated quote */
+
 		return (str-str0);
 
 	case CH_QCHAR:
@@ -174,8 +174,7 @@ int rfc822_toklen(const char *str)
 			str += charlen(str);
 		if (*str == ']')
 			++str;
-		else
-			; /* ERROR - unterminated domain literal */
+		/* else ERROR - unterminated domain literal */
 		return (str-str0);
 
 	case CH_EOS:
