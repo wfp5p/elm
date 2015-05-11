@@ -321,7 +321,7 @@ void toqp(FILE *infile, FILE *outfile)
 
 void fromqp(FILE *infile, FILE *outfile, char **boundaries, int *boundaryct)
 {
-    unsigned int c1, c2;
+    int c1, c2;
     int sawnewline = 1, neednewline = 0;
     /* The neednewline hack is necessary because the newline leading into 
       a multipart boundary is part of the boundary, not the data */
