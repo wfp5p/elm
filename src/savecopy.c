@@ -233,7 +233,8 @@ int save_copy(const char *fname_dest, const char *fname_mssg,
 int save_mssg(const char *fname_dest, const char *fname_mssg,
 	      const SEND_HEADER *shdr, int form)
 {
-    int rc, err, len;
+    int rc, err;
+    size_t len;
     char *fmode;
     long clen_pos, clen_begdata, clen_enddata;
     char buf[SLEN];

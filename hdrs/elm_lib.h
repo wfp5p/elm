@@ -147,7 +147,7 @@ int len_next_part P_((const char *));
 
 /* mail_gets.c */
 
-int mail_gets P_((char *, int, FILE *));
+size_t mail_gets(char *buffer, size_t size, FILE *mailfile);
 
 
 /* mailfile.c */

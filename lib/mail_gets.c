@@ -28,9 +28,10 @@
 
 #include "elm_defs.h"
 
-int mail_gets(char *buffer, int size, FILE *mailfile)
+size_t mail_gets(char *buffer, size_t size, FILE *mailfile)
 {
-	int line_bytes = 0, ch;
+	size_t line_bytes = 0;
+	int ch;
 	char *c = buffer;
 
 	size--; /* allow room for zero terminator on end, just in case */
