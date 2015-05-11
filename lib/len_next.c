@@ -40,7 +40,7 @@
 
 #include "elm_defs.h"
 
-int len_next_part(const char *str)
+size_t len_next_part(const char *str)
 {
 	const char *s;
 

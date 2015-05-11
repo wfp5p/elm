@@ -142,7 +142,7 @@ int load_folder_state_file P_((struct folder_state *));
 
 /* len_next.c */
 
-int len_next_part P_((const char *));
+size_t len_next_part P_((const char *));
 
 
 /* mail_gets.c */

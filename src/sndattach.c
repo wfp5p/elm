@@ -880,7 +880,7 @@ static int at_do_change_disposition(SEND_BODYPART *att, int *do_redraw_p)
 {
     const char *cp;
     char orig_fname[SLEN], new_fname[SLEN], *s;
-    int len;
+    size_t len;
 
     *do_redraw_p |= (ATDRAW_INSTR|ATDRAW_PROMPT|ATDRAW_CURR_DISP);
     at_disp_instr(
@@ -913,10 +913,10 @@ static int at_do_change_disposition(SEND_BODYPART *att, int *do_redraw_p)
 	    len = len_next_part(cp) - 2;
 	    if (len >= sizeof(orig_fname))
 		len = sizeof(orig_fname)-1;
-	    (void) strfcpy(orig_fname, cp+1, len+1);
+	    strfcpy(orig_fname, cp+1, len+1);
 	} else {
 	    /* filename is unquoted */
-	    (void) strfcpy(orig_fname, cp, sizeof(orig_fname));
+	    strfcpy(orig_fname, cp, sizeof(orig_fname));
 	    for (s = orig_fname ; *s != '\0' && !isspace(*s) ; ++s)
 		;
 	    *s = '\0';
