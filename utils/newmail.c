@@ -143,7 +143,7 @@ static struct folder_struct {
 	  char		prefix[NLEN];
 	  long		filesize;
 	  int		access_error;
-       } folders[MAX_FOLDERS] = {0};
+} folders[MAX_FOLDERS] = {{{0}}};
 
 static int  interval_time,		/* how long to sleep between checks */
      in_window = 0,		/* are we running as 'wnewmail'?    */
