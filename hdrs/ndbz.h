@@ -126,10 +126,8 @@ typedef struct dbz {
 	int dbz_written;		/* has a store() been done? */
 	} DBZ;
 
-/* FOO - should these declarations be ANSIfied? */
-
 /* standard dbz functions */
-extern DBZ *dbz_open(char *name, int mode, int flags);
+extern DBZ *dbz_open(char *name, int mode);
 extern datum dbz_fetch(DBZ *db, datum key);
 extern int dbz_store(DBZ *db, datum key, datum data);
 extern int dbz_close(DBZ *db);

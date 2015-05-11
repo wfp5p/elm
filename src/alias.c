@@ -124,7 +124,7 @@ static int open_system_aliases(void)
 	    if (system_hash != NULL)
 	        dbz_close(system_hash);
 
-	    if ((system_hash = dbz_open(system_data_file, O_RDONLY, 0)) == NULL)
+	    if ((system_hash = dbz_open(system_data_file, O_RDONLY)) == NULL)
 	        return(0);
 
 	    /* Remember hash file times. */
@@ -183,7 +183,7 @@ static int open_user_aliases(void)
 	    if (user_hash != NULL)
 	        dbz_close(user_hash);
 
-	    if ((user_hash = dbz_open(fname, O_RDONLY, 0)) == NULL)
+	    if ((user_hash = dbz_open(fname, O_RDONLY)) == NULL)
 	        return(0);
 
 	    /* Remember hash file times. */

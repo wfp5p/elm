@@ -311,7 +311,7 @@ DBZ *dbz_fresh(char *name, long size, int fs, int32_t tagmask)
 		(void) fclose(f);
 
 	/* and punt to dbz_open for the hard work */
-	return(dbz_open(name, O_RDWR, 0));
+	return dbz_open(name, O_RDWR);
 }
 
 /*
@@ -449,7 +449,7 @@ DBZ *dbz_again(char *name, char *oldname)
 		(void) fclose(f);
 
 	/* and let dbz_open do the work */
-	return(dbz_open(name, O_RDWR, 0));
+	return dbz_open(name, O_RDWR);
 }
 
 /*
@@ -458,7 +458,8 @@ DBZ *dbz_again(char *name, char *oldname)
  * We try to leave errno set plausibly, to the extent that underlying
  * functions permit this, since many people consult it if dbz_open() fails.
  */
-DBZ *dbz_open(char *name, int mode, int flags)
+/* This used to take a flags param, but it didn't use it */
+DBZ *dbz_open(char *name, int mode)
 {
 	unsigned int i;
 	size_t s;

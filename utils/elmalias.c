@@ -273,7 +273,7 @@ Alias:\t\t%a\n\
 
 static DBZ *open_system_aliases(void)
 {
-    return dbz_open(system_data_file, O_RDONLY, 0);
+	return dbz_open(system_data_file, O_RDONLY);
 }
 
 
@@ -281,7 +281,7 @@ static DBZ *open_user_aliases(void)
 {
     char fname[SLEN];
     sprintf(fname, "%s/%s", user_home, ALIAS_DATA);
-    return dbz_open(fname, O_RDONLY, 0);
+    return dbz_open(fname, O_RDONLY);
 }
 
 
