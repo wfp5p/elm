@@ -38,8 +38,6 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-void leave P_((int));
-
 
 /*
  * The initialize() procedure sets the "xalloc_fail_handler" vector to

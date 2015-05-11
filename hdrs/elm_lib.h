@@ -539,7 +539,7 @@ int print_msg(int pause_on_scroll);
 
 /* src/utils.c */
 int get_page(int msg_pointer);
-void leave(int mode);
+void leave(int mode) __attribute__((noreturn));
 void malloc_failed_exit(const char *proc, unsigned int len);
 char *nameof(const char *filename);
 
