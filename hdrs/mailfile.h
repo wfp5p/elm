@@ -33,7 +33,7 @@ struct mailFile {
 	FILE *copy;	/* output copy of input, if any */
 	char *buffer;	/* current buffer */
 	char *offset;	/* current position within buffer (relative) */
-	int remain;	/* number of bytes remaining in buffer */
+	size_t remain;	/* number of bytes remaining in buffer */
 	int savechar;	/* character in the buffer null-ed to term. string */
         int charsaved;  /* "savechar" is saved */
 	void (*error)();/* function to call on copy write error */
