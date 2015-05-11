@@ -81,8 +81,7 @@ static int at_do_change_type P_((SEND_BODYPART *, int *));
 static int at_do_change_encoding P_((SEND_BODYPART *, int *));
 static int at_do_change_descrip P_((SEND_BODYPART *, int *));
 static int at_do_change_disposition P_((SEND_BODYPART *, int *));
-
-static char *strtruncate P_((char *, int));
+static char *strtruncate(char *str, size_t len);
 
 /* manipulation of the internal attachment list */
 static void atlist_initialize P_((void));
@@ -943,7 +942,7 @@ static int at_do_change_disposition(SEND_BODYPART *att, int *do_redraw_p)
 }
 
 
-static char *strtruncate(char *str, int len)
+static char *strtruncate(char *str, size_t len)
 {
     int i;
 
@@ -965,7 +964,7 @@ static char *strtruncate(char *str, int len)
     }
 
     /* nope - just chop off the tail */
-    (void) strcpy(str+len-4, " ...");
+    strcpy(str+len-4, " ...");
     return str;
 }
 
