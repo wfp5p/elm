@@ -36,7 +36,7 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-void copy_sans_escape(unsigned char *dest, unsigned char *source, int len)
+void copy_sans_escape(char *dest, char *source, int len)
 {
 	/** this performs the same function that strncpy() does, but
 	    also will translate any escape character to a printable
