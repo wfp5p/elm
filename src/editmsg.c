@@ -58,7 +58,7 @@ static int builtin_interrupt_count;	/* consecutive interrupt count	*/
 
 static void tilde_help P_((void));
 static void read_in_file P_((FILE *, const char *, int));
-static void print_message_so_far P_((FILE *, const SEND_HEADER *, const char *));
+static void print_message_so_far(FILE *edit_fd, const SEND_HEADER *shdr);
 static void read_in_messages P_((FILE *, char *));
 static void get_with_expansion P_((const char *, char *, char *, const char *));
 static SIGHAND_TYPE builtin_interrupt_handler P_((int));
@@ -237,7 +237,7 @@ static void read_in_file(FILE *fd, const char *filename, int show_user_filename)
 	return;
 }
 
-static void print_message_so_far(FILE *edit_fd, const SEND_HEADER *shdr, const char *filename)
+static void print_message_so_far(FILE *edit_fd, const SEND_HEADER *shdr)
 {
 	/** This prints out the message typed in so far.  We accomplish
 	    this in a cheap manner - close the file, reopen it for reading,
@@ -667,7 +667,7 @@ more_wrap:
 	    break;
 
 	case 'p': /* print out message so far */
-	    print_message_so_far(fp, shdr, filename);
+	    print_message_so_far(fp, shdr);
 	    break;
 
 	default:
