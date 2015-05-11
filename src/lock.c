@@ -167,8 +167,7 @@ int elm_lock(int direction)
 	     either the lock file is removed...indicating new mail
 	  or
 	     we have iterated MAX_ATTEMPTS times, in which case we
-	     either fail or remove it and make our own (determined
-	     by if REMOVE_AT_LAST is defined in header file
+	     fail
 
 	  If direction == LOCK_INCOMING then DON'T remove the lock file
 	  on the way out!  (It'd mess up whatever created it!).
@@ -255,44 +254,6 @@ int elm_lock(int direction)
       if(!(create_fd >= 0 || errno == ENOENT)) {
 
 	/* we weren't able to create the lock file */
-
-#ifdef REMOVE_AT_LAST
-
-	/** time to waste the lock file!  Must be there in error! **/
-	dprint(2, (debugfile,
-	   "Warning: I'm giving up waiting - removing lock file(lock)\n"));
-	if (direction == LOCK_INCOMING)
-	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveTimedOutRemoving,
-		"Timed out - removing current lock file..."));
-	else
-	  show_error(catgets(elm_msg_cat, ElmSet, ElmLeaveThrowingAwayLock,
-		"Throwing away the current lock file!"));
-
-	if (unlink(lockfile) != 0) {
-	  ShutdownTerm();
-	  show_error(stderr, catgets(elm_msg_cat, ElmSet,
-	        ElmLeaveCouldntRemoveCurLock,
-	    "Couldn't remove current lock file %s! [%s]",
-	    lockfile, strerror(errno)));
-	  if (mailgroupid != groupid)
-	    setegid(groupid);
-	  leave(direction == LOCK_INCOMING ? LEAVE_ERROR : LEAVE_EMERGENCY);
-	}
-
-	/* we've removed the bad lock, let's try to assert lock once more */
-	if((create_fd=open(lockfile,O_WRONLY | O_CREAT | O_EXCL,0444)) == -1){
-
-	  /* still can't lock it - just give up */
-	  ShutdownTerm();
-	  show_error(stderr, catgets(elm_msg_cat, ElmSet,
-	    ElmLeaveErrorCreatingLock,
-	    "Couldn't create lock file %s! [%s]",
-	    lockfile, strerror(errno)));
-	  if (mailgroupid != groupid)
-	    setegid(groupid);
-	  leave(LEAVE_ERROR);
-	}
-#else
 	/* Okay...we die and leave, not updating the mailfile mbox or
 	   any of those! */
 
@@ -313,7 +274,6 @@ int elm_lock(int direction)
 	    setegid(groupid);
 	  leave(LEAVE_ERROR);
 	}
-#endif
       }
 
       /* If we're here we successfully created the lock file */
