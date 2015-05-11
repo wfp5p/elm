@@ -231,9 +231,14 @@ void bodypart_guess_content P_((SEND_BODYPART *, int));
 
 SEND_MULTIPART *multipart_new P_((SEND_BODYPART *, long));
 void multipart_destroy P_((SEND_MULTIPART *));
-SEND_MULTIPART *multipart_insertpart P_((SEND_MULTIPART *, SEND_MULTIPART *, SEND_BODYPART *, long));
-SEND_MULTIPART *multipart_appendpart P_((SEND_MULTIPART *, SEND_MULTIPART *, SEND_BODYPART *, long));
-SEND_BODYPART *multipart_deletepart P_((SEND_MULTIPART *, SEND_MULTIPART *));
+SEND_MULTIPART *multipart_insertpart(SEND_MULTIPART __attribute__((unused)) *multi,
+				     SEND_MULTIPART *mp_curr,
+				     SEND_BODYPART *part, long id);
+SEND_MULTIPART *multipart_appendpart(SEND_MULTIPART __attribute__((unused)) *multi,
+				     SEND_MULTIPART *mp_curr,
+				     SEND_BODYPART *part, long id);
+SEND_BODYPART *multipart_deletepart(SEND_MULTIPART __attribute__((unused)) *multi,
+				    SEND_MULTIPART *mp_curr);
 SEND_MULTIPART *multipart_next P_((SEND_MULTIPART *, SEND_MULTIPART *));
 SEND_MULTIPART *multipart_find P_((SEND_MULTIPART *, long));
 

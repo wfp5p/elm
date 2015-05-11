@@ -418,8 +418,7 @@ void multipart_destroy(SEND_MULTIPART *multi)
 }
 
 
-/*ARGSUSED*/
-SEND_MULTIPART *multipart_insertpart(SEND_MULTIPART *multi,
+SEND_MULTIPART *multipart_insertpart(SEND_MULTIPART __attribute__((unused)) *multi,
 				     SEND_MULTIPART *mp_curr,
 				     SEND_BODYPART *part, long id)
 {
@@ -440,8 +439,7 @@ SEND_MULTIPART *multipart_insertpart(SEND_MULTIPART *multi,
 }
 
 
-/*ARGSUSED*/
-SEND_MULTIPART *multipart_appendpart(SEND_MULTIPART *multi,
+SEND_MULTIPART *multipart_appendpart(SEND_MULTIPART __attribute__((unused)) *multi,
 				     SEND_MULTIPART *mp_curr,
 				     SEND_BODYPART *part, long id)
 {
@@ -462,8 +460,7 @@ SEND_MULTIPART *multipart_appendpart(SEND_MULTIPART *multi,
 }
 
 
-/*ARGSUSED*/
-SEND_BODYPART *multipart_deletepart(SEND_MULTIPART *multi,
+SEND_BODYPART *multipart_deletepart(SEND_MULTIPART __attribute__((unused)) *multi,
 				    SEND_MULTIPART *mp_curr)
 {
     SEND_BODYPART *part;
