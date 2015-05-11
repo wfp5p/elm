@@ -174,6 +174,8 @@ int file_copy(FILE *fpsrc, FILE *fpdest, const char *srcname, const char *destna
 	    return -1;
 	}
     }
+
+    /* FIXME fread() can't return < 0 */
     if (i < 0) {
 	err = errno;
 	dprint(1, (debugfile, "file_copy(%s,%s) fread FAILED [%s]\n",
