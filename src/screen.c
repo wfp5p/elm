@@ -499,7 +499,7 @@ static void build_header_line(char *buffer, struct header_rec *entry,
 
 	/* truncate 'from' on left if needed.
 	 * sprintf will truncate on right afterward if needed. */
-	if ((strlen(from) > who_width) && dot && bang && (dot < bang)) {
+	if ((strlen(from) > (size_t) who_width) && dot && bang && (dot < bang)) {
 	  from += (strlen(from) - who_width);
 	}
 
