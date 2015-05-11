@@ -45,10 +45,6 @@
  * the (struct folder_state) record.
  */
 
-#if !defined(ANSI_C) && !defined(atol)  /* avoid problems with systems that declare atol as a macro */
-extern long atol();
-#endif
-
 static char *elm_fgetline(char *buf, unsigned buflen, FILE *fp)
 {
     if (fgets(buf, buflen, fp) == NULL)
