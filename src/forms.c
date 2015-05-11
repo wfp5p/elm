@@ -55,7 +55,8 @@
 #include "s_elm.h"
 
 static void prompt_for_entries(char *buffer, FILE *fd, int entries);
-static void prompt_for_sized_entry(char *prompt, char *buffer, int field_size);
+static void prompt_for_sized_entry(char *prompt, char *buffer,
+				   size_t field_size);
 
 int check_form_file(const char *filename)
 {
@@ -364,14 +365,15 @@ static void prompt_for_entries(char *buffer, FILE *fd, int entries)
 	fprintf(fd, "\n");
 }
 
-static void prompt_for_sized_entry(char *prompt, char *buffer, int field_size)
+static void prompt_for_sized_entry(char *prompt, char *buffer,
+				   size_t field_size)
 {
 	/* This routine prompts for an entry of the size specified. */
 
-	int i;
+	size_t i;
 
 	dprint(7, (debugfile, "prompt-for-sized-entry \"%s\" %d chars\n",
-		prompt, field_size));
+		   prompt, (int) field_size));
 
 	printf("%s: ", prompt);
 
