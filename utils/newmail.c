@@ -139,11 +139,11 @@ struct utimbuf {
 #define metachar(c)	(c == '+' || c == '=' || c == '%')
 
 static struct folder_struct {
-	  char		foldername[SLEN];
-	  char		prefix[NLEN];
-	  long		filesize;
-	  int		access_error;
-} folders[MAX_FOLDERS] = {{{0}}};
+	long		filesize;
+	int		access_error;
+	char		foldername[SLEN];
+	char		prefix[NLEN];
+} folders[MAX_FOLDERS] = {{0}};
 
 static int  interval_time,		/* how long to sleep between checks */
      in_window = 0,		/* are we running as 'wnewmail'?    */
