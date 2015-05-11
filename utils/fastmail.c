@@ -58,7 +58,7 @@
 #include "patchlevel.h"
 #include "s_fastmail.h"
 
-int addword P_((char *, int, const char *, int *));
+static int addword(char *dest, int destsiz, const char *word, size_t *len_p);
 
 extern char *get_arpa_date();
 
@@ -75,7 +75,8 @@ int main(int argc, char *argv[])
     char *from_addr, *from_fullname;
     char *replyto, *comments, *inreplyto, *references;
     char *p;
-    int  add_from, i, len;
+    int  add_from, i;
+    size_t len;
 
     initialize_common();
     progname = basename(argv[0]);
@@ -290,7 +291,7 @@ usage_error:
     exit(i);
 }
 
-int addword(char *dest, int destsiz, const char *word, int *len_p)
+static int addword(char *dest, int destsiz, const char *word, size_t *len_p)
 {
     int dlen, wlen;
 

@@ -353,7 +353,8 @@ static void print_alias(char *fmt, struct alias_rec *ar)
     int in_conditional;		/* TRUE if in middle of cond expression	*/
     int print_enab;		/* TRUE if OK to print output		*/
     char *s;
-    int n, c;
+    size_t n;
+    int c;
 
     print_enab = TRUE;
     in_conditional = FALSE;
