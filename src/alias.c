@@ -65,7 +65,7 @@ static void get_realnames(char *aliasname, char *firstname, char *lastname,
 void install_aliases(void);
 static int get_one_alias(DBZ *db, int current);
 static int open_system_aliases(void);
-static int superceed_system(int this_alias, char *buffer);
+static int superceed_system(int this_alias);
 static int get_aliasname(char *aliasname, char *buffer, int *duplicate);
 static int open_user_aliases(void);
 static int ask_accept(char *aliasname, char *firstname, char *lastname,
@@ -314,7 +314,7 @@ static int add_alias(int replace, int to_replace)
 	     *  If they don't want to superceed the SYSTEM alias then
 	     *  just return.
 	     */
-	        if( ! superceed_system(to_replace, buffer)) {
+	        if( ! superceed_system(to_replace)) {
 	            ClearLine(LINES-2);
 	            return(0);
 	        }
@@ -1466,14 +1466,14 @@ static int get_aliasname(char *aliasname, char *buffer, int *duplicate)
 	      "Attempt to add a duplicate system alias [%s] in get_aliasname\n",
 	      aliases[loc]->address));
 
-	    if( ! superceed_system(loc, buffer))
+	    if( ! superceed_system(loc))
 	        return(-1);
 	}
 	return(0);
 
 }
 
-static int superceed_system(int this_alias, char *buffer)
+static int superceed_system(int this_alias)
 {
 
 	PutLine(LINES-2, 0, catgets(elm_msg_cat,
