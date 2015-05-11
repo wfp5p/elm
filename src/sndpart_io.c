@@ -349,7 +349,8 @@ static int do_emit_mssgtext_body(FILE *fp_dest, SEND_BODYPART *part)
 {
     char buf[SLEN];
     SEND_MULTIPART *mp;
-    int rc, part_active, len;
+    int rc, part_active;
+    size_t len;
     long fpos;
     FILE *fp_src;
 
