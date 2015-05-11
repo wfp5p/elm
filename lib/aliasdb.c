@@ -53,7 +53,7 @@ static int32_t bytemap(int32_t ino, int *map1, int *map2)
 	};
 	union oc in;
 	union oc out;
-	int i;
+	unsigned int i;
 
 	in.o = ino;
 	for (i = 0; i < SOF; i++)

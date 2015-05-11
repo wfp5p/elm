@@ -460,7 +460,7 @@ DBZ *dbz_again(char *name, char *oldname)
  */
 DBZ *dbz_open(char *name, int mode, int flags)
 {
-	int i;
+	unsigned int i;
 	size_t s;
 	DBZ  *db;
 	char *dirfname;
@@ -1236,11 +1236,11 @@ static void mybytemap(int map[])
 		char c[SOF];
 	} u;
 	int *mp = &map[SOF];
-	int ntodo;
-	int i;
+	unsigned int ntodo;
+	unsigned int i;
 
 	u.o = 1;
-	for (ntodo = (int)SOF; ntodo > 0; ntodo--) {
+	for (ntodo = SOF; ntodo > 0; ntodo--) {
 		for (i = 0; i < SOF; i++)
 			if (u.c[i] != 0)
 				break;
@@ -1269,7 +1269,7 @@ static int32_t bytemap(int32_t ino, int *map1, int *map2)
 	};
 	union oc in;
 	union oc out;
-	int i;
+	unsigned int i;
 
 	in.o = ino;
 	for (i = 0; i < SOF; i++)
