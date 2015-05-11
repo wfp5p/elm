@@ -52,8 +52,6 @@
 #include "s_aliases.h"
 #include "ndbz.h"
 
-#define	ECHOIT	1 	/* echo on for prompting */
-
 /*
  * A simple macro to make it easier to remember how to do a simple
  * resync and not screw up whether or not to prompt on deletions.

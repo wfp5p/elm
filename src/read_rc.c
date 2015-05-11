@@ -69,10 +69,6 @@
 #define ok_rc_char(c)   (isalnum(c) || c == '-' || c == '_')
 
 
-#define ASSIGNMENT      0
-#define WEEDOUT		1
-#define ALTERNATIVES	2
-
 #define SYSTEM_RC	0
 #define LOCAL_RC	1
 

@@ -27,8 +27,6 @@
 #include "elm_globals.h"
 #include "s_elm.h"
 
-#undef onoff
-#define   onoff(n)	(n ? on_name : off_name)
 #undef yesno
 #define   yesno(n)	(n ? yes_name : no_name)
 
@@ -37,10 +35,6 @@ static char *yes_name = NULL, *no_name = NULL;
 
 
 static void status_help();
-
-
-#define MENU_NEW 0
-#define MENU_REPLIED 1
 
 #define SLINE_HDR 5
 #define SLINE_NEW 7

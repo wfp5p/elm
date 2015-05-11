@@ -7,9 +7,6 @@
 #define AT_DUMMYMODE	(user_level == 0)
 #define AT_MAX_ATTACH	64
 
-/* WARNING - side effects */
-#define PutRight(line, str) PutLine((line), COLS-(strlen(str)+2), (str))
-
 #define S_(sel, str)	catgets(elm_msg_cat, AttachSet, (sel), (str))
 
 /*
